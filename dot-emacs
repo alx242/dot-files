@@ -1,0 +1,319 @@
+;;;; Create some etags
+(defun generate-etags ()
+  (interactive)
+  ;;(shell-command "etags --language=erlang -o ${HOME}/TAGS `find ${HOME}/Dropbox/Devel | grep -E '\.py$'`")
+  ;;(shell-command "etags --language=erlang -o ${HOME}/TAGS `find ${HOME}/Dropbox/Devel | grep -E '\.erl$'`")
+  (shell-command "etags --language=erlang -o ${HOME}/TAGS `find ${HOME}/git/klarna/dev | grep -E '\.erl$'`")
+  (shell-command "etags --language=erlang -a -o ${HOME}/TAGS `find ${HOME}/git/klarna/dev | grep -E '\.hrl$'`")
+  (shell-command "etags --language=erlang -a -o ${HOME}/TAGS `find ${HOME}/git/klarna/OTP/otp/ | grep -E '\.erl$'`")
+  (shell-command "etags --language=erlang -a -o ${HOME}/TAGS `find ${HOME}/git/klarna/OTP/otp/ | grep -E '\.hrl$'`"))
+
+; (generate-etags)
+(if (file-exists-p "~/TAGS") (visit-tags-table "~/TAGS"))
+(setq tags-revert-without-query 1)
+
+;; Auto complete via buffers
+;; (global-set-key [(control return)] 'dabbrev-expand)
+;; -unknown-Amiga Topaz Unicode Rus-normal-normal-normal-*-13-*-*-*-*-0-iso10646-1
+;; -unknown-Pet Me 64 2Y-normal-normal-normal-*-14-*-*-*-m-0-iso10646-1
+(set-default-font "-unknown-Amiga Topaz Unicode Rus-normal-normal-normal-*-13-*-*-*-*-0-iso10646-1")
+
+;; Set some colors
+(set-cursor-color "red")
+(set-foreground-color "black")
+(set-background-color "white")
+(set-mouse-color "red")
+
+
+(transient-mark-mode t) ;Highligthing when in marking mode
+;; (menu-bar-mode nil)
+
+;; No tabs only spaces
+(setq indent-tabs-mode nil)
+(setq-default indent-tabs-mode nil)
+(setq-default show-trailing-whitespace t)
+(setq-default default-indicate-empty-lines t)
+;; (setq-default indent-tabs-mode nil)
+;; (set-variable default-indicate-empty-lines t)
+
+;; Load various modes
+(add-to-list 'load-path "~/.emacs.d/")
+(add-to-list 'load-path "~/.emacs.d/erlang")
+(add-to-list 'load-path "~/.emacs.d/pymacs")
+;(add-to-list 'load-path "/usr/local/Cellar/ccrypt/1.9/share/emacs/site-list")
+
+;; Encrypted files
+;(require 'ps-ccrypt)
+
+;; (load-library "auto-complete")
+(add-to-list 'load-path "~/.emacs.d/auto-complete-1.3")
+
+(require 'pymacs)
+;(pymacs-load "ropemacs" "rope-")
+;(setq ropemacs-enable-autoimport t)
+
+(require 'auto-complete-config)
+(add-to-list 'ac-dictionary-directories "~/.emacs.d/auto-complete-1.3/dict")
+(ac-config-default)
+
+;; (require 'auto-complete)
+;; (global-auto-complete-mode t)
+(require 'yasnippet-bundle) ;; not yasnippet-bundle
+
+;; Run pyflakes via flymake (auto check code for bad stuff)
+;; (when (load "flymake" t)
+;;   (defun flymake-pyflakes-init ()
+;;     (let* ((temp-file (flymake-init-create-temp-buffer-copy
+;;                        'flymake-create-temp-inplace))
+;;            (local-file (file-relative-name
+;;                         temp-file
+;;                         (file-name-directory buffer-file-name))))
+;;       (list "pyflakes" (list local-file))))
+;;
+;;   (add-to-list 'flymake-allowed-file-name-masks
+;;                '("\\.py\\'" flymake-pyflakes-init)))
+;;
+;; (add-hook 'find-file-hook 'flymake-find-file-hook)
+
+
+;; FLYMAKE REMOVED UNTIL RUNABLE ON kred
+;;(require 'flymake)
+;; (defun flymake-erlang-init ()
+;;   (let* ((temp-file (flymake-init-create-temp-buffer-copy
+;;                      'flymake-create-temp-inplace))
+;;           (local-file (file-relative-name temp-file
+;;                                           (file-name-directory buffer-file-name))))
+;;     (list "~/.emacs.d/flymaker.escript" (list local-file))))
+;; (add-to-list 'flymake-allowed-file-name-masks '("\\.erl\\'" flymake-erlang-init))
+;; (add-hook 'erlang-mode-hook 'flymake-mode)
+;;
+;; (defun flymake-erlang-load-hook ()
+;;   (require 'erlang-flymaker-el)
+;;   (flymake-mode))
+;;
+;; (add-hook 'erlang-mode-hook 'flymake-erlang-load-hook)
+;;
+;; ;; Flymake in the status bar
+;; (load-library "flymake-cursor")
+
+;; Column marker and always mark column at character 80
+;; (require 'vline)
+;; (add-hook 'python-mode-hook (lambda () (interactive) (vline-mode)))
+
+;; Python mode
+(require 'python)
+(add-hook 'python-mode-hook 'turn-on-font-lock)
+(add-hook 'python-hook 'turn-on-font-lock)
+(add-hook 'java-mode-hook 'turn-on-font-lock)
+(add-hook 'js2-mode-hook 'turn-on-font-lock)
+
+(global-font-lock-mode t)
+
+;Close all buffers
+(defun kill-all-buffers ()
+  (interactive)
+  (mapc 'kill-buffer (buffer-list)))
+
+(defun pretty-print-xml-region (begin end)
+  "Pretty format XML markup in region. You need to have nxml-mode
+http://www.emacswiki.org/cgi-bin/wiki/NxmlMode installed to do
+this.  The function inserts linebreaks to separate tags that have
+nothing but whitespace between them.  It then indents the markup
+by using nxml's indentation rules."
+  (interactive "r")
+  (save-excursion
+    (nxml-mode)
+    (goto-char begin)
+    (while (search-forward-regexp "\>[ \\t]*\<" nil t)
+      (backward-char) (insert "\n"))
+    (indent-region begin end))
+  (message "Ah, much better!"))
+
+(defun insert-date-stamp ()
+  "Insert current date at the end of the file position."
+  (interactive "*")
+  (message "starting to date stamp the line...")
+  (setq make-backup-files         nil)
+  (end-of-buffer)
+  (end-of-line)
+  (insert (format-time-string "\n\n%a %b %e %R %Z %Y\n\n" (current-time)))
+  ;;(forward-char -1)
+  ;;(forward-char 1)
+  (end-of-buffer)
+  (end-of-line)
+  (message "starting to date stamp the line - finished.")
+  )
+
+;; Show line-number in the mode line
+
+(line-number-mode 1)
+
+;; Show column-number in the mode line
+(column-number-mode 1)
+
+;; Always save the current session (desktop)
+(desktop-save-mode 1)
+
+;; Backwards delete
+(global-set-key (kbd "<A-backspace>") 'backward-kill-word)
+(global-set-key (kbd "M-g") 'goto-line)
+
+;; Resize window
+(global-set-key (kbd "C-x <up>") 'enlarge-window-horizontally)
+(global-set-key (kbd "C-x <down>") 'enlarge-window)
+
+
+(defun get-erl-man ()
+  (interactive)
+  (let* ((man-path "/usr/lib/erlang/man")
+         (man-args (format "-M %s %s" man-path (current-word))))
+    (man man-args)))
+
+;; (add-hook 'erlang-load-hook 'modified-erlang)
+;; 
+;; (defun modified-erlang ()
+;;   (setq erlang-root-dir "~/git/klarna/OTP/otp")
+;;   (add-to-list 'exec-path "~/git/klarna/OTP/otp/bin")
+;;   (require 'erlang-start))
+
+;; distel
+(add-to-list 'load-path "~/distel/elisp/")
+(require 'distel)
+(distel-setup)
+
+(setq erlang-root-dir "~/otp")
+(add-to-list 'exec-path "~/otp/bin")
+(require 'erlang-start)
+
+;; where to find Wrangler elisp files
+;; (add-to-list 'load-path "~/wrangler/elisp")
+;; (add-to-list 'load-path "~/distel/elisp")
+;; (require 'wrangler)
+;; (setq erl-nodename-cache 'kred@<bonit>)
+
+;; (add-hook 'erlang-mode-hook '(lambda () (setq flymake-mode 1)))
+(add-hook 'erlang-mode-hook '(lambda () (setq indent-tabs-mode nil)))
+(add-hook 'erlang-mode-hook '(lambda () (setq erlang-indent-level 2)))
+(add-hook 'erlang-mode-hook '(lambda () (setq case-fold-search t)))
+
+(autoload 'erlang-mode "erlang.el" "" t)
+(add-to-list 'auto-mode-alist '("\\.[eh]rl$" . erlang-mode))
+(add-to-list 'auto-mode-alist '("\\.yaws$" . erlang-mode))
+(add-to-list 'auto-mode-alist '("\\.rst$" . rst-mode))
+(customize-set-variable 'rst-level-face-base-color "black")
+
+(require 'erlang)
+
+;; (global-hl-line-mode 1)
+ 
+;; To customize the background color
+;; (set-face-background 'highlight "yellow")  ;; Emacs 22 Only
+
+;; (require 'esense-start)
+;; (setq esense-indexer-program "~/.emacs.d/esense.sh")
+
+;; (setq erl-nodename-cache 'kred)
+;; (setq erl-nodename-cache 'kred\@stensimpa)
+
+;; This lets you do M-zf to find a (grep)regexp in all kred-sources.
+;; Then you can use next error to find the match in the code.
+;; E.g. ^C-zf -> Find: OCRGIRO_BNO_START ^C-.
+(defun kfind-at (path word)
+  (grep-find
+   (concat "find " path
+           (concat " -name '.svn' -prune -o -name '*~' -prune -o -name '*html' -prune -o -type f -print0 | xargs -0 -e grep -nI -e " word))))
+(defun kfind (word)
+  (interactive "MFind: ")
+  (kfind-at
+   (concat
+    (car (split-string (buffer-file-name) "lib"))
+    "lib/")
+   word)
+  )
+
+;; Shortcuts
+(setq ctrl-z-map (make-keymap))
+(global-set-key "\C-z" ctrl-z-map)
+;; (global-set-key "\C-z\C-f" 'kfind)
+(global-set-key "\C-z\C-c" 'compile)
+(global-set-key "\C-z\C-m" (lambda() (interactive) (get-erl-man)))
+(global-set-key (kbd "<C-return>") 'erl-complete)
+(global-set-key "\C-z\C-o" '(lambda () (set-variable case-fold-search t)))
+(global-set-key (kbd "C-x j") (kbd "M-w C-s M-y"))
+
+;; Emacs no window mode
+(global-set-key (kbd "M-[ A") 'backward-paragraph)
+(global-set-key (kbd "M-[ B") 'forward-paragraph)
+(global-set-key (kbd "M-[ C") 'forward-word)
+(global-set-key (kbd "M-[ D") 'backward-word)
+
+;; (global-set-key (kbd "<C-return>") 'erlang-find-tag)
+;; (global-set-key "\C-tab" 'complete-tag)
+;; (global-set-key (kbd "M-s") 'tags-apropos)
+(global-set-key "\C-z\C-s" 'tags-apropos)
+(global-set-key "\C-z\C-a" 'rgrep)
+(global-set-key (kbd "C-z m") 'menu-bar-open)
+
+;;(global-set-key (kbd "<A-g>") 'goto-line)
+;; (global-set-key [(A-backspace)] 'backward-delete-word
+
+(global-set-key [(control -)] 'dabbrev-expand)
+
+;(global-set-key [(meta O) (a)] 'backward-paragraph)
+;(global-set-key [(meta O) (b)] 'forward-paragraph)
+;(global-set-key (<C-prior>) 'beginning-of-buffer)
+
+;;(define-key global-map "\e[1~" [chome])
+;;(define-key global-map "\e[4~" [cend])
+;;(define-key global-map "\033[40~" [chome])
+;;(define-key global-map "\033[41~" [cend])
+;;(global-set-key [chome] 'beginning-of-buffer)
+;;(global-set-key [cend] 'end-of-buffer)
+;;(global-set-key [(control home)] 'beginning-of-buffer)
+;;(global-set-key [(control end)]  'end-of-buffer)
+(global-set-key (kbd "ESC <end>") 'end-of-buffer)
+(global-set-key (kbd "ESC <home>") 'beginning-of-buffer)
+
+(global-set-key [kp-delete] 'delete-char)
+
+(custom-set-variables
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(dirs-to-monitor (quote ("~/git/klarna/dev/")))
+ '(safe-local-variable-values (quote ((allout-layout . t) (erlang-indent-level . 4) (erlang-indent-level . 2)))))
+(custom-set-faces
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ )
+
+;; Whata heck :)
+(find-file "~/todo_n_stuff.rst")
+(switch-to-buffer "todo_n_stuff.rst")
+
+;; Make the mac-alt key work as normal. Mac-option becomes the meta key :P
+(setq mac-option-key-is-meta nil)
+(setq mac-command-key-is-meta t)
+(setq mac-command-modifier 'meta)
+(setq mac-option-modifier nil)
+
+;; Searching
+; (setq case-fold-search nil) ; make searches case sensitive
+; (setq case-fold-search t)   ; make searches case insensitive
+
+;; Scroll one line at a time...
+;; (setq mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control) . nil)))
+
+;; Better mouse wheel scrolling...not so fast :P
+(setq mouse-wheel-progressive-speed nil)
+(put 'upcase-region 'disabled nil)
+
+;; 80 chars limit
+;; (require 'column-marker)
+;; (add-hook 'find-file-hook (lambda () (interactive) (column-marker-3 80)))
+;; (global-font-lock-mode t)
+;; (setq-default show-trailing-whitespace t)
+;; (setq-default indent-tabs-mode nil)
