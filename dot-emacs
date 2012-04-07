@@ -75,26 +75,34 @@
 ;;
 ;; (add-hook 'find-file-hook 'flymake-find-file-hook)
 
+;; Flymake
+(require 'flymake)
 
-;; FLYMAKE REMOVED UNTIL RUNABLE ON kred
-;;(require 'flymake)
-;; (defun flymake-erlang-init ()
-;;   (let* ((temp-file (flymake-init-create-temp-buffer-copy
-;;                      'flymake-create-temp-inplace))
-;;           (local-file (file-relative-name temp-file
-;;                                           (file-name-directory buffer-file-name))))
-;;     (list "~/.emacs.d/flymaker.escript" (list local-file))))
-;; (add-to-list 'flymake-allowed-file-name-masks '("\\.erl\\'" flymake-erlang-init))
-;; (add-hook 'erlang-mode-hook 'flymake-mode)
-;;
-;; (defun flymake-erlang-load-hook ()
-;;   (require 'erlang-flymaker-el)
-;;   (flymake-mode))
-;;
-;; (add-hook 'erlang-mode-hook 'flymake-erlang-load-hook)
-;;
-;; ;; Flymake in the status bar
-;; (load-library "flymake-cursor")
+(defun flymake-erlang-init ()
+  (let* ((temp-file (flymake-init-create-temp-buffer-copy
+                     'flymake-create-temp-inplace))
+         (local-file (file-relative-name temp-file
+                                         (file-name-directory buffer-file-name))))
+    (list "~/.emacs.d/flymaker.escript" (list local-file))))
+
+(add-to-list 'flymake-allowed-file-name-masks '("\\.erl$" flymake-erlang-init))
+
+(defun my-erlang-mode-hook ()
+  (interactive)
+  (linum-mode)
+  (setq truncate-lines t)
+  (setq truncate-partial-width-windows nil)
+  (setq whitespace-style       (quote (face tabs lines-tail)))
+  (setq whitespace-action      nil)
+  (setq whitespace-line-column 80)
+  (whitespace-mode)
+  ;; (flymake-mode t)
+  (highlight-todo)
+  (highlight-parentheses-mode)
+  (allout-mode))
+
+;; Flymake in the status bar
+(load-library "flymake-cursor")
 
 ;; Column marker and always mark column at character 80
 ;; (require 'vline)
