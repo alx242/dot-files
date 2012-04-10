@@ -39,7 +39,7 @@
 ;; Load various modes
 (add-to-list 'load-path "~/.emacs.d/")
 (add-to-list 'load-path "~/.emacs.d/erlang")
-(add-to-list 'load-path "~/.emacs.d/pymacs")
+;(add-to-list 'load-path "~/.emacs.d/pymacs")
 ;(add-to-list 'load-path "/usr/local/Cellar/ccrypt/1.9/share/emacs/site-list")
 
 ;; Encrypted files
@@ -48,7 +48,7 @@
 ;; (load-library "auto-complete")
 (add-to-list 'load-path "~/.emacs.d/auto-complete-1.3")
 
-(require 'pymacs)
+;(require 'pymacs)
 ;(pymacs-load "ropemacs" "rope-")
 ;(setq ropemacs-enable-autoimport t)
 
@@ -58,7 +58,6 @@
 
 ;; (require 'auto-complete)
 ;; (global-auto-complete-mode t)
-(require 'yasnippet-bundle) ;; not yasnippet-bundle
 
 ;; Run pyflakes via flymake (auto check code for bad stuff)
 ;; (when (load "flymake" t)
@@ -92,6 +91,8 @@
   (linum-mode)
   (setq truncate-lines t)
   (setq truncate-partial-width-windows nil)
+  (setq erlang-indent-level 2)
+  (setq case-fold-search t)
   (setq whitespace-style       (quote (face tabs lines-tail)))
   (setq whitespace-action      nil)
   (setq whitespace-line-column 80)
@@ -178,7 +179,7 @@ by using nxml's indentation rules."
     (man man-args)))
 
 ;; (add-hook 'erlang-load-hook 'modified-erlang)
-;; 
+;;
 ;; (defun modified-erlang ()
 ;;   (setq erlang-root-dir "~/git/klarna/OTP/otp")
 ;;   (add-to-list 'exec-path "~/git/klarna/OTP/otp/bin")
@@ -199,10 +200,8 @@ by using nxml's indentation rules."
 ;; (require 'wrangler)
 ;; (setq erl-nodename-cache 'kred@<bonit>)
 
-;; (add-hook 'erlang-mode-hook '(lambda () (setq flymake-mode 1)))
-(add-hook 'erlang-mode-hook '(lambda () (setq indent-tabs-mode nil)))
-(add-hook 'erlang-mode-hook '(lambda () (setq erlang-indent-level 2)))
-(add-hook 'erlang-mode-hook '(lambda () (setq case-fold-search t)))
+(add-hook 'erlang-mode-hook 'my-erlang-mode-hook)
+;; (add-hook 'erlang-mode-hook '(lambda () (setq case-fold-search t)))
 
 (autoload 'erlang-mode "erlang.el" "" t)
 (add-to-list 'auto-mode-alist '("\\.[eh]rl$" . erlang-mode))
@@ -324,4 +323,3 @@ by using nxml's indentation rules."
 ;; (add-hook 'find-file-hook (lambda () (interactive) (column-marker-3 80)))
 ;; (global-font-lock-mode t)
 ;; (setq-default show-trailing-whitespace t)
-;; (setq-default indent-tabs-mode nil)
