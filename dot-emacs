@@ -58,6 +58,7 @@
 
 ;; (require 'auto-complete)
 ;; (global-auto-complete-mode t)
+;; (require 'yasnippet-bundle) ;; not yasnippet-bundle
 
 ;; Run pyflakes via flymake (auto check code for bad stuff)
 ;; (when (load "flymake" t)
@@ -97,7 +98,7 @@
   (setq whitespace-action      nil)
   (setq whitespace-line-column 80)
   (whitespace-mode)
-  ;; (flymake-mode t)
+  (flymake-mode t)
   (highlight-todo)
   (highlight-parentheses-mode)
   (allout-mode))
@@ -184,6 +185,10 @@ by using nxml's indentation rules."
 ;;   (setq erlang-root-dir "~/git/klarna/OTP/otp")
 ;;   (add-to-list 'exec-path "~/git/klarna/OTP/otp/bin")
 ;;   (require 'erlang-start))
+
+(add-to-list 'load-path "~/.emacs.d/mo-git-blame")
+(autoload 'mo-git-blame-file "mo-git-blame" nil t)
+(autoload 'mo-git-blame-current "mo-git-blame" nil t)
 
 ;; distel
 (add-to-list 'load-path "~/distel/elisp/")
