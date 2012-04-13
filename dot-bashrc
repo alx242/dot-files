@@ -48,6 +48,10 @@ function gbout {
     git log $1.. --no-merges --format='%h | Author:%an | Date:%ad | %s' --date=local
 }
 
+function gbranches {
+    for k in `git branch|perl -pe s/^..//`;do echo -e `git show --pretty=format:"%Cgreen%ci %Cblue%cr%Creset" $k|head -n 1`\\t$k;done|sort -r
+}
+
 # Setup a good ssh agent to not have to type password over and over and over...
 # http://help.github.com/ssh-key-passphrases/
 
@@ -105,3 +109,4 @@ alias scpresume="rsync --partial --progress --rsh=ssh"
 
 export PYTHONSTARTUP=~/Dropbox/Env/pythonrc
 export ERL_LIBS=/usr/local/lib/erlang/addons/esdl-1.2
+export LC_CTYPE=en_US.UTF-8
