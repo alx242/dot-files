@@ -289,8 +289,8 @@ by using nxml's indentation rules."
  )
 
 ;; Whata heck :)
-(find-file "~/todo_n_stuff.rst")
-(switch-to-buffer "todo_n_stuff.rst")
+(find-file "~/TODO")
+(switch-to-buffer "TODO")
 
 ;; Make the mac-alt key work as normal. Mac-option becomes the meta key :P
 (setq mac-option-key-is-meta nil)
