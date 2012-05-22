@@ -191,7 +191,7 @@ by using nxml's indentation rules."
 (autoload 'mo-git-blame-current "mo-git-blame" nil t)
 
 ;; distel
-(add-to-list 'load-path "~/distel/elisp/")
+(add-to-list 'load-path "~/.emacs.d/distel/elisp/")
 (require 'distel)
 (distel-setup)
 
