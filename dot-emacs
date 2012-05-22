@@ -98,7 +98,8 @@
   (setq whitespace-action      nil)
   (setq whitespace-line-column 80)
   (whitespace-mode)
-  (flymake-mode t)
+  (erlang-extended-mode t)
+;  (flymake-mode t)
   (highlight-todo)
   (highlight-parentheses-mode)
   (allout-mode))
@@ -179,31 +180,14 @@ by using nxml's indentation rules."
          (man-args (format "-M %s %s" man-path (current-word))))
     (man man-args)))
 
-;; (add-hook 'erlang-load-hook 'modified-erlang)
-;;
-;; (defun modified-erlang ()
-;;   (setq erlang-root-dir "~/git/klarna/OTP/otp")
-;;   (add-to-list 'exec-path "~/git/klarna/OTP/otp/bin")
-;;   (require 'erlang-start))
-
 (add-to-list 'load-path "~/.emacs.d/mo-git-blame")
 (autoload 'mo-git-blame-file "mo-git-blame" nil t)
 (autoload 'mo-git-blame-current "mo-git-blame" nil t)
 
 ;; distel
-(add-to-list 'load-path "~/.emacs.d/distel/elisp/")
+(add-to-list 'load-path "~/.emacs.d/distel/elisp")
 (require 'distel)
 (distel-setup)
-
-(setq erlang-root-dir "~/otp")
-(add-to-list 'exec-path "~/otp/bin")
-(require 'erlang-start)
-
-;; where to find Wrangler elisp files
-;; (add-to-list 'load-path "~/wrangler/elisp")
-;; (add-to-list 'load-path "~/distel/elisp")
-;; (require 'wrangler)
-;; (setq erl-nodename-cache 'kred@<bonit>)
 
 (add-hook 'erlang-mode-hook 'my-erlang-mode-hook)
 ;; (add-hook 'erlang-mode-hook '(lambda () (setq case-fold-search t)))
@@ -211,13 +195,15 @@ by using nxml's indentation rules."
 (autoload 'erlang-mode "erlang.el" "" t)
 (add-to-list 'auto-mode-alist '("\\.[eh]rl$" . erlang-mode))
 (add-to-list 'auto-mode-alist '("\\.yaws$" . erlang-mode))
+;; (add-to-list 'auto-mode-alist '("\\.[eh]rl$" . erlang-extended-mode))
+;; (add-to-list 'auto-mode-alist '("\\.yaws$" . erlang-extended-mode))
 (add-to-list 'auto-mode-alist '("\\.rst$" . rst-mode))
 (customize-set-variable 'rst-level-face-base-color "black")
 
 (require 'erlang)
 
 ;; (global-hl-line-mode 1)
- 
+
 ;; To customize the background color
 ;; (set-face-background 'highlight "yellow")  ;; Emacs 22 Only
 
@@ -303,8 +289,8 @@ by using nxml's indentation rules."
  )
 
 ;; Whata heck :)
-(find-file "~/todo_n_stuff.rst")
-(switch-to-buffer "todo_n_stuff.rst")
+(find-file "~/TODO")
+(switch-to-buffer "TODO")
 
 ;; Make the mac-alt key work as normal. Mac-option becomes the meta key :P
 (setq mac-option-key-is-meta nil)

@@ -10,6 +10,7 @@ SRCITEMS=(
     pythonrc
     emacs
     emacs.d
+    tmux.conf
 )
 
 mkdir -p $HOME/.config

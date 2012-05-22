@@ -1,6 +1,9 @@
 export PATH=~/bin:/usr/local/bin:$PATH
 export EDITOR=nano
 
+if [ -r /etc/bash_completion ]; then
+    . /etc/bash_completion
+fi
 if [ -r /usr/local/bin/brew ]; then
   if [ -f `brew --prefix`/etc/bash_completion ]; then
     . `brew --prefix`/etc/bash_completion
