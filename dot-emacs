@@ -94,7 +94,7 @@
   (setq truncate-partial-width-windows nil)
   (setq erlang-indent-level 2)
   (setq case-fold-search t)
-  (setq whitespace-style       (quote (face tabs lines-tail)))
+  (setq whitespace-style       (quote (face tabs lines-tail trailing)))
   (setq whitespace-action      nil)
   (setq whitespace-line-column 80)
   (whitespace-mode)

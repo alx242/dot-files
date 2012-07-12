@@ -55,6 +55,8 @@ function gbranches {
     for k in `git branch|perl -pe s/^..//`;do echo -e `git show --pretty=format:"%Cgreen%ci %Cblue%cr%Creset" $k|head -n 1`\\t$k;done|sort -r
 }
 
+# git checkout `git rev-list -n 1 --before="2009-07-27 13:37" master`
+
 # Setup a good ssh agent to not have to type password over and over and over...
 # http://help.github.com/ssh-key-passphrases/
 
@@ -104,10 +106,10 @@ else
     fi
 fi
 
-alias ls="ls -G"
-alias l="ls"
-alias ll="ls -l"
-alias la="ls -a"
+alias ls="ls -G --color"
+alias l="ls --color"
+alias ll="ls -l --color"
+alias la="ls -a --color"
 alias scpresume="rsync --partial --progress --rsh=ssh"
 
 export PYTHONSTARTUP=~/Dropbox/Env/pythonrc
