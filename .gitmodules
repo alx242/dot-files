@@ -1,0 +1,3 @@
+[submodule "dot-emacs.d/distel"]
+	path = dot-emacs.d/distel
+	url = https://github.com/sebastiw/distel.git
