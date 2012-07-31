@@ -99,7 +99,10 @@
   (setq whitespace-line-column 80)
   (whitespace-mode)
   (erlang-extended-mode t)
-;  (flymake-mode t)
+
+  (require 'flymaker-el)
+  (flymake-mode t)
+
   (highlight-todo)
   (highlight-parentheses-mode)
   (allout-mode))

@@ -106,12 +106,12 @@ else
     fi
 fi
 
-alias ls="ls -G --color"
-alias l="ls --color"
-alias ll="ls -l --color"
-alias la="ls -a --color"
+#alias ls="ls"
+alias l="ls"
+alias ll="ls -l"
+alias la="ls -a"
 alias scpresume="rsync --partial --progress --rsh=ssh"
 
-export PYTHONSTARTUP=~/Dropbox/Env/pythonrc
-export ERL_LIBS=/usr/local/lib/erlang/addons/esdl-1.2
+export PYTHONSTARTUP=${HOME}/.pythonrc
+# export ERL_LIBS=/usr/local/lib/erlang/addons/esdl-1.2
 export LC_CTYPE=en_US.UTF-8
