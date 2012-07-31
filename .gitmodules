@@ -1,3 +1,4 @@
 [submodule "dot-emacs.d/distel"]
 	path = dot-emacs.d/distel
-	url = https://github.com/rost/distel.git
+	url = https://github.com/sebastiw/distel
+
