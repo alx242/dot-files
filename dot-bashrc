@@ -106,7 +106,18 @@ else
     fi
 fi
 
-#alias ls="ls"
+# Set appropriate ls alias
+case $(uname -s) in
+        Darwin|FreeBSD)
+                alias ls="ls -hFG"
+        ;;
+        Linux)
+                alias ls="ls --color=always -hF"
+        ;;
+        NetBSD|OpenBSD)
+                alias ls="ls -hF"
+        ;;
+esac
 alias l="ls"
 alias ll="ls -l"
 alias la="ls -a"

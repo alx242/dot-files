@@ -87,9 +87,6 @@
 
 (add-to-list 'flymake-allowed-file-name-masks '("\\.erl$" flymake-erlang-init))
 
-(require 'erlang-compile-server)
-; (setq erl-ecs-backends '(xref dialyzer eunit))
-
 (defun my-erlang-mode-hook ()
   (interactive)
   (linum-mode)
@@ -194,6 +191,8 @@ by using nxml's indentation rules."
 (add-to-list 'load-path "~/.emacs.d/distel/elisp")
 (require 'distel)
 (distel-setup)
+(require 'erlang-compile-server)
+(setq erl-ecs-backends '(xref dialyzer eunit))
 
 (add-hook 'erlang-mode-hook 'my-erlang-mode-hook)
 ;; (add-hook 'erlang-mode-hook '(lambda () (setq case-fold-search t)))
