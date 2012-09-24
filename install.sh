@@ -16,7 +16,7 @@ SRCITEMS=(
 
 mkdir -p $HOME/.config
 
-## First, get all git submodules like .config/awesome/vicious and .emacs.d/distel
+## First, get all git submodules like .config/awesome/vicious and .emacs.de/edts
 git submodule update --init
 
 for SRCITEM in ${SRCITEMS[*]} ; do 
@@ -28,7 +28,7 @@ for SRCITEM in ${SRCITEMS[*]} ; do
 done
 
 ## Some emacs modules need compilation
-cd $HOME/.emacs.d/distel && make
+cd $HOME/.emacs.d/edts && make
 cd $HOME
 
 ## Initialize some scripts

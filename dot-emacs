@@ -101,7 +101,7 @@
   (erlang-extended-mode t)
 
   (require 'flymaker-el)
-  (flymake-mode t)
+  (flymake-mode f)
 
   (highlight-todo)
   (highlight-parentheses-mode)
@@ -188,11 +188,19 @@ by using nxml's indentation rules."
 (autoload 'mo-git-blame-current "mo-git-blame" nil t)
 
 ;; distel
-(add-to-list 'load-path "~/.emacs.d/distel/elisp")
-(require 'distel)
-(distel-setup)
-(require 'erlang-compile-server)
-(setq erl-ecs-backends '(xref dialyzer eunit))
+; (add-to-list 'load-path "~/.emacs.d/distel/elisp")
+; (require 'distel)
+; (distel-setup)
+; (require 'erlang-compile-server)
+; (setq erl-ecs-backends '(xref dialyzer eunit))
+
+
+(setq edts-projects
+    '(( ;; My other project.
+       (name       . "kred")
+       (root       . "~/git/klarna/dev")
+       ;       (node-sname . "apa") ; defaults to project name
+       (lib-dirs   . ("lib" "test")))))
 
 (add-hook 'erlang-mode-hook 'my-erlang-mode-hook)
 ;; (add-hook 'erlang-mode-hook '(lambda () (setq case-fold-search t)))
@@ -206,6 +214,11 @@ by using nxml's indentation rules."
 (customize-set-variable 'rst-level-face-base-color "black")
 
 (require 'erlang)
+
+;; edts Erlang Development Tool Suite
+;; After erlang
+(add-to-list 'load-path "~/.emacs.d/edts")
+(require 'edts-start)
 
 ;; (global-hl-line-mode 1)
 
