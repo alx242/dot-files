@@ -1,4 +1,4 @@
-export PATH=~/bin:/usr/local/bin:$PATH
+export PATH=~/bin:/usr/local/bin:/usr/local/sbin:$PATH
 export EDITOR=nano
 export LANG=sv_SE.UTF-8
 
