@@ -56,6 +56,10 @@ function gbranches {
     for k in `git branch|perl -pe s/^..//`;do echo -e `git show --pretty=format:"%Cgreen%ci %Cblue%cr%Creset" $k|head -n 1`\\t$k;done|sort -r
 }
 
+function glatest {
+    for k in `git branch -r | perl -pe 's/^..(.*?)( ->.*)?$/\1/'`; do echo -e `git show --pretty=format:"%Cgreen%ci %Cblue%cr%Creset" $k -- | head -n 1`\\t$k; done | sort -r
+}
+
 # git checkout `git rev-list -n 1 --before="2009-07-27 13:37" master`
 
 # Setup a good ssh agent to not have to type password over and over and over...
@@ -129,3 +133,4 @@ export LC_CTYPE=en_US.UTF-8
 # Erlang inet config: http://www.erlang.org/doc/apps/erts/inet_cfg.html
 export ERL_INETRC=${HOME}/.inetrc
 # export ERL_LIBS=/usr/local/lib/erlang/addons/esdl-1.2
+export PYTHONPATH=/usr/local/lib/python2.7/site-packages
