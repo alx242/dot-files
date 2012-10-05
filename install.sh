@@ -11,7 +11,6 @@ SRCITEMS=(
     emacs
     emacs.d
     tmux.conf
-    newsbeuter
 )
 
 mkdir -p $HOME/.config
