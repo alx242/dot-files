@@ -166,7 +166,7 @@ by using nxml's indentation rules."
 (column-number-mode 1)
 
 ;; Always save the current session (desktop)
-(desktop-save-mode 1)
+(desktop-save-mode 0)
 
 ;; Backwards delete
 (global-set-key (kbd "<A-backspace>") 'backward-kill-word)
