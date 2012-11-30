@@ -16,14 +16,14 @@
 ;; (global-set-key [(control return)] 'dabbrev-expand)
 ;; -unknown-Amiga Topaz Unicode Rus-normal-normal-normal-*-13-*-*-*-*-0-iso10646-1
 ;; -unknown-Pet Me 64 2Y-normal-normal-normal-*-14-*-*-*-m-0-iso10646-1
-(set-default-font "-unknown-Amiga Topaz Unicode Rus-normal-normal-normal-*-13-*-*-*-*-0-iso10646-1")
+;; (set-default-font "-unknown-Amiga Topaz Unicode Rus-normal-normal-normal-*-13-*-*-*-*-0-iso10646-1")
 
 ;; Set some colors
 (set-cursor-color "red")
 (set-foreground-color "black")
 (set-background-color "white")
 (set-mouse-color "red")
-
+(add-to-list 'default-frame-alist '(background-color . "grey00"))
 
 (transient-mark-mode t) ;Highligthing when in marking mode
 ;; (menu-bar-mode nil)
