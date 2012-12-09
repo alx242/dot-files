@@ -20,8 +20,8 @@
 
 ;; Set some colors
 (set-cursor-color "red")
-(set-foreground-color "black")
-(set-background-color "white")
+;(set-foreground-color "black")
+;(set-background-color "white")
 (set-mouse-color "red")
 (add-to-list 'default-frame-alist '(background-color . "grey00"))
 
