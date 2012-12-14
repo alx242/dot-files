@@ -225,7 +225,7 @@ by using nxml's indentation rules."
 
 ;; Scala
 (add-to-list 'load-path "~/.emacs.d/scala-mode2")
-(require 'scala-mode2)
+(require 'scala-mode)
 
 ;; (global-hl-line-mode 1)
 
