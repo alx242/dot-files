@@ -7,6 +7,9 @@
 [submodule "dot-emacs.d/popup-el"]
 	path = dot-emacs.d/popup-el
 	url = https://github.com/auto-complete/popup-el
+[submodule "dot-emacs.d/auto-complete"]
+	path = dot-emacs.d/auto-complete
+	url = https://github.com/auto-complete/auto-complete
 [submodule "dot-emacs.d/scala-mode"]
 	path = dot-emacs.d/scala-mode
 	url = https://github.com/haxney/scala-mode
