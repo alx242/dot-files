@@ -224,8 +224,8 @@ by using nxml's indentation rules."
 ; (require 'edts-start)
 
 ;; Scala
-(add-to-list 'load-path "~/.emacs.d/scala-mode")
-(require 'scala-mode)
+(add-to-list 'load-path "~/.emacs.d/scala-mode2")
+(require 'scala-mode2)
 
 ;; (global-hl-line-mode 1)
 
