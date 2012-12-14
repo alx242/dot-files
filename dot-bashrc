@@ -37,7 +37,7 @@ PS4='+ '
 
 ok_prompt
 
-# Git stoff
+# Git environment
 function parse_git_branch {
     git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'
 }
@@ -128,9 +128,15 @@ alias ll="ls -l"
 alias la="ls -a"
 alias scpresume="rsync --partial --progress --rsh=ssh"
 
-export PYTHONSTARTUP=${HOME}/.pythonrc
+#
 export LC_CTYPE=en_US.UTF-8
+
+# Devel environment
+#
+# Supplies auto completion for ordinary python
+export PYTHONSTARTUP=${HOME}/.pythonrc
 # Erlang inet config: http://www.erlang.org/doc/apps/erts/inet_cfg.html
 export ERL_INETRC=${HOME}/.inetrc
-# export ERL_LIBS=/usr/local/lib/erlang/addons/esdl-1.2
+# Some more libs, perhaps
+#export ERL_LIBS=/usr/local/lib/erlang/addons/esdl-1.2
 #export PYTHONPATH=/usr/local/lib/python2.7/site-packages
