@@ -46,14 +46,14 @@
 ;(require 'ps-ccrypt)
 
 ;; (load-library "auto-complete")
-(add-to-list 'load-path "~/.emacs.d/auto-complete-1.3")
+(add-to-list 'load-path "~/.emacs.d/auto-complete")
 
 ;(require 'pymacs)
 ;(pymacs-load "ropemacs" "rope-")
 ;(setq ropemacs-enable-autoimport t)
 
 (require 'auto-complete-config)
-(add-to-list 'ac-dictionary-directories "~/.emacs.d/auto-complete-1.3/dict")
+(add-to-list 'ac-dictionary-directories "~/.emacs.d/auto-complete/dict")
 (ac-config-default)
 
 ;; (require 'auto-complete)

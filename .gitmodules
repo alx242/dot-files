@@ -4,3 +4,6 @@
 [submodule "dot-emacs.d/edts"]
 	path = dot-emacs.d/edts
 	url = git://github.com/tjarvstrand/edts.git
+[submodule "dot-emacs.d/auto-complete"]
+	path = dot-emacs.d/auto-complete
+	url = https://github.com/m2ym/auto-complete.git
