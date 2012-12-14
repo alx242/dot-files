@@ -4,6 +4,9 @@
 [submodule "dot-emacs.d/edts"]
 	path = dot-emacs.d/edts
 	url = git://github.com/tjarvstrand/edts.git
-[submodule "dot-emacs.d/auto-complete"]
-	path = dot-emacs.d/auto-complete
-	url = https://github.com/m2ym/auto-complete.git
+[submodule "dot-emacs.d/popup-el"]
+	path = dot-emacs.d/popup-el
+	url = https://github.com/auto-complete/popup-el
+[submodule "dot-emacs.d/scala-mode"]
+	path = dot-emacs.d/scala-mode
+	url = https://github.com/haxney/scala-mode
