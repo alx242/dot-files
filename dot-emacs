@@ -46,8 +46,8 @@
 ;(require 'ps-ccrypt)
 
 ;; (load-library "auto-complete")
-(add-to-list 'load-path "~/.emacs.d/popup-el")
-(require 'popup)
+;(add-to-list 'load-path "~/.emacs.d/popup-el")
+;(require 'popup)
 
 (add-to-list 'load-path "~/.emacs.d/auto-complete")
 
@@ -221,7 +221,7 @@ by using nxml's indentation rules."
 ;; edts Erlang Development Tool Suite
 ;; After erlang
 (add-to-list 'load-path "~/.emacs.d/edts")
-; (require 'edts-start)
+(require 'edts-start)
 
 ;; Scala
 (add-to-list 'load-path "~/.emacs.d/scala-mode2")
