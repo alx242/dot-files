@@ -1,4 +1,4 @@
-;;;; Create some etags
+;;;; Create etags
 (defun generate-etags ()
   (interactive)
   ;;(shell-command "etags --language=erlang -o ${HOME}/TAGS `find ${HOME}/Dropbox/Devel | grep -E '\.py$'`")
@@ -8,15 +8,12 @@
   (shell-command "etags --language=erlang -a -o ${HOME}/TAGS `find ${HOME}/git/klarna/OTP/otp/ | grep -E '\.erl$'`")
   (shell-command "etags --language=erlang -a -o ${HOME}/TAGS `find ${HOME}/git/klarna/OTP/otp/ | grep -E '\.hrl$'`"))
 
-; (generate-etags)
+;; Make sure the TAGS are loaded
 (if (file-exists-p "~/TAGS") (visit-tags-table "~/TAGS"))
 (setq tags-revert-without-query 1)
 
-;; Auto complete via buffers
+;; BROKEN Auto complete via buffers
 ;; (global-set-key [(control return)] 'dabbrev-expand)
-;; -unknown-Amiga Topaz Unicode Rus-normal-normal-normal-*-13-*-*-*-*-0-iso10646-1
-;; -unknown-Pet Me 64 2Y-normal-normal-normal-*-14-*-*-*-m-0-iso10646-1
-;; (set-default-font "-unknown-Amiga Topaz Unicode Rus-normal-normal-normal-*-13-*-*-*-*-0-iso10646-1")
 
 ;; Set some colors
 (set-cursor-color "red")
@@ -25,7 +22,8 @@
 (set-mouse-color "red")
 (add-to-list 'default-frame-alist '(background-color . "grey00"))
 
-(transient-mark-mode t) ;Highligthing when in marking mode
+;; Highligthing when in marking mode
+(transient-mark-mode t)
 ;; (menu-bar-mode nil)
 
 ;; No tabs only spaces
@@ -36,33 +34,68 @@
 ;; (setq-default indent-tabs-mode nil)
 ;; (set-variable default-indicate-empty-lines t)
 
-;; Load various modes
+;; Load various general stuff
 (add-to-list 'load-path "~/.emacs.d/")
-(add-to-list 'load-path "~/.emacs.d/erlang")
-;(add-to-list 'load-path "~/.emacs.d/pymacs")
-;(add-to-list 'load-path "/usr/local/Cellar/ccrypt/1.9/share/emacs/site-list")
 
 ;; Encrypted files
 ;(require 'ps-ccrypt)
 
-;; (load-library "auto-complete")
+;; Popup (required by auto complete)
 (add-to-list 'load-path "~/.emacs.d/popup-el")
 (require 'popup)
 
+;; Load auto complete
 (add-to-list 'load-path "~/.emacs.d/auto-complete")
 
-;(require 'pymacs)
-;(pymacs-load "ropemacs" "rope-")
-;(setq ropemacs-enable-autoimport t)
-
+;; Tab complete code expressions
 (require 'auto-complete-config)
 (add-to-list 'ac-dictionary-directories "~/.emacs.d/auto-complete/dict")
 (ac-config-default)
-
 (require 'auto-complete)
 (global-auto-complete-mode t)
-;; (require 'yasnippet-bundle) ;; not yasnippet-bundle
 
+;; Yasnippet (code snippets to fix autocompletion n' more)
+(add-to-list 'load-path "~/.emacs.d/yasnippet")
+(require 'yasnippet)
+(yas-global-mode 1)
+
+;; Collection of emacs development environment tools
+(add-to-list 'load-path "~/.emacs.d/cedet-1.1/common")
+(load-file "~/.emacs.d/cedet-1.1/common/cedet.el")
+(semantic-load-enable-minimum-features) ;; or enable more if you wish
+
+;; Flymake
+(require 'flymake)
+
+;; Flymake in the status bar
+(load-library "flymake-cursor")
+
+;; * * * Java * * *
+;;
+;; Maven stuff
+;; (require 'malabar-mode)
+;; (setq malabar-groovy-lib-dir "~/.emacs.d/malabar/lib")
+;; (add-to-list 'auto-mode-alist '("\\.java\\'" . malabar-mode))
+;; ;; Compile on save
+;; (add-hook 'malabar-mode-hook
+;;           (lambda ()
+;;             (add-hook 'after-save-hook 'malabar-compile-file-silently
+;;                       nil t)))
+;;
+;; Java auto completion: http://www.emacswiki.org/emacs/AutoJavaComplete
+(add-to-list 'load-path "~/.emacs.d/ajc-java-complete/")
+(require 'ajc-java-complete-config)
+(add-hook 'java-mode-hook 'ajc-java-complete-mode)
+(add-hook 'find-file-hook 'ajc-4-jsp-find-file-hook)
+;;
+;; Javadoc Help
+(autoload 'javadoc-lookup "javadoc-help" "Look up Java class in Javadoc." t)
+(autoload 'javadoc-help "javadoc-help" "Open up the Javadoc-help menu." t)
+(autoload 'javadoc-set-predefined-urls "javadoc-help" "Set pre-defined urls." t)
+; (global-set-key [f8] 'javadoc-lookup)
+; (global-set-key [(shift f8)] 'javadoc-help)
+
+;; * * * Python * * *
 ;; Run pyflakes via flymake (auto check code for bad stuff)
 ;; (when (load "flymake" t)
 ;;   (defun flymake-pyflakes-init ()
@@ -77,9 +110,11 @@
 ;;                '("\\.py\\'" flymake-pyflakes-init)))
 ;;
 ;; (add-hook 'find-file-hook 'flymake-find-file-hook)
+;;
+(require 'python)
 
-;; Flymake
-(require 'flymake)
+;; * * * Erlang * * *
+(add-to-list 'load-path "~/.emacs.d/erlang")
 
 (defun flymake-erlang-init ()
   (let* ((temp-file (flymake-init-create-temp-buffer-copy
@@ -110,94 +145,6 @@
   (highlight-parentheses-mode)
   (allout-mode))
 
-;; Flymake in the status bar
-(load-library "flymake-cursor")
-
-;; Column marker and always mark column at character 80
-;; (require 'vline)
-;; (add-hook 'python-mode-hook (lambda () (interactive) (vline-mode)))
-
-;; Python mode
-(require 'python)
-(add-hook 'python-mode-hook 'turn-on-font-lock)
-(add-hook 'python-hook 'turn-on-font-lock)
-(add-hook 'java-mode-hook 'turn-on-font-lock)
-(add-hook 'js2-mode-hook 'turn-on-font-lock)
-
-(global-font-lock-mode t)
-
-;Close all buffers
-(defun kill-all-buffers ()
-  (interactive)
-  (mapc 'kill-buffer (buffer-list)))
-
-(defun pretty-print-xml-region (begin end)
-  "Pretty format XML markup in region. You need to have nxml-mode
-http://www.emacswiki.org/cgi-bin/wiki/NxmlMode installed to do
-this.  The function inserts linebreaks to separate tags that have
-nothing but whitespace between them.  It then indents the markup
-by using nxml's indentation rules."
-  (interactive "r")
-  (save-excursion
-    (nxml-mode)
-    (goto-char begin)
-    (while (search-forward-regexp "\>[ \\t]*\<" nil t)
-      (backward-char) (insert "\n"))
-    (indent-region begin end))
-  (message "Ah, much better!"))
-
-(defun insert-date-stamp ()
-  "Insert current date at the end of the file position."
-  (interactive "*")
-  (message "starting to date stamp the line...")
-  (setq make-backup-files         nil)
-  (end-of-buffer)
-  (end-of-line)
-  (insert (format-time-string "\n\n%a %b %e %R %Z %Y\n\n" (current-time)))
-  ;;(forward-char -1)
-  ;;(forward-char 1)
-  (end-of-buffer)
-  (end-of-line)
-  (message "starting to date stamp the line - finished.")
-  )
-
-;; Show line-number in the mode line
-
-(line-number-mode 1)
-
-;; Show column-number in the mode line
-(column-number-mode 1)
-
-;; Always save the current session (desktop)
-(desktop-save-mode 0)
-
-;; Backwards delete
-(global-set-key (kbd "<A-backspace>") 'backward-kill-word)
-(global-set-key (kbd "M-g") 'goto-line)
-
-;; Resize window
-(global-set-key (kbd "C-x <up>") 'enlarge-window-horizontally)
-(global-set-key (kbd "C-x <down>") 'enlarge-window)
-
-
-(defun get-erl-man ()
-  (interactive)
-  (let* ((man-path "/usr/lib/erlang/man")
-         (man-args (format "-M %s %s" man-path (current-word))))
-    (man man-args)))
-
-(add-to-list 'load-path "~/.emacs.d/mo-git-blame")
-(autoload 'mo-git-blame-file "mo-git-blame" nil t)
-(autoload 'mo-git-blame-current "mo-git-blame" nil t)
-
-;; distel
-; (add-to-list 'load-path "~/.emacs.d/distel/elisp")
-; (require 'distel)
-; (distel-setup)
-; (require 'erlang-compile-server)
-; (setq erl-ecs-backends '(xref dialyzer eunit))
-
-
 (setq edts-projects
     '(( ;; My other project.
        (name       . "kred")
@@ -223,20 +170,84 @@ by using nxml's indentation rules."
 (add-to-list 'load-path "~/.emacs.d/edts")
 ; (require 'edts-start)
 
+;; Lookup erlang man pages
+(defun get-erl-man ()
+  (interactive)
+  (let* ((man-path "/usr/lib/erlang/man")
+         (man-args (format "-M %s %s" man-path (current-word))))
+    (man man-args)))
+
+;; Font locks
+(add-hook 'python-mode-hook 'turn-on-font-lock)
+(add-hook 'python-hook 'turn-on-font-lock)
+(add-hook 'java-mode-hook 'turn-on-font-lock)
+(add-hook 'js2-mode-hook 'turn-on-font-lock)
+
+(global-font-lock-mode t)
+
+;; Close all buffers
+(defun kill-all-buffers ()
+  (interactive)
+  (mapc 'kill-buffer (buffer-list)))
+
+;; Pretty print XML
+(defun pretty-print-xml-region (begin end)
+  "Pretty format XML markup in region. You need to have nxml-mode
+http://www.emacswiki.org/cgi-bin/wiki/NxmlMode installed to do
+this.  The function inserts linebreaks to separate tags that have
+nothing but whitespace between them.  It then indents the markup
+by using nxml's indentation rules."
+  (interactive "r")
+  (save-excursion
+    (nxml-mode)
+    (goto-char begin)
+    (while (search-forward-regexp "\>[ \\t]*\<" nil t)
+      (backward-char) (insert "\n"))
+    (indent-region begin end))
+  (message "Ah, much better!"))
+
+;; Insert a timestamp at the end of a file (diary stuff)
+(defun insert-date-stamp ()
+  "Insert current date at the end of the file position."
+  (interactive "*")
+  (message "starting to date stamp the line...")
+  (setq make-backup-files         nil)
+  (end-of-buffer)
+  (end-of-line)
+  (insert (format-time-string "\n\n%a %b %e %R %Z %Y\n\n" (current-time)))
+  ;;(forward-char -1)
+  ;;(forward-char 1)
+  (end-of-buffer)
+  (end-of-line)
+  (message "starting to date stamp the line - finished.")
+  )
+
+;; Show line-number in the mode line
+(line-number-mode 1)
+
+;; Show column-number in the mode line
+(column-number-mode 1)
+
+;; Always save the current session (desktop)
+(desktop-save-mode 0)
+
+;; Backwards delete
+(global-set-key (kbd "<A-backspace>") 'backward-kill-word)
+(global-set-key (kbd "M-g") 'goto-line)
+
+;; Resize window
+(global-set-key (kbd "C-x <up>") 'enlarge-window-horizontally)
+(global-set-key (kbd "C-x <down>") 'enlarge-window)
+
+(add-to-list 'load-path "~/.emacs.d/mo-git-blame")
+(autoload 'mo-git-blame-file "mo-git-blame" nil t)
+(autoload 'mo-git-blame-current "mo-git-blame" nil t)
+
 ;; Scala
 (add-to-list 'load-path "~/.emacs.d/scala-mode2")
 (require 'scala-mode)
 
 ;; (global-hl-line-mode 1)
-
-;; To customize the background color
-;; (set-face-background 'highlight "yellow")  ;; Emacs 22 Only
-
-;; (require 'esense-start)
-;; (setq esense-indexer-program "~/.emacs.d/esense.sh")
-
-;; (setq erl-nodename-cache 'kred)
-;; (setq erl-nodename-cache 'kred\@stensimpa)
 
 ;; This lets you do M-zf to find a (grep)regexp in all kred-sources.
 ;; Then you can use next error to find the match in the code.
@@ -253,6 +264,8 @@ by using nxml's indentation rules."
     "lib/")
    word)
   )
+
+;; LOADS OF THESE ARE ACTUALLY BROKEN, CLEAN UP!
 
 ;; Shortcuts
 (setq ctrl-z-map (make-keymap))
@@ -299,21 +312,7 @@ by using nxml's indentation rules."
 
 (global-set-key [kp-delete] 'delete-char)
 
-(custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- '(dirs-to-monitor (quote ("~/git/klarna/dev/")))
- '(safe-local-variable-values (quote ((allout-layout . t) (erlang-indent-level . 4) (erlang-indent-level . 2)))))
-(custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- )
-
-;; Whata heck :)
+;; Load general TODO file on startup
 (find-file "~/TODO")
 (switch-to-buffer "TODO")
 

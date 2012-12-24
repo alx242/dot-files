@@ -16,3 +16,9 @@
 [submodule "dot-emacs.d/scala-mode2"]
 	path = dot-emacs.d/scala-mode2
 	url = git://github.com/hvesalai/scala-mode2.git
+[submodule "dot-emacs.d/ajc-java-complete"]
+	path = dot-emacs.d/ajc-java-complete
+	url = git://github.com/jixiuf/ajc-java-complete.git
+[submodule "dot-emacs.d/yasnippet"]
+	path = dot-emacs.d/yasnippet
+	url = https://github.com/capitaomorte/yasnippet.git
