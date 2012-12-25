@@ -10,9 +10,6 @@
 [submodule "dot-emacs.d/auto-complete"]
 	path = dot-emacs.d/auto-complete
 	url = https://github.com/auto-complete/auto-complete
-[submodule "dot-emacs.d/scala-mode"]
-	path = dot-emacs.d/scala-mode
-	url = https://github.com/haxney/scala-mode
 [submodule "dot-emacs.d/scala-mode2"]
 	path = dot-emacs.d/scala-mode2
 	url = git://github.com/hvesalai/scala-mode2.git

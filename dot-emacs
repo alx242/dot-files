@@ -12,6 +12,9 @@
 (if (file-exists-p "~/TAGS") (visit-tags-table "~/TAGS"))
 (setq tags-revert-without-query 1)
 
+;; Auto follow symlinks
+(setq vc-follow-symlinks 1) ; default is ask
+
 ;; BROKEN Auto complete via buffers
 ;; (global-set-key [(control return)] 'dabbrev-expand)
 
@@ -57,6 +60,7 @@
 ;; Yasnippet (code snippets to fix autocompletion n' more)
 (add-to-list 'load-path "~/.emacs.d/yasnippet")
 (require 'yasnippet)
+(setq yas/snippet-dirs '("~/.emacs.d/yasnippet/snippets")); add dirs and space between them
 (yas-global-mode 1)
 
 ;; Collection of emacs development environment tools
@@ -158,6 +162,8 @@
 (autoload 'erlang-mode "erlang.el" "" t)
 (add-to-list 'auto-mode-alist '("\\.[eh]rl$" . erlang-mode))
 (add-to-list 'auto-mode-alist '("\\.yaws$" . erlang-mode))
+(add-to-list 'auto-mode-alist '(".emacs$" . lisp-mode))
+(add-to-list 'auto-mode-alist '("dot-emacs$" . lisp-mode))
 ;; (add-to-list 'auto-mode-alist '("\\.[eh]rl$" . erlang-extended-mode))
 ;; (add-to-list 'auto-mode-alist '("\\.yaws$" . erlang-extended-mode))
 (add-to-list 'auto-mode-alist '("\\.rst$" . rst-mode))
