@@ -71,6 +71,13 @@
 
 ;; * * * Java * * *
 ;;
+;; Builtin Cedet setup
+;; (setq semantic-default-submodes '(global-semantic-idle-scheduler-mode
+;;                                   global-semanticdb-minor-mode
+;;                                   global-semantic-idle-summary-mode
+;;                                   global-semantic-mru-bookmark-mode))
+;; (semantic-mode 1)
+;;
 ;; Maven stuff
 ;; (require 'malabar-mode)
 ;; (setq malabar-groovy-lib-dir "~/.emacs.d/malabar/lib")
