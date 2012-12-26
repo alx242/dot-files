@@ -63,11 +63,6 @@
 (setq yas/snippet-dirs '("~/.emacs.d/yasnippet/snippets")); add dirs and space between them
 (yas-global-mode 1)
 
-;; Collection of emacs development environment tools
-(add-to-list 'load-path "~/.emacs.d/cedet-1.1/common")
-(load-file "~/.emacs.d/cedet-1.1/common/cedet.el")
-(semantic-load-enable-minimum-features) ;; or enable more if you wish
-
 ;; Flymake
 (require 'flymake)
 
