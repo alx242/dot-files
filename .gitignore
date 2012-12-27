@@ -1,0 +1,7 @@
+# .emacs.d stuff (caches etc...)
+/dot-emacs.d/abbrev_defs
+/dot-emacs.d/ac-comphist.dat
+/dot-emacs.d/auto-save-lists
+
+# emacs backup files
+*~
