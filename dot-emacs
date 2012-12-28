@@ -69,6 +69,18 @@
 ;; Flymake in the status bar
 (load-library "flymake-cursor")
 
+
+;; Handle browsing from emacs, creates a wrapper around w3m and
+;; display results in emacs
+(setq browse-url-browser-function 'wrap-browser)
+
+(defun wrap-browser (url &rest ignore)
+  "Browse URL using w3m."
+  (interactive "sURL: ")
+  (shell-command (concat "w3m " url))
+  (pop-to-buffer "*Shell Command Output*")
+  (setq truncate-lines t))
+
 ;; * * * Java * * *
 ;;
 ;; Builtin Cedet setup
@@ -98,8 +110,8 @@
 (autoload 'javadoc-lookup "javadoc-help" "Look up Java class in Javadoc." t)
 (autoload 'javadoc-help "javadoc-help" "Open up the Javadoc-help menu." t)
 (autoload 'javadoc-set-predefined-urls "javadoc-help" "Set pre-defined urls." t)
-; (global-set-key [f8] 'javadoc-lookup)
-; (global-set-key [(shift f8)] 'javadoc-help)
+(javadoc-set-predefined-urls '("http://docs.oracle.com/javase/7/docs/api/"))
+;(global-set-key [(shift f8)] 'javadoc-help)
 
 ;; * * * Python * * *
 ;; Run pyflakes via flymake (auto check code for bad stuff)
@@ -319,6 +331,9 @@ by using nxml's indentation rules."
 (global-set-key (kbd "ESC <home>") 'beginning-of-buffer)
 
 (global-set-key [kp-delete] 'delete-char)
+
+;; Java
+(global-set-key "\C-z\C-d" 'javadoc-lookup)
 
 ;; Load general TODO file on startup
 (find-file "~/TODO")
