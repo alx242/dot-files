@@ -1,0 +1,20 @@
+#!/bin/bash
+
+if [ -f $1 ] ; then
+       cd `echo $1 | sed 's/[^/]*$//'`
+else
+       if [ -d $1 ] ; then
+               cd $1
+       fi
+fi
+while [ ! -f "pom.xml" ] ; do
+       cd ..
+       if [ "x/" = "x"`pwd -P` ] ; then
+               echo "No pom.xml found"
+               exit
+       fi
+done
+
+mvn -fn -o compile test-compile | grep -v '\[INFO\]' | perl -p -e 's/(.)\n/$1 /gs' | perl -p -e 's/ +/ /g' | sort -u
+
+exit 0;

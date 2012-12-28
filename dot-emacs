@@ -69,7 +69,6 @@
 ;; Flymake in the status bar
 (load-library "flymake-cursor")
 
-
 ;; Handle browsing from emacs, creates a wrapper around w3m and
 ;; display results in emacs
 (setq browse-url-browser-function 'wrap-browser)
@@ -83,14 +82,20 @@
 
 ;; * * * Java * * *
 ;;
-;; Builtin Cedet setup
-;; (setq semantic-default-submodes '(global-semantic-idle-scheduler-mode
-;;                                   global-semanticdb-minor-mode
-;;                                   global-semantic-idle-summary-mode
-;;                                   global-semantic-mru-bookmark-mode))
-;; (semantic-mode 1)
+;; Builtin Cedet setup, lookin developer menu for more info
+(setq semantic-default-submodes '(global-semantic-idle-scheduler-mode
+                                  global-semanticdb-minor-mode
+                                  global-semantic-idle-summary-mode
+                                  global-semantic-mru-bookmark-mode))
+(semantic-mode 1)
+;; Project is particularly large (more than 1 directory full of files), enable EDE
+(global-ede-mode 1)
+;; Auto detect project type (Makefile, Scons, CMap...)
+(ede-enable-generic-projects)
+;; Generic projects are disabled by default, this gives some kind of summary at least...
+(global-semantic-idle-summary-mode 1)
 ;;
-;; Maven stuff
+;; Maven project stuff
 ;; (require 'malabar-mode)
 ;; (setq malabar-groovy-lib-dir "~/.emacs.d/malabar/lib")
 ;; (add-to-list 'auto-mode-alist '("\\.java\\'" . malabar-mode))
@@ -112,6 +117,10 @@
 (autoload 'javadoc-set-predefined-urls "javadoc-help" "Set pre-defined urls." t)
 (javadoc-set-predefined-urls '("http://docs.oracle.com/javase/7/docs/api/"))
 ;(global-set-key [(shift f8)] 'javadoc-help)
+;;
+;; Java flymake
+(require 'flymake-mvn)
+(add-hook 'java-mode-hook 'flymake-java-mvn-mode-hook)
 
 ;; * * * Python * * *
 ;; Run pyflakes via flymake (auto check code for bad stuff)
