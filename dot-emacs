@@ -1,12 +1,13 @@
-;;;; Create etags
+;; Create etags
+;;
+;;
 (defun generate-etags ()
   (interactive)
-  ;;(shell-command "etags --language=erlang -o ${HOME}/TAGS `find ${HOME}/Dropbox/Devel | grep -E '\.py$'`")
-  ;;(shell-command "etags --language=erlang -o ${HOME}/TAGS `find ${HOME}/Dropbox/Devel | grep -E '\.erl$'`")
-  (shell-command "etags --language=erlang -o ${HOME}/TAGS `find ${HOME}/git/klarna/dev | grep -E '\.erl$'`")
-  (shell-command "etags --language=erlang -a -o ${HOME}/TAGS `find ${HOME}/git/klarna/dev | grep -E '\.hrl$'`")
-  (shell-command "etags --language=erlang -a -o ${HOME}/TAGS `find ${HOME}/git/klarna/OTP/otp/ | grep -E '\.erl$'`")
-  (shell-command "etags --language=erlang -a -o ${HOME}/TAGS `find ${HOME}/git/klarna/OTP/otp/ | grep -E '\.hrl$'`"))
+  ;; Erlang
+  (shell-command "etags --language=erlang -o ${HOME}/TAGS `find ${HOME}/git | grep -E '(\.erl|\.hrl)$' | grep -v '\.eunit'`")
+  ;; Java
+  (shell-command "etags --language=java -a -o ${HOME}/TAGS `find ${HOME}/git/ | grep -E '\.java$'`")
+  )
 
 ;; Make sure the TAGS are loaded
 (if (file-exists-p "~/TAGS") (visit-tags-table "~/TAGS"))
