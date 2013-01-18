@@ -32,3 +32,4 @@ cd $HOME
 
 ## Initialize some scripts
 source $HOME/.bashrc
+echo "make sure to install pyflakes and pep8 via pip"

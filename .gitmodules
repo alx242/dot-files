@@ -19,3 +19,9 @@
 [submodule "dot-emacs.d/yasnippet"]
 	path = dot-emacs.d/yasnippet
 	url = https://github.com/capitaomorte/yasnippet.git
+[submodule "dot-emacs.d/pyflakes"]
+	path = dot-emacs.d/pyflakes
+	url = https://github.com/kevinw/pyflakes.git
+[submodule "dot-emacs.d/pep8"]
+	path = dot-emacs.d/pep8
+	url = https://github.com/jcrocholl/pep8.git

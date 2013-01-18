@@ -124,22 +124,22 @@
 (add-hook 'java-mode-hook 'flymake-java-mvn-mode-hook)
 
 ;; * * * Python * * *
-;; Run pyflakes via flymake (auto check code for bad stuff)
-;; (when (load "flymake" t)
-;;   (defun flymake-pyflakes-init ()
-;;     (let* ((temp-file (flymake-init-create-temp-buffer-copy
-;;                        'flymake-create-temp-inplace))
-;;            (local-file (file-relative-name
-;;                         temp-file
-;;                         (file-name-directory buffer-file-name))))
-;;       (list "pyflakes" (list local-file))))
-;;
-;;   (add-to-list 'flymake-allowed-file-name-masks
-;;                '("\\.py\\'" flymake-pyflakes-init)))
-;;
-;; (add-hook 'find-file-hook 'flymake-find-file-hook)
 ;;
 (require 'python)
+;; Run pyflakes via flymake (auto check code for bad stuff)
+;; Pyflakes for python
+(when (load "flymake" t)
+  (defun flymake-pychecker-init ()
+    (let* ((temp-file (flymake-init-create-temp-buffer-copy
+                       'flymake-create-temp-inplace))
+           (local-file (file-relative-name
+                        temp-file
+                        (file-name-directory buffer-file-name))))
+      (list "~/.emacs.d/pyflakespep8.py" (list local-file))))
+  (add-to-list 'flymake-allowed-file-name-masks
+               '("\\.py\\'" flymake-pychecker-init)))
+
+(add-hook 'find-file-hook 'flymake-find-file-hook)
 
 ;; * * * Erlang * * *
 (add-to-list 'load-path "~/.emacs.d/erlang")
