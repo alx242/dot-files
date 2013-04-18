@@ -140,3 +140,10 @@ export ERL_INETRC=${HOME}/.inetrc
 # Some more libs, perhaps
 #export ERL_LIBS=/usr/local/lib/erlang/addons/esdl-1.2
 #export PYTHONPATH=/usr/local/lib/python2.7/site-packages
+# Anything extra that is not version controlled in dot-files
+EXTRA=~/.extra.bashrc
+if [ -e $EXTRA ]
+then
+  source $EXTRA
+fi
+
