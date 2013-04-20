@@ -28,7 +28,7 @@ case $TERM in
 esac
 
 PS1="${TITLEBAR}\
-$BLUE[$RED\$(date +%H%M)$BLUE]\
+$BLUE[$RED\$(date +%H:%M)$BLUE]\
 $BLUE[$LIGHT_RED\u@\h:\w${GIT}$BLUE]\
 $WHITE\$$NO_COLOUR "
 PS2='> '
