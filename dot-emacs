@@ -185,6 +185,9 @@
        (node-sname . "dashi") ; defaults to project name
        (lib-dirs   . ("lib" "test")))))
 
+
+;; ido mode for file handling bonazaaa
+(setq-default ido-mode t)
 ;; (add-hook 'erlang-mode-hook 'my-erlang-mode-hook)
 ;; (add-hook 'erlang-mode-hook '(lambda () (setq case-fold-search t)))
 
