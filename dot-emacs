@@ -147,9 +147,14 @@
 (add-to-list 'load-path "~/.emacs.d/erlang")
 (require 'erlang)
 
+
+;; Distel
+ (add-to-list 'load-path "~/.emacs.d/distel/elisp")
+ (require 'distel)
+ (distel-setup)
 ;; edts Erlang Development Tool Suite, after erlang
-(add-to-list 'load-path "~/.emacs.d/edts")
-(require 'edts-start)
+;(add-to-list 'load-path "~/.emacs.d/edts")
+;(require 'edts-start)
 
 ;; (defun flymake-erlang-init ()
 ;;   (let* ((temp-file (flymake-init-create-temp-buffer-copy
@@ -180,12 +185,12 @@
 ;;   (highlight-parentheses-mode)
 ;;   (allout-mode))
 
-(setq edts-projects
-    '(( ;; My project.
-       (name       . "kred")
-       (root       . "~/git/klarna/dev")
-       (node-sname . "dashi") ; defaults to project name
-       (lib-dirs   . ("lib" "test")))))
+; (setq edts-projects
+;    '(( ;; My project.
+;       (name       . "kred")
+;       (root       . "~/git/klarna/dev")
+;       (node-sname . "dashi") ; defaults to project name
+;       (lib-dirs   . ("lib" "test")))))
 
 
 ;; ido mode for file handling bonazaaa
