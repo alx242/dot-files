@@ -141,6 +141,11 @@ export ERL_INETRC=${HOME}/.inetrc
 #export ERL_LIBS=/usr/local/lib/erlang/addons/esdl-1.2
 #export PYTHONPATH=/usr/local/lib/python2.7/site-packages
 # Anything extra that is not version controlled in dot-files
+
+# Some dirs to scrape for source files for my etags file. Override these in the $EXTRA bashrc file.
+export JAVA_DIRS=""
+export PYTHON_DIRS=""
+export ERLANG_DIRS=""
 EXTRA=~/.extra.bashrc
 if [ -e $EXTRA ]
 then

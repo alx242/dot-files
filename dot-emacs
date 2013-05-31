@@ -4,9 +4,11 @@
 (defun generate-etags ()
   (interactive)
   ;; Erlang
-  (shell-command "etags --language=erlang -o ${HOME}/TAGS `find ${HOME}/git | grep -E '(\.erl|\.hrl)$' | grep -v '\.eunit'`")
+  (shell-command "etags --language=erlang -o ${HOME}/TAGS `find ${ERLANG_DIRS} | grep -E '(\.erl|\.hrl)$' | grep -v '\.eunit'`")
   ;; Java
-  (shell-command "etags --language=java -a -o ${HOME}/TAGS `find ${HOME}/git/ | grep -E '\.java$'`")
+  ; (shell-command "etags --language=java -a -o ${HOME}/TAGS `find ${JAVA_DIRS} | grep -E '\.java$'`")
+  ;; Python
+  (shell-command "etags --language=python -o ${HOME}/TAGS `find ${PYTHON_DIRS} | grep -E '(\.erl|\.hrl)$' | grep -v '\.eunit'`")
   )
 
 ;; Make sure the TAGS are loaded
