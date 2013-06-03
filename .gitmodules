@@ -1,6 +1,3 @@
-[submodule "dot-emacs.d/distel"]
-	path = dot-emacs.d/distel
-	url = git://github.com/massemanet/distel.git
 [submodule "dot-emacs.d/edts"]
 	path = dot-emacs.d/edts
 	url = git://github.com/tjarvstrand/edts.git
@@ -37,3 +34,6 @@
 [submodule "dot-tmux-powerline"]
 	path = dot-tmux-powerline
 	url = git://github.com/erikw/tmux-powerline.git
+[submodule "dot-emacs.d/distel"]
+	path = dot-emacs.d/distel
+	url = git://github.com/massemanet/distel.git

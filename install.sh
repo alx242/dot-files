@@ -13,6 +13,7 @@ SRCITEMS=(
     emacs
     emacs.d
     tmux.conf
+    powerline
 )
 
 mkdir -p $HOME/.config
@@ -28,15 +29,12 @@ for SRCITEM in ${SRCITEMS[*]} ; do
     ln -s "$SRCDIR/dot-$SRCITEM" "$DESTDIR/.$DESTITEM"
 done
 
-## Powerline
-cd powerline
-python setup.py build
-python setup.py install --user
-
 ## Some emacs modules need compilation
 # cd $HOME/.emacs.d/edts && git submodule update --init && make
 cd $HOME/.emacs.d/distel && git submodule update --init && make
-cd $HOME
+
+## Powerline
+cd $HOME/.powerline && python setup.py build
 
 ## Initialize some scripts
 source $HOME/.bashrc
