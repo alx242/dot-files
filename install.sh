@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 #set -x
 
+INSTALLDIR=`pwd`
+
 DESTDIR="$HOME"
 SRCDIR="$HOME/dot-files"
 SRCITEMS=(
@@ -26,8 +28,13 @@ for SRCITEM in ${SRCITEMS[*]} ; do
     ln -s "$SRCDIR/dot-$SRCITEM" "$DESTDIR/.$DESTITEM"
 done
 
+## Powerline
+cd powerline && python setup.py build
+cd $INSTALLDIR
+
 ## Some emacs modules need compilation
-cd $HOME/.emacs.d/edts && git submodule update --init && make
+# cd $HOME/.emacs.d/edts && git submodule update --init && make
+cd $HOME/.emacs.d/distel && git submodule update --init && make
 cd $HOME
 
 ## Initialize some scripts

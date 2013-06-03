@@ -25,3 +25,6 @@
 [submodule "dot-emacs.d/pep8"]
 	path = dot-emacs.d/pep8
 	url = https://github.com/jcrocholl/pep8.git
+[submodule "powerline"]
+	path = powerline
+	url = git://github.com/Lokaltog/powerline.git
