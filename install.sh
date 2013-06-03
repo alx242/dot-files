@@ -29,7 +29,9 @@ for SRCITEM in ${SRCITEMS[*]} ; do
 done
 
 ## Powerline
-pip install git+git://github.com/Lokaltog/powerline
+cd powerline
+python setup.py build
+python setup.py install --user
 
 ## Some emacs modules need compilation
 # cd $HOME/.emacs.d/edts && git submodule update --init && make
