@@ -13,7 +13,6 @@ SRCITEMS=(
     emacs
     emacs.d
     tmux.conf
-    powerline
 )
 
 mkdir -p $HOME/.config
@@ -30,8 +29,7 @@ for SRCITEM in ${SRCITEMS[*]} ; do
 done
 
 ## Powerline
-cd dot-powerline && python setup.py build
-cd $INSTALLDIR
+pip install git+git://github.com/Lokaltog/powerline
 
 ## Some emacs modules need compilation
 # cd $HOME/.emacs.d/edts && git submodule update --init && make
