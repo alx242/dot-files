@@ -37,3 +37,6 @@
 [submodule "dot-emacs.d/distel"]
 	path = dot-emacs.d/distel
 	url = git://github.com/massemanet/distel.git
+[submodule "SpotifyControl"]
+	path = SpotifyControl
+	url = git://github.com/dronir/SpotifyControl.git
