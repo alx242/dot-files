@@ -8,7 +8,7 @@
   ;; Java
   ; (shell-command "etags --language=java -a -o ${HOME}/TAGS `find ${JAVA_DIRS} | grep -E '\.java$'`")
   ;; Python
-  (shell-command "etags --language=python -o ${HOME}/TAGS `find ${PYTHON_DIRS} | grep -E '(\.erl|\.hrl)$' | grep -v '\.eunit'`")
+  (shell-command "etags --language=python -o ${HOME}/TAGS `find ${PYTHON_DIRS} | grep -E '(\.py)$'`")
   )
 
 ;; Make sure the TAGS are loaded
@@ -82,6 +82,10 @@
   (shell-command (concat "w3m " url))
   (pop-to-buffer "*Shell Command Output*")
   (setq truncate-lines t))
+
+;; Interactively Do Things
+(require 'ido)
+(ido-mode t)
 
 ;; * * * Java * * *
 ;;
@@ -165,26 +169,6 @@
 ;;
 ;; (add-to-list 'flymake-allowed-file-name-masks '("\\.erl$" flymake-erlang-init))
 
-;; (defun my-erlang-mode-hook ()
-;;   (interactive)
-;; ;  (linum-mode)
-;;   (setq truncate-lines t)
-;;   (setq truncate-partial-width-windows nil)
-;;   (setq erlang-indent-level 2)
-;;   (setq case-fold-search t)
-;;   (setq whitespace-style       (quote (face tabs lines-tail trailing)))
-;;   (setq whitespace-action      nil)
-;;   (setq whitespace-line-column 80)
-;;   (whitespace-mode)
-;;   (erlang-extended-mode t)
-;;
-;;   (require 'flymaker-el)
-;;   (flymake-mode f)
-;;
-;;   (highlight-todo)
-;;   (highlight-parentheses-mode)
-;;   (allout-mode))
-
 ; (setq edts-projects
 ;    '(( ;; My project.
 ;       (name       . "kred")
@@ -192,11 +176,29 @@
 ;       (node-sname . "dashi") ; defaults to project name
 ;       (lib-dirs   . ("lib" "test")))))
 
-
-;; ido mode for file handling bonazaaa
-(setq-default ido-mode t)
-;; (add-hook 'erlang-mode-hook 'my-erlang-mode-hook)
-;; (add-hook 'erlang-mode-hook '(lambda () (setq case-fold-search t)))
+;(add-hook 'erlang-mode-hook 'my-erlang-mode-hook)
+;
+;;; (add-hook 'erlang-mode-hook '(lambda () (setq case-fold-search t)))
+;(defun my-erlang-mode-hook ()
+;  (interactive)
+;;  (linum-mode)
+;  (setq truncate-lines t)
+;  (setq truncate-partial-width-windows nil)
+;  (setq erlang-indent-level 2)
+;  (setq case-fold-search t)
+;  (setq whitespace-style       (quote (face tabs lines-tail trailing)))
+;  (setq whitespace-action      nil)
+;  (setq whitespace-line-column 80)
+;  (whitespace-mode)
+;  (erlang-extended-mode t)
+;  (setq ido-mode t)
+;
+;  (require 'flymaker-el)
+;  (flymake-mode f)
+;
+;  (highlight-todo)
+;  (highlight-parentheses-mode)
+;  (allout-mode))
 
 (autoload 'erlang-mode "erlang.el" "" t)
 (add-to-list 'auto-mode-alist '("\\.[eh]rl$" . erlang-mode))

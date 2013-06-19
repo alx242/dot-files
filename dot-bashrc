@@ -127,6 +127,9 @@ alias l="ls"
 alias ll="ls -l"
 alias la="ls -a"
 alias scpresume="rsync --partial --progress --rsh=ssh"
+# Mac OSX terminal wrapper around spotify
+alias spotify="osascript ~/dot-files/SpotifyControl/SpotifyControl.scpt"
+
 
 #
 export LC_CTYPE=en_US.UTF-8
