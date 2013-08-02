@@ -14,6 +14,7 @@ SRCITEMS=(
     emacs.d
     tmux.conf
     powerline
+    ttytterrc
 )
 
 mkdir -p $HOME/.config
