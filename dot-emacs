@@ -153,12 +153,12 @@
 
 
 ;; Distel
- (add-to-list 'load-path "~/.emacs.d/distel/elisp")
- (require 'distel)
- (distel-setup)
+;(add-to-list 'load-path "~/.emacs.d/distel/elisp")
+;(require 'distel)
+;(distel-setup)
 ;; edts Erlang Development Tool Suite, after erlang
-;(add-to-list 'load-path "~/.emacs.d/edts")
-;(require 'edts-start)
+(add-to-list 'load-path "~/.emacs.d/edts")
+(require 'edts-start)
 
 ;; (defun flymake-erlang-init ()
 ;;   (let* ((temp-file (flymake-init-create-temp-buffer-copy
