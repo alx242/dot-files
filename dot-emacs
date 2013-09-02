@@ -18,8 +18,15 @@
 ;; Auto follow symlinks
 (setq vc-follow-symlinks 1) ; default is ask
 
-;; BROKEN Auto complete via buffers
-;; (global-set-key [(control return)] 'dabbrev-expand)
+;; Auto-complete using open buffers
+(defun indent-or-complete ()
+  "Complete if point is at end of a word, otherwise indent line."
+  (interactive)
+  (if (looking-at "\\>")
+      (dabbrev-expand nil)
+    (indent-for-tab-command)
+    ))
+(global-set-key (kbd "TAB") 'indent-or-complete)
 
 ;; Set some colors
 (set-cursor-color "red")
@@ -151,14 +158,13 @@
 (add-to-list 'load-path "~/.emacs.d/erlang")
 (require 'erlang)
 
-
 ;; Distel
 ;(add-to-list 'load-path "~/.emacs.d/distel/elisp")
 ;(require 'distel)
 ;(distel-setup)
 ;; edts Erlang Development Tool Suite, after erlang
-(add-to-list 'load-path "~/.emacs.d/edts")
-(require 'edts-start)
+; (add-to-list 'load-path "~/.emacs.d/edts")
+; (require 'edts-start)
 
 ;; (defun flymake-erlang-init ()
 ;;   (let* ((temp-file (flymake-init-create-temp-buffer-copy
@@ -176,29 +182,30 @@
 ;       (node-sname . "dashi") ; defaults to project name
 ;       (lib-dirs   . ("lib" "test")))))
 
-;(add-hook 'erlang-mode-hook 'my-erlang-mode-hook)
+(add-hook 'erlang-mode-hook 'my-erlang-mode-hook)
 ;
 ;;; (add-hook 'erlang-mode-hook '(lambda () (setq case-fold-search t)))
-;(defun my-erlang-mode-hook ()
+(defun my-erlang-mode-hook ()
 ;  (interactive)
 ;;  (linum-mode)
 ;  (setq truncate-lines t)
 ;  (setq truncate-partial-width-windows nil)
-;  (setq erlang-indent-level 2)
+  (setq erlang-indent-level 2)
 ;  (setq case-fold-search t)
 ;  (setq whitespace-style       (quote (face tabs lines-tail trailing)))
 ;  (setq whitespace-action      nil)
 ;  (setq whitespace-line-column 80)
 ;  (whitespace-mode)
-;  (erlang-extended-mode t)
+  (erlang-extended-mode t)
 ;  (setq ido-mode t)
 ;
 ;  (require 'flymaker-el)
 ;  (flymake-mode f)
 ;
-;  (highlight-todo)
-;  (highlight-parentheses-mode)
-;  (allout-mode))
+  (highlight-todo)
+  (highlight-parentheses-mode)
+  ;;  (allout-mode))
+)
 
 (autoload 'erlang-mode "erlang.el" "" t)
 (add-to-list 'auto-mode-alist '("\\.[eh]rl$" . erlang-mode))
@@ -333,7 +340,6 @@ by using nxml's indentation rules."
 ;;(global-set-key (kbd "<A-g>") 'goto-line)
 ;; (global-set-key [(A-backspace)] 'backward-delete-word
 
-(global-set-key [(control -)] 'dabbrev-expand)
 
 ;(global-set-key [(meta O) (a)] 'backward-paragraph)
 ;(global-set-key [(meta O) (b)] 'forward-paragraph)
