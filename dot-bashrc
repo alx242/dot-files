@@ -112,6 +112,3 @@ then
   source $EXTRA
 fi
 
-#if [[ ! $TERM =~ screen ]]; then
-#    exec tmux
-#fi
