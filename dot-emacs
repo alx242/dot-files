@@ -330,7 +330,10 @@ by using nxml's indentation rules."
 (global-set-key (kbd "M-[ C") 'forward-word)
 (global-set-key (kbd "M-[ D") 'backward-word)
 
+;; Search, jump around stuff
+(global-set-key (kbd "M-,") 'pop-tag-mark)
 ;; (global-set-key (kbd "<C-return>") 'erlang-find-tag)
+(global-set-key (kbd "\C-z\C-r") 'rgrep)
 ;; (global-set-key "\C-tab" 'complete-tag)
 ;; (global-set-key (kbd "M-s") 'tags-apropos)
 (global-set-key "\C-z\C-s" 'tags-apropos)
