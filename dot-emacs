@@ -332,6 +332,8 @@ by using nxml's indentation rules."
 
 ;; Search, jump around stuff
 (global-set-key (kbd "M-,") 'pop-tag-mark)
+(global-set-key (kbd "M-*") (read-kbd-macro "C-u M-."))
+
 ;; (global-set-key (kbd "<C-return>") 'erlang-find-tag)
 (global-set-key (kbd "\C-z\C-r") 'rgrep)
 ;; (global-set-key "\C-tab" 'complete-tag)
