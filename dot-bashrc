@@ -109,3 +109,7 @@ then
   source $EXTRA
 fi
 
+# Launch tmux but only when launching a terminal
+if [[ ! $TERM =~ screen ]]; then
+    exec tmux
+fi
