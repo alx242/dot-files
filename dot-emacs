@@ -5,10 +5,10 @@
   (interactive)
   ;; Erlang
   (shell-command "etags --language=erlang -o ${HOME}/TAGS `find ${ERLANG_DIRS} | grep -E '(\.erl|\.hrl)$' | grep -v '\.eunit'`")
-  ;; Java
+  ;; Java SUXS!
   ; (shell-command "etags --language=java -a -o ${HOME}/TAGS `find ${JAVA_DIRS} | grep -E '\.java$'`")
   ;; Python
-  (shell-command "etags --language=python -o ${HOME}/TAGS `find ${PYTHON_DIRS} | grep -E '(\.py)$'`")
+  (shell-command "etags -a --language=python -o ${HOME}/TAGS `find ${PYTHON_DIRS} | grep -E '(\.py)$'`")
   )
 
 ;; Make sure the TAGS are loaded
@@ -333,6 +333,11 @@ by using nxml's indentation rules."
 ;; Search, jump around stuff
 (global-set-key (kbd "M-,") 'pop-tag-mark)
 (global-set-key (kbd "M-*") (read-kbd-macro "C-u M-."))
+
+; (load-file "~/.emacs.d/etags-select.el")
+; (global-set-key (kbd "M-?") 'etags-select-find-tag-at-point)
+; (global-set-key (kbd "M-.") 'etags-select-find-tag)
+
 
 ;; (global-set-key (kbd "<C-return>") 'erlang-find-tag)
 (global-set-key (kbd "\C-z\C-r") 'rgrep)
