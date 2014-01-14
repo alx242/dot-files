@@ -335,12 +335,10 @@ by using nxml's indentation rules."
 (global-set-key (kbd "C-x j") (kbd "M-w C-s M-y"))
 
 ;; Emacs no window mode
-(global-set-key (kbd "M-[ A") 'backward-paragraph)
-(global-set-key (kbd "M-[ B") 'forward-paragraph)
-; (global-set-key (kbd "M-[ C") 'forward-word)
-; (global-set-key (kbd "M-[ D") 'backward-word)
-(global-set-key "\M-[1;5C" 'forward-word)   ;  Ctrl+right->forward word
-(global-set-key "\M-[1;5D" 'backward-word)  ;  Ctrl+left-> backward word
+(global-set-key "\M-[1;5A" 'backward-paragraph) ;  Ctrl+up->paragraph up
+(global-set-key "\M-[1;5B" 'forward-paragraph)  ;  Ctrl+down->paragraph down
+(global-set-key "\M-[1;5C" 'forward-word)       ;  Ctrl+right->forward word
+(global-set-key "\M-[1;5D" 'backward-word)      ;  Ctrl+left-> backward word
 
 ;; Search, jump around stuff
 (global-set-key (kbd "M-,") 'pop-tag-mark)
