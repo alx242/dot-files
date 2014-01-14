@@ -40,3 +40,12 @@
 [submodule "SpotifyControl"]
 	path = SpotifyControl
 	url = git://github.com/dronir/SpotifyControl.git
+[submodule "dot-emacs.d/magit"]
+	path = dot-emacs.d/magit
+	url = git://github.com/magit/magit.git
+[submodule "dot-emacs.d/git-modes"]
+	path = dot-emacs.d/git-modes
+	url = https://github.com/magit/git-modes.git
+[submodule "dot-emacs.d/cl-lib"]
+	path = dot-emacs.d/cl-lib
+	url = https://github.com/emacsmirror/cl-lib.git

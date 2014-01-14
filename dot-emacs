@@ -60,6 +60,16 @@
 ;; Load auto complete
 (add-to-list 'load-path "~/.emacs.d/auto-complete")
 
+;; magit - git handler
+(add-to-list 'load-path "~/.emacs.d/cl-lib")
+(add-to-list 'load-path "~/.emacs.d/git-modes")
+(add-to-list 'load-path "~/.emacs.d/magit")
+(eval-after-load 'info
+  '(progn (info-initialize)
+          (add-to-list 'Info-directory-list "~/.emacs.d/magit")))
+(require 'magit)
+(require 'magit-blame)
+
 ;; Tab complete code expressions
 (require 'auto-complete-config)
 (add-to-list 'ac-dictionary-directories "~/.emacs.d/auto-complete/dict")
