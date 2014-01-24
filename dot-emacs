@@ -107,11 +107,18 @@
 ;; * * * Java * * *
 ;;
 ;; Builtin Cedet setup, lookin developer menu for more info
-(setq semantic-default-submodes '(global-semantic-idle-scheduler-mode
-                                  global-semanticdb-minor-mode
-                                  global-semantic-idle-summary-mode
-                                  global-semantic-mru-bookmark-mode))
-(semantic-mode 1)
+;; (setq semantic-default-submodes '(global-semantic-idle-scheduler-mode
+;;                                   global-semanticdb-minor-mode
+;;                                   global-semantic-idle-summary-mode
+;;                                   global-semantic-mru-bookmark-mode))
+;; (semantic-mode 1)
+
+;; JDEE
+(add-to-list 'load-path (format "%s/lisp" "~/.emacs.d/jdee-2.4.1" "Path to JDEE"))
+  (autoload 'jde-mode "jde" "JDE mode" t)
+  (setq auto-mode-alist
+        (append '(("\\.java\\'" . jde-mode)) auto-mode-alist))
+
 ;; Project is particularly large (more than 1 directory full of files), enable EDE
 (global-ede-mode 1)
 ;; Auto detect project type (Makefile, Scons, CMap...)
@@ -130,17 +137,19 @@
 ;;                       nil t)))
 ;;
 ;; Java auto completion: http://www.emacswiki.org/emacs/AutoJavaComplete
-(add-to-list 'load-path "~/.emacs.d/ajc-java-complete/")
-(require 'ajc-java-complete-config)
-(add-hook 'java-mode-hook 'ajc-java-complete-mode)
-(add-hook 'find-file-hook 'ajc-4-jsp-find-file-hook)
+;; (add-to-list 'load-path "~/.emacs.d/ajc-java-complete/")
+;; (require 'ajc-java-complete-config)
+;; (add-hook 'java-mode-hook 'ajc-java-complete-mode)
+;; (add-hook 'find-file-hook 'ajc-4-jsp-find-file-hook)
+
+
 ;;
 ;; Javadoc Help
-(autoload 'javadoc-lookup "javadoc-help" "Look up Java class in Javadoc." t)
-(autoload 'javadoc-help "javadoc-help" "Open up the Javadoc-help menu." t)
-(autoload 'javadoc-set-predefined-urls "javadoc-help" "Set pre-defined urls." t)
-(javadoc-set-predefined-urls '("http://docs.oracle.com/javase/7/docs/api/"))
-;(global-set-key [(shift f8)] 'javadoc-help)
+;; (autoload 'javadoc-lookup "javadoc-help" "Look up Java class in Javadoc." t)
+;; (autoload 'javadoc-help "javadoc-help" "Open up the Javadoc-help menu." t)
+;; (autoload 'javadoc-set-predefined-urls "javadoc-help" "Set pre-defined urls." t)
+;; (javadoc-set-predefined-urls '("http://docs.oracle.com/javase/7/docs/api/"))
+;; (global-set-key [(shift f8)] 'javadoc-help)
 ;;
 ;; Java flymake
 (require 'flymake-mvn)
@@ -167,6 +176,8 @@
 ;; * * * Erlang * * *
 (add-to-list 'load-path "~/.emacs.d/erlang")
 (require 'erlang)
+(add-to-list 'load-path "~/.emacs.d/edts")
+(require 'edts-start)
 
 ;; Distel
 ;(add-to-list 'load-path "~/.emacs.d/distel/elisp")
@@ -341,7 +352,7 @@ by using nxml's indentation rules."
 (global-set-key "\M-[1;5D" 'backward-word)      ;  Ctrl+left-> backward word
 
 ;; Search, jump around stuff
-(global-set-key (kbd "M-,") 'pop-tag-mark)
+; (global-set-key (kbd "M-,") 'pop-tag-mark)
 (global-set-key (kbd "M-*") (read-kbd-macro "C-u M-."))
 
 ; (load-file "~/.emacs.d/etags-select.el")
