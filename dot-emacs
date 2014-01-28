@@ -212,6 +212,7 @@
 ;  (setq truncate-lines t)
 ;  (setq truncate-partial-width-windows nil)
   (setq erlang-indent-level 2)
+  (setq edts-mode t)
 ;  (setq case-fold-search t)
 ;  (setq whitespace-style       (quote (face tabs lines-tail trailing)))
 ;  (setq whitespace-action      nil)
