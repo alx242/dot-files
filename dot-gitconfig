@@ -1,0 +1,29 @@
+[alias]
+        st = status
+        co = checkout
+        br = branch
+
+        dt = difftool
+
+        lg = log --graph
+        lp = log -p
+
+        wc = whatchanged
+
+        lc = log ORIG_HEAD.. --stat --no-merges
+        in = log HEAD..origin/master
+        out = log origin/master..HEAD
+[user]
+        name = Alexander Schüssler
+        email = alexander.schussler@klarna.com
+[color]
+        ui = true
+[push]
+        default = current
+[core]
+        excludesfile = "~/.gitignore"
+
+[diff] 
+       tool = ediff 
+[difftool "ediff"]
+       cmd = emacs --eval \"(ediff-files \\\"$LOCAL\\\" \\\"$REMOTE\\\")\"
