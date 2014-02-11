@@ -13,6 +13,7 @@ SRCITEMS=(
     pythonrc
     emacs
     emacs.d
+    gitconfig
     tmux.conf
     powerline
     ttytterrc
