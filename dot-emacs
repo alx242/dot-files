@@ -155,6 +155,15 @@
 (require 'flymake-mvn)
 (add-hook 'java-mode-hook 'flymake-java-mvn-mode-hook)
 
+;; * * * End Java * * *
+
+;; * * * Scala * * *
+
+(add-to-list 'load-path "~/.emacs.d/scala-mode2")
+(require 'scala-mode)
+
+;; * * * End Scala * * *
+
 ;; * * * Python * * *
 ;;
 (require 'python)
@@ -173,19 +182,13 @@
 
 (add-hook 'find-file-hook 'flymake-find-file-hook)
 
+;; * * * End Python * * *
+
 ;; * * * Erlang * * *
 (add-to-list 'load-path "~/.emacs.d/erlang")
 (require 'erlang)
 (add-to-list 'load-path "~/.emacs.d/edts")
 (require 'edts-start)
-
-;; Distel
-;(add-to-list 'load-path "~/.emacs.d/distel/elisp")
-;(require 'distel)
-;(distel-setup)
-;; edts Erlang Development Tool Suite, after erlang
-; (add-to-list 'load-path "~/.emacs.d/edts")
-; (require 'edts-start)
 
 ;; (defun flymake-erlang-init ()
 ;;   (let* ((temp-file (flymake-init-create-temp-buffer-copy
@@ -246,19 +249,26 @@
          (man-args (format "-M %s %s" man-path (current-word))))
     (man man-args)))
 
-;; Font locks
-(add-hook 'python-mode-hook 'turn-on-font-lock)
-(add-hook 'python-hook 'turn-on-font-lock)
-(add-hook 'java-mode-hook 'turn-on-font-lock)
-(add-hook 'js2-mode-hook 'turn-on-font-lock)
+;; This lets you do M-zf to find a (grep)regexp in all kred-sources.
+;; Then you can use next error to find the match in the code.
+;; E.g. ^C-zf -> Find: OCRGIRO_BNO_START ^C-.
+(defun kfind-at (path word)
+  (grep-find
+   (concat "find " path
+           (concat " -name '.svn' -prune -o -name '*~' -prune -o -name '*html' -prune -o -type f -print0 | xargs -0 -e grep -nI -e " word))))
+(defun kfind (word)
+  (interactive "MFind: ")
+  (kfind-at
+   (concat
+    (car (split-string (buffer-file-name) "lib"))
+    "lib/")
+   word)
+  )
 
-(global-font-lock-mode t)
+;; * * * End Erlang * * *
 
-;; Close all buffers
-(defun kill-all-buffers ()
-  (interactive)
-  (mapc 'kill-buffer (buffer-list)))
 
+;; * * * XML * * *
 ;; Pretty print XML
 (defun pretty-print-xml-region (begin end)
   "Pretty format XML markup in region. You need to have nxml-mode
@@ -274,6 +284,22 @@ by using nxml's indentation rules."
       (backward-char) (insert "\n"))
     (indent-region begin end))
   (message "Ah, much better!"))
+;; * * * End XML * * *
+
+;; * * * Font locks * * *
+(add-hook 'python-mode-hook 'turn-on-font-lock)
+(add-hook 'python-hook 'turn-on-font-lock)
+(add-hook 'java-mode-hook 'turn-on-font-lock)
+(add-hook 'js2-mode-hook 'turn-on-font-lock)
+
+(global-font-lock-mode t)
+;; * * * End Font locks * * *
+
+;; Close all buffers
+(defun kill-all-buffers ()
+  (interactive)
+  (mapc 'kill-buffer (buffer-list)))
+
 
 ;; Insert a timestamp at the end of a file (diary stuff)
 (defun insert-date-stamp ()
@@ -300,6 +326,15 @@ by using nxml's indentation rules."
 ;; Always save the current session (desktop)
 (desktop-save-mode 0)
 
+(add-to-list 'load-path "~/.emacs.d/mo-git-blame")
+(autoload 'mo-git-blame-file "mo-git-blame" nil t)
+(autoload 'mo-git-blame-current "mo-git-blame" nil t)
+
+;; (global-hl-line-mode 1)
+
+
+;; * * * Shortcuts * * *
+
 ;; Backwards delete
 (global-set-key (kbd "<A-backspace>") 'backward-kill-word)
 (global-set-key (kbd "M-g") 'goto-line)
@@ -308,35 +343,7 @@ by using nxml's indentation rules."
 (global-set-key (kbd "C-x <up>") 'enlarge-window-horizontally)
 (global-set-key (kbd "C-x <down>") 'enlarge-window)
 
-(add-to-list 'load-path "~/.emacs.d/mo-git-blame")
-(autoload 'mo-git-blame-file "mo-git-blame" nil t)
-(autoload 'mo-git-blame-current "mo-git-blame" nil t)
-
-;; Scala
-(add-to-list 'load-path "~/.emacs.d/scala-mode2")
-(require 'scala-mode)
-
-;; (global-hl-line-mode 1)
-
-;; This lets you do M-zf to find a (grep)regexp in all kred-sources.
-;; Then you can use next error to find the match in the code.
-;; E.g. ^C-zf -> Find: OCRGIRO_BNO_START ^C-.
-(defun kfind-at (path word)
-  (grep-find
-   (concat "find " path
-           (concat " -name '.svn' -prune -o -name '*~' -prune -o -name '*html' -prune -o -type f -print0 | xargs -0 -e grep -nI -e " word))))
-(defun kfind (word)
-  (interactive "MFind: ")
-  (kfind-at
-   (concat
-    (car (split-string (buffer-file-name) "lib"))
-    "lib/")
-   word)
-  )
-
-;; LOADS OF THESE ARE ACTUALLY BROKEN, CLEAN UP!
-
-;; Shortcuts
+;; Re-mapping Ctrl-Z
 (setq ctrl-z-map (make-keymap))
 (global-set-key "\C-z" ctrl-z-map)
 ;; (global-set-key "\C-z\C-f" 'kfind)
@@ -369,22 +376,6 @@ by using nxml's indentation rules."
 (global-set-key "\C-z\C-a" 'rgrep)
 (global-set-key (kbd "C-z m") 'menu-bar-open)
 
-;;(global-set-key (kbd "<A-g>") 'goto-line)
-;; (global-set-key [(A-backspace)] 'backward-delete-word
-
-
-;(global-set-key [(meta O) (a)] 'backward-paragraph)
-;(global-set-key [(meta O) (b)] 'forward-paragraph)
-;(global-set-key (<C-prior>) 'beginning-of-buffer)
-
-;;(define-key global-map "\e[1~" [chome])
-;;(define-key global-map "\e[4~" [cend])
-;;(define-key global-map "\033[40~" [chome])
-;;(define-key global-map "\033[41~" [cend])
-;;(global-set-key [chome] 'beginning-of-buffer)
-;;(global-set-key [cend] 'end-of-buffer)
-;;(global-set-key [(control home)] 'beginning-of-buffer)
-;;(global-set-key [(control end)]  'end-of-buffer)
 (global-set-key (kbd "ESC <end>") 'end-of-buffer)
 (global-set-key (kbd "ESC <home>") 'beginning-of-buffer)
 
