@@ -33,7 +33,7 @@ for SRCITEM in ${SRCITEMS[*]} ; do
 done
 
 ## Some emacs modules need compilation
-## cd $HOME/.emacs.d/edts && git submodule update --init && make
+cd $HOME/.emacs.d/edts && git submodule update --init && make
 ## cd $HOME/.emacs.d/distel && git submodule update --init && make
 
 ## Powerline
