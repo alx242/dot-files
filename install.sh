@@ -9,6 +9,7 @@ SRCITEMS=(
     bash_profile
     bashrc
     inetrc
+    inputrc
     irbrc
     pythonrc
     emacs
