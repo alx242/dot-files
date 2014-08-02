@@ -51,7 +51,7 @@
 (add-to-list 'load-path "~/.emacs.d/")
 
 ;; Encrypted files
-;(require 'ps-ccrypt)
+(require 'ps-ccrypt)
 
 ;; Popup (required by auto complete)
 (add-to-list 'load-path "~/.emacs.d/popup-el")
