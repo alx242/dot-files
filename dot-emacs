@@ -188,7 +188,6 @@
 (add-to-list 'load-path "~/.emacs.d/erlang")
 (require 'erlang)
 (add-to-list 'load-path "~/.emacs.d/edts")
-(require 'edts-start)
 
 ;; (defun flymake-erlang-init ()
 ;;   (let* ((temp-file (flymake-init-create-temp-buffer-copy
@@ -214,6 +213,7 @@
 ;;  (linum-mode)
 ;  (setq truncate-lines t)
 ;  (setq truncate-partial-width-windows nil)
+  (require 'edts-start)
   (setq erlang-indent-level 2)
   (setq edts-mode t)
 ;  (setq case-fold-search t)
