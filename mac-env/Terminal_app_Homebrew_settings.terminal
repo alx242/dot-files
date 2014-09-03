@@ -95,9 +95,9 @@
 		<key>$F72B</key>
 		<string>[F</string>
 		<key>$F72C</key>
-		<string>[5~</string>
+		<string>scrollPageUp:</string>
 		<key>$F72D</key>
-		<string>[6~</string>
+		<string>scrollPageDown:</string>
 		<key>F704</key>
 		<string>OP</string>
 		<key>F705</key>
@@ -145,9 +145,9 @@
 		<key>F72B</key>
 		<string>scrollToEndOfDocument:</string>
 		<key>F72C</key>
-		<string>scrollPageUp:</string>
+		<string>[5~</string>
 		<key>F72D</key>
-		<string>scrollPageDown:</string>
+		<string>[6~</string>
 		<key>^F700</key>
 		<string>[1;5A</string>
 		<key>^F701</key>
@@ -196,7 +196,7 @@
 		<string>[3;5~</string>
 	</dict>
 	<key>name</key>
-	<string>Homebrew</string>
+	<string>Terminal_app_Homebrew_settings</string>
 	<key>type</key>
 	<string>Window Settings</string>
 </dict>
