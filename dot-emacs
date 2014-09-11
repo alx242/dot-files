@@ -4,11 +4,11 @@
 (defun generate-etags ()
   (interactive)
   ;; Erlang
-  (shell-command "etags --language=erlang -o ${HOME}/TAGS `find ${ERLANG_DIRS} | grep -E '(\.erl|\.hrl)$' | grep -v '\.eunit'`")
+  (shell-command "etags --language=erlang -o ${HOME}/TAGS `find ${ERLANG_DIRS} -iregex '.*.erl$' -o -iregex '.*hrl$' | grep -v '\.eunit'`")
   ;; Java SUXS!
   ; (shell-command "etags --language=java -a -o ${HOME}/TAGS `find ${JAVA_DIRS} | grep -E '\.java$'`")
   ;; Python
-  (shell-command "etags -a --language=python -o ${HOME}/TAGS `find ${PYTHON_DIRS} | grep -E '(\.py)$'`")
+  ;; (shell-command "etags -a --language=python -o ${HOME}/TAGS `find ${PYTHON_DIRS} | grep -E '(\.py)$'`")
   )
 
 ;; Make sure the TAGS are loaded
@@ -214,7 +214,7 @@
 ;  (setq truncate-lines t)
 ;  (setq truncate-partial-width-windows nil)
   (require 'edts-start)
-  (setq erlang-indent-level 2)
+  (setq erlang-indent-level 4)
   (setq edts-mode t)
 ;  (setq case-fold-search t)
 ;  (setq whitespace-style       (quote (face tabs lines-tail trailing)))
