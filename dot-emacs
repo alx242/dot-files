@@ -184,6 +184,10 @@
 
 ;; * * * End Python * * *
 
+;; * * * Yang * * *
+ (require 'yang-mode nil t)
+;; * * * End Yang * * *
+
 ;; * * * Erlang * * *
 (add-to-list 'load-path "~/.emacs.d/erlang")
 (require 'erlang)
