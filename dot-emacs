@@ -188,6 +188,10 @@
  (require 'yang-mode nil t)
 ;; * * * End Yang * * *
 
+;; * * * LuX * * *
+(require 'lux-mode)
+;; * * * End LuX * * *
+
 ;; * * * Erlang * * *
 (add-to-list 'load-path "~/.emacs.d/erlang")
 (require 'erlang)
@@ -408,6 +412,31 @@ by using nxml's indentation rules."
 ;; Better mouse wheel scrolling...not so fast :P
 (setq mouse-wheel-progressive-speed nil)
 (put 'upcase-region 'disabled nil)
+
+;; Enable mouse support for nox emacs
+(unless window-system
+  (require 'mouse)
+  (xterm-mouse-mode t)
+  (global-set-key [mouse-4] '(lambda ()
+                               (interactive)
+                               (scroll-down 1)))
+  (global-set-key [mouse-5] '(lambda ()
+                               (interactive)
+                               (scroll-up 1)))
+  (defun track-mouse (e))
+  (setq mouse-sel-mode t)
+)
+
+;; Copy whatever is selected into the mac os x buffer...
+;; (shell-command-on-region (region-beginning) (region-end) "/usr/bin/pbcopy")
+(global-set-key (kbd "C-c c") 'pbcopy)
+
+(defun pbcopy ()
+  (interactive)
+  (call-process-region (point) (mark) "pbcopy")
+  (setq deactivate-mark t))
+
+
 
 ;; 80 chars limit
 ;; (require 'column-marker)
