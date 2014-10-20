@@ -30,10 +30,10 @@
 
 ;; Set some colors
 (set-cursor-color "red")
-;(set-foreground-color "black")
-;(set-background-color "white")
+;;(set-foreground-color "black")
+;;(set-background-color "white")
 (set-mouse-color "red")
-(add-to-list 'default-frame-alist '(background-color . "grey00"))
+;; (add-to-list 'default-frame-alist '(background-color . "grey00"))
 
 ;; Highligthing when in marking mode
 (transient-mark-mode t)
@@ -393,8 +393,8 @@ by using nxml's indentation rules."
 (global-set-key "\C-z\C-d" 'javadoc-lookup)
 
 ;; Load general TODO file on startup
-(find-file "~/TODO")
-(switch-to-buffer "TODO")
+(find-file "~/README")
+(switch-to-buffer "README")
 
 ;; Make the mac-alt key work as normal. Mac-option becomes the meta key :P
 (setq mac-option-key-is-meta nil)
