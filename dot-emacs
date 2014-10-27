@@ -48,7 +48,7 @@
 ;; (set-variable default-indicate-empty-lines t)
 
 ;; Load various general stuff
-(add-to-list 'load-path "~/.emacs.d/")
+(add-to-list 'load-path "~/.emacs.d/lisp")
 
 ;; Encrypted files
 (require 'ps-ccrypt)
