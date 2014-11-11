@@ -49,3 +49,6 @@
 [submodule "dot-emacs.d/cl-lib"]
 	path = dot-emacs.d/cl-lib
 	url = https://github.com/emacsmirror/cl-lib.git
+[submodule "dot-emacs.d/flymake"]
+	path = dot-emacs.d/flymake
+	url = https://github.com/illusori/emacs-flymake.git
