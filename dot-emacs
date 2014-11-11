@@ -1,66 +1,25 @@
-;; Create etags
-;;
-;;
-(defun generate-etags ()
-  (interactive)
-  ;; Erlang
-  (shell-command "etags --language=erlang -o ${HOME}/TAGS `find ${ERLANG_DIRS} -iregex '.*.erl$' -o -iregex '.*hrl$' | grep -v '\.eunit'`")
-  ;; Java SUXS!
-  ; (shell-command "etags --language=java -a -o ${HOME}/TAGS `find ${JAVA_DIRS} | grep -E '\.java$'`")
-  ;; Python
-  ;; (shell-command "etags -a --language=python -o ${HOME}/TAGS `find ${PYTHON_DIRS} | grep -E '(\.py)$'`")
-  )
+;; * * * Load emacs stuff * * *
+(add-to-list 'load-path "~/.emacs.d/lisp")
+;; Package handling
+(setq package-archives '(("elpa" . "http://elpa.gnu.org/packages/")
+                         ("marmalade" . "http://marmalade-repo.org/packages/")
+                         ("melpa" . "http://melpa.milkbox.net/packages/")))
 
-;; Make sure the TAGS are loaded
-(if (file-exists-p "~/TAGS") (visit-tags-table "~/TAGS"))
-(setq tags-revert-without-query 1)
-
-;; Auto follow symlinks
-(setq vc-follow-symlinks 1) ; default is ask
-
-;; Auto-complete using open buffers
-(defun indent-or-complete ()
-  "Complete if point is at end of a word, otherwise indent line."
-  (interactive)
-  (if (looking-at "\\>")
-      (dabbrev-expand nil)
-    (indent-for-tab-command)
-    ))
-(global-set-key (kbd "TAB") 'indent-or-complete)
-
-;; Set some colors
-(set-cursor-color "red")
-;;(set-foreground-color "black")
-;;(set-background-color "white")
-(set-mouse-color "red")
-;; (add-to-list 'default-frame-alist '(background-color . "grey00"))
-
-;; Highligthing when in marking mode
-(transient-mark-mode t)
-;; (menu-bar-mode nil)
-
+;; * * * General variables * * *
 ;; No tabs only spaces
 (setq indent-tabs-mode nil)
 (setq-default indent-tabs-mode nil)
 (setq-default show-trailing-whitespace t)
 (setq-default default-indicate-empty-lines t)
-;; (setq-default indent-tabs-mode nil)
-;; (set-variable default-indicate-empty-lines t)
 
-;; Load various general stuff
-(add-to-list 'load-path "~/.emacs.d/lisp")
+;; * * * Interactively Do Things * * *
+(require 'ido)
+(ido-mode t)
 
-;; Encrypted files
+;; * * * Encrypted files * * *
 (require 'ps-ccrypt)
 
-;; Popup (required by auto complete)
-(add-to-list 'load-path "~/.emacs.d/popup-el")
-(require 'popup)
-
-;; Load auto complete
-(add-to-list 'load-path "~/.emacs.d/auto-complete")
-
-;; magit - git handler
+;; * * * Magit - git handler * * *
 (add-to-list 'load-path "~/.emacs.d/cl-lib")
 (add-to-list 'load-path "~/.emacs.d/git-modes")
 (add-to-list 'load-path "~/.emacs.d/magit")
@@ -70,214 +29,29 @@
 (require 'magit)
 (require 'magit-blame)
 
-;; Tab complete code expressions
-(require 'auto-complete-config)
-(add-to-list 'ac-dictionary-directories "~/.emacs.d/auto-complete/dict")
-(ac-config-default)
-(require 'auto-complete)
-(global-auto-complete-mode t)
-
-;; Yasnippet (code snippets to fix autocompletion n' more)
-(add-to-list 'load-path "~/.emacs.d/yasnippet")
-(require 'yasnippet)
-(setq yas/snippet-dirs '("~/.emacs.d/yasnippet/snippets")); add dirs and space between them
-(yas-global-mode 1)
-
-;; Flymake
-(require 'flymake)
-
-;; Flymake in the status bar
-(load-library "flymake-cursor")
-
-;; Handle browsing from emacs, creates a wrapper around w3m and
-;; display results in emacs
-(setq browse-url-browser-function 'wrap-browser)
-
-(defun wrap-browser (url &rest ignore)
-  "Browse URL using w3m."
-  (interactive "sURL: ")
-  (shell-command (concat "w3m " url))
-  (pop-to-buffer "*Shell Command Output*")
-  (setq truncate-lines t))
-
-;; Interactively Do Things
-(require 'ido)
-(ido-mode t)
-
-;; * * * Java * * *
-;;
-;; Builtin Cedet setup, lookin developer menu for more info
-;; (setq semantic-default-submodes '(global-semantic-idle-scheduler-mode
-;;                                   global-semanticdb-minor-mode
-;;                                   global-semantic-idle-summary-mode
-;;                                   global-semantic-mru-bookmark-mode))
-;; (semantic-mode 1)
-
-;; JDEE
-(add-to-list 'load-path (format "%s/lisp" "~/.emacs.d/jdee-2.4.1" "Path to JDEE"))
-  (autoload 'jde-mode "jde" "JDE mode" t)
-  (setq auto-mode-alist
-        (append '(("\\.java\\'" . jde-mode)) auto-mode-alist))
-
-;; Project is particularly large (more than 1 directory full of files), enable EDE
-(global-ede-mode 1)
-;; Auto detect project type (Makefile, Scons, CMap...)
-(ede-enable-generic-projects)
-;; Generic projects are disabled by default, this gives some kind of summary at least...
-(global-semantic-idle-summary-mode 1)
-;;
-;; Maven project stuff
-;; (require 'malabar-mode)
-;; (setq malabar-groovy-lib-dir "~/.emacs.d/malabar/lib")
-;; (add-to-list 'auto-mode-alist '("\\.java\\'" . malabar-mode))
-;; ;; Compile on save
-;; (add-hook 'malabar-mode-hook
-;;           (lambda ()
-;;             (add-hook 'after-save-hook 'malabar-compile-file-silently
-;;                       nil t)))
-;;
-;; Java auto completion: http://www.emacswiki.org/emacs/AutoJavaComplete
-;; (add-to-list 'load-path "~/.emacs.d/ajc-java-complete/")
-;; (require 'ajc-java-complete-config)
-;; (add-hook 'java-mode-hook 'ajc-java-complete-mode)
-;; (add-hook 'find-file-hook 'ajc-4-jsp-find-file-hook)
-
-
-;;
-;; Javadoc Help
-;; (autoload 'javadoc-lookup "javadoc-help" "Look up Java class in Javadoc." t)
-;; (autoload 'javadoc-help "javadoc-help" "Open up the Javadoc-help menu." t)
-;; (autoload 'javadoc-set-predefined-urls "javadoc-help" "Set pre-defined urls." t)
-;; (javadoc-set-predefined-urls '("http://docs.oracle.com/javase/7/docs/api/"))
-;; (global-set-key [(shift f8)] 'javadoc-help)
-;;
-;; Java flymake
-(require 'flymake-mvn)
-(add-hook 'java-mode-hook 'flymake-java-mvn-mode-hook)
-
-;; * * * End Java * * *
-
-;; * * * Scala * * *
-
-(add-to-list 'load-path "~/.emacs.d/scala-mode2")
-(require 'scala-mode)
-
-;; * * * End Scala * * *
-
-;; * * * Python * * *
-;;
-(require 'python)
-;; Run pyflakes via flymake (auto check code for bad stuff)
-;; Pyflakes for python
-(when (load "flymake" t)
-  (defun flymake-pychecker-init ()
-    (let* ((temp-file (flymake-init-create-temp-buffer-copy
-                       'flymake-create-temp-inplace))
-           (local-file (file-relative-name
-                        temp-file
-                        (file-name-directory buffer-file-name))))
-      (list "~/.emacs.d/pyflakespep8.py" (list local-file))))
-  (add-to-list 'flymake-allowed-file-name-masks
-               '("\\.py\\'" flymake-pychecker-init)))
-
-(add-hook 'find-file-hook 'flymake-find-file-hook)
-
-;; * * * End Python * * *
-
 ;; * * * Yang * * *
- (require 'yang-mode nil t)
-;; * * * End Yang * * *
+(autoload 'yang-mode "yang-mode" "Major mode for editing YANG modules." t)
+(add-to-list 'auto-mode-alist '("\\.yang$" . yang-mode))
 
 ;; * * * LuX * * *
 (require 'lux-mode)
-;; * * * End LuX * * *
 
 ;; * * * Erlang * * *
 (add-to-list 'load-path "~/.emacs.d/erlang")
-(require 'erlang)
 (add-to-list 'load-path "~/.emacs.d/edts")
 
-;; (defun flymake-erlang-init ()
-;;   (let* ((temp-file (flymake-init-create-temp-buffer-copy
-;;                      'flymake-create-temp-inplace))
-;;          (local-file (file-relative-name temp-file
-;;                                          (file-name-directory buffer-file-name))))
-;;     (list "~/.emacs.d/flymaker.escript" (list local-file))))
-;;
-;; (add-to-list 'flymake-allowed-file-name-masks '("\\.erl$" flymake-erlang-init))
+(setq load-path (cons  "~/.emacs.d/emacs" load-path))
+(setq erlang-root-dir "/usr/local/opt/erlang")
+(setq exec-path (cons "/usr/local/opt/erlang/bin" exec-path))
+(setq edts-man-root "~/.emacs.d/edts/doc/R16B03")
 
-; (setq edts-projects
-;    '(( ;; My project.
-;       (name       . "kred")
-;       (root       . "~/git/klarna/dev")
-;       (node-sname . "dashi") ; defaults to project name
-;       (lib-dirs   . ("lib" "test")))))
-
-(add-hook 'erlang-mode-hook 'my-erlang-mode-hook)
-;
-;;; (add-hook 'erlang-mode-hook '(lambda () (setq case-fold-search t)))
-(defun my-erlang-mode-hook ()
-;  (interactive)
-;;  (linum-mode)
-;  (setq truncate-lines t)
-;  (setq truncate-partial-width-windows nil)
+(add-hook 'after-init-hook 'my-after-init-hook)
+(defun my-after-init-hook ()
+  (require 'erlang-start)
   (require 'edts-start)
-  (setq erlang-indent-level 4)
-  (setq edts-mode t)
-;  (setq case-fold-search t)
-;  (setq whitespace-style       (quote (face tabs lines-tail trailing)))
-;  (setq whitespace-action      nil)
-;  (setq whitespace-line-column 80)
-;  (whitespace-mode)
-  (erlang-extended-mode t)
-;  (setq ido-mode t)
-;
-;  (require 'flymaker-el)
-;  (flymake-mode f)
-;
-  (highlight-todo)
-  (highlight-parentheses-mode)
-  ;;  (allout-mode))
-)
-
-(autoload 'erlang-mode "erlang.el" "" t)
-(add-to-list 'auto-mode-alist '("\\.[eh]rl$" . erlang-mode))
-(add-to-list 'auto-mode-alist '("\\.yaws$" . erlang-mode))
-(add-to-list 'auto-mode-alist '(".emacs$" . lisp-mode))
-(add-to-list 'auto-mode-alist '("dot-emacs$" . lisp-mode))
-;; (add-to-list 'auto-mode-alist '("\\.[eh]rl$" . erlang-extended-mode))
-;; (add-to-list 'auto-mode-alist '("\\.yaws$" . erlang-extended-mode))
-(add-to-list 'auto-mode-alist '("\\.rst$" . rst-mode))
-(customize-set-variable 'rst-level-face-base-color "black")
-
-;; Lookup erlang man pages
-(defun get-erl-man ()
-  (interactive)
-  (let* ((man-path "/usr/lib/erlang/man")
-         (man-args (format "-M %s %s" man-path (current-word))))
-    (man man-args)))
-
-;; This lets you do M-zf to find a (grep)regexp in all kred-sources.
-;; Then you can use next error to find the match in the code.
-;; E.g. ^C-zf -> Find: OCRGIRO_BNO_START ^C-.
-(defun kfind-at (path word)
-  (grep-find
-   (concat "find " path
-           (concat " -name '.svn' -prune -o -name '*~' -prune -o -name '*html' -prune -o -type f -print0 | xargs -0 -e grep -nI -e " word))))
-(defun kfind (word)
-  (interactive "MFind: ")
-  (kfind-at
-   (concat
-    (car (split-string (buffer-file-name) "lib"))
-    "lib/")
-   word)
-  )
-
-;; * * * End Erlang * * *
-
+  (require 'edts-refactor))
 
 ;; * * * XML * * *
-;; Pretty print XML
 (defun pretty-print-xml-region (begin end)
   "Pretty format XML markup in region. You need to have nxml-mode
 http://www.emacswiki.org/cgi-bin/wiki/NxmlMode installed to do
@@ -292,22 +66,29 @@ by using nxml's indentation rules."
       (backward-char) (insert "\n"))
     (indent-region begin end))
   (message "Ah, much better!"))
-;; * * * End XML * * *
 
-;; * * * Font locks * * *
-(add-hook 'python-mode-hook 'turn-on-font-lock)
-(add-hook 'python-hook 'turn-on-font-lock)
-(add-hook 'java-mode-hook 'turn-on-font-lock)
-(add-hook 'js2-mode-hook 'turn-on-font-lock)
+;; * * * (e)Lisp * * *
+(add-to-list 'auto-mode-alist '("\\.emacs$" . lisp-mode))
+(add-to-list 'auto-mode-alist '("dot-emacs$" . lisp-mode))
 
-(global-font-lock-mode t)
-;; * * * End Font locks * * *
+;; * * * Rst * * *
+(add-to-list 'auto-mode-alist '("\\.rst$" . rst-mode))
+
+;; * * * Internal functions * * *
+;; Auto-complete using open buffers
+(defun indent-or-complete ()
+  "Complete if point is at end of a word, otherwise indent line."
+  (interactive)
+  (if (looking-at "\\>")
+      (dabbrev-expand nil)
+    (indent-for-tab-command)
+    ))
+(global-set-key (kbd "TAB") 'indent-or-complete)
 
 ;; Close all buffers
 (defun kill-all-buffers ()
   (interactive)
   (mapc 'kill-buffer (buffer-list)))
-
 
 ;; Insert a timestamp at the end of a file (diary stuff)
 (defun insert-date-stamp ()
@@ -325,41 +106,7 @@ by using nxml's indentation rules."
   (message "starting to date stamp the line - finished.")
   )
 
-;; Show line-number in the mode line
-(line-number-mode 1)
-
-;; Show column-number in the mode line
-(column-number-mode 1)
-
-;; Always save the current session (desktop)
-(desktop-save-mode 0)
-
-(add-to-list 'load-path "~/.emacs.d/mo-git-blame")
-(autoload 'mo-git-blame-file "mo-git-blame" nil t)
-(autoload 'mo-git-blame-current "mo-git-blame" nil t)
-
-;; (global-hl-line-mode 1)
-
-
-;; * * * Shortcuts * * *
-
-;; Backwards delete
-(global-set-key (kbd "<A-backspace>") 'backward-kill-word)
-(global-set-key (kbd "M-g") 'goto-line)
-
-;; Resize window
-(global-set-key (kbd "C-x <up>") 'enlarge-window-horizontally)
-(global-set-key (kbd "C-x <down>") 'enlarge-window)
-
-;; Re-mapping Ctrl-Z
-(setq ctrl-z-map (make-keymap))
-(global-set-key "\C-z" ctrl-z-map)
-;; (global-set-key "\C-z\C-f" 'kfind)
-(global-set-key "\C-z\C-c" 'compile)
-(global-set-key "\C-z\C-m" (lambda() (interactive) (get-erl-man)))
-(global-set-key (kbd "<C-return>") 'erl-complete)
-(global-set-key "\C-z\C-o" '(lambda () (set-variable case-fold-search t)))
-(global-set-key (kbd "C-x j") (kbd "M-w C-s M-y"))
+;; * * * Keys * * *
 
 ;; Emacs no window mode
 (global-set-key "\M-[1;5A" 'backward-paragraph) ;  Ctrl+up->paragraph up
@@ -367,51 +114,12 @@ by using nxml's indentation rules."
 (global-set-key "\M-[1;5C" 'forward-word)       ;  Ctrl+right->forward word
 (global-set-key "\M-[1;5D" 'backward-word)      ;  Ctrl+left-> backward word
 
-;; Search, jump around stuff
-; (global-set-key (kbd "M-,") 'pop-tag-mark)
-(global-set-key (kbd "M-*") (read-kbd-macro "C-u M-."))
-
-; (load-file "~/.emacs.d/etags-select.el")
-; (global-set-key (kbd "M-?") 'etags-select-find-tag-at-point)
-; (global-set-key (kbd "M-.") 'etags-select-find-tag)
-
-
-;; (global-set-key (kbd "<C-return>") 'erlang-find-tag)
+;; Re-mapping Ctrl-Z
+(setq ctrl-z-map (make-keymap))
+(global-set-key "\C-z" ctrl-z-map)
 (global-set-key (kbd "\C-z\C-r") 'rgrep)
-;; (global-set-key "\C-tab" 'complete-tag)
-;; (global-set-key (kbd "M-s") 'tags-apropos)
 (global-set-key "\C-z\C-s" 'tags-apropos)
-(global-set-key "\C-z\C-a" 'rgrep)
 (global-set-key (kbd "C-z m") 'menu-bar-open)
-
-(global-set-key (kbd "ESC <end>") 'end-of-buffer)
-(global-set-key (kbd "ESC <home>") 'beginning-of-buffer)
-
-(global-set-key [kp-delete] 'delete-char)
-
-;; Java
-(global-set-key "\C-z\C-d" 'javadoc-lookup)
-
-;; Load general TODO file on startup
-(find-file "~/README")
-(switch-to-buffer "README")
-
-;; Make the mac-alt key work as normal. Mac-option becomes the meta key :P
-(setq mac-option-key-is-meta nil)
-(setq mac-command-key-is-meta t)
-(setq mac-command-modifier 'meta)
-(setq mac-option-modifier nil)
-
-;; Searching
-; (setq case-fold-search nil) ; make searches case sensitive
-; (setq case-fold-search t)   ; make searches case insensitive
-
-;; Scroll one line at a time...
-;; (setq mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control) . nil)))
-
-;; Better mouse wheel scrolling...not so fast :P
-(setq mouse-wheel-progressive-speed nil)
-(put 'upcase-region 'disabled nil)
 
 ;; Enable mouse support for nox emacs
 (unless window-system
@@ -426,7 +134,6 @@ by using nxml's indentation rules."
   (defun track-mouse (e))
   (setq mouse-sel-mode t)
 )
-
 ;; Copy whatever is selected into the mac os x buffer...
 ;; (shell-command-on-region (region-beginning) (region-end) "/usr/bin/pbcopy")
 (global-set-key (kbd "C-c c") 'pbcopy)
@@ -436,19 +143,16 @@ by using nxml's indentation rules."
   (call-process-region (point) (mark) "pbcopy")
   (setq deactivate-mark t))
 
+;; * * * README * * *
+(find-file "~/README")
+(switch-to-buffer "README")
 
-
-;; 80 chars limit
-;; (require 'column-marker)
-;; (add-hook 'find-file-hook (lambda () (interactive) (column-marker-3 80)))
-;; (global-font-lock-mode t)
-;; (setq-default show-trailing-whitespace t)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(safe-local-variable-values (quote ((allout-layout . t) (erlang-indent-level . 2) (erlang-indent-level . 4)))))
+ '(edts-inhibit-package-check t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
