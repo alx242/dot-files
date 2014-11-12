@@ -11,6 +11,8 @@
 (setq-default indent-tabs-mode nil)
 (setq-default show-trailing-whitespace t)
 (setq-default default-indicate-empty-lines t)
+(setq-default line-number-mode t)
+(setq-default column-number-mode t)
 
 ;; * * * Interactively Do Things * * *
 (require 'ido)
@@ -43,7 +45,7 @@
 (setq load-path (cons  "~/.emacs.d/emacs" load-path))
 (setq erlang-root-dir "/usr/local/opt/erlang")
 (setq exec-path (cons "/usr/local/opt/erlang/bin" exec-path))
-(setq edts-man-root "~/.emacs.d/edts/doc/R16B03")
+;; (setq edts-man-root "~/.emacs.d/edts/doc/R16B03")
 
 (add-hook 'after-init-hook 'my-after-init-hook)
 (defun my-after-init-hook ()
@@ -108,7 +110,7 @@ by using nxml's indentation rules."
 
 ;; * * * Keys * * *
 
-;; Emacs no window mode
+;; Word-walk
 (global-set-key "\M-[1;5A" 'backward-paragraph) ;  Ctrl+up->paragraph up
 (global-set-key "\M-[1;5B" 'forward-paragraph)  ;  Ctrl+down->paragraph down
 (global-set-key "\M-[1;5C" 'forward-word)       ;  Ctrl+right->forward word
@@ -120,6 +122,10 @@ by using nxml's indentation rules."
 (global-set-key (kbd "\C-z\C-r") 'rgrep)
 (global-set-key "\C-z\C-s" 'tags-apropos)
 (global-set-key (kbd "C-z m") 'menu-bar-open)
+
+(global-set-key (kbd "M-g") 'goto-line)
+
+;; * * * Mouse * * *
 
 ;; Enable mouse support for nox emacs
 (unless window-system
@@ -134,6 +140,9 @@ by using nxml's indentation rules."
   (defun track-mouse (e))
   (setq mouse-sel-mode t)
 )
+
+;; * * * Copy/Paste * * *
+
 ;; Copy whatever is selected into the mac os x buffer...
 ;; (shell-command-on-region (region-beginning) (region-end) "/usr/bin/pbcopy")
 (global-set-key (kbd "C-c c") 'pbcopy)
@@ -158,4 +167,4 @@ by using nxml's indentation rules."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(edts-face-error-line ((t (:background "red")))))
