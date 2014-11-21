@@ -46,13 +46,13 @@
 (add-to-list 'load-path "~/.emacs.d/edts")
 
 (setq load-path (cons  "~/.emacs.d/emacs" load-path))
-(setq erlang-root-dir "/usr/local/opt/erlang")
-(setq exec-path (cons "/usr/local/opt/erlang/bin" exec-path))
+;; (setq erlang-root-dir "/usr/local/opt/erlang")
+;; (setq exec-path (cons "/usr/local/opt/erlang/bin" exec-path))
 ;; (setq edts-man-root "~/.emacs.d/edts/doc/R16B03")
+(require 'erlang-start)
 
 (add-hook 'after-init-hook 'my-after-init-hook)
 (defun my-after-init-hook ()
-  (require 'erlang-start)
   (require 'edts-start)
   (require 'edts-refactor))
 
