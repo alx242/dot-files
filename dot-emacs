@@ -1,3 +1,18 @@
+;; * * * TAGS * * *
+(defun generate-etags ()
+  (interactive)
+  ;; Erlang
+  (shell-command "etags --language=erlang -o ${HOME}/TAGS
+                  `find ${ERLANG_DIRS} -iregex '.*.erl$' -o -iregex '.*hrl$' | grep -v '\.eunit'`")
+  ;; Python
+  ;; (shell-command "etags -a --language=python -o ${HOME}/TAGS `find ${PYTHON_DIRS} | grep -E '(\.py)$'`")
+  )
+
+;; Make sure the TAGS are loaded
+(if (file-exists-p "~/TAGS") (visit-tags-table "~/TAGS"))
+(setq tags-revert-without-query 1)
+
+
 ;; * * * Load emacs stuff * * *
 (add-to-list 'load-path "~/.emacs.d/lisp")
 ;; Package handling

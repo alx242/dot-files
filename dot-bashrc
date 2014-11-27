@@ -75,10 +75,12 @@ function git-latest {
 }
 
 function git-svn-pull {
-    git stash
+    DID_STASH="`git stash`"
     git pull
     git svn rebase
-    git stash pop
+    if [ "${DID_STASH}" != "No local changes to save" ]; then
+        git stash pop -q
+    fi
 }
 
 # git checkout `git rev-list -n 1 --before="2009-07-27 13:37" master`

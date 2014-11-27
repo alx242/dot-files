@@ -26,7 +26,7 @@
         excludesfile = "~/.gitignore"
 	editor = emacs
 
-[diff] 
-       tool = ediff 
+[diff]
+       tool = ediff
 [difftool "ediff"]
        cmd = emacs --eval \"(ediff-files \\\"$LOCAL\\\" \\\"$REMOTE\\\")\"
