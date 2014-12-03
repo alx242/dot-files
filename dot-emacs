@@ -32,6 +32,7 @@
 (setq-default default-indicate-empty-lines t)
 (setq-default line-number-mode t)
 (setq-default column-number-mode t)
+(setq vc-follow-symlinks t) ; Auto follow symlinks
 
 ;; * * * Interactively Do Things * * *
 (require 'ido)
@@ -69,11 +70,17 @@
 ;; (setq exec-path (cons "/usr/local/opt/erlang/bin" exec-path))
 ;; (setq edts-man-root "~/.emacs.d/edts/doc/R16B03")
 (require 'erlang-start)
+(add-to-list 'load-path "~/.emacs.d/wrangler/elisp")
 
 (add-hook 'after-init-hook 'my-after-init-hook)
 (defun my-after-init-hook ()
-  (require 'edts-start)
-  (require 'edts-refactor))
+  ;; Erlang ide-mode wrangler or edts, edts is default
+  (if (string= (getenv "ERL_IDE") "wrangler")
+      (require 'wrangler)
+    (progn (require 'edts-start)
+           (require 'edts-refactor))
+    )
+  )
 
 (add-hook 'erlang-mode-hook (lambda () (interactive) (column-marker-1 80)))
 
