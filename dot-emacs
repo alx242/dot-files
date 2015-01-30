@@ -12,17 +12,22 @@
 (if (file-exists-p "~/TAGS") (visit-tags-table "~/TAGS"))
 (setq tags-revert-without-query 1)
 
-;; * * * Diff regions * * *
-;; Select first region and execute diff-region and then select second
-;; region and do diff-region-now
-(load "~/.emacs.d/lisp/diff_region.el")
-
 ;; * * * Load emacs stuff * * *
 (add-to-list 'load-path "~/.emacs.d/lisp")
+
 ;; Package handling
 (setq package-archives '(("elpa" . "http://elpa.gnu.org/packages/")
                          ("marmalade" . "http://marmalade-repo.org/packages/")
                          ("melpa" . "http://melpa.milkbox.net/packages/")))
+
+;; * * * Moving around window-buffers * * *
+;; Non-default binding which doesn't screw up that much...
+(global-set-key (kbd "C-x <right>") 'windmove-right)
+(global-set-key (kbd "C-x <left>") 'windmove-left)
+(global-set-key (kbd "C-x <up>") 'windmove-up)
+(global-set-key (kbd "C-x <down>") 'windmove-down)
+;; when cursor is on edge, move to the other side, as in a toroidal space
+(setq windmove-wrap-around t)
 
 ;; * * * General variables * * *
 ;; No tabs only spaces
@@ -156,6 +161,13 @@ by using nxml's indentation rules."
 
 (global-set-key (kbd "M-g") 'goto-line)
 
+;; * * * Diff regions * * *
+;; Select first region and execute diff-region and then select second
+;; region and do diff-region-now
+(load "~/.emacs.d/lisp/diff_region.el")
+(global-set-key (kbd "C-z d") 'diff-region)
+(global-set-key (kbd "C-z n") 'diff-region-now)
+
 ;; * * * Mouse * * *
 
 ;; Enable mouse support for nox emacs
@@ -194,10 +206,14 @@ by using nxml's indentation rules."
  ;; If there is more than one, they won't work right.
  '(edts-inhibit-package-check t)
  '(ediff-split-window-function (quote split-window-horizontally))
+
  )
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(edts-face-error-line ((t (:background "red")))))
+ '(edts-face-error-line ((t (:background "red"))))
+ '(edts-face-warning-line ((t (:background "tomato"))))
+ )
