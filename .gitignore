@@ -3,5 +3,8 @@
 /dot-emacs.d/ac-comphist.dat
 /dot-emacs.d/auto-save-lists
 
+# mac stuff
+.DS_Store
+
 # emacs backup files
 *~
