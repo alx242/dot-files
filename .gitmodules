@@ -19,9 +19,6 @@
 [submodule "powerline"]
 	path = powerline
 	url = git://github.com/Lokaltog/powerline.git
-[submodule "dot-powerline"]
-	path = dot-powerline
-	url = git://github.com/Lokaltog/powerline.git
 [submodule "tmux-powerline"]
 	path = tmux-powerline
 	url = git://github.com/passcod/tmux-powerline.git

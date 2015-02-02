@@ -16,7 +16,6 @@ SRCITEMS=(
     emacs.d
     gitconfig
     tmux.conf
-    powerline
     ttytterrc
 )
 
@@ -36,9 +35,6 @@ done
 ## Some emacs modules need compilation
 cd $HOME/.emacs.d/edts && make
 ## cd $HOME/.emacs.d/distel && git submodule update --init && make
-
-## Powerline
-cd $HOME/.powerline && python setup.py build
 
 ## Initialize some scripts
 source $HOME/.bashrc
