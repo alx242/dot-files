@@ -51,6 +51,14 @@ function new_prompt {
 }
 new_prompt
 
+function safe-reattach-to-user-namespace {
+    if [ -n "$(command -v reattach-to-user-namespace)" ]; then
+        reattach-to-user-namespace $@
+    else
+        exec "$@"
+    fi
+}
+
 # Git environment
 function parse_git_branch {
     git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'
