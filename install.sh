@@ -36,6 +36,8 @@ done
 cd $HOME/.emacs.d/edts && make
 ## cd $HOME/.emacs.d/distel && git submodule update --init && make
 
+ln -s "$SRCDIR/safe-reattach-to-user-namespace" "$DESTDIR/bin"
+
 ## Initialize some scripts
 source $HOME/.bashrc
 echo "make sure to install pyflakes and pep8 via pip"
