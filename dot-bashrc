@@ -117,8 +117,11 @@ export LC_CTYPE=en_US.UTF-8
 # Supplies auto completion for ordinary python
 export PYTHONSTARTUP=${HOME}/.pythonrc
 
-# Erlang inet config: http://www.erlang.org/doc/apps/erts/inet_cfg.html
+# Erlang inet config:
+# http://www.erlang.org/doc/apps/erts/inet_cfg.html
 export ERL_INETRC=${HOME}/.inetrc
+# Turn on debug info by default in all erlang applications.
+export ERL_COMPILER_OPTIONS=[debug_info]
 
 # Powerline paths
 export PYTHONPATH=~/.powerline/build/lib/:$PYTHONPATH
@@ -130,7 +133,8 @@ else
 	export TMUX_POWERLINE=~/.powerline/build/lib/powerline/bindings/tmux/powerline.conf
 fi
 
-# Some dirs to scrape for source files for my etags file. Override these in the $EXTRA bashrc file.
+# Some dirs to scrape for source files for my etags file. Override
+# these in the $EXTRA bashrc file.
 export JAVA_DIRS=""
 export PYTHON_DIRS=""
 export ERLANG_DIRS=""
