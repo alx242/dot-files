@@ -155,10 +155,10 @@ by using nxml's indentation rules."
 ;; (global-set-key "\M-[1;5B" 'forward-paragraph)  ;  Ctrl+down->paragraph down
 ;; (global-set-key "\M-[1;5C" 'forward-word)       ;  Ctrl+right->forward word
 ;; (global-set-key "\M-[1;5D" 'backward-word)      ;  Ctrl+left-> backward word
-(global-set-key "M-<up>" 'backward-paragraph) ;  Ctrl+up->paragraph up
-(global-set-key "M-<down>" 'forward-paragraph)  ;  Ctrl+down->paragraph down
-(global-set-key "M-<right>" 'forward-word)       ;  Ctrl+right->forward word
-(global-set-key "M-<left>" 'backward-word)      ;  Ctrl+left-> backward word
+;; (global-set-key "\M-<up>" 'backward-paragraph) ;  Ctrl+up->paragraph up
+;; (global-set-key "\M-<down>" 'forward-paragraph)  ;  Ctrl+down->paragraph down
+;; (global-set-key "\M-<right>" 'forward-word)       ;  Ctrl+right->forward word
+;; (global-set-key "\M-<left>" 'backward-word)      ;  Ctrl+left-> backward word
 
 ;; Re-mapping Ctrl-Z
 (setq ctrl-z-map (make-keymap))
