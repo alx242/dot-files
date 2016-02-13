@@ -149,16 +149,17 @@ by using nxml's indentation rules."
 ;; Word-walk
 ;;
 ;; In apple terminal add the alt-up and alt-down by using \033[1;5A
-;; and \033[1;5B (\033 is Meta/Esc)
+;; and \033[1;5B (\033 is Meta/Esc) then wordwalk should work automatically
 ;;
 ;; (global-set-key "\M-[1;5A" 'backward-paragraph) ;  Ctrl+up->paragraph up
 ;; (global-set-key "\M-[1;5B" 'forward-paragraph)  ;  Ctrl+down->paragraph down
 ;; (global-set-key "\M-[1;5C" 'forward-word)       ;  Ctrl+right->forward word
 ;; (global-set-key "\M-[1;5D" 'backward-word)      ;  Ctrl+left-> backward word
-(global-set-key "M-<up>" 'backward-paragraph) ;  Ctrl+up->paragraph up
-(global-set-key "M-<down>" 'forward-paragraph)  ;  Ctrl+down->paragraph down
-(global-set-key "M-<right>" 'forward-word)       ;  Ctrl+right->forward word
-(global-set-key "M-<left>" 'backward-word)      ;  Ctrl+left-> backward word
+
+;; (global-set-key "\M-<up>"    'backward-paragraph) ;  Ctrl+up->paragraph up
+;; (global-set-key "\M-<down>"  'forward-paragraph)  ;  Ctrl+down->paragraph down
+;; (global-set-key "\M-<right>" 'forward-word)       ;  Ctrl+right->forward word
+;; (global-set-key "\M-<left>"  'backward-word)      ;  Ctrl+left-> backward word
 
 ;; Re-mapping Ctrl-Z
 (setq ctrl-z-map (make-keymap))
