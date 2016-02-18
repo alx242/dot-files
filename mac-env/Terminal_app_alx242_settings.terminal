@@ -75,6 +75,10 @@
 	<false/>
 	<key>keyMapBoundKeys</key>
 	<dict>
+		<key>$F700</key>
+		<string>[1;2A</string>
+		<key>$F701</key>
+		<string>[1;2B</string>
 		<key>$F702</key>
 		<string>[1;2D</string>
 		<key>$F703</key>
@@ -155,8 +159,6 @@
 		<string>[5~</string>
 		<key>F72D</key>
 		<string>[6~</string>
-		<key>^F702</key>
-		<string>[1;5D</string>
 		<key>^F703</key>
 		<string>[1;5C</string>
 		<key>^F728</key>
