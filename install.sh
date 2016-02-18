@@ -32,6 +32,10 @@ for SRCITEM in ${SRCITEMS[*]} ; do
     ln -s "$SRCDIR/dot-$SRCITEM" "$DESTDIR/.$DESTITEM"
 done
 
+# Newsbeuter
+mkdir -p $HOME/.newsbeuter
+ln -s $SRCDIR/dot-newsbeuter $HOME/.newsbeuter/config
+
 ## Some emacs modules need compilation
 cd $HOME/.emacs.d/edts && make
 ## cd $HOME/.emacs.d/distel && git submodule update --init && make

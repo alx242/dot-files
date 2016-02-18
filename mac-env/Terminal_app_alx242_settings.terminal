@@ -32,17 +32,17 @@
 	<data>
 	YnBsaXN0MDDUAQIDBAUGGBlYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3AS
 	AAGGoKQHCBESVSRudWxs1AkKCwwNDg8QVk5TU2l6ZVhOU2ZGbGFnc1ZOU05hbWVWJGNs
-	YXNzI0AoAAAAAAAAEBCAAoADWkFuZGFsZU1vbm/SExQVFlokY2xhc3NuYW1lWCRjbGFz
-	c2VzVk5TRm9udKIVF1hOU09iamVjdF8QD05TS2V5ZWRBcmNoaXZlctEaG1Ryb290gAEI
-	ERojLTI3PEJLUltiaXJ0dniDiJOco6avwcTJAAAAAAAAAQEAAAAAAAAAHAAAAAAAAAAA
-	AAAAAAAAAMs=
+	YXNzI0AkAAAAAAAAEBCAAoADVk1vbmFjb9ITFBUWWiRjbGFzc25hbWVYJGNsYXNzZXNW
+	TlNGb250ohUXWE5TT2JqZWN0XxAPTlNLZXllZEFyY2hpdmVy0RobVHJvb3SAAQgRGiMt
+	Mjc8QktSW2JpcnR2eH+Ej5ifoqu9wMUAAAAAAAABAQAAAAAAAAAcAAAAAAAAAAAAAAAA
+	AAAAxw==
 	</data>
 	<key>FontAntialias</key>
 	<false/>
 	<key>Linewrap</key>
 	<true/>
 	<key>ProfileCurrentVersion</key>
-	<real>2.02</real>
+	<real>2.04</real>
 	<key>SelectionColor</key>
 	<data>
 	YnBsaXN0MDDUAQIDBAUGFRZYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3AS
@@ -71,8 +71,14 @@
 	</data>
 	<key>VisualBell</key>
 	<true/>
+	<key>VisualBellOnlyWhenMuted</key>
+	<false/>
 	<key>keyMapBoundKeys</key>
 	<dict>
+		<key>$F700</key>
+		<string>[1;2A</string>
+		<key>$F701</key>
+		<string>[1;2B</string>
 		<key>$F702</key>
 		<string>[1;2D</string>
 		<key>$F703</key>
@@ -153,16 +159,14 @@
 		<string>[5~</string>
 		<key>F72D</key>
 		<string>[6~</string>
-		<key>^F700</key>
-		<string>[1;5A</string>
-		<key>^F701</key>
-		<string>[1;5B</string>
-		<key>^F702</key>
-		<string>[1;5D</string>
 		<key>^F703</key>
 		<string>[1;5C</string>
 		<key>^F728</key>
 		<string>[3;5~</string>
+		<key>~F700</key>
+		<string>[1;5A</string>
+		<key>~F701</key>
+		<string>[1;5B</string>
 		<key>~F702</key>
 		<string>b</string>
 		<key>~F703</key>
@@ -201,8 +205,12 @@
 		<string>[3;5~</string>
 	</dict>
 	<key>name</key>
-	<string>Terminal_app_Homebrew_settings</string>
+	<string>Terminal_app_alx242_settings</string>
+	<key>shellExitAction</key>
+	<integer>1</integer>
 	<key>type</key>
 	<string>Window Settings</string>
+	<key>useOptionAsMetaKey</key>
+	<false/>
 </dict>
 </plist>
