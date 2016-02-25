@@ -152,9 +152,10 @@ by using nxml's indentation rules."
 ;; and \033[1;5B (\033 is Meta/Esc) as well as ctrl-left/right. Make
 ;; sure the standard shortcuts doesn't catch these...
 ;;
-;; <<<<<<< 63dd1aa4a503af1e5df2a0eddfc0f1f8b7f66508
-;; (global-set-key (kbd "M-[ A") 'backward-paragraph) ; Alt+up
-;; (global-set-key (kbd "M-[ B") 'forward-paragraph)  ; Alt+down
+(global-set-key (kbd "M-[ A") 'backward-paragraph) ; Meta+up
+(global-set-key (kbd "M-[ B") 'forward-paragraph)  ; Meta+down
+(global-set-key (kbd "M-[ C") 'forward-word)       ; Meta+down
+(global-set-key (kbd "M-[ D") 'backward-word)      ; Meta+up
 ;; (global-set-key "\M-[1;5A" 'backward-paragraph) ;  Ctrl+up->paragraph up
 ;; (global-set-key "\M-[1;5B" 'forward-paragraph)  ;  Ctrl+down->paragraph down
 ;; (global-set-key "\M-[1;5C" 'forward-word)       ;  Ctrl+right->forward word
@@ -163,10 +164,10 @@ by using nxml's indentation rules."
 ;; (global-set-key "\M-<down>"  'forward-paragraph)  ;  Ctrl+down->paragraph down
 ;; (global-set-key "\M-<right>" 'forward-word)       ;  Ctrl+right->forward word
 ;; (global-set-key "\M-<left>"  'backward-word)      ;  Ctrl+left-> backward word
-(global-set-key "\M-[1;5A" 'backward-paragraph) ;  Ctrl+up->paragraph up
-(global-set-key "\M-[1;5B" 'forward-paragraph)  ;  Ctrl+down->paragraph down
-(global-set-key "\M-[1;5C" 'forward-word)       ;  Ctrl+right->forward word
-(global-set-key "\M-[1;5D" 'backward-word)      ;  Ctrl+left-> backward word
+;; (global-set-key "\M-[1;5A" 'backward-paragraph) ;  Ctrl+up->paragraph up
+;; (global-set-key "\M-[1;5B" 'forward-paragraph)  ;  Ctrl+down->paragraph down
+;; (global-set-key "\M-[1;5C" 'forward-word)       ;  Ctrl+right->forward word
+;; (global-set-key "\M-[1;5D" 'backward-word)      ;  Ctrl+left-> backward word
 
 ;; Re-mapping Ctrl-Z
 (setq ctrl-z-map (make-keymap))
