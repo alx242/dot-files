@@ -36,6 +36,10 @@ done
 mkdir -p $HOME/.newsbeuter
 ln -s $SRCDIR/dot-newsbeuter $HOME/.newsbeuter/config
 
+# Weechat
+mkdir -p $HOME/.weechat
+ln -s $SRCDIR/weechat.irc.conf $HOME/.weechat/irc.conf
+
 ## Some emacs modules need compilation
 cd $HOME/.emacs.d/edts && make
 ## cd $HOME/.emacs.d/distel && git submodule update --init && make
