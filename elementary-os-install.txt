@@ -1,0 +1,47 @@
+# During install boot hold shift and make sure to remove quiet splash
+# and replace with nomodeset
+
+# Post install
+sudo apt-add-repository ppa:pi-rho/dev
+sudo apt-get update && sudo apt-get dist-upgrade
+sudo apt-get install git tmux emacs24-nox erlang weechat dconf-editor
+
+# Graphics
+sudo apt-add-repository ppa:graphics-drivers/ppa
+sudo add-apt-repository ppa:xorg-edgers/ppa
+sudo apt-get update && sudo apt-get dist-upgrade
+# Check additional driver for most recent nvidia-version
+
+# Steam
+sudo apt-get install steam
+
+# Spotify
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys BBEBDCB318AD50EC6865090613B00F1FD2C19886
+echo deb http://repository.spotify.com stable non-free | sudo tee /etc/apt/sources.list.d/spotify.list
+sudo apt-get update
+sudo apt-get install spotify-client
+
+# Google Chrome
+wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
+sudo apt-get update
+sudo apt-get install google-chrome-stable
+
+# Env
+git clone https://github.com/alx242/dot-files.git
+cd dot-files && ./install.sh
+
+# Newsbeuter (missing good package for this)
+sudo apt-get install build-essential libsqlite3-dev libcurl4-gnutls-dev libxml2-dev libstfl-dev libjson0-dev libjson-c-dev
+cd ~/Downloads
+wget http://newsbeuter.org/downloads/newsbeuter-2.9.tar.gz
+tar -zxvf newsbeuter-2.9.tar.gz
+cd newsbeuter-2.9
+make
+sudo make install
+
+# Plex
+...
+
+# Syncthing
+...
