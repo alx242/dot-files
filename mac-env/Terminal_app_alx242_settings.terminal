@@ -159,14 +159,16 @@
 		<string>[5~</string>
 		<key>F72D</key>
 		<string>[6~</string>
+		<key>^F700</key>
+		<string>[1;5A</string>
+		<key>^F701</key>
+		<string>[1;5B</string>
+		<key>^F702</key>
+		<string>[1;5D</string>
 		<key>^F703</key>
 		<string>[1;5C</string>
 		<key>^F728</key>
 		<string>[3;5~</string>
-		<key>~F700</key>
-		<string>[1;5A</string>
-		<key>~F701</key>
-		<string>[1;5B</string>
 		<key>~F702</key>
 		<string>b</string>
 		<key>~F703</key>
