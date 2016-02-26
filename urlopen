@@ -2,6 +2,6 @@
 
 case $( uname -s ) in
     Darwin)           open $1;;
-    Linux|*BSD|SunOS) xdg-open $1;; # Check for DISPLAY and xsel/xclip, and use them (or whatever is appropriate).
+    Linux|*BSD|SunOS) xdg-open $1 > /dev/null 2> /dev/null;; # Check for DISPLAY and xsel/xclip, and use them (or whatever is appropriate).
     *)                echo "FAIL!!!!";;
 esac

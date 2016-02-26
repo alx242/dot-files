@@ -4,7 +4,7 @@
 # Post install
 sudo apt-add-repository ppa:pi-rho/dev
 sudo apt-get update && sudo apt-get dist-upgrade
-sudo apt-get install git tig tmux emacs24-nox erlang weechat dconf-editor
+sudo apt-get install git tig tmux-next emacs24-nox erlang weechat dconf-editor
 
 # Graphics
 sudo apt-add-repository ppa:graphics-drivers/ppa

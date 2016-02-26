@@ -32,6 +32,9 @@ for SRCITEM in ${SRCITEMS[*]} ; do
     ln -s "$SRCDIR/dot-$SRCITEM" "$DESTDIR/.$DESTITEM"
 done
 
+# tmux-next
+ln -s $HOME/.tmux.conf $HOME/.tmux-next.conf
+
 # Newsbeuter
 mkdir -p $HOME/.newsbeuter
 ln -s $SRCDIR/dot-newsbeuter $HOME/.newsbeuter/config
@@ -47,7 +50,6 @@ cd $HOME/.emacs.d/edts && make
 mkdir -p $DESTDIR/bin
 ln -s "$SRCDIR/tmux-osdep-copy-buffer" "$DESTDIR/bin"
 ln -s "$SRCDIR/urlopen" "$DESTDIR/bin"
-
 
 ## Initialize some scripts
 source $HOME/.bashrc
