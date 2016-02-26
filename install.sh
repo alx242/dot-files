@@ -45,7 +45,7 @@ cd $HOME/.emacs.d/edts && make
 ## cd $HOME/.emacs.d/distel && git submodule update --init && make
 
 mkdir -p $DESTDIR/bin
-ln -s "$SRCDIR/safe-reattach-to-user-namespace" "$DESTDIR/bin"
+ln -s "$SRCDIR/tmux-osdep-copy-buffer" "$DESTDIR/bin"
 
 ## Initialize some scripts
 source $HOME/.bashrc
