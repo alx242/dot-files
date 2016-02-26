@@ -24,7 +24,7 @@ mkdir -p $HOME/.config
 ## First, get all git submodules like .config/awesome/vicious and .emacs.de/edts
 git submodule update --init
 
-for SRCITEM in ${SRCITEMS[*]} ; do 
+for SRCITEM in ${SRCITEMS[*]} ; do
     DESTITEM=$(echo $SRCITEM | tr '!' '/')
     echo "Trying to link $DESTDIR/.$SRCITEM ..."
     [ -L "$DESTDIR/.$DESTITEM" ] && continue
@@ -46,6 +46,8 @@ cd $HOME/.emacs.d/edts && make
 
 mkdir -p $DESTDIR/bin
 ln -s "$SRCDIR/tmux-osdep-copy-buffer" "$DESTDIR/bin"
+ln -s "$SRCDIR/urlopen" "$DESTDIR/bin"
+
 
 ## Initialize some scripts
 source $HOME/.bashrc
