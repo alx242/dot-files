@@ -1,0 +1,7 @@
+#!/bin/bash
+
+case $( uname -s ) in
+    Darwin)           open $1;;
+    Linux|*BSD|SunOS) xdg-open $1;; # Check for DISPLAY and xsel/xclip, and use them (or whatever is appropriate).
+    *)                echo "FAIL!!!!";;
+esac
