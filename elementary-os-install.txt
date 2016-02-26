@@ -4,7 +4,7 @@
 # Post install
 sudo apt-add-repository ppa:pi-rho/dev
 sudo apt-get update && sudo apt-get dist-upgrade
-sudo apt-get install git tmux emacs24-nox erlang weechat dconf-editor
+sudo apt-get install git tig tmux emacs24-nox erlang weechat dconf-editor
 
 # Graphics
 sudo apt-add-repository ppa:graphics-drivers/ppa
@@ -44,4 +44,7 @@ sudo make install
 ...
 
 # Syncthing
-...
+curl -s https://syncthing.net/release-key.txt | sudo apt-key add -
+echo "deb http://apt.syncthing.net/ syncthing release" | sudo tee /etc/apt/sources.list.d/syncthing.list
+sudo apt-get update
+sudo apt-get install syncthing
