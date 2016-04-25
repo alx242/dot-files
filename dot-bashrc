@@ -85,10 +85,19 @@ function git-svn-pull {
     fi
 }
 
+# Repeat a command (including all params) until a error happens
+# (return code =/= 0)
+function repeat_until_error {
+    while $@; do :; done
+}
+
+# Check all files for any with above 80 chars per line.
 function above_80 {
          grep -n '^.\{81\}' $@
 }
-function emacs_diff {
+
+# Do a diff in emacs with file A and B
+function diff_emacs {
     emacs --eval "(ediff-files \"$1\" \"$2\")"
 }
 
