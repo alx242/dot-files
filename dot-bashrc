@@ -111,6 +111,11 @@ function top_proc {
     watch -n 2 "ps -eo pcpu,pmem,pid,user,args | sort -t. -nk1,2 -k4,4 -r | grep ${PROC} | grep -v grep | grep -v \"pcpu,pmem\" |cut -c 1-80"
 }
 
+function weather {
+    LOCATION=${1:stockholm}
+    curl http://wttr.in/${LOCATION}
+}
+
 # git checkout `git rev-list -n 1 --before="2009-07-27 13:37" master`
 
 # Set appropriate ls alias
