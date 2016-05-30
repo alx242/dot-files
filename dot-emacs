@@ -206,13 +206,18 @@ by using nxml's indentation rules."
 ;; * * * Copy/Paste * * *
 
 ;; Copy whatever is selected into the mac os x buffer...
-;; (shell-command-on-region (region-beginning) (region-end) "/usr/bin/pbcopy")
-(global-set-key (kbd "C-c c") 'pbcopy)
+;; (shell-command-on-region (region-beginning) (region-end) "tmux save-buffer")
+(global-set-key (kbd "C-c c")
+                '(lambda () (interactive) (shell-command-on-region
+                                           (region-beginning) (region-end) "tmux set-buffer \"`xargs -0 $@`\""))
+                )
 
-(defun pbcopy ()
-  (interactive)
-  (call-process-region (point) (mark) "pbcopy")
-  (setq deactivate-mark t))
+;;(lambda() (save-buffer "/tmp/tmux-buffer")))
+
+;; (defun pbcopy ()
+;;   (interactive)
+;;   (call-process-region (point) (mark) "tmux set-buffer")
+;;   (setq deactivate-mark t))
 
 ;; * * * README * * *
 (find-file "~/README")
