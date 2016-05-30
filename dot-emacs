@@ -209,7 +209,8 @@ by using nxml's indentation rules."
 ;; (shell-command-on-region (region-beginning) (region-end) "tmux save-buffer")
 (global-set-key (kbd "C-c c")
                 '(lambda () (interactive) (shell-command-on-region
-                                           (region-beginning) (region-end) "tmux set-buffer \"`xargs -0 $@`\""))
+                                           (region-beginning) (region-end)
+                                           "tmux set-buffer \"`xargs -0 $@`\""))
                 )
 
 ;;(lambda() (save-buffer "/tmp/tmux-buffer")))
