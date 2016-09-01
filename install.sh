@@ -16,6 +16,7 @@ SRCITEMS=(
     emacs.d
     gitconfig
     tmux.conf
+    surfraw.conf
     ttytterrc
 )
 
