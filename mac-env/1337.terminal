@@ -191,6 +191,10 @@
 		<string>[1;5C</string>
 		<key>^F728</key>
 		<string>[3;5~</string>
+		<key>~F700</key>
+		<string>[1;3A</string>
+		<key>~F701</key>
+		<string>[1;3B</string>
 		<key>~F702</key>
 		<string>b</string>
 		<key>~F703</key>
@@ -235,6 +239,6 @@
 	<key>type</key>
 	<string>Window Settings</string>
 	<key>useOptionAsMetaKey</key>
-	<true/>
+	<false/>
 </dict>
 </plist>
