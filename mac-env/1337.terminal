@@ -196,9 +196,9 @@
 		<key>~F701</key>
 		<string>[1;3B</string>
 		<key>~F702</key>
-		<string>b</string>
+		<string>[1;3D</string>
 		<key>~F703</key>
-		<string>f</string>
+		<string>[1;3C</string>
 		<key>~F704</key>
 		<string>[17~</string>
 		<key>~F705</key>
