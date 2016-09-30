@@ -112,7 +112,7 @@ function top_proc {
 }
 
 function weather {
-    LOCATION=${1:stockholm}
+    LOCATION=${1:-stockholm}
     curl http://wttr.in/${LOCATION}
 }
 
