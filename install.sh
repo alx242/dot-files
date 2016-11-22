@@ -49,7 +49,8 @@ cd $HOME/.emacs.d/edts && make
 ## cd $HOME/.emacs.d/distel && git submodule update --init && make
 
 mkdir -p $DESTDIR/bin
-ln -s "$SRCDIR/tmux-osdep-copy-buffer" "$DESTDIR/bin"
+ln -s "$SRCDIR/brew_up" "$DESTDIR/bin"
+ln -s "$SRCDIR/apt_up"  "$DESTDIR/bin"
 ln -s "$SRCDIR/urlopen" "$DESTDIR/bin"
 
 ## Initialize some scripts
