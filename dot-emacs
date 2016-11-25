@@ -159,6 +159,9 @@ by using nxml's indentation rules."
 (global-set-key (kbd "ESC <down>") 'forward-paragraph)  ; Meta+down
 (global-set-key (kbd "M-[ C") 'forward-word)       ; Meta+down
 (global-set-key (kbd "M-[ D") 'backward-word)      ; Meta+up
+(global-set-key (kbd "<M-up>") 'backward-paragraph) ; Meta+up
+(global-set-key (kbd "<M-down>") 'forward-paragraph)  ; Meta+down
+
 
 ;; (global-set-key "\M-[1;5A" 'backward-paragraph) ;  Ctrl+up->paragraph up
 ;; (global-set-key "\M-[1;5B" 'forward-paragraph)  ;  Ctrl+down->paragraph down
