@@ -17,7 +17,7 @@
         out = log origin/master..HEAD
 [user]
         name = Alexander Schüssler
-        email = alex@tail-f.com
+        email = alex@xalx.com
 [color]
         ui = true
 [push]
