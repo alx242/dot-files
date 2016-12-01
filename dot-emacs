@@ -1,4 +1,11 @@
 ;; * * * TAGS * * *
+
+;; Added by Package.el.  This must come before configurations of
+;; installed packages.  Don't delete this line.  If you don't want it,
+;; just comment it out by adding a semicolon to the start of the line.
+;; You may delete these explanatory comments.
+(package-initialize)
+
 (defun generate-etags ()
   (interactive)
   ;; Erlang
@@ -7,8 +14,6 @@
   ;; Python
   ;; (shell-command "etags -a --language=python -o ${HOME}/TAGS `find ${PYTHON_DIRS} | grep -E '(\.py)$'`")
   )
-
-
 
 ;; Make sure the TAGS are loaded
 (if (file-exists-p "~/TAGS") (visit-tags-table "~/TAGS"))
@@ -63,16 +68,11 @@
 (require 'column-marker)
 
 ;; * * * Erlang * * *
-(add-to-list 'load-path "~/.emacs.d/erlang")
-(add-to-list 'load-path "~/.emacs.d/edts")
-
 (setq load-path (cons  "~/.emacs.d/emacs" load-path))
-;; (setq erlang-root-dir "/usr/local/opt/erlang")
-;; (setq exec-path (cons "/usr/local/opt/erlang/bin" exec-path))
-;; (setq edts-man-root "~/.emacs.d/edts/doc/R16B03")
 (require 'erlang-start)
 (add-to-list 'load-path "~/.emacs.d/wrangler/elisp")
 
+;; package-install edts
 (add-hook 'after-init-hook 'my-after-init-hook)
 (defun my-after-init-hook ()
   ;; Erlang ide-mode wrangler or edts, edts is default
@@ -210,11 +210,6 @@ by using nxml's indentation rules."
 
 ;;(lambda() (save-buffer "/tmp/tmux-buffer")))
 
-;; (defun pbcopy ()
-;;   (interactive)
-;;   (call-process-region (point) (mark) "tmux set-buffer")
-;;   (setq deactivate-mark t))
-
 ;; * * * README * * *
 (find-file "~/README")
 (switch-to-buffer "README")
@@ -228,7 +223,8 @@ by using nxml's indentation rules."
    (quote
     ("38e64ea9b3a5e512ae9547063ee491c20bd717fe59d9c12219a0b1050b439cdd" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
  '(ediff-split-window-function (quote split-window-horizontally))
- '(edts-inhibit-package-check t))
+ '(edts-inhibit-package-check t)
+ '(package-selected-packages (quote (edts cyberpunk-theme))))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

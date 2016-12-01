@@ -1,12 +1,6 @@
-[submodule "dot-emacs.d/edts"]
-	path = dot-emacs.d/edts
-	url = git://github.com/tjarvstrand/edts.git
 [submodule "dot-emacs.d/popup-el"]
 	path = dot-emacs.d/popup-el
 	url = https://github.com/auto-complete/popup-el
-[submodule "dot-emacs.d/scala-mode2"]
-	path = dot-emacs.d/scala-mode2
-	url = git://github.com/hvesalai/scala-mode2.git
 [submodule "dot-emacs.d/yasnippet"]
 	path = dot-emacs.d/yasnippet
 	url = https://github.com/capitaomorte/yasnippet.git
