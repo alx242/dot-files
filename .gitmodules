@@ -28,12 +28,6 @@
 [submodule "SpotifyControl"]
 	path = SpotifyControl
 	url = git://github.com/dronir/SpotifyControl.git
-[submodule "dot-emacs.d/magit"]
-	path = dot-emacs.d/magit
-	url = git://github.com/magit/magit.git
-[submodule "dot-emacs.d/git-modes"]
-	path = dot-emacs.d/git-modes
-	url = https://github.com/magit/git-modes.git
 [submodule "dot-emacs.d/wrangler"]
 	path = dot-emacs.d/wrangler
 	url = https://github.com/RefactoringTools/wrangler.git

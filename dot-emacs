@@ -49,15 +49,8 @@
 (require 'ps-ccrypt)
 
 ;; * * * Magit - git handler * * *
-(add-to-list 'load-path "~/.emacs.d/cl-lib")
-(add-to-list 'load-path "~/.emacs.d/git-modes")
-(add-to-list 'load-path "~/.emacs.d/magit")
-(eval-after-load 'info
-  '(progn (info-initialize)
-          (add-to-list 'Info-directory-list "~/.emacs.d/magit")))
-(require 'magit)
-(require 'magit-blame)
-(global-set-key "\M-m" 'magit-blame-mode)
+;; Use package-installer magit
+(global-set-key "\M-m" 'magit-blame)
 
 ;; * * * Yang * * *
 (autoload 'yang-mode "yang-mode" "Major mode for editing YANG modules." t)
@@ -164,7 +157,6 @@ by using nxml's indentation rules."
 (global-set-key (kbd "<M-up>") 'backward-paragraph) ; Meta+up
 (global-set-key (kbd "<M-down>") 'forward-paragraph)  ; Meta+down
 
-
 ;; (global-set-key "\M-[1;5A" 'backward-paragraph) ;  Ctrl+up->paragraph up
 ;; (global-set-key "\M-[1;5B" 'forward-paragraph)  ;  Ctrl+down->paragraph down
 ;; (global-set-key "\M-[1;5C" 'forward-word)       ;  Ctrl+right->forward word
@@ -173,10 +165,6 @@ by using nxml's indentation rules."
 ;; (global-set-key "\M-<down>"  'forward-paragraph)  ;  Ctrl+down->paragraph down
 ;; (global-set-key "\M-<right>" 'forward-word)       ;  Ctrl+right->forward word
 ;; (global-set-key "\M-<left>"  'backward-word)      ;  Ctrl+left-> backward word
-;; (global-set-key "\M-[1;5A" 'backward-paragraph) ;  Ctrl+up->paragraph up
-;; (global-set-key "\M-[1;5B" 'forward-paragraph)  ;  Ctrl+down->paragraph down
-;; (global-set-key "\M-[1;5C" 'forward-word)       ;  Ctrl+right->forward word
-;; (global-set-key "\M-[1;5D" 'backward-word)      ;  Ctrl+left-> backward word
 
 ;; Re-mapping Ctrl-Z
 (setq ctrl-z-map (make-keymap))
