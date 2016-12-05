@@ -1,4 +1,11 @@
 ;; * * * TAGS * * *
+
+;; Added by Package.el.  This must come before configurations of
+;; installed packages.  Don't delete this line.  If you don't want it,
+;; just comment it out by adding a semicolon to the start of the line.
+;; You may delete these explanatory comments.
+(package-initialize)
+
 (defun generate-etags ()
   (interactive)
   ;; Erlang
@@ -47,15 +54,8 @@
 (require 'ps-ccrypt)
 
 ;; * * * Magit - git handler * * *
-(add-to-list 'load-path "~/.emacs.d/cl-lib")
-(add-to-list 'load-path "~/.emacs.d/git-modes")
-(add-to-list 'load-path "~/.emacs.d/magit")
-(eval-after-load 'info
-  '(progn (info-initialize)
-          (add-to-list 'Info-directory-list "~/.emacs.d/magit")))
-(require 'magit)
-(require 'magit-blame)
-(global-set-key "\M-m" 'magit-blame-mode)
+;; Use package-installer magit
+(global-set-key "\M-m" 'magit-blame)
 
 ;; * * * Yang * * *
 (autoload 'yang-mode "yang-mode" "Major mode for editing YANG modules." t)
@@ -68,16 +68,11 @@
 (require 'column-marker)
 
 ;; * * * Erlang * * *
-(add-to-list 'load-path "~/.emacs.d/erlang")
-(add-to-list 'load-path "~/.emacs.d/edts")
-
 (setq load-path (cons  "~/.emacs.d/emacs" load-path))
-;; (setq erlang-root-dir "/usr/local/opt/erlang")
-;; (setq exec-path (cons "/usr/local/opt/erlang/bin" exec-path))
-;; (setq edts-man-root "~/.emacs.d/edts/doc/R16B03")
 (require 'erlang-start)
 (add-to-list 'load-path "~/.emacs.d/wrangler/elisp")
 
+;; package-install edts
 (add-hook 'after-init-hook 'my-after-init-hook)
 (defun my-after-init-hook ()
   ;; Erlang ide-mode wrangler or edts, edts is default
@@ -159,6 +154,8 @@ by using nxml's indentation rules."
 (global-set-key (kbd "ESC <down>") 'forward-paragraph)  ; Meta+down
 (global-set-key (kbd "M-[ C") 'forward-word)       ; Meta+down
 (global-set-key (kbd "M-[ D") 'backward-word)      ; Meta+up
+(global-set-key (kbd "<M-up>") 'backward-paragraph) ; Meta+up
+(global-set-key (kbd "<M-down>") 'forward-paragraph)  ; Meta+down
 
 ;; (global-set-key "\M-[1;5A" 'backward-paragraph) ;  Ctrl+up->paragraph up
 ;; (global-set-key "\M-[1;5B" 'forward-paragraph)  ;  Ctrl+down->paragraph down
@@ -168,10 +165,6 @@ by using nxml's indentation rules."
 ;; (global-set-key "\M-<down>"  'forward-paragraph)  ;  Ctrl+down->paragraph down
 ;; (global-set-key "\M-<right>" 'forward-word)       ;  Ctrl+right->forward word
 ;; (global-set-key "\M-<left>"  'backward-word)      ;  Ctrl+left-> backward word
-;; (global-set-key "\M-[1;5A" 'backward-paragraph) ;  Ctrl+up->paragraph up
-;; (global-set-key "\M-[1;5B" 'forward-paragraph)  ;  Ctrl+down->paragraph down
-;; (global-set-key "\M-[1;5C" 'forward-word)       ;  Ctrl+right->forward word
-;; (global-set-key "\M-[1;5D" 'backward-word)      ;  Ctrl+left-> backward word
 
 ;; Re-mapping Ctrl-Z
 (setq ctrl-z-map (make-keymap))
@@ -217,11 +210,6 @@ by using nxml's indentation rules."
 
 ;;(lambda() (save-buffer "/tmp/tmux-buffer")))
 
-;; (defun pbcopy ()
-;;   (interactive)
-;;   (call-process-region (point) (mark) "tmux set-buffer")
-;;   (setq deactivate-mark t))
-
 ;; * * * README * * *
 (find-file "~/README")
 (switch-to-buffer "README")
@@ -231,16 +219,21 @@ by using nxml's indentation rules."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(edts-inhibit-package-check t)
+ '(custom-safe-themes
+   (quote
+    ("38e64ea9b3a5e512ae9547063ee491c20bd717fe59d9c12219a0b1050b439cdd" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
  '(ediff-split-window-function (quote split-window-horizontally))
-
- )
+ '(edts-inhibit-package-check t)
+ '(package-selected-packages (quote (edts cyberpunk-theme))))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(edts-face-error-line ((t (:background "red"))))
- '(edts-face-warning-line ((t (:background "tomato"))))
  )
+
+;; Load cyberpunk theme, install it with M-x package-installer
+;; cyberpunk-theme
+(add-hook 'after-init-hook
+          (lambda () (load-theme 'cyberpunk t)))
