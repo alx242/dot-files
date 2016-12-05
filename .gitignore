@@ -2,6 +2,7 @@
 /dot-emacs.d/abbrev_defs
 /dot-emacs.d/ac-comphist.dat
 /dot-emacs.d/auto-save-lists
+/dot-emacs.d/elpa
 
 # mac stuff
 .DS_Store
