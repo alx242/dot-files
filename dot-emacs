@@ -54,7 +54,7 @@
 (require 'ps-ccrypt)
 
 ;; * * * Magit - git handler * * *
-;; Use package-installer magit
+;; Use package-installer magit, to exit from magit-blame just press q
 (global-set-key "\M-m" 'magit-blame)
 
 ;; * * * Yang * * *
@@ -224,7 +224,7 @@ by using nxml's indentation rules."
     ("38e64ea9b3a5e512ae9547063ee491c20bd717fe59d9c12219a0b1050b439cdd" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
  '(ediff-split-window-function (quote split-window-horizontally))
  '(edts-inhibit-package-check t)
- '(package-selected-packages (quote (edts cyberpunk-theme))))
+ '(package-selected-packages (quote (magit edts cyberpunk-theme))))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
