@@ -221,10 +221,12 @@ by using nxml's indentation rules."
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    (quote
-    ("38e64ea9b3a5e512ae9547063ee491c20bd717fe59d9c12219a0b1050b439cdd" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
+    ("4f2ede02b3324c2f788f4e0bad77f7ebc1874eff7971d2a2c9b9724a50fb3f65" "2d16f85f22f1841390dfc1234bd5acfcce202d9bb1512aa8eabd0068051ac8c3" "eb0a314ac9f75a2bf6ed53563b5d28b563eeba938f8433f6d1db781a47da1366" "38e64ea9b3a5e512ae9547063ee491c20bd717fe59d9c12219a0b1050b439cdd" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
  '(ediff-split-window-function (quote split-window-horizontally))
  '(edts-inhibit-package-check t)
- '(package-selected-packages (quote (magit edts cyberpunk-theme))))
+ '(package-selected-packages
+   (quote
+    (heroku-theme django-theme dracula-theme magit edts cyberpunk-theme))))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
