@@ -6,7 +6,12 @@ set convert-meta off
 # Ctrl+arrows
 "\e[1;5D": backward-word
 "\e[1;5C": forward-word
+"\e[1;5A": backward-paragraph
+"\e[1;5B": forward-paragraph
 
-"\e[1;3D": backward-word ### Alt left
-"\e[1;3C": forward-word ### Alt right
+# Alt+arrows
+"\e[1;3D": backward-word
+"\e[1;3C": forward-word
+"\e[1;3A": backward-paragraph
+"\e[1;3B": forward-paragraph
 
