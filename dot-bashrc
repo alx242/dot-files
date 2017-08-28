@@ -170,7 +170,5 @@ then
   source $EXTRA
 fi
 
-# Launch tmux but only when launching a terminal
-# if [[ ! $TERM =~ screen ]] && [ -z $NO_TMUX ]; then
-#     exec tmux
-# fi
+# The f*ck
+eval "$(thefuck --alias)"
