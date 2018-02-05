@@ -36,9 +36,9 @@ done
 # tmux-next
 ln -s $HOME/.tmux.conf $HOME/.tmux-next.conf
 
-# Newsbeuter
-mkdir -p $HOME/.newsbeuter
-ln -s $SRCDIR/dot-newsbeuter $HOME/.newsbeuter/config
+# Newsboat
+mkdir -p $HOME/.newsboat
+ln -s $SRCDIR/dot-newsboat $HOME/.newsboat/config
 
 # Weechat
 mkdir -p $HOME/.weechat
