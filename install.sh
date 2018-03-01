@@ -11,6 +11,7 @@ SRCITEMS=(
     inetrc
     inputrc
     irbrc
+    tigrc
     pythonrc
     emacs
     emacs.d
