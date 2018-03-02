@@ -1,0 +1,26 @@
+#!/bin/sh
+#
+# apt install xdotool
+#
+# add mapping in elementary os
+
+case $1 in
+    "play")
+        key="XF86AudioPlay"
+        ;;
+    "next")
+        key="XF86AudioNext"
+        ;;
+    "prev")
+        key="XF86AudioPrev"
+        ;;
+    "stop")
+        key="XF86AudioStop"
+        ;;
+    *)
+        echo "Usage: $0 play|next|prev|stop"
+        exit 1
+        ;;
+esac
+xdotool key --window $(xdotool search --name "iTunes"|head -n1) $key
+exit 0
