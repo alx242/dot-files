@@ -22,5 +22,5 @@ case $1 in
         exit 1
         ;;
 esac
-xdotool key --window $(xdotool search --name "iTunes"|head -n1) $key
+xdotool key --window $(xdotool search --name "iTunes"|sort|head -n1) $key
 exit 0

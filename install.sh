@@ -55,6 +55,7 @@ mkdir -p $DESTDIR/bin
 ln -s "$SRCDIR/brew_up" "$DESTDIR/bin"
 ln -s "$SRCDIR/apt_up"  "$DESTDIR/bin"
 ln -s "$SRCDIR/urlopen" "$DESTDIR/bin"
+ln -s "$SRCDIR/itunes_controller" "$DESTDIR/bin"
 
 ## Initialize some scripts
 source $HOME/.bashrc
