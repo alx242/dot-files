@@ -52,8 +52,7 @@ touch $HOME/TAGS # Make sure TAGS file exists or emacs could bork out...
 git clone https://github.com/jimeh/tmux-themepack.git ~/.tmux-themepack
 
 mkdir -p $DESTDIR/bin
-ln -s "$SRCDIR/brew_up" "$DESTDIR/bin"
-ln -s "$SRCDIR/apt_up"  "$DESTDIR/bin"
+ln -s "$SRCDIR/up"  "$DESTDIR/bin"
 ln -s "$SRCDIR/itunes_controller"  "$DESTDIR/bin"
 ln -s "$SRCDIR/urlopen" "$DESTDIR/bin"
 
