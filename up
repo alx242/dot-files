@@ -1,0 +1,9 @@
+#!/bin/bash
+case $(uname -s) in
+    Darwin|FreeBSD)
+        brew update && brew upgrade
+        ;;
+    Linux)
+        sudo apt update && sudo apt dist-upgrade
+        ;;
+esac
