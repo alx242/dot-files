@@ -56,6 +56,7 @@ ln -s "$SRCDIR/up"  "$DESTDIR/bin"
 ln -s "$SRCDIR/itunes_controller"  "$DESTDIR/bin"
 ln -s "$SRCDIR/urlopen" "$DESTDIR/bin"
 ln -s "$SRCDIR/itunes_controller" "$DESTDIR/bin"
+ln -s "$SRCDIR/hidpi-scale" "$DESTDIR/bin"
 
 ## Initialize some scripts
 source $HOME/.bashrc
