@@ -69,7 +69,7 @@
 
 ;; * * * Erlang * * *
 (setq erlang-root-dir "~/dev/trunk/otp")
-(setq exec-path (cons "~/dev/trunk/otp/bin" exec-path))
+(setq exec-path (cons "~/dev/trunk/otp/installed/bin" exec-path))
 (setq load-path (cons  "~/.emacs.d/emacs" load-path))
 (require 'erlang-start)
 ;(add-to-list 'load-path "~/.emacs.d/wrangler/elisp")
