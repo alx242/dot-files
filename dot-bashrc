@@ -169,6 +169,3 @@ if [ -e $EXTRA ]
 then
   source $EXTRA
 fi
-
-# The f*ck
-eval "$(thefuck --alias)"
