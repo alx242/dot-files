@@ -71,18 +71,14 @@
 (setq erlang-root-dir (getenv "ERL_TOP"))
 (setq exec-path (cons (concat (getenv "ERL_TOP") "/installed/bin") exec-path))
 (setq load-path (cons  "~/.emacs.d/emacs" load-path))
-(require 'erlang-start)
-;(add-to-list 'load-path "~/.emacs.d/wrangler/elisp")
 
 ;; package-install edts
 (add-hook 'after-init-hook 'my-after-init-hook)
 (defun my-after-init-hook ()
   ;; Erlang ide-mode wrangler or edts, edts is default
-  (if (string= (getenv "ERL_IDE") "wrangler")
-      (require 'wrangler)
-    (progn (require 'edts-start)
+    (progn (require 'erlang-start)
+           (require 'edts-start)
            (require 'edts-refactor))
-    )
   )
 
 (add-hook 'erlang-mode-hook (lambda () (interactive) (column-marker-1 80)))
@@ -210,34 +206,23 @@ by using nxml's indentation rules."
                                            "tmux set-buffer \"`xargs -0 $@`\""))
                 )
 
-;;(lambda() (save-buffer "/tmp/tmux-buffer")))
-
 ;; * * * README * * *
 (find-file "~/README")
 (switch-to-buffer "README")
 
+;; Load cyberpunk theme, install it with M-x package-installer
+;; cyberpunk-theme
+(add-hook 'after-init-hook
+          (lambda () (load-theme 'manoj-dark t)))
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   (quote
-    ("4f2ede02b3324c2f788f4e0bad77f7ebc1874eff7971d2a2c9b9724a50fb3f65" "2d16f85f22f1841390dfc1234bd5acfcce202d9bb1512aa8eabd0068051ac8c3" "eb0a314ac9f75a2bf6ed53563b5d28b563eeba938f8433f6d1db781a47da1366" "38e64ea9b3a5e512ae9547063ee491c20bd717fe59d9c12219a0b1050b439cdd" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
- '(ediff-split-window-function (quote split-window-horizontally))
- '(edts-inhibit-package-check t)
- '(package-selected-packages
-   (quote
-    (heroku-theme django-theme dracula-theme magit edts cyberpunk-theme))))
-
+ '(package-selected-packages (quote (edts f erlang auto-highlight-symbol auto-complete))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
-
-;; Load cyberpunk theme, install it with M-x package-installer
-;; cyberpunk-theme
-(add-hook 'after-init-hook
-         (lambda () (load-theme 'manoj-dark t)))

@@ -17,7 +17,11 @@
         out = log origin/master..HEAD
 [user]
         name = Alexander Schüssler
-        email = alex@tail-f.com
+        email = alex@xalx.net
+
+[includeIf "gitdir:~/work/"]
+        path = ~/.work.gitconfig
+
 [color]
         ui = true
 [push]
