@@ -213,12 +213,15 @@ by using nxml's indentation rules."
 ;; Load cyberpunk theme, install it with M-x package-installer
 ;; cyberpunk-theme
 (add-hook 'after-init-hook
-          (lambda () (load-theme 'manoj-dark t)))
+          (lambda () (load-theme 'cyberpunk t)))
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+    ("d1cc05d755d5a21a31bced25bed40f85d8677e69c73ca365628ce8024827c9e3" default)))
  '(package-selected-packages (quote (edts f erlang auto-highlight-symbol auto-complete))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
