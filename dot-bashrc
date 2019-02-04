@@ -91,11 +91,6 @@ function repeat_until_error {
     while $@; do :; done
 }
 
-# Check all files for any with above 80 chars per line.
-function above_80 {
-         grep -n '^.\{81\}' $@
-}
-
 # Do a diff in emacs with file A and B
 function diff_emacs {
     emacs --eval "(ediff-files \"$1\" \"$2\")"
@@ -133,6 +128,8 @@ esac
 alias l="ls"
 alias ll="ls -l"
 alias la="ls -a"
+alias big_dirs="du -hd1 . 2>/dev/null | grep '[0-9]G\>'"
+alias above_80="grep -n '^.\{81\}'"
 alias scpresume="rsync --partial --progress --rsh=ssh"
 
 #
