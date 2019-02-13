@@ -68,17 +68,17 @@
 (require 'column-marker)
 
 ;; * * * Erlang * * *
-(setq erlang-root-dir (getenv "ERL_TOP"))
-(setq exec-path (cons (concat (getenv "ERL_TOP") "/installed/bin") exec-path))
+;(setq erlang-root-dir (getenv "ERL_TOP"))
+;(setq exec-path (cons (concat (getenv "ERL_TOP") "/installed/bin") exec-path))
 (setq load-path (cons  "~/.emacs.d/emacs" load-path))
 
 ;; package-install edts
-(add-hook 'after-init-hook 'my-after-init-hook)
-(defun my-after-init-hook ()
-  ;; Erlang ide-mode wrangler or edts, edts is default
-    (progn (require 'erlang-start)
-           (require 'edts-start)
-           (require 'edts-refactor))
+(add-hook 'after-init-hook 'da-erlang-init-hook)
+(defun da-erlang-init-hook ()
+  (progn (require 'erlang-start)
+         (require 'edts-start)
+         (require 'edts-refactor)
+         )
   )
 
 (add-hook 'erlang-mode-hook (lambda () (interactive) (column-marker-1 80)))

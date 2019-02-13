@@ -131,6 +131,7 @@ alias la="ls -a"
 alias big_dirs="du -hd1 . 2>/dev/null | grep '[0-9]G\>'"
 alias above_80="grep -n '^.\{81\}'"
 alias scpresume="rsync --partial --progress --rsh=ssh"
+alias process_port="lsof -n -P -i +c 13"
 
 #
 export LC_CTYPE=en_US.UTF-8
