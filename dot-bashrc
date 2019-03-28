@@ -1,5 +1,5 @@
 # -*- mode: sh -*-
-export PATH=~/bin:~/.local/bin:/usr/local/bin:/usr/local/sbin:$PATH
+export PATH=~/bin:~/.local/bin:~/Library/Python/3.7/bin:/usr/local/bin:/usr/local/sbin:$PATH
 export EDITOR=nano
 export LC_ALL=en_US.UTF-8
 export TMPDIR=/tmp
