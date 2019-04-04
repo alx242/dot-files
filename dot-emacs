@@ -10,9 +10,11 @@
   (interactive)
   ;; Erlang
   (shell-command "etags --language=erlang -o ${HOME}/TAGS
-                  `find ${ERLANG_DIRS} -iregex '.*.erl$' -o -iregex '.*hrl$' | grep -v '\.eunit'`")
+                  `find ${ERLANG_DIRS} -iregex '.*.erl$'
+                   -o -iregex '.*hrl$' | grep -v '\.eunit'`")
   ;; Python
-  ;; (shell-command "etags -a --language=python -o ${HOME}/TAGS `find ${PYTHON_DIRS} | grep -E '(\.py)$'`")
+  ;; (shell-command "etags -a --language=python
+  ;; -o ${HOME}/TAGS `find ${PYTHON_DIRS} | grep -E '(\.py)$'`")
   )
 
 ;; Make sure the TAGS are loaded
@@ -188,13 +190,13 @@ by using nxml's indentation rules."
   (xterm-mouse-mode t)
   (global-set-key [mouse-4] '(lambda ()
                                (interactive)
-                               (scroll-down 1)))
+                               (scroll-down 2)))
   (global-set-key [mouse-5] '(lambda ()
                                (interactive)
-                               (scroll-up 1)))
-  (defun track-mouse (e))
-  (setq mouse-sel-mode t)
-)
+                               (scroll-up 2)))
+  ;;  (defun track-mouse (e))
+  ;;  (setq mouse-sel-mode t)
+  )
 
 ;; * * * Copy/Paste * * *
 
