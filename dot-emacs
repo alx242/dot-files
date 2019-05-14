@@ -101,14 +101,14 @@
   ((warning line-start (file-name) ":" line ": Warning:" (message) line-end)
    (error line-start (file-name) ":" line ": " (message) line-end)))
 
+;;          (lambda () (generate-etags))
 (add-hook 'erlang-mode-hook
           (lambda ()
             (flycheck-select-checker 'erlang-otp)
-            (flycheck-mode))
-;;          (lambda () (generate-etags))
-          (if (file-exists-p (concat (getenv "ERL_TOP") "/../TAGS"))
-              (visit-tags-table (concat (getenv "ERL_TOP") "/../TAGS")))
-          (lambda () (interactive) (column-marker-1 80))
+            (flycheck-mode)
+            (if (file-exists-p (concat (getenv "ERL_TOP") "/../TAGS"))
+                (visit-tags-table (concat (getenv "ERL_TOP") "/../TAGS")))
+            (column-marker-1 80))
           )
 
 ;; * * * XML * * *
