@@ -101,6 +101,11 @@
   ((warning line-start (file-name) ":" line ": Warning:" (message) line-end)
    (error line-start (file-name) ":" line ": " (message) line-end)))
 
+;; Erlang compiler extra options
+(setq erlang-compile-extra-opts '((i . "../..")
+                                  (i . "../include")
+                                  debug_info))
+
 ;;          (lambda () (generate-etags))
 (add-hook 'erlang-mode-hook
           (lambda ()
