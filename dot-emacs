@@ -113,7 +113,9 @@
             (flycheck-mode)
             (if (file-exists-p (concat (getenv "ERL_TOP") "/../TAGS"))
                 (visit-tags-table (concat (getenv "ERL_TOP") "/../TAGS")))
-            (column-marker-1 80))
+            (column-marker-1 80)
+            (generate-etags)
+            )
           )
 
 ;; * * * XML * * *
