@@ -17,8 +17,6 @@ SRCITEMS=(
     emacs.d
     gitconfig
     tmux.conf
-    surfraw.conf
-    ttytterrc
 )
 
 mkdir -p $HOME/.config
@@ -53,9 +51,7 @@ git clone https://github.com/jimeh/tmux-themepack.git ~/.tmux-themepack
 
 mkdir -p $DESTDIR/bin
 ln -s "$SRCDIR/up"  "$DESTDIR/bin"
-ln -s "$SRCDIR/itunes_controller"  "$DESTDIR/bin"
 ln -s "$SRCDIR/urlopen" "$DESTDIR/bin"
-ln -s "$SRCDIR/itunes_controller" "$DESTDIR/bin"
 ln -s "$SRCDIR/hidpi-scale" "$DESTDIR/bin"
 
 ## Initialize some scripts
