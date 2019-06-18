@@ -46,9 +46,6 @@ ln -s $SRCDIR/weechat.irc.conf $HOME/.weechat/irc.conf
 # Some emacs modules need compilation
 touch $HOME/TAGS # Make sure TAGS file exists or emacs could bork out...
 
-# Tmux themes
-git clone https://github.com/jimeh/tmux-themepack.git ~/.tmux-themepack
-
 mkdir -p $DESTDIR/bin
 ln -s "$SRCDIR/up"  "$DESTDIR/bin"
 ln -s "$SRCDIR/urlopen" "$DESTDIR/bin"
