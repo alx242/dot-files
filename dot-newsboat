@@ -1,6 +1,5 @@
 cookie-cache "~/.newsbeuter/cookies"
 refresh-on-startup "true"
-oldreader-login "alex@xalx.net"
-oldreader-min-items "100"
-urls-source "oldreader"
+inoreader-login "alex@xalx.net"
+urls-source "inoreader"
 browser "urlopen %u &"
