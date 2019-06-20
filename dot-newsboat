@@ -3,3 +3,10 @@ refresh-on-startup "true"
 inoreader-login "alex@xalx.net"
 urls-source "inoreader"
 browser "urlopen %u &"
+color background          white   black
+color listnormal          white   black
+color listfocus           black   blue  bold
+color listnormal_unread   white   black
+color listfocus_unread    white   blue  bold
+color info                black   cyan  bold
+color article             white   black
