@@ -8,6 +8,9 @@ export EDITOR=emacs
 if [ -r /etc/bash_completion ]; then
     . /etc/bash_completion
 fi
+if [ -r /usr/share/git/completion/git-prompt.sh ]; then
+    . /usr/share/git/completion/git-prompt.sh
+fi
 if [ -r /usr/local/bin/brew ]; then
   if [ -f `brew --prefix`/etc/bash_completion ]; then
     . `brew --prefix`/etc/bash_completion
