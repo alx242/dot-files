@@ -4,6 +4,7 @@ case $(uname -s) in
         brew update && brew upgrade
         ;;
     Linux)
-        sudo pacman -Syu
+        pacaur -Syu
         ;;
 esac
+
