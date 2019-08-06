@@ -114,6 +114,11 @@ function weather {
     curl http://wttr.in/${LOCATION}
 }
 
+function convert_m4a_to_mp3 {
+    find . -name '*.m4a' -print0 | while read -d '' -r file; do
+        ffmpeg -i "$file" -n -codec:a libmp3lame -qscale:a 2 "${file%.m4a}.mp3" < /dev/null
+    done
+}
 # git checkout `git rev-list -n 1 --before="2009-07-27 13:37" master`
 
 # Set appropriate ls alias
