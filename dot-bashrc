@@ -20,9 +20,9 @@ fi
 # Prompt flipping...
 
 function ok_prompt {
-local BLUE="\[\033[0;34m\]"
-local RED="\[\033[0;31m\]"
-local LIGHT_RED="\[\033[1;31m\]"
+local DARKBLUE="\[\033[2;34m\]"
+local LIGHTBLUE="\[\033[0;34m\]"
+local LIGHT_RED="\[\033[0;34m\]"
 local WHITE="\[\033[1;37m\]"
 local NO_COLOUR="\[\033[0m\]"
 local GIT='$(__git_ps1 " (%s)")'
@@ -36,25 +36,13 @@ case $TERM in
 esac
 
 PS1="${TITLEBAR}\
-$BLUE[$RED\$(date +%H:%M)$BLUE]\
-$BLUE[$LIGHT_RED\u@\h:\w${GIT}$BLUE]\
-$WHITE\$$NO_COLOUR "
+$DARKBLUE[$LIGHTBLUE\u@\h:\w${GIT}$DARKBLUE]\
+$WHITE->$NO_COLOUR "
+# PS1='[\u@\h \W]\$ '
 PS2='> '
 PS4='+ '
 }
-
-function new_prompt {
-  local BLUE="\[\033[0;34m\]"
-  local RED="\[\033[0;31m\]"
-  local LIGHT_RED="\[\033[1;31m\]"
-  local WHITE="\[\033[1;37m\]"
-  local NO_COLOUR="\[\033[0m\]"
-  local GIT='$(__git_ps1 "git: %s")'
-  local WRAP_GIT="-[${LIGHT_RED}${GIT}${NO_COLOUR}]"
-  # https://bbs.archlinux.org/viewtopic.php?pid=1068202#p1068202
-  PS1="\[\033[0;37m\]\342\224\214\342\224\200\$([[ \$? != 0 ]] && echo \"[\[\033[0;31m\]\342\234\227\[\033[0;37m\]]\342\224\200\")[$(if [[ ${EUID} == 0 ]]; then echo '\[\033[0;31m\]\h'; else echo '\[\033[0;33m\]\u\[\033[0;37m\]@\[\033[0;96m\]\h'; fi)\[\033[0;37m\]]\342\224\200[\[\033[0;32m\]\w\[\033[0;37m\]]${WRAP_GIT}\n\[\033[0;37m\]\342\224\224\342\224\200\342\224\200\342\225\274 \[\033[0m\]"
-}
-new_prompt
+ok_prompt
 
 # Git environment
 function parse_git_branch {

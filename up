@@ -1,6 +1,6 @@
 #!/bin/bash
 function up_arch {
-    pacaur -Syu 2> /dev/null
+    yay -Syu 2> /dev/null
 }
 
 function up_elementary {
