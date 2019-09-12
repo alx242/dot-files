@@ -39,6 +39,10 @@ ln -s $HOME/.tmux.conf $HOME/.tmux-next.conf
 mkdir -p $HOME/.newsboat
 ln -s $SRCDIR/dot-newsboat $HOME/.newsboat/config
 
+# Conky
+mkdir -p $HOME/.config/conky
+ln -s $SRCDIR/conky.conf $HOME/.config/conky/conky.conf
+
 # Weechat
 mkdir -p $HOME/.weechat
 ln -s $SRCDIR/weechat.irc.conf $HOME/.weechat/irc.conf
