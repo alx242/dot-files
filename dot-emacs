@@ -37,6 +37,9 @@
 (global-set-key (kbd "C-x <left>") 'windmove-left)
 (global-set-key (kbd "C-x <up>") 'windmove-up)
 (global-set-key (kbd "C-x <down>") 'windmove-down)
+(global-set-key (kbd "C-x C-<up>") 'enlarge-window)
+(global-set-key (kbd "C-x C-<down>") 'shrink-window)
+
 ;; when cursor is on edge, move to the other side, as in a toroidal space
 (setq windmove-wrap-around t)
 
