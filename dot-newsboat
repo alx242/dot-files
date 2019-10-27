@@ -1,7 +1,7 @@
 cookie-cache "~/.newsbeuter/cookies"
 refresh-on-startup "true"
 inoreader-login "alex@xalx.net"
-inoreader-passwordeval "gpg --decrypt ~/.newsboat/password.gpg"
+inoreader-passwordfile "~/.newsboat/inoreader.passwd"
 urls-source "inoreader"
 browser "urlopen %u &"
 color background          white   black
