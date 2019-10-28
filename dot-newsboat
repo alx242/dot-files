@@ -7,6 +7,8 @@ inoreader-login "alex@xalx.net"
 inoreader-passwordfile "~/.newsboat/inoreader.passwd"
 urls-source "inoreader"
 browser "urlopen %u &"
+show-read-feeds false
+show-read-articles false
 color background          white   black
 color listnormal          white   black
 color listfocus           black   blue  bold
