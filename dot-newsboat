@@ -1,4 +1,4 @@
-cookie-cache "~/.newsbeuter/cookies"
+cookie-cache "~/.newsboat/cookies"
 refresh-on-startup "true"
 inoreader-login "alex@xalx.net"
 inoreader-passwordfile "~/.newsboat/inoreader.passwd"
