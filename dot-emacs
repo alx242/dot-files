@@ -19,8 +19,6 @@
   nil
   )
 
-;; Make sure the TAGS are loaded
-;; (if (file-exists-p "~/TAGS") (visit-tags-table "~/TAGS"))
 (setq tags-revert-without-query 1)
 
 ;; * * * Load emacs stuff * * *
@@ -81,17 +79,6 @@
 ;; Arch linux erlang mode
 (setq load-path (cons  "/usr/lib/erlang/lib/tools-3.2/emacs/" load-path))
 (require 'erlang-start)
-
-;; package-install edts
-;; (add-hook 'after-init-hook 'da-erlang-init-hook)
-;; (defun da-erlang-init-hook ()
-;;   (progn (require 'erlang-start)
-;;
-;;          ;; (require 'edts-start)
-;;          ;; (require 'edts-refactor)
-;;          )
-;;   )
-;;
 
 (require 'flycheck)
 
@@ -195,15 +182,6 @@ by using nxml's indentation rules."
 (global-set-key (kbd "M-[ D") 'backward-word)      ; Meta+up
 (global-set-key (kbd "<M-up>") 'backward-paragraph) ; Meta+up
 (global-set-key (kbd "<M-down>") 'forward-paragraph)  ; Meta+down
-
-;; (global-set-key "\M-[1;5A" 'backward-paragraph) ;  Ctrl+up->paragraph up
-;; (global-set-key "\M-[1;5B" 'forward-paragraph)  ;  Ctrl+down->paragraph down
-;; (global-set-key "\M-[1;5C" 'forward-word)       ;  Ctrl+right->forward word
-;; (global-set-key "\M-[1;5D" 'backward-word)      ;  Ctrl+left-> backward word
-;; (global-set-key "\M-<up>"    'backward-paragraph) ;  Ctrl+up->paragraph up
-;; (global-set-key "\M-<down>"  'forward-paragraph)  ;  Ctrl+down->paragraph down
-;; (global-set-key "\M-<right>" 'forward-word)       ;  Ctrl+right->forward word
-;; (global-set-key "\M-<left>"  'backward-word)      ;  Ctrl+left-> backward word
 
 ;; Re-mapping Ctrl-Z
 (setq ctrl-z-map (make-keymap))
