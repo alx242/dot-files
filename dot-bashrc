@@ -147,22 +147,12 @@ export ERL_INETRC=${HOME}/.inetrc
 # Turn on debug info by default in all erlang applications.
 export ERL_COMPILER_OPTIONS=[debug_info]
 
-# Powerline paths
-export PYTHONPATH=~/.powerline/build/lib/:$PYTHONPATH
-export PATH=~/.powerline/build/scripts-2.7:$PATH
-LNX_TMUX_POWERLINE=~/.powerline/build/lib.linux-x86_64-2.7/powerline/bindings/tmux/powerline.conf
-if [ -f $LNX_TMUX_POWERLINE ]; then
-	export TMUX_POWERLINE=$LNX_TMUX_POWERLINE
-else
-	export TMUX_POWERLINE=~/.powerline/build/lib/powerline/bindings/tmux/powerline.conf
-fi
-
 # Some dirs to scrape for source files for my etags file. Override
 # these in the $EXTRA bashrc file.
 export JAVA_DIRS=""
 export PYTHON_DIRS=""
 export ERLANG_DIRS=""
-EXTRA=~/.extra.bashrc
+EXTRA=${HOME}/.extra.bashrc
 if [ -e $EXTRA ]
 then
   source $EXTRA
