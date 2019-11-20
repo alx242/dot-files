@@ -8,17 +8,17 @@ export EDITOR=emacs
 if [ -r /etc/bash_completion ]; then
     . /etc/bash_completion
 fi
-if [ -r /usr/share/git/completion/git-prompt.sh ]; then
-    . /usr/share/git/completion/git-prompt.sh
-fi
 if [ -r /usr/local/bin/brew ]; then
-  if [ -f `brew --prefix`/etc/bash_completion ]; then
-    . `brew --prefix`/etc/bash_completion
-  fi
+    export BASH_COMPLETION_COMPAT_DIR="`brew --prefix`/etc/bash_completion.d"
+    if [ -r `brew --prefix`/etc/profile.d/bash_completion.sh ]; then
+        . /usr/local/etc/profile.d/bash_completion.sh
+    fi
+fi
+if [ -r "/usr/share/git/completion/git-prompt.sh" ]; then
+    . /usr/share/git/completion/git-prompt.sh
 fi
 
 # Prompt flipping...
-
 function ok_prompt {
 local DARKBLUE="\[\033[2;34m\]"
 local LIGHTBLUE="\[\033[0;34m\]"
