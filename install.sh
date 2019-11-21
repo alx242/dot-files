@@ -8,6 +8,7 @@ SRCDIR="$HOME/dot-files"
 SRCITEMS=(
     bash_profile
     bashrc
+    zshrc
     inetrc
     inputrc
     irbrc

@@ -1,47 +1,20 @@
 # -*- mode: sh -*-
 export PATH=~/bin:~/.local/bin:~/Library/Python/3.7/bin:/usr/local/bin:/usr/local/sbin:$PATH
-export LC_ALL=en_US.UTF-8
+# export LC_ALL=en_US.UTF-8
 export TMPDIR=/tmp
 export EDITOR=emacs
 
-if [ -r "/etc/bash_completion" ]; then
-    . /etc/bash_completion
-fi
-
-if [ -r "/usr/local/etc/profile.d/bash_completion.sh" ]; then
-    export BASH_COMPLETION_COMPAT_DIR="/usr/local/etc/bash_completion.d"
-    . /usr/local/etc/profile.d/bash_completion.sh
-    . /usr/local/etc/bash_completion.d/git-prompt.sh
-fi
-if [ -r "/usr/share/git/completion/git-prompt.sh" ]; then
-    . /usr/share/git/completion/git-prompt.sh
-fi
-
 # Prompt flipping...
-function ok_prompt {
-local DARKBLUE="\[\033[2;34m\]"
-local LIGHTBLUE="\[\033[0;34m\]"
-local LIGHT_RED="\[\033[0;34m\]"
-local WHITE="\[\033[1;37m\]"
-local NO_COLOUR="\[\033[0m\]"
-local GIT='$(__git_ps1 " (%s)")'
-case $TERM in
-    xterm*|rxvt*)
-        TITLEBAR='\[\033]0;\u@\h:\w\007\]'
-        ;;
-    *)
-        TITLEBAR=""
-        ;;
-esac
+#PROMPT='%F{blue}%1~%f %# '
+PROMPT='%(?.%F{green}√.%F{red}?%?)%f %B%F{240}%1~%f%b %# '
 
-PS1="${TITLEBAR}\
-$DARKBLUE[$LIGHTBLUE\u@\h:\w${GIT}$DARKBLUE]\
-$WHITE->$NO_COLOUR "
-# PS1='[\u@\h \W]\$ '
-PS2='> '
-PS4='+ '
-}
-ok_prompt
+autoload -Uz vcs_info
+precmd_vcs_info() { vcs_info }
+precmd_functions+=( precmd_vcs_info )
+setopt prompt_subst
+RPROMPT=%*\ \$vcs_info_msg_0_
+zstyle ':vcs_info:git:*' formats '%F{240}(%b)%r%f'
+zstyle ':vcs_info:*' enable git
 
 # Git environment
 function parse_git_branch {
@@ -108,16 +81,20 @@ function convert_m4a_to_mp3 {
 }
 # git checkout `git rev-list -n 1 --before="2009-07-27 13:37" master`
 
-# Set appropriate ls alias
+# Machine specifics
 case $(uname -s) in
-        Darwin|FreeBSD)
-                alias ls="ls -hFG"
+    Darwin|FreeBSD)
+        autoload -Uz compinit
+        compinit
+        fpath=(/usr/local/share/zsh-completions $fpath)
+        alias ls="ls -hFG"
         ;;
-        Linux)
-                alias ls="ls --color=always -hF"
+    Linux)
+        fpath=(/etc/zsh-completions $fpath)
+        alias ls="ls --color=always -hF"
         ;;
-        NetBSD|OpenBSD)
-                alias ls="ls -hF"
+    NetBSD|OpenBSD)
+        alias ls="ls -hF"
         ;;
 esac
 alias l="ls"
