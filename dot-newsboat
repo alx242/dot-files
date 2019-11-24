@@ -9,10 +9,10 @@ urls-source "inoreader"
 browser "urlopen %u &"
 show-read-feeds false
 show-read-articles false
-color background          white   black
-color listnormal          white   black
-color listfocus           black   blue  bold
-color listnormal_unread   white   black
-color listfocus_unread    white   blue  bold
-color info                black   cyan  bold
+color background          white   default
+color listnormal          white   default
+color listfocus           black   black   bold
+color listnormal_unread   white   default
+color listfocus_unread    white   black   bold
+color info                black   default bold
 color article             white   black
