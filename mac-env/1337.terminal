@@ -407,7 +407,7 @@
 	DWoNdQ1+DYsNjg2bDaQNqQ2xAAAAAAAAAgEAAAAAAAAAKAAAAAAAAAAAAAAAAAAADbQ=
 	</data>
 	<key>UseBoldFonts</key>
-	<true/>
+	<false/>
 	<key>UseBrightBold</key>
 	<true/>
 	<key>keyMapBoundKeys</key>
@@ -500,6 +500,10 @@
 		<string>[1;5C</string>
 		<key>^F728</key>
 		<string>[3;5~</string>
+		<key>^F72C</key>
+		<string>[5^</string>
+		<key>^F72D</key>
+		<string>[6^</string>
 		<key>~007F</key>
 		<string></string>
 		<key>~F700</key>
