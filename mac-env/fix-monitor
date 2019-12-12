@@ -1,0 +1,23 @@
+https://gist.github.com/adaugherity/7435890
+https://www.mathewinkson.com/2013/03/force-rgb-mode-in-mac-os-x-to-fix-the-picture-quality-of-an-external-monitor
+
+Thanks a bunch for the guide! Saved me from needlessly returning my MacBook, the HDMI Adapter, or my TV.
+
+I have a few recommendations to speed up the process, which saves one boot to recovery and you never have to actually disable the System Integrity Protection (SIP), thus never really leaving the system potentially vulnerable.
+
+1.) Start by running the .rb script.
+
+It only generates a couple of files in your user’s directory and does not require any special rights to read the current monitor / tv configuration. (TV must be connected).
+
+2.) Boot to into the recovery system (Cmd+R during boot).
+
+All your files are accessible here and you have write permissions to the “Overrides” folder. Your system disk is just not mounted to / but to /Volumes/ (e.g. “/Volumes/Macintosh HD/”)
+
+3.) Open a terminal and copy the DisplayVendor-directory. Remember that every path is now prefixed by “/Volumes/Macintosh HD/”.
+
+E.g. I had the Ruby script in a folder “EDID-Fix” on my desktop.
+-bash-3.2# cp -r /Volumes/Macintosh\ HD/Users/marcus/Desktop/EDID-Fix/DisplayVendorID-* /Volumes/Macintosh\ HD/System/Library/Displays/Contents/Resources/Overrides/
+
+4.) Reboot to your system
+
+Hope you find that useful.
