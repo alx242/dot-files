@@ -9,8 +9,8 @@ inoreader-flag-star "b"
 max-browser-tabs 4
 urls-source "inoreader"
 browser "urlopen %u &"
-show-read-feeds false
-show-read-articles false
+show-read-feeds true
+show-read-articles true
 
 color background          white   default
 color listnormal          white   default
@@ -25,3 +25,4 @@ macro s edit-flags "b"
 macro c edit-flags ""
 
 define-filter "All 'stared' articles" "flags = \"b\""
+define-filter "All articles older than 5 days" "age > 5"
