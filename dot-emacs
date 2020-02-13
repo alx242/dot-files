@@ -111,6 +111,21 @@
             )
           )
 
+(defun erlang-function-toggle ()
+  "Exchange point in Erlang function body with its header"
+  (interactive)
+  (let ((regexp "^[a-zA-Z0-9_]"))
+    (let ((looking-at-fundef
+           (save-excursion
+             (beginning-of-line 1)
+             (looking-at regexp))))
+      (if looking-at-fundef
+          (progn
+            (goto-char erlang-function-toggle-pos))
+        (progn
+          (setq erlang-function-toggle-pos (point))
+          (search-backward-regexp regexp))))))
+
 ;; * * * XML * * *
 (defun pretty-print-xml-region (begin end)
   "Pretty format XML markup in region. You need to have nxml-mode
@@ -189,6 +204,7 @@ by using nxml's indentation rules."
 (global-set-key (kbd "\C-z\C-r") 'rgrep)
 (global-set-key "\C-z\C-s" 'tags-apropos)
 (global-set-key (kbd "C-z m") 'menu-bar-open)
+(global-set-key "\C-z\C-f" 'erlang-function-toggle)
 
 (global-set-key (kbd "M-g") 'goto-line)
 
