@@ -21,6 +21,8 @@ color info                black   default bold
 color article             white   default
 
 bind-key ^O open-all-unread-in-browser-and-mark-read
+bind-key O open-in-browser
+bind-key o open-in-browser-and-mark-read
 macro s edit-flags "b"
 macro c edit-flags ""
 
