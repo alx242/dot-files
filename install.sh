@@ -54,7 +54,8 @@ touch $HOME/TAGS # Make sure TAGS file exists or emacs could bork out...
 mkdir -p $DESTDIR/bin
 ln -s "$SRCDIR/up"  "$DESTDIR/bin"
 ln -s "$SRCDIR/urlopen" "$DESTDIR/bin"
-ln -s "$SRCDIR/hidpi-scale" "$DESTDIR/bin"
+ln -s "$SRCDIR/nvidia-switch/install-nvidia-prime-offload" "$DESTDIR/bin"
+ln -s "$SRCDIR/nvidia-switch/uninstall-nvidia-prime-offload" "$DESTDIR/bin"
 
 ## Initialize some scripts
 source $HOME/.bashrc

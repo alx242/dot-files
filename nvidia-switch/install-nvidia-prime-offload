@@ -1,0 +1,7 @@
+#!/bin/zsh
+
+DIR=${HOME}/dot-files/nvidia-switch
+
+echo "Installing xorg.conf.prime into /etc/X11/xorg.conf"
+
+sudo cp ${DIR}/xorg.conf.prime /etc/X11/xorg.conf
