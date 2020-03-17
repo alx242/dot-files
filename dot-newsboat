@@ -11,6 +11,7 @@ urls-source "inoreader"
 browser "urlopen %u &"
 show-read-feeds true
 show-read-articles true
+download-full-page true
 
 color background          white   default
 color listnormal          white   default
