@@ -197,6 +197,8 @@ by using nxml's indentation rules."
 (global-set-key (kbd "M-[ D") 'backward-word)      ; Meta+up
 (global-set-key (kbd "<M-up>") 'backward-paragraph) ; Meta+up
 (global-set-key (kbd "<M-down>") 'forward-paragraph)  ; Meta+down
+(global-set-key (kbd "M-p") 'backward-paragraph) ; Meta+p
+(global-set-key (kbd "M-n") 'forward-paragraph)  ; Meta+n
 
 ;; Re-mapping Ctrl-Z
 (setq ctrl-z-map (make-keymap))
