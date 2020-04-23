@@ -55,6 +55,7 @@ mkdir -p $DESTDIR/bin
 ln -s "$SRCDIR/up"  "$DESTDIR/bin"
 ln -s "$SRCDIR/urlopen" "$DESTDIR/bin"
 ln -s "$SRCDIR/nvidia-gamemoderun"  "$DESTDIR/bin"
+ln -s "$SRCDIR/nvidia-run"  "$DESTDIR/bin"
 ln -s "$SRCDIR/nvidia-switch/install-nvidia-prime-offload" "$DESTDIR/bin"
 ln -s "$SRCDIR/nvidia-switch/uninstall-nvidia-prime-offload" "$DESTDIR/bin"
 
