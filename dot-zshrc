@@ -119,7 +119,7 @@ alias tail_f="journalctl -f"
 # alias nvidia-gamemoderun="__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia gamemoderun $@"
 # alias nvidiarun="__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia $@"
 alias laptop-screen-off="xrandr --output eDP-1 --off"
-alias laptop-screen-on="xrandr --output eDP-1 --below"
+alias laptop-screen-on="xrandr --output eDP-1 --auto --below DP-1"
 
 #
 export LC_CTYPE=en_US.UTF-8
