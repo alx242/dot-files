@@ -93,8 +93,6 @@ case $(uname -s) in
         autoload -Uz compinit
         compinit
         fpath=(/usr/local/share/zsh-completions $fpath)
-        export PATH="/usr/local/opt/python@3.8/bin:$PATH"
-        export LDFLAGS="-L/usr/local/opt/python@3.8/lib"
         alias ls="ls -hFG"
         ;;
     Linux)
