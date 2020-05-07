@@ -1,0 +1,5 @@
+#!/bin/zsh
+
+
+echo "Removing xorg.conf to revert to default config..."
+sudo rm /etc/X11/xorg.conf
