@@ -76,10 +76,9 @@
 ;(setq erlang-root-dir (getenv "ERL_TOP"))
 ;(setq exec-path (cons (concat (getenv "ERL_TOP") "/installed/bin") exec-path))
 (setq load-path (cons  "~/.emacs.d/emacs" load-path))
-;; Arch linux erlang mode
-(setq load-path (cons  "/usr/lib/erlang/lib/tools-3.2/emacs/" load-path))
-(require 'erlang-start)
 
+;; Install flycheck and erlang from melpa or similar
+(require 'erlang-start)
 (require 'flycheck)
 
 (flycheck-define-checker erlang-otp
@@ -249,7 +248,7 @@ by using nxml's indentation rules."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages (quote (flycheck edts cyberpunk-theme)))
+ '(package-selected-packages (quote (erlang flycheck edts cyberpunk-theme)))
  '(safe-local-variable-values (quote ((sh-indent-comment . t)))))
 ;; C-u C-x = and change "face" and then "customize this face" and then
 ;; Foreground (maybe check if it inherits something)
@@ -258,8 +257,4 @@ by using nxml's indentation rules."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- ;; '(custom-variable-tag ((t (:foreground "color-27" :weight bold))))
- ;; '(font-lock-comment-face ((t (:foreground "brightred"))))
- ;; '(font-lock-function-name-face ((t (:foreground "brightmagenta"))))
- ;; '(font-lock-string-face ((t (:foreground "magenta"))))
  )
