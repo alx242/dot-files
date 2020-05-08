@@ -2,6 +2,3 @@ $include /etc/inputrc
 
 # Case-insensitive tab completion
 set completion-ignore-case on
-
-# Make sure gamemode uses nvidia prime offloading
-export GAMEMODERUNEXEC="env __NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia"
