@@ -4,6 +4,9 @@ export LC_ALL=en_US.UTF-8
 export TMPDIR=/tmp
 export EDITOR=emacs
 
+# Stop the silly bash vs zsh warning in macos
+export BASH_SILENCE_DEPRECATION_WARNING=1
+
 if [ -r "/etc/bash_completion" ]; then
     . /etc/bash_completion
 fi
@@ -19,27 +22,27 @@ fi
 
 # Prompt flipping...
 function ok_prompt {
-local DARKBLUE="\[\033[2;34m\]"
-local LIGHTBLUE="\[\033[0;34m\]"
-local LIGHT_RED="\[\033[0;34m\]"
-local WHITE="\[\033[1;37m\]"
-local NO_COLOUR="\[\033[0m\]"
-local GIT='$(__git_ps1 " (%s)")'
-case $TERM in
-    xterm*|rxvt*)
-        TITLEBAR='\[\033]0;\u@\h:\w\007\]'
-        ;;
-    *)
-        TITLEBAR=""
-        ;;
-esac
+    local DARKBLUE="\[\033[2;34m\]"
+    local LIGHTBLUE="\[\033[0;34m\]"
+    local LIGHT_RED="\[\033[0;34m\]"
+    local WHITE="\[\033[1;37m\]"
+    local NO_COLOUR="\[\033[0m\]"
+    local GIT='$(__git_ps1 " (%s)")'
+    case $TERM in
+        xterm*|rxvt*)
+            TITLEBAR='\[\033]0;\u@\h:\w\007\]'
+            ;;
+        *)
+            TITLEBAR=""
+            ;;
+    esac
 
-PS1="${TITLEBAR}\
+    PS1="${TITLEBAR}\
 $DARKBLUE[$LIGHTBLUE\u@\h:\w${GIT}$DARKBLUE]\
 $WHITE->$NO_COLOUR "
-# PS1='[\u@\h \W]\$ '
-PS2='> '
-PS4='+ '
+    # PS1='[\u@\h \W]\$ '
+    PS2='> '
+    PS4='+ '
 }
 ok_prompt
 
@@ -130,7 +133,14 @@ alias process_port="lsof -n -P -i +c 13"
 alias bluetooth_list_cards="pacmd list-cards"
 alias bluetooth_good_audio="pacmd set-card-profile 2 a2dp_sink"
 alias tail_f="journalctl -f"
+
+# Kept as a proper command, otherwise steam would use it
+# Better to set 
+# alias nvidia-gamemoderun="__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia gamemoderun $@"
+# alias nvidiarun="__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia $@"
 alias nvidiarun="__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia $@"
+alias laptop_screen_off="xrandr --output eDP-1 --off"
+alias laptop_screen_on="xrandr --output eDP-1 --below DP-1"
 
 #
 export LC_CTYPE=en_US.UTF-8
