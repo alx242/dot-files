@@ -6,6 +6,8 @@ reload-time 15
 inoreader-login "alex@xalx.net"
 inoreader-passwordfile "~/.newsboat/inoreader.passwd"
 inoreader-flag-star "b"
+inoreader-app-id "999999536"
+inoreader-app-key "gW4ZxdgSQJz1lwrcLNcWsNStHNuIf_19"
 max-browser-tabs 4
 urls-source "inoreader"
 browser "urlopen %u &"
