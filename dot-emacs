@@ -75,15 +75,16 @@
 (require 'column-marker)
 
 ;; * * * Erlang * * *
-;;(setq erlang-root-dir (getenv "ERL_TOP"))
-;;(setq exec-path (getenv "ERL_TOP/bin"))
-;;(setq erlang-root-dir (cons (concat (getenv "ERL_TOP") "/installed") exec-path))
-;;(setq exec-path (cons (concat (getenv "ERL_TOP") "/installed/bin") exec-path))
-
+(cond
+ (
+  (file-directory-p (concat (getenv "ERL_TOP") "/installed"))
+  (setq erlang-root-dir (concat (getenv "ERL_TOP") "/installed"))
+  (setq exec-path (cons (concat (getenv "ERL_TOP") "/installed/bin") exec-path))
+  ))
 (require 'erlang-start)
 
 (setq ‘edts-inhibit-package-check’ t)
-;;(add-to-list 'load-path "/home/alex/dev/edts")
+(add-to-list 'load-path "~/dev/edts")
 
 (add-hook 'after-init-hook 'my-after-init-hook)
 (defun my-after-init-hook ()
@@ -217,7 +218,7 @@ by using nxml's indentation rules."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(edts-inhibit-package-check t)
- '(package-selected-packages (quote (edts gnu-elpa-keyring-update erlang flycheck)))
+ '(package-selected-packages (quote (gnu-elpa-keyring-update erlang flycheck)))
  '(safe-local-variable-values (quote ((allout-layout . t) (sh-indent-comment . t)))))
 ;; C-u C-x = and change "face" and then "customize this face" and then
 ;; Foreground (maybe check if it inherits something)

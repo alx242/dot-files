@@ -48,6 +48,9 @@ ln -s $SRCDIR/conky.conf $HOME/.config/conky/conky.conf
 mkdir -p $HOME/.weechat
 ln -s $SRCDIR/weechat.irc.conf $HOME/.weechat/irc.conf
 
+# EDTS
+ln -s $SRCDIR/edts $HOME/dev/edts
+
 # Some emacs modules need compilation
 touch $HOME/TAGS # Make sure TAGS file exists or emacs could bork out...
 
