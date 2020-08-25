@@ -25,9 +25,11 @@
 (add-to-list 'load-path "~/.emacs.d/lisp")
 
 ;; Package handling
-(add-to-list 'package-archives '("elpa" . "http://elpa.gnu.org/packages/"))
-(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
-(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+(require 'package)
+(add-to-list 'package-archives '("elpa" . "http://elpa.gnu.org/packages/") t)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
+(package-initialize)
 
 ;; * * * Moving around window-buffers * * *
 ;; Non-default binding which doesn't screw up that much...
@@ -73,57 +75,21 @@
 (require 'column-marker)
 
 ;; * * * Erlang * * *
-;(setq erlang-root-dir (getenv "ERL_TOP"))
-;(setq exec-path (cons (concat (getenv "ERL_TOP") "/installed/bin") exec-path))
-(setq load-path (cons  "~/.emacs.d/emacs" load-path))
+;;(setq erlang-root-dir (getenv "ERL_TOP"))
+;;(setq exec-path (getenv "ERL_TOP/bin"))
+;;(setq erlang-root-dir (cons (concat (getenv "ERL_TOP") "/installed") exec-path))
+;;(setq exec-path (cons (concat (getenv "ERL_TOP") "/installed/bin") exec-path))
 
-;; Install flycheck and erlang from melpa or similar
 (require 'erlang-start)
-(require 'flycheck)
 
-(flycheck-define-checker erlang-otp
-  "An Erlang syntax checker using the Erlang interpreter."
-  :command ("erlc" "-o" temporary-directory "-Wall"
-            "-I" "../.."
-            "-I" "../include"
-            "-pz" "../ebin"
-            source)
-  :modes erlang-mode
-  :error-patterns
-  ((warning line-start (file-name) ":" line ": Warning:" (message) line-end)
-   (error line-start (file-name) ":" line ": " (message) line-end)))
+(setq ‘edts-inhibit-package-check’ t)
+;;(add-to-list 'load-path "/home/alex/dev/edts")
 
-;; Erlang compiler extra options
-(setq erlang-compile-extra-opts '((i . "../..")
-                                  (i . "../include")
-                                  debug_info))
+(add-hook 'after-init-hook 'my-after-init-hook)
+(defun my-after-init-hook ()
+  (require 'edts-start))
 
-;;          (lambda () (generate-etags))
-(add-hook 'erlang-mode-hook
-          (lambda ()
-            (flycheck-select-checker 'erlang-otp)
-            (flycheck-mode)
-            (if (file-exists-p (concat (getenv "ERL_TOP") "/../TAGS"))
-                (visit-tags-table (concat (getenv "ERL_TOP") "/../TAGS")))
-            (column-marker-1 80)
-            (generate-etags)
-            )
-          )
-
-(defun erlang-function-toggle ()
-  "Exchange point in Erlang function body with its header"
-  (interactive)
-  (let ((regexp "^[a-zA-Z0-9_]"))
-    (let ((looking-at-fundef
-           (save-excursion
-             (beginning-of-line 1)
-             (looking-at regexp))))
-      (if looking-at-fundef
-          (progn
-            (goto-char erlang-function-toggle-pos))
-        (progn
-          (setq erlang-function-toggle-pos (point))
-          (search-backward-regexp regexp))))))
+(setq load-path (cons  "~/.emacs.d/emacs" load-path))
 
 ;; * * * XML * * *
 (defun pretty-print-xml-region (begin end)
@@ -250,8 +216,9 @@ by using nxml's indentation rules."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages (quote (erlang flycheck)))
- '(safe-local-variable-values (quote ((sh-indent-comment . t)))))
+ '(edts-inhibit-package-check t)
+ '(package-selected-packages (quote (edts gnu-elpa-keyring-update erlang flycheck)))
+ '(safe-local-variable-values (quote ((allout-layout . t) (sh-indent-comment . t)))))
 ;; C-u C-x = and change "face" and then "customize this face" and then
 ;; Foreground (maybe check if it inherits something)
 (custom-set-faces
