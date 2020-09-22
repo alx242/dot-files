@@ -1,1 +1,12 @@
-source ~/.bashrc
+# General
+if [ -f ~/.bashrc ]; then
+   . ~/.bashrc;
+fi
+
+# Linux
+[[ -r "/etc/bash_completion" ]] && . "/etc/bash_completion"
+[[ -r "/usr/share/git/completion/git-prompt.sh" ]] && . "/usr/share/git/completion/git-prompt.sh"
+
+# MacOS
+[[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
+[[ -r  "/usr/local/etc/bash_completion.d/git-prompt.sh" ]] && . "/usr/local/etc/bash_completion.d/git-prompt.sh"

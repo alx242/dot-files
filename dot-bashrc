@@ -1,5 +1,5 @@
 # -*- mode: sh -*-
-export PATH=~/bin:~/.local/bin:~/Library/Python/3.7/bin:/usr/local/bin:/usr/local/sbin:$PATH
+export PATH=~/bin:~/.local/bin:/usr/local/bin:/usr/local/sbin:$PATH
 export LC_ALL=en_US.UTF-8
 export TMPDIR=/tmp
 export EDITOR=emacs
@@ -10,15 +10,19 @@ export BASH_SILENCE_DEPRECATION_WARNING=1
 if [ -r "/etc/bash_completion" ]; then
     . /etc/bash_completion
 fi
-
-if [ -r "/usr/local/etc/profile.d/bash_completion.sh" ]; then
-    export BASH_COMPLETION_COMPAT_DIR="/usr/local/etc/bash_completion.d"
-    . /usr/local/etc/profile.d/bash_completion.sh
-    . /usr/local/etc/bash_completion.d/git-prompt.sh
-fi
 if [ -r "/usr/share/git/completion/git-prompt.sh" ]; then
     . /usr/share/git/completion/git-prompt.sh
 fi
+
+if [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]]; then
+    . "/usr/local/etc/profile.d/bash_completion.sh"
+    . "/usr/local/etc/bash_completion.d/git-prompt.sh"
+fi
+# if [ -r "/usr/local/etc/profile.d/bash_completion.sh" ]; then
+#     export BASH_COMPLETION_COMPAT_DIR="/usr/local/etc/bash_completion.d"
+#     . /usr/local/etc/profile.d/bash_completion.sh
+#     . /usr/local/etc/bash_completion.d/git-prompt.sh
+# fi
 
 # Prompt flipping...
 function ok_prompt {

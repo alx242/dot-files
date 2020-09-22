@@ -75,6 +75,7 @@
  ((file-directory-p (concat (getenv "ERL_TOP") "/installed"))
   (setq erlang-root-dir (concat (getenv "ERL_TOP") "/installed"))
   (setq exec-path (cons (concat (getenv "ERL_TOP") "/installed/bin") exec-path))
+  (add-to-list 'load-path (concat (getenv "ERL_TOP") "/otp/lib/tools/emacs"))
   )
  ((file-directory-p "/usr/lib/erlang")
   (setq erlang-root-dir "/usr/lib/erlang")
@@ -82,13 +83,12 @@
   )
  )
 
-(require 'erlang-start)
+; (require 'erlang-start)
 (setq ‘edts-inhibit-package-check’ t)
-(add-to-list 'load-path "~/dev/edts")
-
-;(add-hook 'after-init-hook 'my-after-init-hook)
-;(defun my-after-init-hook ()
-;  (require 'edts-start))
+(add-to-list 'load-path "~/dev/edts/")
+(add-hook 'after-init-hook 'my-after-init-hook)
+(defun my-after-init-hook ()
+  (require 'edts-start))
 
 (setq load-path (cons  "~/.emacs.d/emacs" load-path))
 
@@ -213,8 +213,9 @@ by using nxml's indentation rules."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(edts-inhibit-package-check t)
- '(package-selected-packages (quote (gnu-elpa-keyring-update erlang flycheck)))
- '(safe-local-variable-values (quote ((allout-layout . t) (sh-indent-comment . t)))))
+ '(package-selected-packages
+   '(auto-complete auto-highlight-symbol f edts gnu-elpa-keyring-update erlang flycheck))
+ '(safe-local-variable-values '((allout-layout . t) (sh-indent-comment . t))))
 ;; C-u C-x = and change "face" and then "customize this face" and then
 ;; Foreground (maybe check if it inherits something)
 (custom-set-faces
