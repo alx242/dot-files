@@ -1,7 +1,5 @@
 # General
-if [ -f ~/.bashrc ]; then
-   . ~/.bashrc;
-fi
+[[ -f ~/.bashrc ]] && . "${HOME}/.bashrc"
 
 # Linux
 [[ -r "/etc/bash_completion" ]] && . "/etc/bash_completion"
