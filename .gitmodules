@@ -25,6 +25,3 @@
 [submodule "dot-emacs.d/wrangler"]
 	path = dot-emacs.d/wrangler
 	url = https://github.com/RefactoringTools/wrangler.git
-[submodule "ivy-erlang-complete"]
-	path = ivy-erlang-complete
-	url = git@github.com:s-kostyaev/ivy-erlang-complete.git
