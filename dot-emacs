@@ -52,6 +52,8 @@
 (setq-default column-number-mode t)
 (setq vc-follow-symlinks t) ; Auto follow symlinks
 
+(setq max-lisp-eval-depth 600)
+
 ;; * * * Interactively Do Things * * *
 (require 'ido)
 (ido-mode t)
@@ -95,25 +97,25 @@
 (add-hook 'erlang-mode-hook #'ivy-erlang-complete-init)
 ;; automatic update completion data after save
 (add-hook 'after-save-hook #'ivy-erlang-complete-reparse)
-
+;;
 (cond
  ((file-directory-p (getenv "CONFD_DIR"))
   (setq ivy-erlang-complete-project-root (concat (getenv "CONFD_DIR") "/../lib"))
   )
  )
 
-(defun my-erlang-hook ()
-  "Setup for erlang."
-  ;; (require 'wrangler)
-  (require 'erlang-start)
-  (ivy-erlang-complete-init)
-  (defvar erlang-extended-mode-map)
-  (define-key erlang-extended-mode-map (kbd "M-.") nil)
-  (define-key erlang-extended-mode-map (kbd "M-,") nil)
-  (define-key erlang-extended-mode-map (kbd "M-?") nil)
-  (define-key erlang-extended-mode-map (kbd "(") nil))
-(add-hook 'erlang-mode-hook #'my-erlang-hook)
-(add-hook 'after-save-hook #'ivy-erlang-complete-reparse)
+;; (defun my-erlang-hook ()
+;;   "Setup for erlang."
+;;   ;; (require 'wrangler)
+;;   (require 'erlang-start)
+;;   (ivy-erlang-complete-init)
+;;   (defvar erlang-extended-mode-map)
+;;   (define-key erlang-extended-mode-map (kbd "M-.") nil)
+;;   (define-key erlang-extended-mode-map (kbd "M-,") nil)
+;;   (define-key erlang-extended-mode-map (kbd "M-?") nil)
+;;   (define-key erlang-extended-mode-map (kbd "(") nil))
+;; (add-hook 'erlang-mode-hook #'my-erlang-hook)
+;; (add-hook 'after-save-hook #'ivy-erlang-complete-reparse)
 
 (add-to-list 'auto-mode-alist '("rebar\\.config$" . erlang-mode))
 (add-to-list 'auto-mode-alist '("relx\\.config$" . erlang-mode))
