@@ -92,17 +92,25 @@
   )
  )
 
-;;;; Erlang
-(require 'ivy-erlang-complete)
-(add-hook 'erlang-mode-hook #'ivy-erlang-complete-init)
-;; automatic update completion data after save
+(defun my-erlang-hook ()
+  "Setup for erlang."
+  ;; (require 'wrangler)
+  ;;   (require 'erlang-start)
+  (require 'ivy-erlang-complete)
+  (ivy-erlang-complete-init))
+(add-hook 'erlang-mode-hook #'my-erlang-hook)
 (add-hook 'after-save-hook #'ivy-erlang-complete-reparse)
+
+;(require 'ivy-erlang-complete)
+;(add-hook 'erlang-mode-hook #'ivy-erlang-complete-init)
+;; automatic update completion data after save
+;(add-hook 'after-save-hook #'ivy-erlang-complete-reparse)
 ;;
-(cond
- ((file-directory-p (getenv "CONFD_DIR"))
-  (setq ivy-erlang-complete-project-root (concat (getenv "CONFD_DIR") "/../lib"))
-  )
- )
+; (cond
+;  ((file-directory-p (getenv "CONFD_DIR"))
+;   (setq ivy-erlang-complete-project-root (concat (getenv "CONFD_DIR") "/../lib"))
+;   )
+;  )
 
 ;; (defun my-erlang-hook ()
 ;;   "Setup for erlang."
@@ -250,8 +258,9 @@ by using nxml's indentation rules."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(ivy-erlang-complete auto-complete auto-highlight-symbol f gnu-elpa-keyring-update erlang flycheck))
- '(safe-local-variable-values '((allout-layout . t) (sh-indent-comment . t))))
+   (quote
+    (auto-complete auto-highlight-symbol f gnu-elpa-keyring-update erlang flycheck)))
+ '(safe-local-variable-values (quote ((allout-layout . t) (sh-indent-comment . t)))))
 ;; C-u C-x = and change "face" and then "customize this face" and then
 ;; Foreground (maybe check if it inherits something)
 (custom-set-faces
