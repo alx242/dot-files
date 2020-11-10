@@ -8,15 +8,18 @@
 (defun generate-etags ()
   (interactive)
   ;; Erlang
-  (shell-command "etags --language=erlang \
- -o ${ERL_TOP}/../TAGS \
- `find ${ERL_TOP}/../lib -iregex '.*.erl$' -o -iregex '.*hrl$' | grep -v '\.eunit'`")
-
+  ;;  (shell-command "etags --language=erlang \
+  ;; -o ${ERL_TOP}/../TAGS \
+  ;; `find ${ERL_TOP}/../lib -iregex '.*.erl$' -o -iregex '.*hrl$' | grep -v '\.eunit'`")
+  (shell-command "ctags -e -f ${ERL_TOP}/../TAGS -R ${ERL_TOP}/../lib -h \".hrl.erl\"")
   ;; Python
   ;; (shell-command "etags -a --language=python
   ;; -o ${PYTHON_DIRS}/TAGS `find ${PYTHON_DIRS} | grep -E '(\.py)$'`")
   nil
   )
+
+;; Enable ctags update for the mode-hooks. See Erlang, below...
+(autoload 'turn-on-ctags-auto-update-mode "ctags-update" "turn on `ctags-auto-update-mode'." t)
 
 (setq tags-revert-without-query 1)
 
@@ -76,54 +79,25 @@
 (cond
  ((file-directory-p (concat (getenv "ERL_TOP") "/installed"))
   (setq erlang-root-dir (concat (getenv "ERL_TOP") "/installed"))
-  (setq ivy-erlang-complete-erlang-root (concat (getenv "ERL_TOP") "/installed"))
   (setq exec-path (cons (concat (getenv "ERL_TOP") "/installed/bin") exec-path))
   (add-to-list 'load-path (concat (getenv "ERL_TOP") "/otp/lib/tools/emacs"))
   )
  ((file-directory-p "/usr/local/lib/erlang")
   (setq erlang-root-dir "/usr/local/lib/erlang")
-  (setq ivy-erlang-complete-erlang-root "/usr/local/lib/erlang")
   (setq exec-path (cons "/usr/local/lib/erlang/bin" exec-path))
   )
  ((file-directory-p "/usr/lib/erlang")
   (setq erlang-root-dir "/usr/lib/erlang")
-  (setq ivy-erlang-complete-erlang-root "/usr/lib/erlang")
   (setq exec-path (cons "/usr/lib/erlang/bin" exec-path))
   )
  )
 
-(defun my-erlang-hook ()
-  "Setup for erlang."
-  ;; (require 'wrangler)
-  ;;   (require 'erlang-start)
-  (require 'ivy-erlang-complete)
-  (ivy-erlang-complete-init))
-(add-hook 'erlang-mode-hook #'my-erlang-hook)
-(add-hook 'after-save-hook #'ivy-erlang-complete-reparse)
+;; (setq tags-table-list '("${ERL_TOP}/../TAGS"))
+(add-hook 'erlang-mode-hook (lambda ()
+                              (visit-tags-table
+                               (file-name-directory (concat (getenv "ERL_TOP") "/../TAGS")))))
 
-;(require 'ivy-erlang-complete)
-;(add-hook 'erlang-mode-hook #'ivy-erlang-complete-init)
-;; automatic update completion data after save
-;(add-hook 'after-save-hook #'ivy-erlang-complete-reparse)
-;;
-; (cond
-;  ((file-directory-p (getenv "CONFD_DIR"))
-;   (setq ivy-erlang-complete-project-root (concat (getenv "CONFD_DIR") "/../lib"))
-;   )
-;  )
-
-;; (defun my-erlang-hook ()
-;;   "Setup for erlang."
-;;   ;; (require 'wrangler)
-;;   (require 'erlang-start)
-;;   (ivy-erlang-complete-init)
-;;   (defvar erlang-extended-mode-map)
-;;   (define-key erlang-extended-mode-map (kbd "M-.") nil)
-;;   (define-key erlang-extended-mode-map (kbd "M-,") nil)
-;;   (define-key erlang-extended-mode-map (kbd "M-?") nil)
-;;   (define-key erlang-extended-mode-map (kbd "(") nil))
-;; (add-hook 'erlang-mode-hook #'my-erlang-hook)
-;; (add-hook 'after-save-hook #'ivy-erlang-complete-reparse)
+(add-hook 'erlang-mode-hook  'turn-on-ctags-auto-update-mode)
 
 (add-to-list 'auto-mode-alist '("rebar\\.config$" . erlang-mode))
 (add-to-list 'auto-mode-alist '("relx\\.config$" . erlang-mode))
@@ -258,9 +232,8 @@ by using nxml's indentation rules."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   (quote
-    (auto-complete auto-highlight-symbol f gnu-elpa-keyring-update erlang flycheck)))
- '(safe-local-variable-values (quote ((allout-layout . t) (sh-indent-comment . t)))))
+   '(ctags-update auto-complete auto-highlight-symbol f gnu-elpa-keyring-update erlang flycheck))
+ '(safe-local-variable-values '((allout-layout . t) (sh-indent-comment . t))))
 ;; C-u C-x = and change "face" and then "customize this face" and then
 ;; Foreground (maybe check if it inherits something)
 (custom-set-faces
