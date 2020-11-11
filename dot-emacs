@@ -5,22 +5,38 @@
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
 
+;; To reload .emacs just do M-x load-file press return twice if it is
+;; the current buffer or just open the correct file...
+
+;; Generate a completely new etags file using ctags command
 (defun generate-etags ()
   (interactive)
   ;; Erlang
-  ;;  (shell-command "etags --language=erlang \
-  ;; -o ${ERL_TOP}/../TAGS \
-  ;; `find ${ERL_TOP}/../lib -iregex '.*.erl$' -o -iregex '.*hrl$' | grep -v '\.eunit'`")
-  (shell-command "ctags -e -f ${ERL_TOP}/../TAGS \
-                  -R ${ERL_TOP}/../lib/*/src -h \".hrl.erl\"")
-  ;; Python
-  ;; (shell-command "etags -a --language=python
-  ;; -o ${PYTHON_DIRS}/TAGS `find ${PYTHON_DIRS} | grep -E '(\.py)$'`")
+  (shell-command "ctags -e -f ${ERL_TOP}/../lib/TAGS -R ${ERL_TOP}/../lib/*/src -h \".hrl.erl\"")
+  (message "Generated etags")
   nil
   )
 
-;; Enable ctags update for the mode-hooks. See Erlang, below...
-(autoload 'turn-on-ctags-auto-update-mode "ctags-update" "turn on `ctags-auto-update-mode'." t)
+;; Update the etags file with the current open buffer
+(defun update-etags ()
+  (interactive)
+  ;; Erlang
+  (let* ((file (buffer-file-name (current-buffer)))))
+  (shell-command (concat "ctags -e -a -f ${ERL_TOP}/../lib/TAGS " buffer-file-name))
+  (message (concat "Update etags file with: " buffer-file-name))
+  nil
+  )
+
+;; Will update the etags file in case we are saving a correct file (or
+;; rather we save a file with the correct mode)
+(add-hook 'after-save-hook (lambda()
+                             (if (string-equal mode-name "Erlang")
+                                 (update-etags)
+                               nil)))
+; (message (concat "No etags update, mode: " mode-name)))))
+
+(add-hook 'after-init-hook
+	  (lambda () (load-theme 'cyberpunk t)))
 
 (setq tags-revert-without-query 1)
 
@@ -94,11 +110,10 @@
  )
 
 ;; (setq tags-table-list '("${ERL_TOP}/../TAGS"))
-(add-hook 'erlang-mode-hook (lambda ()
-                              (visit-tags-table
-                               (file-name-directory (concat (getenv "ERL_TOP") "/../TAGS")))))
-
-(add-hook 'erlang-mode-hook  'turn-on-ctags-auto-update-mode)
+(add-hook 'erlang-mode-hook
+          (lambda ()
+            (visit-tags-table
+             (file-name-directory (concat (getenv "ERL_TOP") "/../lib/TAGS")))))
 
 (add-to-list 'auto-mode-alist '("rebar\\.config$" . erlang-mode))
 (add-to-list 'auto-mode-alist '("relx\\.config$" . erlang-mode))
@@ -232,8 +247,10 @@ by using nxml's indentation rules."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   '("b89a4f5916c29a235d0600ad5a0849b1c50fab16c2c518e1d98f0412367e7f97" default))
  '(package-selected-packages
-   '(ctags-update auto-complete auto-highlight-symbol f gnu-elpa-keyring-update erlang flycheck))
+   '(cyberpunk-theme auto-complete auto-highlight-symbol f gnu-elpa-keyring-update erlang flycheck))
  '(safe-local-variable-values '((allout-layout . t) (sh-indent-comment . t))))
 ;; C-u C-x = and change "face" and then "customize this face" and then
 ;; Foreground (maybe check if it inherits something)
