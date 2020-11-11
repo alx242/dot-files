@@ -11,7 +11,8 @@
   ;;  (shell-command "etags --language=erlang \
   ;; -o ${ERL_TOP}/../TAGS \
   ;; `find ${ERL_TOP}/../lib -iregex '.*.erl$' -o -iregex '.*hrl$' | grep -v '\.eunit'`")
-  (shell-command "ctags -e -f ${ERL_TOP}/../TAGS -R ${ERL_TOP}/../lib -h \".hrl.erl\"")
+  (shell-command "ctags -e -f ${ERL_TOP}/../TAGS \
+                  -R ${ERL_TOP}/../lib/*/src -h \".hrl.erl\"")
   ;; Python
   ;; (shell-command "etags -a --language=python
   ;; -o ${PYTHON_DIRS}/TAGS `find ${PYTHON_DIRS} | grep -E '(\.py)$'`")
