@@ -9,7 +9,7 @@ function up_elementary {
 
 case $(uname -s) in
     Darwin|FreeBSD)
-        brew update && brew upgrade
+        brew update && brew upgrade -n
         ;;
     Linux)
         up_arch || up_elementary
