@@ -56,8 +56,8 @@
 (global-set-key (kbd "C-x <left>") 'windmove-left)
 (global-set-key (kbd "C-x <up>") 'windmove-up)
 (global-set-key (kbd "C-x <down>") 'windmove-down)
-(global-set-key (kbd "C-<prior>") 'enlarge-window)
-(global-set-key (kbd "C-<next>") 'shrink-window)
+; (global-set-key (kbd "C-P") 'enlarge-window)
+; (global-set-key (kbd "C-N") 'shrink-window)
 
 ;; when cursor is on edge, move to the other side, as in a toroidal space
 (setq windmove-wrap-around t)
@@ -203,6 +203,8 @@ by using nxml's indentation rules."
 (global-set-key "\C-z\C-s" 'tags-apropos)
 (global-set-key (kbd "C-z m") 'menu-bar-open)
 (global-set-key "\C-z\C-f" 'erlang-function-toggle)
+(global-set-key (kbd "\C-z\C-m") 'maximize-window)
+(global-set-key (kbd "\C-z\C-b") 'balance-windows)
 
 (global-set-key (kbd "M-g") 'goto-line)
 
