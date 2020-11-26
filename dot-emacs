@@ -12,7 +12,7 @@
 (defun generate-etags ()
   (interactive)
   ;; Erlang
-  (shell-command "ctags -e -f ${ERL_TOP}/../lib/TAGS -R ${ERL_TOP}/../lib/*/src -h \".hrl.erl\"")
+  (shell-command "ctags -e -f ${ERLANG_DIRS}/TAGS -R ${ERLANG_DIRS}/*/src ${ERLANG_DIRS}/*/include -h \".hrl.erl\"")
   (message "Generated etags")
   nil
   )
@@ -22,7 +22,7 @@
   (interactive)
   ;; Erlang
   (let* ((file (buffer-file-name (current-buffer)))))
-  (shell-command (concat "ctags -e -a -f ${ERL_TOP}/../lib/TAGS " buffer-file-name))
+  (shell-command (concat "ctags -e -a -f ${ERLANG_DIRS}/TAGS " buffer-file-name))
   (message (concat "Update etags file with: " buffer-file-name))
   nil
   )
