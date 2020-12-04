@@ -202,9 +202,10 @@ by using nxml's indentation rules."
 (global-set-key (kbd "\C-z\C-r") 'rgrep)
 (global-set-key "\C-z\C-s" 'tags-apropos)
 (global-set-key (kbd "C-z m") 'menu-bar-open)
-(global-set-key "\C-z\C-f" 'erlang-function-toggle)
-(global-set-key (kbd "\C-z\C-m") 'maximize-window)
-(global-set-key (kbd "\C-z\C-b") 'balance-windows)
+(global-set-key "\C-c\C-f" 'erlang-beginning-of-clause)
+(global-set-key (kbd "\C-c\C-m") 'maximize-window)
+(global-set-key (kbd "\C-c\C-b") 'balance-windows)
+(global-set-key (kbd "\C-c\C-e") 'erlang-next-error)
 
 (global-set-key (kbd "M-g") 'goto-line)
 
