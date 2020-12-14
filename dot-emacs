@@ -40,6 +40,9 @@
 
 (setq tags-revert-without-query 1)
 
+;; Force confirmation before exit of emacs
+(setq confirm-kill-emacs 'y-or-n-p)
+
 ;; * * * Load emacs stuff * * *
 (add-to-list 'load-path "~/.emacs.d/lisp")
 
