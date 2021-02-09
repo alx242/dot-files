@@ -6,8 +6,8 @@ reload-time 15
 inoreader-login "alex@xalx.net"
 inoreader-passwordfile "~/.newsboat/inoreader.passwd"
 inoreader-flag-star "b"
-inoreader-app-id "999999536"
-inoreader-app-key "gW4ZxdgSQJz1lwrcLNcWsNStHNuIf_19"
+# inoreader-app-id "999999536"
+# inoreader-app-key "gW4ZxdgSQJz1lwrcLNcWsNStHNuIf_19"
 max-browser-tabs 4
 urls-source "inoreader"
 browser "urlopen %u &"
@@ -20,7 +20,7 @@ color listnormal          white   default
 color listfocus           black   black   bold
 color listnormal_unread   white   default
 color listfocus_unread    white   black   bold
-color info                black   default bold
+color info                white   default bold
 color article             white   default
 
 bind-key ^O open-all-unread-in-browser-and-mark-read

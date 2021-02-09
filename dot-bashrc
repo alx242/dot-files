@@ -3,6 +3,7 @@ export PATH=~/bin:~/.local/bin:/usr/local/bin:/usr/local/sbin:$PATH
 export LC_ALL=en_US.UTF-8
 export TMPDIR=/tmp
 export EDITOR=emacs
+export TERM=xterm-256color
 
 # Stop the silly bash vs zsh warning in macos
 export BASH_SILENCE_DEPRECATION_WARNING=1
