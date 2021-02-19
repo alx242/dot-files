@@ -139,13 +139,13 @@ alias bluetooth_list_cards="pacmd list-cards"
 alias bluetooth_good_audio="pacmd set-card-profile 2 a2dp_sink"
 alias tail_f="journalctl -f"
 
-# Kept as a proper command, otherwise steam would use it
-# Better to set 
+# Kept as a proper command, otherwise steam would not use it.
+
 # alias nvidia-gamemoderun="__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia gamemoderun $@"
 # alias nvidiarun="__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia $@"
 alias nvidiarun="__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia $@"
-alias laptop_screen_off="xrandr --output eDP-1 --off"
-alias laptop_screen_on="xrandr --output eDP-1 --below DP-1"
+# alias laptop_screen_off="xrandr --output eDP-1 --off"
+# alias laptop_screen_on="xrandr --output eDP-1 --below DP-1"
 
 #
 export LC_CTYPE=en_US.UTF-8
