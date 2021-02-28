@@ -1,0 +1,19 @@
+#!/bin/bash
+cd / # THIS CD IS IMPORTANT THE FOLLOWING LONG COMMAND IS RUN FROM /
+tar -cvpzf /mnt/bloated/Backup/backup.tar.gz \
+    --exclude=/backup.tar.gz \
+    --exclude=/proc \
+    --exclude=/tmp \
+    --exclude=/mnt \
+    --exclude=/dev \
+    --exclude=/sys \
+    --exclude=/run \
+    --exclude=/media \
+    --exclude=/var/log \
+    --exclude=/var/cache \
+    --exclude=/var/lib/flatpak \
+    --exclude=/usr/src/linux-headers* \
+    --exclude=/home/*/Downloads \
+    --exclude=/home/*/.gvfs \
+    --exclude=/home/*/.cache \
+    --exclude=/home/*/.local/share/Trash /

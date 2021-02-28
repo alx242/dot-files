@@ -54,6 +54,7 @@ ln -s $SRCDIR/edts $HOME/dev/edts
 touch $HOME/TAGS # Make sure TAGS file exists or emacs could bork out...
 
 mkdir -p $DESTDIR/bin
+ln -s "$SRCDIR/backup"  "$DESTDIR/bin"
 ln -s "$SRCDIR/up"  "$DESTDIR/bin"
 ln -s "$SRCDIR/vol_up" "$DESTDIR/bin"
 ln -s "$SRCDIR/vol_down" "$DESTDIR/bin"
