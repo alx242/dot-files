@@ -27,6 +27,11 @@
   nil
   )
 
+(setq mac-option-modifier nil
+      mac-command-modifier 'meta
+      x-select-enable-clipboard t)
+
+
 ;; Will update the etags file in case we are saving a correct file (or
 ;; rather we save a file with the correct mode)
 (add-hook 'after-save-hook (lambda()
@@ -245,6 +250,14 @@ by using nxml's indentation rules."
                                            "tmux set-buffer \"`xargs -0 $@`\""))
                 )
 
+(set-face-font
+ 'default
+ ;;(selected-frame)
+ ;;"-*-unscii-bold-normal-normal-*-*-*-*-*-m-0-iso10646-1")
+ "-*-unscii-bold-normal-normal-*-16-*-*-*-m-0-iso10646-1")
+
+
+
 ;; * * * README * * *
 (find-file "~/README")
 (switch-to-buffer "README")
@@ -279,9 +292,4 @@ by using nxml's indentation rules."
 ;;  '(font-lock-type-face ((t (:foreground "brightgreen"))))
 ;;  '(font-lock-variable-name-face ((t (:foreground "blue"))))
 ;;  '(minibuffer-prompt ((t (:foreground "brightwhite")))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+
