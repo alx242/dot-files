@@ -280,11 +280,11 @@ by using nxml's indentation rules."
  '(ansi-color-faces-vector
    [default default default italic underline success warning error])
  '(column-number-mode t)
- '(custom-enabled-themes '(misterioso))
+ '(custom-enabled-themes '(tango))
  '(custom-safe-themes
-   '("5a27cbf4736a5f9be00c35f4961efd29ea72f7e959f856e0ab31051547ce4f29" "b89a4f5916c29a235d0600ad5a0849b1c50fab16c2c518e1d98f0412367e7f97" default))
+   '("4eb6fa2ee436e943b168a0cd8eab11afc0752aebb5d974bba2b2ddc8910fca8f" "117efd35bd4451a2d4ee0180cb2dbfc8601af5c4d9ade3ea575d2afdda0feb82" "81c3de64d684e23455236abde277cda4b66509ef2c28f66e059aa925b8b12534" "5a27cbf4736a5f9be00c35f4961efd29ea72f7e959f856e0ab31051547ce4f29" "b89a4f5916c29a235d0600ad5a0849b1c50fab16c2c518e1d98f0412367e7f97" default))
  '(package-selected-packages
-   '(nyan-mode inkpot-theme yang-mode cyberpunk-theme auto-complete auto-highlight-symbol f gnu-elpa-keyring-update erlang flycheck))
+   '(gruvbox-theme gotham-theme dracula-theme nyan-mode inkpot-theme yang-mode cyberpunk-theme auto-complete auto-highlight-symbol f gnu-elpa-keyring-update erlang flycheck))
  '(safe-local-variable-values '((allout-layout . t) (sh-indent-comment . t)))
  '(scroll-bar-mode nil))
 ;; C-u C-x = and change "face" and then "customize this face" and then
