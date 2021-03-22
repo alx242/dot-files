@@ -27,10 +27,21 @@
   nil
   )
 
-(setq mac-option-modifier nil
-      mac-command-modifier 'meta
-      x-select-enable-clipboard t)
+;; Mac OS allow alt-command and make command meta
+;; (setq mac-option-modifier nil
+;;       ;; mac-command-modifier 'meta
+;;       x-select-enable-clipboard t)
 
+;; (setq mac-option-key-is-meta t)
+(setq mac-option-key-is-meta t)
+(setq mac-right-option-modifier nil)
+(setq x-select-enable-clipboard t)
+
+;; (setq mac-option-key-is-meta nil
+;;      mac-command-key-is-meta t
+;;      mac-command-modifier 'meta
+;;      mac-option-modifier 'none
+;;      x-select-enable-clipboard t
 
 ;; Will update the etags file in case we are saving a correct file (or
 ;; rather we save a file with the correct mode)
