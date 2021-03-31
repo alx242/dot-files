@@ -49,8 +49,9 @@
                              (if (string-equal mode-name "Erlang")
                                  (update-etags)
                                nil)))
-; (message (concat "No etags update, mode: " mode-name)))))
+;; (message (concat "No etags update, mode: " mode-name)))))
 
+(add-to-list 'custom-theme-load-path (expand-file-name "~/.emacs.d/themes/"))
 (add-hook 'after-init-hook
 	  (lambda () (load-theme 'gotham t)))
 
