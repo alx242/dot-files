@@ -51,8 +51,8 @@
                                nil)))
 ; (message (concat "No etags update, mode: " mode-name)))))
 
-;(add-hook 'after-init-hook
-;	  (lambda () (load-theme 'adwaita t)))
+(add-hook 'after-init-hook
+	  (lambda () (load-theme 'gotham t)))
 
 (setq tags-revert-without-query 1)
 
@@ -280,12 +280,13 @@ by using nxml's indentation rules."
  '(ansi-color-faces-vector
    [default default default italic underline success warning error])
  '(column-number-mode t)
- '(custom-enabled-themes '(tango))
  '(custom-safe-themes
-   '("4eb6fa2ee436e943b168a0cd8eab11afc0752aebb5d974bba2b2ddc8910fca8f" "117efd35bd4451a2d4ee0180cb2dbfc8601af5c4d9ade3ea575d2afdda0feb82" "81c3de64d684e23455236abde277cda4b66509ef2c28f66e059aa925b8b12534" "5a27cbf4736a5f9be00c35f4961efd29ea72f7e959f856e0ab31051547ce4f29" "b89a4f5916c29a235d0600ad5a0849b1c50fab16c2c518e1d98f0412367e7f97" default))
+   (quote
+    ("d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "e16a771a13a202ee6e276d06098bc77f008b73bbac4d526f160faa2d76c1dd0e" "4eb6fa2ee436e943b168a0cd8eab11afc0752aebb5d974bba2b2ddc8910fca8f" "117efd35bd4451a2d4ee0180cb2dbfc8601af5c4d9ade3ea575d2afdda0feb82" "81c3de64d684e23455236abde277cda4b66509ef2c28f66e059aa925b8b12534" "5a27cbf4736a5f9be00c35f4961efd29ea72f7e959f856e0ab31051547ce4f29" "b89a4f5916c29a235d0600ad5a0849b1c50fab16c2c518e1d98f0412367e7f97" default)))
  '(package-selected-packages
-   '(gruvbox-theme gotham-theme dracula-theme nyan-mode inkpot-theme yang-mode cyberpunk-theme auto-complete auto-highlight-symbol f gnu-elpa-keyring-update erlang flycheck))
- '(safe-local-variable-values '((allout-layout . t) (sh-indent-comment . t)))
+   (quote
+    (solarized-theme color-theme-solarized gruvbox-theme gotham-theme dracula-theme nyan-mode inkpot-theme yang-mode cyberpunk-theme auto-complete auto-highlight-symbol f gnu-elpa-keyring-update erlang flycheck)))
+ '(safe-local-variable-values (quote ((allout-layout . t) (sh-indent-comment . t))))
  '(scroll-bar-mode nil))
 ;; C-u C-x = and change "face" and then "customize this face" and then
 ;; Foreground (maybe check if it inherits something)
@@ -304,3 +305,12 @@ by using nxml's indentation rules."
 ;;  '(font-lock-variable-name-face ((t (:foreground "blue"))))
 ;;  '(minibuffer-prompt ((t (:foreground "brightwhite")))))
 
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(font-lock-comment-face ((t (:foreground "red"))))
+ '(font-lock-function-name-face ((t (:foreground "blue"))))
+ '(font-lock-string-face ((t (:foreground "magenta"))))
+ '(minibuffer-prompt ((t (:foreground "blue")))))
