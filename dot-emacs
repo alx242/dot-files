@@ -98,6 +98,9 @@
 (require 'ido)
 (ido-mode t)
 
+;; :P
+(nyan-mode t)
+
 ;; * * * Encrypted files * * *
 (require 'ps-ccrypt)
 
