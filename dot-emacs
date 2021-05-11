@@ -135,8 +135,10 @@
 ;; (setq tags-table-list '("${ERL_TOP}/../TAGS"))
 (add-hook 'erlang-mode-hook
           (lambda ()
+            (highlight-lines-matching-regexp ".\{81\}" "hi-green-b")
             (visit-tags-table
-             (file-name-directory (concat (getenv "ERL_TOP") "/../lib/TAGS")))))
+             (file-name-directory (concat (getenv "ERL_TOP") "/../lib/TAGS"))))
+          )
 
 (add-to-list 'auto-mode-alist '("rebar\\.config$" . erlang-mode))
 (add-to-list 'auto-mode-alist '("relx\\.config$" . erlang-mode))
