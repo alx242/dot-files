@@ -7,12 +7,25 @@ function up_elementary {
     sudo apt update && sudo apt dist-upgrade 2> /dev/null
 }
 
+function up_fedora {
+    sudo dnf update && sudo dnf upgrade
+}
+
 case $(uname -s) in
     Darwin|FreeBSD)
         brew update && brew upgrade -n
         ;;
     Linux)
-        up_arch || up_elementary
-        ;;
+        case $(lsb_release -is) in
+            Fedora)
+                up_fedora
+                ;;
+            elementary)
+                up_elementary
+                ;;
+            Arch)
+                up_arch
+                ;;
+        esac
 esac
 
