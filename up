@@ -20,7 +20,7 @@ case $(uname -s) in
             Fedora)
                 up_fedora
                 ;;
-            elementary)
+            Elementary)
                 up_elementary
                 ;;
             Arch)
