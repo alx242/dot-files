@@ -8,26 +8,19 @@ export TERM=xterm-256color
 # Stop the silly bash vs zsh warning in macos
 export BASH_SILENCE_DEPRECATION_WARNING=1
 
-# Fedora
-if [ -r "/etc/bashrc" ]; then
-    . /etc/bashrc
-fi
-if [ -r "/usr/share/git/completion/git-prompt.sh" ]; then
-    . /usr/share/git/completion/git-prompt.sh
-fi
-
 # Elementary
-if [ -r "/etc/bash_completon" ]; then
-    . /etc/bash_completion
+if [[ -r "/etc/bash_completion" ]]; then
+    source /etc/bash_completion
 fi
-if [ -r "/etc/bash_completion.d/git-prompt" ]; then
-    . /etc/bash_completion.d/git-prompt
-    # . /usr/share/git-core/contrib/completion/git-prompt.sh
+# . /usr/share/git-core/contrib/completion/git-prompt.sh
+if [[ -r "/etc/bash_completion.d/git-prompt" ]]; then
+    source /etc/bash_completion.d/git-prompt
 fi
 
+# Darwin
 if [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]]; then
-    . "/usr/local/etc/profile.d/bash_completion.sh"
-    . "/usr/local/etc/bash_completion.d/git-prompt.sh"
+    source "/usr/local/etc/profile.d/bash_completion.sh"
+    source "/usr/local/etc/bash_completion.d/git-prompt.sh"
 fi
 # if [ -r "/usr/local/etc/profile.d/bash_completion.sh" ]; then
 #     export BASH_COMPLETION_COMPAT_DIR="/usr/local/etc/bash_completion.d"
