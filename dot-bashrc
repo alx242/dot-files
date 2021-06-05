@@ -149,9 +149,7 @@ alias roll_airpods="pactl set-card-profile bluez_card.E4_90_FD_CC_FB_DB off && p
 
 # Kept as a proper command, otherwise steam would not use it.
 
-# alias nvidia-gamemoderun="__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia gamemoderun $@"
 # alias nvidiarun="__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia $@"
-alias nvidiarun="__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia $@"
 # alias laptop_screen_off="xrandr --output eDP-1 --off"
 # alias laptop_screen_on="xrandr --output eDP-1 --below DP-1"
 
