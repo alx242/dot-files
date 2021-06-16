@@ -43,25 +43,19 @@ ln -s $SRCDIR/dot-newsboat $HOME/.newsboat/config
 mkdir -p $HOME/.config/conky
 ln -s $SRCDIR/conky.conf $HOME/.config/conky/conky.conf
 
-# Weechat
-mkdir -p $HOME/.weechat
-ln -s $SRCDIR/weechat.irc.conf $HOME/.weechat/irc.conf
-
-# EDTS
-ln -s $SRCDIR/edts $HOME/dev/edts
-
-# Some emacs modules need compilation
-touch $HOME/TAGS # Make sure TAGS file exists or emacs could bork out...
-
 mkdir -p $DESTDIR/bin
 ln -s "$SRCDIR/backup"  "$DESTDIR/bin"
 ln -s "$SRCDIR/up"  "$DESTDIR/bin"
 ln -s "$SRCDIR/vol_up" "$DESTDIR/bin"
 ln -s "$SRCDIR/vol_down" "$DESTDIR/bin"
-ln -s "$SRCDIR/nvidia-run" "$DESTDIR/bin"
-ln -s "$SRCDIR/nvidia-switch/install-nvidia-prime-offload" "$DESTDIR/bin"
-ln -s "$SRCDIR/nvidia-switch/uninstall-nvidia-prime-offload" "$DESTDIR/bin"
+ln -s "$SRCDIR/nvidiarun" "$DESTDIR/bin"
 
 ## Initialize some scripts
 source $HOME/.bashrc
-echo "make sure to install pyflakes and pep8 via pip"
+echo ""
+echo "Add this to the ~/.bashrc file: "
+echo " # Support own bashrc stuff"
+echo " if [ -f ~/.own.bashrc ]; then"
+echo "     . ~/.own.bashrc"
+echo " fi"
+echo ""
