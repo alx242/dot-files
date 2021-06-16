@@ -1,32 +1,15 @@
 # -*- mode: sh -*-
 export PATH=~/bin:~/.local/bin:/usr/local/bin:/usr/local/sbin:$PATH
-export LC_ALL=en_US.UTF-8
-export TMPDIR=/tmp
 export EDITOR=emacs
-export TERM=xterm-256color
 
 # Stop the silly bash vs zsh warning in macos
 export BASH_SILENCE_DEPRECATION_WARNING=1
-
-# Elementary
-if [[ -r "/etc/bash_completion" ]]; then
-    source /etc/bash_completion
-fi
-# . /usr/share/git-core/contrib/completion/git-prompt.sh
-if [[ -r "/etc/bash_completion.d/git-prompt" ]]; then
-    source /etc/bash_completion.d/git-prompt
-fi
 
 # Darwin
 if [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]]; then
     source "/usr/local/etc/profile.d/bash_completion.sh"
     source "/usr/local/etc/bash_completion.d/git-prompt.sh"
 fi
-# if [ -r "/usr/local/etc/profile.d/bash_completion.sh" ]; then
-#     export BASH_COMPLETION_COMPAT_DIR="/usr/local/etc/bash_completion.d"
-#     . /usr/local/etc/profile.d/bash_completion.sh
-#     . /usr/local/etc/bash_completion.d/git-prompt.sh
-# fi
 
 # Prompt flipping...
 function ok_prompt {
@@ -145,16 +128,6 @@ alias above_80="grep -n '^.\{81\}'"
 alias scpresume="rsync --append-verify --progress --rsh=ssh"
 alias process_port="lsof -n -P -i +c 13"
 alias tail_f="journalctl -f"
-alias roll_airpods="pactl set-card-profile bluez_card.E4_90_FD_CC_FB_DB off && pactl set-card-profile bluez_card.E4_90_FD_CC_FB_DB a2dp_sink"
-
-# Kept as a proper command, otherwise steam would not use it.
-
-# alias nvidiarun="__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia $@"
-# alias laptop_screen_off="xrandr --output eDP-1 --off"
-# alias laptop_screen_on="xrandr --output eDP-1 --below DP-1"
-
-#
-export LC_CTYPE=en_US.UTF-8
 
 # Devel environment
 #
