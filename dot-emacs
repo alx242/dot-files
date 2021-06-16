@@ -104,6 +104,10 @@
 ;; * * * Encrypted files * * *
 (require 'ps-ccrypt)
 
+;; * * * Markdown * * *
+(add-to-list 'auto-mode-alist '("README$" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.mdp$" . markdown-mode))
+
 ;; * * * Yang * * *
 (autoload 'yang-mode "yang-mode" "Major mode for editing YANG modules." t)
 (add-to-list 'auto-mode-alist '("\\.yang$" . yang-mode))
