@@ -1,0 +1,5 @@
+#!/bin/bash
+DIRNAME=${1}
+FILE="file:///$(find ${DIRNAME} -type f | shuf -n 1)"
+echo "Will set background to: ${FILE}"
+gsettings set org.gnome.desktop.background picture-uri "${FILE}"

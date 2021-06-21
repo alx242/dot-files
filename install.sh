@@ -49,13 +49,17 @@ ln -s "$SRCDIR/up"  "$DESTDIR/bin"
 ln -s "$SRCDIR/vol_up" "$DESTDIR/bin"
 ln -s "$SRCDIR/vol_down" "$DESTDIR/bin"
 ln -s "$SRCDIR/nvidiarun" "$DESTDIR/bin"
+ln -s "$SRCDIR/randomwallpaper" "$DESTDIR/bin"
+
+echo ""
+echo "Use standard rc files from /etc/skel instead and extend with these installers..."
+echo ""
 
 ## Initialize some scripts
 source $HOME/.bashrc
-echo ""
 echo "Add this to the ~/.bashrc file: "
-echo " # Support own bashrc stuff"
-echo " if [ -f ~/.own.bashrc ]; then"
-echo "     . ~/.own.bashrc"
-echo " fi"
+echo "# Support own bashrc stuff"
+echo "if [ -f ~/.own.bashrc ]; then"
+echo "    . ~/.own.bashrc"
+echo "fi"
 echo ""
