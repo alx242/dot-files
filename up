@@ -4,7 +4,7 @@ function up_arch {
 }
 
 function up_pop {
-    sudo apt update && sudo apt dist-upgrade 2> /dev/null
+    sudo apt update && sudo apt full-upgrade 2> /dev/null
 }
 
 function up_fedora {
