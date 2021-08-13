@@ -43,13 +43,13 @@ ln -s $SRCDIR/dot-newsboat $HOME/.newsboat/config
 mkdir -p $HOME/.config/conky
 ln -s $SRCDIR/conky.conf $HOME/.config/conky/conky.conf
 
-mkdir -p $DESTDIR/bin
-ln -s "$SRCDIR/backup"  "$DESTDIR/bin"
-ln -s "$SRCDIR/up"  "$DESTDIR/bin"
-ln -s "$SRCDIR/vol_up" "$DESTDIR/bin"
-ln -s "$SRCDIR/vol_down" "$DESTDIR/bin"
-ln -s "$SRCDIR/nvidiarun" "$DESTDIR/bin"
-ln -s "$SRCDIR/randomwallpaper" "$DESTDIR/bin"
+mkdir -p $DESTDIR/.local/bin
+ln -s "$SRCDIR/backup"  "$DESTDIR/.local/bin"
+ln -s "$SRCDIR/up"  "$DESTDIR/.local/bin"
+ln -s "$SRCDIR/vol_up" "$DESTDIR/.local/bin"
+ln -s "$SRCDIR/vol_down" "$DESTDIR/.local/bin"
+ln -s "$SRCDIR/nvidiarun" "$DESTDIR/.local/bin"
+ln -s "$SRCDIR/randomwallpaper" "$DESTDIR/.local/bin"
 
 echo ""
 echo "Use standard rc files from /etc/skel instead and extend with these installers..."

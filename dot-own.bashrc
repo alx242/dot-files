@@ -11,6 +11,14 @@ if [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]]; then
     source "/usr/local/etc/bash_completion.d/git-prompt.sh"
 fi
 
+case $(lsb_release -is) in
+   Fedora)
+       source /usr/share/git-core/contrib/completion/git-prompt.sh
+       ;;
+   *)
+       ;;
+esac
+
 # Prompt flipping...
 function ok_prompt {
     local DARKBLUE="\[\033[2;34m\]"
