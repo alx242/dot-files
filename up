@@ -23,6 +23,9 @@ case $(uname -s) in
             Pop)
                 up_pop
                 ;;
+            elementary)
+                up_pop
+                ;;
             Elementary)
                 up_pop
                 ;;
