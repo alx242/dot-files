@@ -42,10 +42,11 @@ function ok_prompt {
             ;;
     esac
 
-    PS1="${TITLEBAR}\
-$DARKBLUE[$LIGHTBLUE\u@\h:\w${GIT}$DARKBLUE]\
-$PURPLE->$NO_COLOUR "
+#     PS1="${TITLEBAR}\
+# $WHITE[$NO_COLOR\u@\h:\w${GIT}$WHITE]\
+# $WHITE->$NO_COLOUR "
     # PS1='[\u@\h \W]\$ '
+    PS1="\[\033[35m\]\t\[\033[m\]-\[\033[36m\]\u\[\033[m\]@\[\033[32m\]\h:\[\033[33;1m\]\w\[\033[m\]\$ "
     PS2='> '
     PS4='+ '
 }
