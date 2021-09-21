@@ -8,7 +8,12 @@ function up_pop {
 }
 
 function up_fedora {
+    echo "dnf update..."
     sudo dnf update && sudo dnf upgrade
+    echo "flatpak update..."
+    flatpak upgrade
+    echo "lpf update..."
+    lpf update
 }
 
 case $(uname -s) in
