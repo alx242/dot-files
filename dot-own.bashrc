@@ -138,6 +138,14 @@ alias scpresume="rsync --append-verify --progress --rsh=ssh"
 alias process_port="lsof -n -P -i +c 13"
 alias tail_f="journalctl -f"
 
+function unzipmulti {
+    for i in *.zip; do
+        echo "Unzipping ${i}"
+        $(echo unzip -q "$i" -d "${i%%.zip}")
+        echo done;
+    done
+}
+
 # Devel environment
 #
 # Supplies auto completion for ordinary python
