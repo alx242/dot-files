@@ -12,8 +12,6 @@ function up_fedora {
     sudo dnf update && sudo dnf upgrade
     echo "flatpak update..."
     flatpak upgrade
-    echo "lpf update..."
-    lpf -n update
 }
 
 case $(uname -s) in
