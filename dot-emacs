@@ -265,9 +265,14 @@ by using nxml's indentation rules."
 ;; Copy whatever is selected into the mac os x buffer...
 ;; (shell-command-on-region (region-beginning) (region-end) "tmux save-buffer")
 (global-set-key (kbd "C-c c")
-                '(lambda () (interactive) (shell-command-on-region
-                                           (region-beginning) (region-end)
-                                           "tmux set-buffer \"`xargs -0 $@`\""))
+                '(lambda () (interactive)
+                   (shell-command-on-region
+                    (region-beginning) (region-end)
+                    "tmux set-buffer \"`xargs -0 $@`\"")
+                   (shell-command-on-region
+                    (region-beginning) (region-end)
+                    "echo \"`xargs -0 $@`\" | pbcopy")
+                   )
                 )
 
 (set-face-font

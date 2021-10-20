@@ -25,3 +25,6 @@
 [submodule "dot-emacs.d/wrangler"]
 	path = dot-emacs.d/wrangler
 	url = https://github.com/RefactoringTools/wrangler.git
+[submodule "tmux-yank"]
+	path = tmux-yank
+	url = https://github.com/tmux-plugins/tmux-yank
