@@ -5,18 +5,24 @@ export EDITOR=emacs
 # Stop the silly bash vs zsh warning in macos
 export BASH_SILENCE_DEPRECATION_WARNING=1
 
-# Darwin
-if [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]]; then
-    source "/usr/local/etc/profile.d/bash_completion.sh"
-    source "/usr/local/etc/bash_completion.d/git-prompt.sh"
-fi
 
-case $(lsb_release -is) in
-   Fedora)
-       source /usr/share/git-core/contrib/completion/git-prompt.sh
-       ;;
-   *)
-       ;;
+case $(uname -s) in
+    Darwin|FreeBSD)
+        # Darwin
+        if [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]]; then
+            source "/usr/local/etc/profile.d/bash_completion.sh"
+            source "/usr/local/etc/bash_completion.d/git-prompt.sh"
+        fi
+        ;;
+    Linux)
+        case $(lsb_release -is) in
+            Fedora)
+                source /usr/share/git-core/contrib/completion/git-prompt.sh
+                ;;
+            *)
+                ;;
+        esac
+        ;;
 esac
 
 # Prompt flipping...

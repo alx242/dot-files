@@ -276,8 +276,6 @@ by using nxml's indentation rules."
  ;;"-*-unscii-bold-normal-normal-*-*-*-*-*-m-0-iso10646-1")
  "-*-unscii-bold-normal-normal-*-16-*-*-*-m-0-iso10646-1")
 
-
-
 ;; * * * README * * *
 (find-file "~/README")
 (switch-to-buffer "README")
