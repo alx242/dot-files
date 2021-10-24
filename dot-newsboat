@@ -7,8 +7,8 @@ urls-source "newsblur"
 newsblur-login "alx242"
 newsblur-passwordfile "~/.newsboat/newsblur-pw.txt"
 max-browser-tabs 4
-# browser "urlopen %u &"
-browser "firefox %u"
+browser "urlopen %u &"
+# browser "firefox %u"
 show-read-feeds false
 show-read-articles false
 download-full-page true
