@@ -44,3 +44,5 @@ gsettings set org.gnome.shell.extensions.pop-shell focus-up "['<Super><Ctrl>Up']
 gsettings set org.gnome.shell.extensions.pop-shell focus-down "['<Super><Ctrl>Down']"
 gsettings set org.gnome.shell.extensions.pop-shell focus-left "['<Super><Ctrl>Left']"
 gsettings set org.gnome.shell.extensions.pop-shell focus-right "['<Super><Ctrl>Right']"
+
+gsettings set org.gnome.shell.extensions.pop-shell activate-launcher "['<Super>space']"
