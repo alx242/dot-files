@@ -11,10 +11,17 @@
 ;; Generate a completely new etags file using ctags command
 (defun generate-etags ()
   (interactive)
-  ;; Erlang
-  (shell-command "ctags -e -f ${ERLANG_DIRS}/TAGS -R ${ERLANG_DIRS}/*/src ${ERLANG_DIRS}/*/include -h \".hrl.erl\"")
-  (message "Generated etags")
-  nil
+  (cond ((> (length (getenv "ERLANG_DIRS")) 0)
+         (shell-command "ctags -e -f ${ERLANG_DIRS}/TAGS -R ${ERLANG_DIRS}/*/src ${ERLANG_DIRS}/*/include -h \".hrl.erl\"")
+         (message "Generated etags")
+         nil
+         )
+        ((= (length (getenv "ERLANG_DIRS")) 0)
+         (shell-command "ctags -e -f TAGS -R ../src ../include ../*/src ../*/include -h \".hrl.erl\"")
+         (message "Generated etags")
+         nil
+         )
+        )
   )
 
 ;; Update the etags file with the current open buffer
