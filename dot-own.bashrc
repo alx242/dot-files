@@ -143,6 +143,7 @@ alias above_80="grep -n '^.\{81\}'"
 alias scpresume="rsync --append-verify --progress --rsh=ssh"
 alias process_port="lsof -n -P -i +c 13"
 alias tail_f="journalctl -f"
+alias battery_info="upower -i /org/freedesktop/UPower/devices/battery_BAT0"
 
 function unzipmulti {
     for i in *.zip; do
