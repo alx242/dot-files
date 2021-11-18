@@ -17,7 +17,7 @@
          nil
          )
         ((= (length (getenv "ERLANG_DIRS")) 0)
-         (shell-command "ctags -e -f TAGS -R ../src ../include ../*/src ../*/include -h \".hrl.erl\"")
+         (shell-command "ctags -e -f ../TAGS -R ../src ../include ../*/src ../*/include -h \".hrl.erl\"")
          (message "Generated etags")
          nil
          )
