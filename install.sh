@@ -51,6 +51,7 @@ ln -s "$SRCDIR/vol_down" "$DESTDIR/.local/bin"
 ln -s "$SRCDIR/nvidiarun" "$DESTDIR/.local/bin"
 ln -s "$SRCDIR/randomwallpaper" "$DESTDIR/.local/bin"
 ln -s "$SRCDIR/urlopen" "$DESTDIR/.local/bin"
+ln -s "$SRCDIR/conky-restart" "$DESTDIR/.local/bin"
 
 echo ""
 echo "Use standard rc files from /etc/skel instead and extend with these installers..."
