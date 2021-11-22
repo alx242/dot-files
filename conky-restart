@@ -1,3 +1,4 @@
 #!/bin/bash
+#
+pkill -HUP conky
 
-killall conky && conky -d
