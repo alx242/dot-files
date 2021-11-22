@@ -17,6 +17,7 @@ SRCITEMS=(
     emacs.d
     gitconfig
     tmux.conf
+    alacritty.yml
 )
 
 mkdir -p $HOME/.config
