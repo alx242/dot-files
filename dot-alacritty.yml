@@ -719,7 +719,13 @@ background_opacity: 0.9
 #
 # If the same trigger is assigned to multiple actions, all of them are executed
 # in the order they were defined in.
+#
+# macos alt/meta issue https://github.com/alacritty/alacritty/issues/93
 key_bindings:
+  - { key:  3, mods: Alt, chars: "\eé" }
+  - { key:  8, mods: Alt, chars: "\eè" }
+  - { key: 10, mods: Alt, chars: "\eç" }
+  - { key: 11, mods: Alt, chars: "\eà" }
   #- { key: Paste,                                       action: Paste          }
   #- { key: Copy,                                        action: Copy           }
   #- { key: L,         mods: Control,                    action: ClearLogNotice }
