@@ -13,9 +13,18 @@ show-read-feeds false
 show-read-articles false
 download-full-page true
 
-# color background          white   default
-# color listnormal          white   default
-# color listfocus           black   black   bold
+# Default colors
+color background          white   black
+color listnormal          white   black
+color listfocus           default blue      bold
+color listnormal_unread   white   default
+color listfocus_unread    black   blue      bold
+color info                black   magenta   bold
+color article             white   black
+
+# color background            white   default
+# color listnormal            red     default
+# color listfocus             black   black   bold
 # color listnormal_unread   white   default
 # color listfocus_unread    white   black   bold
 # color info                white   default bold
