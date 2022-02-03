@@ -14,13 +14,13 @@ show-read-articles false
 download-full-page true
 
 # Default colors
-color background          white   default
-color listnormal          white   default
+color background          default   default
+color listnormal          default   default
 color listfocus           default blue      bold
-color listnormal_unread   white   default
+color listnormal_unread   default   default
 color listfocus_unread    black   blue      bold
 color info                black   magenta   bold
-color article             white   default
+color article             default   default
 
 # color background            white   default
 # color listnormal            red     default
@@ -38,3 +38,5 @@ bind-key ^O open-all-unread-in-browser-and-mark-read
 
 define-filter "All 'stared' articles" "flags = \"b\""
 define-filter "All articles older than 5 days" "age > 5"
+
+confirm-mark-feed-read no
