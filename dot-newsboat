@@ -10,7 +10,7 @@ max-browser-tabs 4
 browser "urlopen %u &"
 # browser "firefox %u"
 show-read-feeds false
-show-read-articles false
+show-read-articles true
 download-full-page true
 
 # Default colors
