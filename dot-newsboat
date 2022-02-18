@@ -16,10 +16,10 @@ download-full-page true
 # Default colors
 color background          default   default
 color listnormal          default   default
-color listfocus           default blue      bold
+color listfocus           white     blue      bold
 color listnormal_unread   default   default
-color listfocus_unread    black   blue      bold
-color info                black   magenta   bold
+color listfocus_unread    white     blue      bold
+color info                white     magenta   bold
 color article             default   default
 
 # color background            white   default
