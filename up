@@ -26,10 +26,7 @@ case $(uname -s) in
             Pop)
                 up_pop
                 ;;
-            elementary)
-                up_pop
-                ;;
-            Elementary)
+            Raspbian)
                 up_pop
                 ;;
             Arch)
