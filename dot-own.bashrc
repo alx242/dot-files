@@ -12,6 +12,7 @@ case $(uname -s) in
         if [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]]; then
             source "/usr/local/etc/profile.d/bash_completion.sh"
             source "/usr/local/etc/bash_completion.d/git-prompt.sh"
+            export MANPATH=$MANPATH:/usr/local/opt/erlang/lib/erlang/man
         fi
         ;;
     Linux)
