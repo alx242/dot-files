@@ -16,7 +16,7 @@ function up_fedora {
 
 case $(uname -s) in
     Darwin|FreeBSD)
-        brew update && brew upgrade -n
+        brew update && brew upgrade
         ;;
     Linux)
         case $(lsb_release -is) in

@@ -1,4 +1,7 @@
 $include /etc/inputrc
 
+"\e[1;5C": forward-word
+"\e[1;5D": backward-word
+
 # Case-insensitive tab completion
 set completion-ignore-case on
