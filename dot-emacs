@@ -24,6 +24,31 @@
         )
   )
 
+(defun erlfs-alt-find-callers ()
+  (interactive)
+  (grep (concat "grep --include=\"*.erl\" --color -rnw "
+                (concat (format "%s " (symbol-at-point))
+                        "~/work/trunk/lib/"))))
+
+(defun erlfs-find-callers ()
+  (interactive)
+  (grep
+   (format
+    ;; regexp below - do not start line with "-" (directive like -spec),
+    ;; no line comment, match Fun( in local file; Mod:Fun( in other files
+    ;; then highlight just Fun
+    ;;
+    ;;" | grep --color -w %s")
+    (concat "(grep -nHE '^[^-][^%%]*[^\\w:]%s\\(' ./%s "
+            "; grep --include=\"*.erl\" -nrE '^[^-][^%%]*%s:%s\\(' %s )"
+            " | grep --color %s")
+    (symbol-at-point)
+    (file-name-nondirectory (buffer-file-name))
+    (erlang-get-module)
+    (symbol-at-point)
+    (string-join erlfs-search-patterns " ")
+    (symbol-at-point))))
+
 ;; Update the etags file with the current open buffer
 (defun update-etags ()
   (interactive)
@@ -139,13 +164,27 @@
   )
  )
 
+(load "~/.emacs.d/erl-find-source/erl-find-source.el")
+(defun my-erlang-mode-hook ()
+  "Configuration for Erlang Mode. Add this to `erlang-mode-hook'."
+ (setq indent-tabs-mode nil)
+ ;; I use M-. to push to stack (default), and M-* to pop from stack
+ (local-set-key "\e." 'erlfs-find-source-under-point)
+ ;; (local-set-key "\e*" 'erlfs-find-source-unwind))
+ ;; Some prefer M-, for pop
+ (local-set-key "\e," 'erlfs-find-source-unwind)
+ (local-set-key "\e?" 'erlfs-alt-find-callers)
+ )
+;;;
+(add-hook 'erlang-mode-hook 'my-erlang-mode-hook)
+
 ;; (setq tags-table-list '("${ERL_TOP}/../TAGS"))
-(add-hook 'erlang-mode-hook
-          (lambda ()
-            (highlight-lines-matching-regexp ".\{81\}" "hi-green-b")
-            (visit-tags-table
-             (file-name-directory (concat (getenv "ERL_TOP") "/../lib/TAGS"))))
-          )
+;; (add-hook 'erlang-mode-hook
+;;           (lambda ()
+;;             (highlight-lines-matching-regexp ".\{81\}" "hi-green-b")
+;;             (visit-tags-table (file-name-directory (concat (getenv "ERL_TOP") "/../lib/TAGS")))
+;;             )
+;;           )
 
 (add-to-list 'auto-mode-alist '("rebar\\.config$" . erlang-mode))
 (add-to-list 'auto-mode-alist '("relx\\.config$" . erlang-mode))

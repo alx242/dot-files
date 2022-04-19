@@ -28,3 +28,6 @@
 [submodule "tmux-yank"]
 	path = tmux-yank
 	url = https://github.com/tmux-plugins/tmux-yank
+[submodule "dot-emacs.d/erl-find-source"]
+	path = dot-emacs.d/erl-find-source
+	url = git@github.com:mbj4668/erl-find-source.git
