@@ -26,28 +26,9 @@
 
 (defun erlfs-alt-find-callers ()
   (interactive)
-  (grep (concat "grep --include=\"*.erl\" --color -rnw "
+  (grep (concat "grep --include=\"*.erl\" --include=\"*.hrl\" --color -rnw "
                 (concat (format "%s " (symbol-at-point))
                         "~/work/trunk/lib/"))))
-
-(defun erlfs-find-callers ()
-  (interactive)
-  (grep
-   (format
-    ;; regexp below - do not start line with "-" (directive like -spec),
-    ;; no line comment, match Fun( in local file; Mod:Fun( in other files
-    ;; then highlight just Fun
-    ;;
-    ;;" | grep --color -w %s")
-    (concat "(grep -nHE '^[^-][^%%]*[^\\w:]%s\\(' ./%s "
-            "; grep --include=\"*.erl\" -nrE '^[^-][^%%]*%s:%s\\(' %s )"
-            " | grep --color %s")
-    (symbol-at-point)
-    (file-name-nondirectory (buffer-file-name))
-    (erlang-get-module)
-    (symbol-at-point)
-    (string-join erlfs-search-patterns " ")
-    (symbol-at-point))))
 
 ;; Update the etags file with the current open buffer
 (defun update-etags ()
@@ -173,7 +154,8 @@
  ;; (local-set-key "\e*" 'erlfs-find-source-unwind))
  ;; Some prefer M-, for pop
  (local-set-key "\e," 'erlfs-find-source-unwind)
- (local-set-key "\e?" 'erlfs-alt-find-callers)
+ ;;(local-set-key "\e?" 'erlfs-alt-find-callers)
+ (local-set-key "\e?" 'erlfs-find-callers)
  )
 ;;;
 (add-hook 'erlang-mode-hook 'my-erlang-mode-hook)
