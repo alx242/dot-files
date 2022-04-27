@@ -17,6 +17,7 @@ SRCITEMS=(
     emacs.d
     gitconfig
     tmux.conf
+    ssl.conf
     alacritty.yml
 )
 
