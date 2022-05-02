@@ -17,11 +17,13 @@ SRCITEMS=(
     emacs.d
     gitconfig
     tmux.conf
-    ssl.conf
     alacritty.yml
 )
 
 mkdir -p $HOME/.config
+
+
+# ssl.conf Only works with openssl (on linux)
 
 ## First, get all git submodules like .config/awesome/vicious and .emacs.de/edts
 git submodule update --init
