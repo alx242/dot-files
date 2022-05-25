@@ -7,7 +7,6 @@ DESTDIR="$HOME"
 SRCDIR="$HOME/dot-files"
 SRCITEMS=(
     bash_profile
-    own.bashrc
     inetrc
     inputrc
     irbrc
@@ -56,16 +55,21 @@ ln -s "$SRCDIR/nvidiarun" "$DESTDIR/.local/bin"
 ln -s "$SRCDIR/randomwallpaper" "$DESTDIR/.local/bin"
 ln -s "$SRCDIR/urlopen" "$DESTDIR/.local/bin"
 ln -s "$SRCDIR/conky-restart" "$DESTDIR/.local/bin"
+mkdir -p $HOME/.bashrc.d
+ln -s "$SRCDIR/dot-own.bashrc" "$DESTDIR/.bashrc.d/own.bashrc"
 
 echo ""
 echo "Use standard rc files from /etc/skel instead and extend with these installers..."
 echo ""
 
 ## Initialize some scripts
-source $HOME/.bashrc
-echo "Add this to the ~/.bashrc file: "
-echo "# Support own bashrc stuff"
-echo "if [ -f ~/.own.bashrc ]; then"
-echo "    . ~/.own.bashrc"
+echo "# User specific aliases and functions"
+echo "if [ -d ~/.bashrc.d ]; then"
+echo "	for rc in ~/.bashrc.d/*; do"
+echo "		if [ -f \"$rc\" ]; then"
+echo "			. \"$rc\""
+echo "		fi"
+echo "	done"
 echo "fi"
 echo ""
+echo "unset rc"
