@@ -114,6 +114,7 @@
 (require 'ps-ccrypt)
 
 ;; * * * Markdown * * *
+(load "~/.emacs.d/markdown-mode/markdown-mode.el")
 (add-to-list 'auto-mode-alist '("README$" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.mdp$" . markdown-mode))
 

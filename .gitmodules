@@ -31,3 +31,6 @@
 [submodule "dot-emacs.d/erl-find-source"]
 	path = dot-emacs.d/erl-find-source
 	url = git@github.com:mbj4668/erl-find-source.git
+[submodule "dot-emacs.d/markdown-mode"]
+	path = dot-emacs.d/markdown-mode
+	url = https://github.com/jrblevin/markdown-mode
