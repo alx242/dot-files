@@ -39,4 +39,4 @@ bind-key ^O open-all-unread-in-browser-and-mark-read
 define-filter "All 'stared' articles" "flags = \"b\""
 define-filter "All articles older than 5 days" "age > 5"
 
-confirm-mark-feed-read no
+# confirm-mark-feed-read no
