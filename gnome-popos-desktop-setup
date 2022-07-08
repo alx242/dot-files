@@ -27,18 +27,18 @@ gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-right "['<Pri
 gsettings set org.gnome.desktop.wm.keybindings close "['<Super>q']"
 
 gsettings set org.gnome.desktop.wm.keybindings maximize "[]"
-gsettings reset org.gnome.desktop.wm.keybindings switch-to-workspace-up
-gsettings reset org.gnome.desktop.wm.keybindings switch-to-workspace-down
+gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-up "[]"
+gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-down "[]"
 
-gsettings reset org.gnome.shell.keybindings shift-overview-up
-gsettings reset org.gnome.shell.keybindings shift-overview-down
+gsettings set org.gnome.shell.keybindings shift-overview-up "['<Primary><Super>Up']"
+gsettings set org.gnome.shell.keybindings shift-overview-down "['<Primary><Super>Down']"
 
 gsettings set org.gnome.desktop.wm.keybindings toggle-maximized "['<Alt><Super>Up']"
 gsettings set org.gnome.mutter.keybindings toggle-tiled-left "['<Alt><Super>Left']"
 gsettings set org.gnome.mutter.keybindings toggle-tiled-right "['<Alt><Super>Right']"
 
-gsettings reset org.gnome.desktop.wm.keybindings move-to-workspace-right
-gsettings reset org.gnome.desktop.wm.keybindings move-to-workspace-left
+gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-right "['<Shift><Super>Right']"
+gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-left "['<Shift><Super>Left']"
 gsettings set org.gnome.desktop.wm.keybindings unmaximize "[]"
 
 gsettings set org.gnome.desktop.wm.preferences resize-with-right-button true
