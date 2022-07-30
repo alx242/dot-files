@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# My prefered way of handling Pop!_OS
+# My prefered way of handling Gnome desktop on Pop!_OS
 
 gsettings set org.gnome.shell.keybindings switch-to-application-1 "[]"
 gsettings set org.gnome.shell.keybindings switch-to-application-2 "[]"
