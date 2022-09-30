@@ -65,7 +65,7 @@
 ;; (message (concat "No etags update, mode: " mode-name)))))
 
 (add-to-list 'custom-theme-load-path (expand-file-name "~/.emacs.d/themes/"))
-; (add-hook 'after-init-hook (lambda () (load-theme 'tango t)))
+(add-hook 'after-init-hook (lambda () (load-theme 'leuven t)))
 
 (setq tags-revert-without-query 1)
 
