@@ -1,30 +1,9 @@
 # -*- mode: sh -*-
-export PATH=~/bin:~/.local/bin:/usr/local/bin:/usr/local/sbin:$PATH
+export PATH=~/bin:~/.local/bin:/usr/local/bin:/usr/local/sbin:/opt/homebrew/bin:$PATH
 export EDITOR=emacs
 
 # Stop the silly bash vs zsh warning in macos
 export BASH_SILENCE_DEPRECATION_WARNING=1
-
-
-case $(uname -s) in
-    Darwin|FreeBSD)
-        # Darwin
-        if [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]]; then
-            source "/usr/local/etc/profile.d/bash_completion.sh"
-            source "/usr/local/etc/bash_completion.d/git-prompt.sh"
-            export MANPATH=$MANPATH:/usr/local/opt/erlang/lib/erlang/man
-        fi
-        ;;
-    Linux)
-        case $(lsb_release -is) in
-            Fedora)
-                source /usr/share/git-core/contrib/completion/git-prompt.sh
-                ;;
-            *)
-                ;;
-        esac
-        ;;
-esac
 
 # Prompt flipping...
 function ok_prompt {
