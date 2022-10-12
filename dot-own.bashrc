@@ -124,6 +124,8 @@ alias scpresume="rsync --append-verify --progress --rsh=ssh"
 alias process_port="lsof -n -P -i +c 13"
 alias tail_f="journalctl -f"
 alias battery_info="upower -i /org/freedesktop/UPower/devices/battery_BAT0"
+alias tmuxemacs="tmux new-window emacs $@"
+
 
 function unzipmulti {
     for i in *.zip; do
