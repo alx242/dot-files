@@ -1,42 +1,49 @@
 # -*- mode: sh -*-
-export PATH=~/bin:~/.local/bin:/usr/local/bin:/usr/local/sbin:/opt/homebrew/bin:$PATH
+#
+# zsh version
+export PATH=~/bin:~/.local/bin:/usr/local/bin:/usr/local/sbin:/opt/homebrew/bin:/opt/homebrew/sbin:$PATH
 export EDITOR=emacs
 
-# Stop the silly bash vs zsh warning in macos
-export BASH_SILENCE_DEPRECATION_WARNING=1
+bindkey "\e[1;5C" vi-forward-word    # CTRL+RIGHT
+bindkey "\e[1;5D" vi-backward-word   # CTRL+LEFT
+bindkey "\e\e[C" vi-forward-word     # META+RIGHT
+bindkey "\e\e[D" vi-backward-word    # META+LEFT
+bindkey "\e^?" vi-backward-kill-word # META+BACKSPACE
 
-# Prompt flipping...
-function ok_prompt {
-    local DARKBLUE="\[\033[2;34m\]"
-    local LIGHTBLUE="\[\033[0;34m\]"
-    local LIGHTRED="\[\033[0;34m\]"
-    local WHITE="\[\033[1;37m\]"
-    local CYAN="\[\033[1;36m\]"
-    local BLACK="\[\033[1;30m\]"
-    local GREEN="\[\033[1;32m\]"
-    local PURPLE="\[\033[1;35m\]"
-    local RED="\[\033[1;31m\]"
-    local YELLOW="\[\033[1;33m\]"
-    local NO_COLOUR="\[\033[0m\]"
-    local GIT='$(__git_ps1 " (%s)")'
-    case $TERM in
-        xterm*|rxvt*)
-            TITLEBAR='\[\033]0;\u@\h:\w\007\]'
-            ;;
-        *)
-            TITLEBAR=""
-            ;;
-    esac
+# Fix for zsh compinit: insecure directories, run compaudit for list.
+#
+# sudo chmod -R 755 =$(brew --prefix)/share
 
-#     PS1="${TITLEBAR}\
-# $WHITE[$NO_COLOR\u@\h:\w${GIT}$WHITE]\
-# $WHITE->$NO_COLOUR "
-    # PS1='[\u@\h \W]\$ '
-    PS1="\[\033[35m\]\t\[\033[m\]-\[\033[36m\]\u\[\033[m\]@\[\033[32m\]\h:\[\033[33;1m\]\w\[\033[m\]${GIT}\$ "
-    PS2='> '
-    PS4='+ '
+# Load all the zsh completion (homebrew style)
+if type brew &>/dev/null; then
+    FPATH=$(brew --prefix)/share/zsh-completions:$(brew --prefix)/share/zsh/site-functions:$FPATH
+    autoload -Uz compinit
+    compinit
+fi
+
+# Load git version control info
+setopt prompt_subst
+autoload -Uz vcs_info
+zstyle ':vcs_info:*' actionformats \
+    '%F{5}(%f%s%F{5})%F{3}-%F{5}[%F{2}%b%F{3}|%F{1}%a%F{5}]%f '
+zstyle ':vcs_info:*' formats       \
+    '%F{5}(%f%s%F{5})%F{3}-%F{5}[%F{2}%b%F{5}]%f '
+zstyle ':vcs_info:(sv[nk]|bzr):*' branchformat '%b%F{1}:%F{3}%r'
+zstyle ':vcs_info:*' enable git cvs svn
+
+# or use pre_cmd, see man zshcontrib
+vcs_info_wrapper() {
+  vcs_info
+  if [ -n "$vcs_info_msg_0_" ]; then
+    echo "%{$fg[grey]%}${vcs_info_msg_0_}%{$reset_color%}$del"
+  fi
 }
-ok_prompt
+
+# REVERSE PROMPT 
+RPROMPT=$'$(vcs_info_wrapper)'
+
+# ORDINARY PROMPT
+PS1='%F{blue}%T%f-%F{green}%n@%m%f:%F{yellow}%~%f $ '
 
 # Git environment
 function parse_git_branch {
@@ -103,6 +110,16 @@ function convert_m4a_to_mp3 {
 }
 # git checkout `git rev-list -n 1 --before="2009-07-27 13:37" master`
 
+function unzipmulti {
+    for i in *.zip; do
+        echo "Unzipping ${i}"
+        $(echo unzip -q "$i" -d "${i%%.zip}")
+        echo done;
+    done
+}
+
+# Aliases
+
 # Set appropriate ls alias
 case $(uname -s) in
     Darwin|FreeBSD)
@@ -126,15 +143,6 @@ alias tail_f="journalctl -f"
 alias battery_info="upower -i /org/freedesktop/UPower/devices/battery_BAT0"
 alias tmuxemacs="tmux new-window emacs $@"
 
-
-function unzipmulti {
-    for i in *.zip; do
-        echo "Unzipping ${i}"
-        $(echo unzip -q "$i" -d "${i%%.zip}")
-        echo done;
-    done
-}
-
 # Devel environment
 #
 # Supplies auto completion for ordinary python
@@ -151,7 +159,7 @@ export ERL_COMPILER_OPTIONS=[debug_info]
 export JAVA_DIRS=""
 export PYTHON_DIRS=""
 export ERLANG_DIRS=""
-EXTRA=${HOME}/.extra.bashrc
+EXTRA=${HOME}/.bashrc.d/extra.bashrc
 if [ -e $EXTRA ]
 then
   source $EXTRA
