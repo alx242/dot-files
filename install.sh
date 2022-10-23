@@ -56,7 +56,7 @@ ln -s "$SRCDIR/randomwallpaper" "$DESTDIR/.local/bin"
 ln -s "$SRCDIR/urlopen" "$DESTDIR/.local/bin"
 ln -s "$SRCDIR/conky-restart" "$DESTDIR/.local/bin"
 mkdir -p $HOME/.bashrc.d
-ln -s "$SRCDIR/dot-own.bashrc" "$DESTDIR/.bashrc.d/own.bashrc"
+ln -s "$SRCDIR/dot-zshrc" "$DESTDIR/.zshrc"
 
 echo ""
 echo "Use standard rc files from /etc/skel instead and extend with these installers..."
