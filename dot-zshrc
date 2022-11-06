@@ -12,7 +12,7 @@ bindkey "\e^?" vi-backward-kill-word # META+BACKSPACE
 
 # Fix for zsh compinit: insecure directories, run compaudit for list.
 #
-# sudo chmod -R 755 =$(brew --prefix)/share
+# sudo chmod -R 755 $(brew --prefix)/share
 
 # Load all the zsh completion (homebrew style)
 if type brew &>/dev/null; then
@@ -123,6 +123,9 @@ function unzipmulti {
 # Set appropriate ls alias
 case $(uname -s) in
     Darwin|FreeBSD)
+        if [ -d $(brew --prefix)/opt/erlang/lib/erlang/man ]; then
+            export MANPATH=$MANPATH:$(brew --prefix)/opt/erlang/lib/erlang/man
+        fi
         alias ls="ls -hFG"
         ;;
     Linux)
@@ -159,7 +162,7 @@ export ERL_COMPILER_OPTIONS=[debug_info]
 export JAVA_DIRS=""
 export PYTHON_DIRS=""
 export ERLANG_DIRS=""
-EXTRA=${HOME}/.bashrc.d/extra.bashrc
+EXTRA=${HOME}/.zsh/extra.bashrc
 if [ -e $EXTRA ]
 then
   source $EXTRA
