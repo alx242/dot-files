@@ -24,11 +24,11 @@
         )
   )
 
-(defun erlfs-alt-find-callers ()
-  (interactive)
-  (grep (concat "grep --include=\"*.erl\" --include=\"*.hrl\" --color -rnw "
-                (concat (format "%s " (symbol-at-point))
-                        "~/work/trunk/lib/"))))
+;; (defun erlfs-alt-find-callers ()
+;;   (interactive)
+;;   (grep (concat "grep --include=\"*.erl\" --include=\"*.hrl\" --color -rnw "
+;;                 (concat (format "%s " (symbol-at-point))
+;;                         "~/work/trunk/lib/"))))
 
 ;; Update the etags file with the current open buffer
 (defun update-etags ()
@@ -253,6 +253,7 @@ by using nxml's indentation rules."
 ;; Re-mapping Ctrl-Z
 (setq ctrl-z-map (make-keymap))
 (global-set-key "\C-z" ctrl-z-map)
+;;(global-set-key (kbd "\C-z\C-r") 'rgrep)
 (global-set-key (kbd "\C-z\C-r") 'rgrep)
 (global-set-key "\C-z\C-s" 'tags-apropos)
 (global-set-key (kbd "C-z m") 'menu-bar-open)
@@ -307,6 +308,13 @@ by using nxml's indentation rules."
  ;;"-*-unscii-bold-normal-normal-*-*-*-*-*-m-0-iso10646-1")
  "-*-unscii-bold-normal-normal-*-16-*-*-*-m-0-iso10646-1")
 
+;; (grep-apply-setting 'grep-find-template
+;;                     "rg -uu -g <F> <R> <D>")
+;;(grep-apply-setting 'grep-find-template
+;; "find <D> <X> -type f <F> -exec rg <C> --no-heading -H  <R> /dev/null {} +")
+
+;; (grep-apply-setting 'grep-template "rg --no-heading -H -uu -g <F> <R> <D>")
+
 ;; * * * README * * *
 (find-file "~/README")
 (switch-to-buffer "README")
@@ -318,3 +326,4 @@ by using nxml's indentation rules."
    '(markdown-mode rust-mode solarized-theme color-theme-solarized gruvbox-theme gotham-theme dracula-theme nyan-mode inkpot-theme yang-mode cyberpunk-theme auto-complete auto-highlight-symbol f gnu-elpa-keyring-update erlang flycheck))
  '(safe-local-variable-values '((allout-layout . t) (sh-indent-comment . t)))
  '(scroll-bar-mode nil))
+

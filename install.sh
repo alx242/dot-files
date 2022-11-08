@@ -55,7 +55,7 @@ ln -s "$SRCDIR/nvidiarun" "$DESTDIR/.local/bin"
 ln -s "$SRCDIR/randomwallpaper" "$DESTDIR/.local/bin"
 ln -s "$SRCDIR/urlopen" "$DESTDIR/.local/bin"
 ln -s "$SRCDIR/conky-restart" "$DESTDIR/.local/bin"
-mkdir -p $HOME/.bashrc.d
+mkdir -p $HOME/.zsh
 ln -s "$SRCDIR/dot-zshrc" "$DESTDIR/.zshrc"
 
 echo ""
