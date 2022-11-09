@@ -57,19 +57,3 @@ ln -s "$SRCDIR/urlopen" "$DESTDIR/.local/bin"
 ln -s "$SRCDIR/conky-restart" "$DESTDIR/.local/bin"
 mkdir -p $HOME/.zsh
 ln -s "$SRCDIR/dot-zshrc" "$DESTDIR/.zshrc"
-
-echo ""
-echo "Use standard rc files from /etc/skel instead and extend with these installers..."
-echo ""
-
-## Initialize some scripts
-echo "# User specific aliases and functions"
-echo "if [ -d ~/.bashrc.d ]; then"
-echo "	for rc in ~/.bashrc.d/*; do"
-echo "		if [ -f \"\$rc\" ]; then"
-echo "			. \"\$rc\""
-echo "		fi"
-echo "	done"
-echo "fi"
-echo ""
-echo "unset rc"
