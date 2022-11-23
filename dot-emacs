@@ -65,7 +65,7 @@
 ;; (message (concat "No etags update, mode: " mode-name)))))
 
 (add-to-list 'custom-theme-load-path (expand-file-name "~/.emacs.d/themes/"))
-(add-hook 'after-init-hook (lambda () (load-theme 'leuven t)))
+
 
 (setq tags-revert-without-query 1)
 
@@ -88,6 +88,7 @@
 (global-set-key (kbd "C-x <left>") 'windmove-left)
 (global-set-key (kbd "C-x <up>") 'windmove-up)
 (global-set-key (kbd "C-x <down>") 'windmove-down)
+(global-set-key (kbd "C-t") 'customize-themes)
 ; (global-set-key (kbd "C-P") 'enlarge-window)
 ; (global-set-key (kbd "C-N") 'shrink-window)
 
