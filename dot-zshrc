@@ -17,9 +17,9 @@ bindkey "\e^?" vi-backward-kill-word # META+BACKSPACE
 # Load all the zsh completion (homebrew style)
 if type brew &>/dev/null; then
     FPATH=$(brew --prefix)/share/zsh-completions:$(brew --prefix)/share/zsh/site-functions:$FPATH
-    autoload -Uz compinit
-    compinit
 fi
+autoload -Uz compinit
+compinit
 
 # Load git version control info
 setopt prompt_subst
