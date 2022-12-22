@@ -50,6 +50,9 @@
 (setq mac-right-option-modifier nil)
 (setq x-select-enable-clipboard t)
 
+;; save desktop to enable getting back in to action ö_Ö
+(desktop-save-mode 1)
+
 ;; (setq mac-option-key-is-meta nil
 ;;      mac-command-key-is-meta t
 ;;      mac-command-modifier 'meta
@@ -84,13 +87,26 @@
 
 ;; * * * Moving around window-buffers * * *
 ;; Non-default binding which doesn't screw up that much...
-(global-set-key (kbd "C-x <right>") 'windmove-right)
-(global-set-key (kbd "C-x <left>") 'windmove-left)
-(global-set-key (kbd "C-x <up>") 'windmove-up)
-(global-set-key (kbd "C-x <down>") 'windmove-down)
+
+;; Can check this by running `cat` and doing keyboard input in a term.
+;; Make shift+alt+arrow work as meta+arrow
+(add-hook 'term-setup-hook
+          '(lambda ()
+            (define-key function-key-map "\e[1;10A" [M-up])
+            (define-key function-key-map "\e[1;10B" [M-down])
+            (define-key function-key-map "\e[1;10C" [M-right])
+            (define-key function-key-map "\e[1;10D" [M-left])
+            )
+          )
 (global-set-key (kbd "C-t") 'customize-themes)
-; (global-set-key (kbd "C-P") 'enlarge-window)
-; (global-set-key (kbd "C-N") 'shrink-window)
+;; (global-set-key (kbd "<M-right>") 'windmove-right)
+;; (global-set-key (kbd "<M-left>") 'windmove-left)
+;; (global-set-key (kbd "<M-up>") 'windmove-up)
+;; (global-set-key (kbd "<M-down>") 'windmove-down)
+(windmove-default-keybindings 'meta)
+
+;; (global-set-key (kbd "C-P") 'enlarge-window)
+;; (global-set-key (kbd "C-N") 'shrink-window)
 
 ;; when cursor is on edge, move to the other side, as in a toroidal space
 (setq windmove-wrap-around t)

@@ -2,7 +2,7 @@
 #
 # zsh version
 export PATH=~/bin:~/.local/bin:/usr/local/bin:/usr/local/sbin:/opt/homebrew/bin:/opt/homebrew/sbin:$PATH
-export EDITOR=emacs
+export EDITOR="nano"
 
 bindkey "\e[1;5C" vi-forward-word    # CTRL+RIGHT
 bindkey "\e[1;5D" vi-backward-word   # CTRL+LEFT

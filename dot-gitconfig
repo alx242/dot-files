@@ -31,7 +31,6 @@
         default = current
 [core]
         excludesfile = "~/.gitignore"
-	editor = emacs
 
 [diff]
        tool = ediff
