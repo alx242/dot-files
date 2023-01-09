@@ -1,8 +1,37 @@
 # -*- mode: sh -*-
 #
 # zsh version
-export PATH=~/bin:~/.local/bin:/usr/local/bin:/usr/local/sbin:/opt/homebrew/bin:/opt/homebrew/sbin:$PATH
+export PATH="~/bin:~/.local/bin:/usr/local/bin:/usr/local/sbin:${PATH}"
 export EDITOR="nano"
+
+# Aliases
+
+# Set appropriate ls alias
+case $(uname -s) in
+    Darwin|FreeBSD)
+        PATH="/opt/homebrew/bin:/opt/homebrew/opt/gawk/libexec/gnubin:${PATH}"
+        if [ -d $(brew --prefix)/opt/erlang/lib/erlang/man ]; then
+            export MANPATH=$MANPATH:$(brew --prefix)/opt/erlang/lib/erlang/man
+        fi
+        alias ls="ls -hFG"
+        ;;
+    Linux)
+        alias ls="ls --color=always -hF"
+        ;;
+    NetBSD|OpenBSD)
+        alias ls="ls -hF"
+        ;;
+esac
+alias l="ls"
+alias ll="ls -l"
+alias la="ls -a"
+alias big_dirs="du -hd1 . 2>/dev/null | grep '[0-9]G\>'"
+alias above_80="grep -n '^.\{81\}'"
+alias scpresume="rsync --append-verify --progress --rsh=ssh"
+alias process_port="lsof -n -P -i +c 13"
+alias tail_f="journalctl -f"
+alias battery_info="upower -i /org/freedesktop/UPower/devices/battery_BAT0"
+alias tmuxemacs="tmux new-window emacs $@"
 
 bindkey "\e[1;5C" vi-forward-word    # CTRL+RIGHT
 bindkey "\e[1;5D" vi-backward-word   # CTRL+LEFT
@@ -117,34 +146,6 @@ function unzipmulti {
         echo done;
     done
 }
-
-# Aliases
-
-# Set appropriate ls alias
-case $(uname -s) in
-    Darwin|FreeBSD)
-        if [ -d $(brew --prefix)/opt/erlang/lib/erlang/man ]; then
-            export MANPATH=$MANPATH:$(brew --prefix)/opt/erlang/lib/erlang/man
-        fi
-        alias ls="ls -hFG"
-        ;;
-    Linux)
-        alias ls="ls --color=always -hF"
-        ;;
-    NetBSD|OpenBSD)
-        alias ls="ls -hF"
-        ;;
-esac
-alias l="ls"
-alias ll="ls -l"
-alias la="ls -a"
-alias big_dirs="du -hd1 . 2>/dev/null | grep '[0-9]G\>'"
-alias above_80="grep -n '^.\{81\}'"
-alias scpresume="rsync --append-verify --progress --rsh=ssh"
-alias process_port="lsof -n -P -i +c 13"
-alias tail_f="journalctl -f"
-alias battery_info="upower -i /org/freedesktop/UPower/devices/battery_BAT0"
-alias tmuxemacs="tmux new-window emacs $@"
 
 # Devel environment
 #
