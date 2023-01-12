@@ -1,0 +1,4 @@
+global-set-key "\e[1;5A" backward-paragraph
+global-set-key "\e[1;5B" forward-paragraph
+global-set-key "\e[1;5C" forward-word
+global-set-key "\e[1;5D" backward-word

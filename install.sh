@@ -17,6 +17,8 @@ SRCITEMS=(
     gitconfig
     tmux.conf
     alacritty.yml
+    zshrc
+    mg
 )
 
 mkdir -p $HOME/.config
@@ -56,4 +58,3 @@ ln -s "$SRCDIR/randomwallpaper" "$DESTDIR/.local/bin"
 ln -s "$SRCDIR/urlopen" "$DESTDIR/.local/bin"
 ln -s "$SRCDIR/conky-restart" "$DESTDIR/.local/bin"
 mkdir -p $HOME/.zsh
-ln -s "$SRCDIR/dot-zshrc" "$DESTDIR/.zshrc"
