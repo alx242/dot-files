@@ -9,20 +9,20 @@
 ;; the current buffer or just open the correct file...
 
 ;; Generate a completely new etags file using ctags command
-(defun generate-etags ()
-  (interactive)
-  (cond ((> (length (getenv "ERLANG_DIRS")) 0)
-         (shell-command "ctags -e -f ${ERLANG_DIRS}/TAGS -R ${ERLANG_DIRS}/*/src ${ERLANG_DIRS}/*/include -h \".hrl.erl\"")
-         (message "Generated etags")
-         nil
-         )
-        ((= (length (getenv "ERLANG_DIRS")) 0)
-         (shell-command "ctags -e -f ../TAGS -R ../src ../include ../*/src ../*/include -h \".hrl.erl\"")
-         (message "Generated etags")
-         nil
-         )
-        )
-  )
+;; (defun generate-etags ()
+;;   (interactive)
+;;   (cond ((> (length (getenv "ERLANG_DIRS")) 0)
+;;          (shell-command "ctags -e -f ${ERLANG_DIRS}/TAGS -R ${ERLANG_DIRS}/*/src ${ERLANG_DIRS}/*/include -h \".hrl.erl\"")
+;;          (message "Generated etags")
+;;          nil
+;;          )
+;;         ((= (length (getenv "ERLANG_DIRS")) 0)
+;;          (shell-command "ctags -e -f ../TAGS -R ../src ../include ../*/src ../*/include -h \".hrl.erl\"")
+;;          (message "Generated etags")
+;;          nil
+;;          )
+;;         )
+;;   )
 
 ;; (defun erlfs-alt-find-callers ()
 ;;   (interactive)
@@ -31,14 +31,14 @@
 ;;                         "~/work/trunk/lib/"))))
 
 ;; Update the etags file with the current open buffer
-(defun update-etags ()
-  (interactive)
-  ;; Erlang
-  (let* ((file (buffer-file-name (current-buffer)))))
-  (shell-command (concat "ctags -e -a -f ${ERLANG_DIRS}/TAGS " buffer-file-name))
-  (message (concat "Update etags file with: " buffer-file-name))
-  nil
-  )
+;; (defun update-etags ()
+;;   (interactive)
+;;   ;; Erlang
+;;   (let* ((file (buffer-file-name (current-buffer)))))
+;;   (shell-command (concat "ctags -e -a -f ${ERLANG_DIRS}/TAGS " buffer-file-name))
+;;   (message (concat "Update etags file with: " buffer-file-name))
+;;   nil
+;;   )
 
 ;; Mac OS allow alt-command and make command meta
 ;; (setq mac-option-modifier nil
@@ -146,22 +146,47 @@
 (require 'column-marker)
 
 ;; * * * Erlang * * *
-;; Various optional locations of erlang
-(cond
- ((file-directory-p (concat (getenv "ERL_TOP") "/installed"))
-  (setq erlang-root-dir (concat (getenv "ERL_TOP") "/installed"))
-  (setq exec-path (cons (concat (getenv "ERL_TOP") "/installed/bin") exec-path))
-  (add-to-list 'load-path (concat (getenv "ERL_TOP") "/otp/lib/tools/emacs"))
-  )
- ((file-directory-p "/usr/local/lib/erlang")
-  (setq erlang-root-dir "/usr/local/lib/erlang")
-  (setq exec-path (cons "/usr/local/lib/erlang/bin" exec-path))
-  )
- ((file-directory-p "/usr/lib/erlang")
-  (setq erlang-root-dir "/usr/lib/erlang")
-  (setq exec-path (cons "/usr/lib/erlang/bin" exec-path))
-  )
- )
+;; Try and get a working erlang environment
+(defun setup-erlang(erl_top)
+  "Setup erlang compile environment via M-x setup-erlang."
+  (interactive "sWhere is the root of your erlang-environment? ")
+  (cond ((and (not (string-empty-p erl_top))
+              (file-directory-p erl_top))
+         (setenv "ERL_TOP" erl_top))
+        ((file-directory-p (concat (getenv "HOME") "/work/trunk/otp"))
+         (setenv "ERL_TOP" (concat (getenv "HOME") "/work/trunk/otp"))
+         )
+        )
+   (cond
+    ;; ((file-directory-p (concat (getenv "ERL_TOP") "/installed"))
+    ;;  (message "going with default...")
+    ;;  )
+    ((and (string-empty-p (getenv "ERL_TOP")) (file-directory-p "/opt/homebrew/lib/erlang"))
+     (setenv "ERL_TOP" "/opt/homebrew/lib/erlang")
+     )
+    ((and (string-empty-p (getenv "ERL_TOP")) (file-directory-p "/usr/local/lib/erlang"))
+     (setenv "ERL_TOP" "/usr/local/lib/erlang")
+     )
+    ((and (string-empty-p (getenv "ERL_TOP")) (file-directory-p "/usr/lib/erlang"))
+     (setenv "ERL_TOP" "/usr/local/lib/erlang")
+     )
+    )
+   (message (concat "Using this ERL_TOP: " (getenv "ERL_TOP")))
+   (cond
+    ;; Source installed version...
+    ((file-directory-p (concat (getenv "ERL_TOP") "/installed"))
+     (setq erlang-root-dir (concat (getenv "ERL_TOP") "/installed"))
+     (setq exec-path (cons (concat (getenv "ERL_TOP") "/installed/bin") exec-path))
+     (add-to-list 'load-path (concat (getenv "ERL_TOP") "/otp/lib/tools/emacs"))
+     )
+    ;; Package installed version...
+    ((file-directory-p (getenv "ERL_TOP"))
+     (setq erlang-root-dir (getenv "ERL_TOP"))
+     (setq exec-path (cons (getenv "ERL_TOP") exec-path))
+     (add-to-list 'load-path (concat (getenv "ERL_TOP") "/otp/lib/tools/emacs"))
+     )
+    )
+   )
 
 (load "~/.emacs.d/erl-find-source/erl-find-source.el")
 (defun my-erlang-mode-hook ()
@@ -336,11 +361,22 @@ by using nxml's indentation rules."
 (find-file "~/README")
 (switch-to-buffer "README")
 (custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(column-number-mode t)
+ '(custom-enabled-themes '(dracula))
  '(custom-safe-themes
-   '("68bda5909fa46ce2fa510108d4abfafb75671f721dcad05211d3f78fec8a918a" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "e16a771a13a202ee6e276d06098bc77f008b73bbac4d526f160faa2d76c1dd0e" "4eb6fa2ee436e943b168a0cd8eab11afc0752aebb5d974bba2b2ddc8910fca8f" "117efd35bd4451a2d4ee0180cb2dbfc8601af5c4d9ade3ea575d2afdda0feb82" "81c3de64d684e23455236abde277cda4b66509ef2c28f66e059aa925b8b12534" "5a27cbf4736a5f9be00c35f4961efd29ea72f7e959f856e0ab31051547ce4f29" "b89a4f5916c29a235d0600ad5a0849b1c50fab16c2c518e1d98f0412367e7f97" default))
+   '("83e0376b5df8d6a3fbdfffb9fb0e8cf41a11799d9471293a810deb7586c131e6" "6bdcff29f32f85a2d99f48377d6bfa362768e86189656f63adbf715ac5c1340b" "78c4238956c3000f977300c8a079a3a8a8d4d9fee2e68bad91123b58a4aa8588" "7661b762556018a44a29477b84757994d8386d6edee909409fabe0631952dad9" "6b5c518d1c250a8ce17463b7e435e9e20faa84f3f7defba8b579d4f5925f60c1" "d14f3df28603e9517eb8fb7518b662d653b25b26e83bd8e129acea042b774298" "0ed3d96a506b89c1029a1ed904b11b5adcebeb2e0c16098c99c0ad95cb124729" "b6c43bb2aea78890cf6bd4a970e6e0277d2daf0075272817ea8bb53f9c6a7f0a" "91c008faf603a28d026957120a5a924a3c8fff0e12331abf5e04c0e9dd310c65" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" "fa2b58bb98b62c3b8cf3b6f02f058ef7827a8e497125de0254f56e373abee088" "68bda5909fa46ce2fa510108d4abfafb75671f721dcad05211d3f78fec8a918a" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "e16a771a13a202ee6e276d06098bc77f008b73bbac4d526f160faa2d76c1dd0e" "4eb6fa2ee436e943b168a0cd8eab11afc0752aebb5d974bba2b2ddc8910fca8f" "117efd35bd4451a2d4ee0180cb2dbfc8601af5c4d9ade3ea575d2afdda0feb82" "81c3de64d684e23455236abde277cda4b66509ef2c28f66e059aa925b8b12534" "5a27cbf4736a5f9be00c35f4961efd29ea72f7e959f856e0ab31051547ce4f29" "b89a4f5916c29a235d0600ad5a0849b1c50fab16c2c518e1d98f0412367e7f97" default))
  '(package-selected-packages
-   '(markdown-mode rust-mode solarized-theme color-theme-solarized gruvbox-theme gotham-theme dracula-theme nyan-mode inkpot-theme yang-mode cyberpunk-theme auto-complete auto-highlight-symbol f gnu-elpa-keyring-update erlang flycheck))
+   '(graphviz-dot-mode afternoon-theme acme-theme abyss-theme ample-theme spacemacs-theme yang-mode rust-mode nyan-mode gruvbox-theme gotham-theme erlang dracula-theme cyberpunk-theme))
  '(safe-local-variable-values '((allout-layout . t) (sh-indent-comment . t)))
  '(scroll-bar-mode nil))
 
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
