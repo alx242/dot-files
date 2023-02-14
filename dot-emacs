@@ -347,8 +347,9 @@ by using nxml's indentation rules."
 (set-face-font
  'default
  ;;(selected-frame)
- ;;"-*-unscii-bold-normal-normal-*-*-*-*-*-m-0-iso10646-1")
+ ;; "-*-unscii-bold-normal-normal-*-16-*-*-*-m-0-fontset-auto1")
  "-*-unscii-bold-normal-normal-*-16-*-*-*-m-0-iso10646-1")
+
 
 ;; (grep-apply-setting 'grep-find-template
 ;;                     "rg -uu -g <F> <R> <D>")
