@@ -12,6 +12,8 @@ browser "urlopen %u &"
 show-read-feeds false
 show-read-articles true
 download-full-page true
+reload-time 5
+reload-threads 3
 
 # Default colors
 color background          default   default
@@ -30,7 +32,8 @@ color article             default   default
 # color info                white   default bold
 # color article             white   default
 
-bind-key ^O open-all-unread-in-browser-and-mark-read
+# bind-key o open-in-browser-noninteractively
+# bind-key ^O open-all-unread-in-browser-and-mark-read
 # bind-key O open-in-browser
 # bind-key o open-in-browser-and-mark-read
 # macro s edit-flags "b"
@@ -39,4 +42,5 @@ bind-key ^O open-all-unread-in-browser-and-mark-read
 define-filter "All 'stared' articles" "flags = \"b\""
 define-filter "All articles older than 5 days" "age > 5"
 
-# confirm-mark-feed-read no
+confirm-mark-feed-read no
+confirm-exit yes
