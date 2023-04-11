@@ -13,7 +13,7 @@ show-read-feeds false
 show-read-articles true
 download-full-page true
 reload-time 5
-reload-threads 3
+reload-threads 4
 
 # Default colors
 color background          default   default
