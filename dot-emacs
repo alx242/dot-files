@@ -102,12 +102,13 @@
 ;;             (define-key function-key-map "\e[1;10D" [M-left])
 ;;             )
 ;;           )
+
 (global-set-key (kbd "C-t") 'customize-themes)
 (global-set-key (kbd "<s-right>") 'windmove-right)
 (global-set-key (kbd "<s-left>") 'windmove-left)
 (global-set-key (kbd "<s-up>") 'windmove-up)
 (global-set-key (kbd "<s-down>") 'windmove-down)
-(windmove-default-keybindings 'meta)
+;; (windmove-default-keybindings 'meta)
 
 ;; (global-set-key (kbd "C-P") 'enlarge-window)
 ;; (global-set-key (kbd "C-N") 'shrink-window)
@@ -286,6 +287,8 @@ by using nxml's indentation rules."
 ;; and \033[1;5B (\033 is Meta/Esc) as well as ctrl-left/right. Make
 ;; sure the standard shortcuts doesn't catch these...
 ;;
+;; C-h k and then press a key to get current description
+
 (global-set-key (kbd "M-[ A") 'backward-paragraph) ; Meta+up
 (global-set-key (kbd "M-[ B") 'forward-paragraph)  ; Meta+down
 (global-set-key (kbd "ESC <up>") 'backward-paragraph) ; Meta+up
@@ -296,10 +299,10 @@ by using nxml's indentation rules."
 (global-set-key (kbd "M-p") 'backward-paragraph) ; Meta+p
 (global-set-key (kbd "M-n") 'forward-paragraph)  ; Meta+n
 
-(global-set-key (kbd "M-<up>") 'backward-paragraph) ; Meta+up
-(global-set-key (kbd "M-<down>") 'forward-paragraph)  ; Meta+down
-(global-set-key (kbd "M-<left>") 'backward-word) ; Meta+up
-(global-set-key (kbd "M-<right>") 'forward-word)  ; Meta+down
+(global-set-key (kbd "M-<down>") 'forward-paragraph)
+(global-set-key (kbd "M-<up>") 'backward-paragraph)
+(global-set-key (kbd "M-<left>") 'backward-word)
+(global-set-key (kbd "M-<right>") 'forward-word)
 
 ;; Re-mapping Ctrl-Z
 (setq ctrl-z-map (make-keymap))
