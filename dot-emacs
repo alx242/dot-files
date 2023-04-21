@@ -360,12 +360,10 @@ by using nxml's indentation rules."
  'default
  ;;(selected-frame)
  ;; "-*-unscii-bold-normal-normal-*-16-*-*-*-m-0-fontset-auto1")
- "-*-unscii-bold-normal-normal-*-16-*-*-*-m-0-iso10646-1")
-
+ "-*-unscii-thin-normal-normal-*-16-*-*-*-m-0-iso10646-1")
 
 ;; Stop sounding the bell in emacs
 (setq ring-bell-function 'ignore)
-
 
 ;; (grep-apply-setting 'grep-find-template
 ;;                     "rg -uu -g <F> <R> <D>")

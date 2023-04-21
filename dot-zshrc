@@ -9,7 +9,7 @@ export EDITOR="emacs --no-desktop -nw"
 # Set appropriate ls alias
 case $(uname -s) in
     Darwin|FreeBSD)
-        HPATH="$(brew --prefix)"
+        HPATH="$(/opt/homebrew/bin/brew --prefix)"
         PATH="${HPATH}/sbin:${HPATH}/bin:${HPATH}/gawk/libexec/gnubin:${PATH}"
         if [ -d $(brew --prefix)/opt/erlang/lib/erlang/man ]; then
             export MANPATH=$MANPATH:$(brew --prefix)/opt/erlang/lib/erlang/man
