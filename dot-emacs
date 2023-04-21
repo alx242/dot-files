@@ -1,44 +1,5 @@
-;; * * * TAGS * * *
-
-;; Added by Package.el.  This must come before configurations of
-;; installed packages.  Don't delete this line.  If you don't want it,
-;; just comment it out by adding a semicolon to the start of the line.
-;; You may delete these explanatory comments.
-
 ;; To reload .emacs just do M-x load-file press return twice if it is
 ;; the current buffer or just open the correct file...
-
-;; Generate a completely new etags file using ctags command
-;; (defun generate-etags ()
-;;   (interactive)
-;;   (cond ((> (length (getenv "ERLANG_DIRS")) 0)
-;;          (shell-command "ctags -e -f ${ERLANG_DIRS}/TAGS -R ${ERLANG_DIRS}/*/src ${ERLANG_DIRS}/*/include -h \".hrl.erl\"")
-;;          (message "Generated etags")
-;;          nil
-;;          )
-;;         ((= (length (getenv "ERLANG_DIRS")) 0)
-;;          (shell-command "ctags -e -f ../TAGS -R ../src ../include ../*/src ../*/include -h \".hrl.erl\"")
-;;          (message "Generated etags")
-;;          nil
-;;          )
-;;         )
-;;   )
-
-;; (defun erlfs-alt-find-callers ()
-;;   (interactive)
-;;   (grep (concat "grep --include=\"*.erl\" --include=\"*.hrl\" --color -rnw "
-;;                 (concat (format "%s " (symbol-at-point))
-;;                         "~/work/trunk/lib/"))))
-
-;; Update the etags file with the current open buffer
-;; (defun update-etags ()
-;;   (interactive)
-;;   ;; Erlang
-;;   (let* ((file (buffer-file-name (current-buffer)))))
-;;   (shell-command (concat "ctags -e -a -f ${ERLANG_DIRS}/TAGS " buffer-file-name))
-;;   (message (concat "Update etags file with: " buffer-file-name))
-;;   nil
-;;   )
 
 ;; Mac OS allow alt-command and make command meta
 ;; (setq mac-option-modifier nil
@@ -207,15 +168,6 @@
  )
 ;;;
 (add-hook 'erlang-mode-hook 'my-erlang-mode-hook)
-
-;; (setq tags-table-list '("${ERL_TOP}/../TAGS"))
-;; (add-hook 'erlang-mode-hook
-;;           (lambda ()
-;;             (highlight-lines-matching-regexp ".\{81\}" "hi-green-b")
-;;             (visit-tags-table (file-name-directory
-;;                (concat (getenv "ERL_TOP") "/../lib/TAGS")))
-;;             )
-;;           )
 
 (add-to-list 'auto-mode-alist '("rebar\\.config$" . erlang-mode))
 (add-to-list 'auto-mode-alist '("relx\\.config$" . erlang-mode))
