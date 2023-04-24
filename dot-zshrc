@@ -4,6 +4,10 @@
 export PATH="${HOME}/bin:${HOME}/.local/bin:/usr/local/bin:/usr/local/sbin:${PATH}"
 export EDITOR="emacs --no-desktop -nw"
 
+# zsh - turn off globbing "*qwerty*"-stuff for zsh. Can be done via
+# `noglob <command>` as well
+unsetopt nomatch
+
 # Aliases
 
 # Set appropriate ls alias
