@@ -34,6 +34,8 @@
 
 (add-to-list 'custom-theme-load-path (expand-file-name "~/.emacs.d/themes/"))
 
+;; MacOS brew location :) 
+(setq exec-path (append exec-path '("/opt/homebrew/bin/")))
 
 (setq tags-revert-without-query 1)
 
