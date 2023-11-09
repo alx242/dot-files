@@ -80,7 +80,7 @@
 ;; (windmove-default-keybindings 'meta)
 
 ;; (global-set-key (kbd "C-P") 'enlarge-window)
-;; (global-set-key0B0B0A0A0B0B (kbd "C-N") 'shrink-window)
+;; (global-set-key (kbd "C-N") 'shrink-window)
 
 ;; when cursor is on edge, move to the other side, as in a toroidal space
 (setq windmove-wrap-around t)
