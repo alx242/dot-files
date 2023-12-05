@@ -38,6 +38,7 @@ color article             default   default
 bind-key o open-in-browser-and-mark-read
 # macro s edit-flags "b"
 # macro c edit-flags ""
+bind-key C mark-all-above-as-read
 
 define-filter "All 'stared' articles" "flags = \"b\""
 define-filter "All articles older than 5 days" "age > 5"
