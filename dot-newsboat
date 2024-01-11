@@ -14,6 +14,7 @@ show-read-articles true
 download-full-page true
 reload-time 5
 reload-threads 4
+article-sort-order date-desc
 
 # Default colors
 color background          default   default
