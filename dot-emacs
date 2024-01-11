@@ -36,7 +36,6 @@
 ;; (message (concat "No etags update, mode: " mode-name)))))
 
 ;; (add-to-list 'custom-theme-load-path (expand-file-name "~/.emacs.d/themes/"))
-
 (setq tags-revert-without-query 1)
 
 ;; Force confirmation before exit of emacs
@@ -53,32 +52,11 @@
 (package-initialize)
 
 ;; * * * Moving around window-buffers * * *
-;; Non-default binding which doesn't screw up that much...
 
-;; Can check this by running `cat` and doing keyboard input in a term.
-;; Make shift+alt+arrow work as meta+arrow
-;; (add-hook 'term-setup-hook
-;;           '(lambda ()
-;;             (define-key function-key-map "\e[1;10A" [M-up])
-;;             (define-key function-key-map "\e[1;10B" [M-down])
-;;             (define-key function-key-map "\e[1;10C" [M-right])
-;;             (define-key function-key-map "\e[1;10D" [M-left])
-;;             )
-;;           )
-
-
-;; (global-set-key (kbd "\e[1;10D") 'windmove-left)
-;; (global-set-key (kbd "\e[1;10C") 'windmove-right)
-;; (global-set-key (kbd "\e[1;10A") 'windmove-up)
-;; (global-set-key (kbd "\e[1;10B") 'windmove-down)
 ;; (global-set-key (kbd "C-t") 'customize-face)
 (global-set-key (kbd "C-t") 'customize-themes)
 (global-set-key (kbd "C-f") 'menu-set-font)
-;; (global-set-key (kbd "<S-left>") 'windmove-left)
-;; (global-set-key (kbd "<S-right>") 'windmove-right)
-;; (global-set-key (kbd "<S-up>") 'windmove-up)
-;; (global-set-key (kbd "<S-down>") 'windmove-down)
-(windmove-default-keybindings 'meta)
+(windmove-default-keybindings 'super)
 
 ;; (global-set-key (kbd "C-P") 'enlarge-window)
 ;; (global-set-key (kbd "C-N") 'shrink-window)
@@ -104,6 +82,7 @@
   scroll-step 1
   scroll-conservatively 10000
   scroll-preserve-screen-position 1)
+
 (setq jit-lock-defer-time 0.05)
 ;; (setq jit-lock-defer-time 0)
 (setq fast-but-imprecise-scrolling t)
@@ -138,47 +117,8 @@
 (setenv "ERL_COMPILER_OPTIONS" "[debug_info]")
 (setenv "ERL_NO_FAIL_ON_WARNING" "true")
 
-;; (defun setup-erlang(erl_top)
-;;   "Setup erlang compile environment via M-x setup-erlang."
-;;   (interactive "sWhere is the root of your erlang-environment? ")
-;;   (cond ((and (not (string-empty-p erl_top))
-;;               (file-directory-p erl_top))
-;;          (setenv "ERL_TOP" erl_top))
-;;         ((file-directory-p (concat (getenv "HOME") "/work/trunk/otp"))
-;;          (setenv "ERL_TOP" (concat (getenv "HOME") "/work/trunk/otp"))
-;;          )
-;;         )
-;;    (cond
-;;     ;; ((file-directory-p (concat (getenv "ERL_TOP") "/installed"))
-;;     ;;  (message "going with default...")
-;;     ;;  )
-;;     ((and (string-empty-p (getenv "ERL_TOP")) (file-directory-p "/opt/homebrew/lib/erlang"))
-;;      (setenv "ERL_TOP" "/opt/homebrew/lib/erlang")
-;;      )
-;;     ((and (string-empty-p (getenv "ERL_TOP")) (file-directory-p "/usr/local/lib/erlang"))
-;;      (setenv "ERL_TOP" "/usr/local/lib/erlang")
-;;      )
-;;     ((and (string-empty-p (getenv "ERL_TOP")) (file-directory-p "/usr/lib/erlang"))
-;;      (setenv "ERL_TOP" "/usr/local/lib/erlang")
-;;      )
-;;     )
-;;    (cond
-;;     ;; Source installed version...
-;;     ((file-directory-p (concat (getenv "ERL_TOP") "/installed"))
-;;      (message (concat "Using this ERL_TOP: " (getenv "ERL_TOP")))
-;;      (setq erlang-root-dir (concat (getenv "ERL_TOP") "/installed"))
-;;      (add-to-list 'exec-path (cons (concat (getenv "ERL_TOP") "/installed/bin")))
-;;      )
-;;     ;; Package installed version...
-;;     ((file-directory-p (getenv "ERL_TOP"))
-;;      (message (concat "Using this ERL_TOP: " (getenv "ERL_TOP")))
-;;      (setq erlang-root-dir (getenv "ERL_TOP"))
-;;      (add-to-list 'exec-path (cons (concat (getenv "ERL_TOP") "/bin")))
-;;      )
-;;     )
-;;    )
-
 (load "~/.emacs.d/erl-find-source/erl-find-source.el")
+
 (defun my-erlang-mode-hook ()
   "Configuration for Erlang Mode. Add this to `erlang-mode-hook'."
  (setq indent-tabs-mode nil)
@@ -197,11 +137,6 @@
 (add-to-list 'auto-mode-alist '("relx\\.config$" . erlang-mode))
 (add-to-list 'auto-mode-alist '("system\\.config$" . erlang-mode))
 (add-to-list 'auto-mode-alist '("\\.app\\.src$" . erlang-mode))
-
-;; ;; Erlang compiler extra options
-;; (setq erlang-compile-extra-opts '((i . "../..")
-;;                                   (i . "../include")
-;;                                   debug_info))
 
 (setq load-path (cons  "~/.emacs.d/emacs" load-path))
 
@@ -340,10 +275,6 @@ by using nxml's indentation rules."
                    )
                 )
 
-;; (set-face-font
-;;  'default
-;; "-*-unscii-bold-normal-normal-*-16-*-*-*-m-0-fontset-auto1")
-
 ;; Stop sounding the bell in emacs
 (setq ring-bell-function 'ignore)
 
@@ -372,11 +303,10 @@ by using nxml's indentation rules."
  '(safe-local-variable-values '((allout-layout . t) (sh-indent-comment . t)))
  '(scroll-bar-mode nil))
 
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(default ((t (:family "unscii" :foundry "nil" :slant normal :weight thin :height 161 :width normal)))))
+
+(set-face-font
+ 'default
+ ;; "-*-unscii-thin-normal-normal-*-16-*-*-*-m-0-iso10646-1")
+ "-*-unscii-thin-normal-normal-*-16-*-*-*-m-0-iso10646-1")
 
 ;; (set-mouse-color "red")
