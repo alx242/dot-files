@@ -375,5 +375,5 @@ by using nxml's indentation rules."
  "-*-unscii-thin-normal-normal-*-16-*-*-*-m-0-iso10646-1")
 
 (set-face-font
- 'default markdown-inline-code-face
+ 'markdown-inline-code-face
  "-*-unscii-thin-normal-normal-*-16-*-*-*-m-0-iso10646-1")
