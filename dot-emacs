@@ -17,6 +17,18 @@
 (setq mac-option-modifier 'meta)
 (setq x-select-enable-clipboard t)
 
+;; co-pilot
+;; required: brew install nodejs
+;; packages: editorconfig (melpa)
+;;           jsonrpc (elpa)
+;;           dash (melpa)
+;;           s (melpa)
+;;
+;; after running copilot-login the device activation code will be in
+;; the clipboard ready to be posted on the URL page ctrl/cmd-v
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/copilot/"))
+(require 'copilot)
+(setq copilot-max-char 1000000)
 
 ;; save desktop to enable getting back in to action ö_Ö
 (desktop-save-mode 1)
@@ -227,16 +239,20 @@ by using nxml's indentation rules."
 ;; * * * Rst * * *
 (add-to-list 'auto-mode-alist '("\\.rst$" . rst-mode))
 
+
 ;; * * * Internal functions * * *
 ;; Auto-complete using open buffers
 (defun indent-or-complete ()
   "Complete if point is at end of a word, otherwise indent line."
   (interactive)
   (if (looking-at "\\>")
-      (dabbrev-expand nil)
-    (indent-for-tab-command)
-    ))
+      (or (copilot-accept-completion)
+          (dabbrev-expand nil))
+      (indent-for-tab-command)))
+
 (global-set-key (kbd "TAB") 'indent-or-complete)
+(global-set-key (kbd "<backtab>") 'copilot-next-completion)
+; (global-set-key (kbd "<backtab>") 'copilot-previous-completion)
 
 ;; Insert a timestamp at the end of a file (diary stuff)
 (defun insert-date-stamp ()
