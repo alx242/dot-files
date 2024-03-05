@@ -157,6 +157,7 @@ function unzipmulti {
 #
 # Supplies auto completion for ordinary python
 export PYTHONSTARTUP=${HOME}/.pythonrc
+export PYTHONPATH=${HOME}/Library/Python/3.9/lib/python/site-packages/
 
 # Erlang inet config:
 # http://www.erlang.org/doc/apps/erts/inet_cfg.html
