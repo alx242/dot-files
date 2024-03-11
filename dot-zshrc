@@ -37,7 +37,6 @@ alias scpresume="rsync --append-verify --progress --rsh=ssh"
 alias process_port="lsof -n -P -i +c 13"
 alias tail-f="journalctl -f"
 alias battery_info="upower -i /org/freedesktop/UPower/devices/battery_BAT0"
-alias emacs="emacsclient -n"
 
 bindkey "\e[1;5C" vi-forward-word    # CTRL+RIGHT
 bindkey "\e[1;5D" vi-backward-word   # CTRL+LEFT
