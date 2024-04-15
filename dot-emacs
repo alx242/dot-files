@@ -382,32 +382,32 @@ by using nxml's indentation rules."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(column-number-mode t)
- '(custom-enabled-themes '(undersea))
+ '(custom-enabled-themes nil)
  '(custom-safe-themes
    '("aa742450bc84284415b398be20bfe1c7e63b58fbbc4beb4f2709ce08f2ca3c92" "7c7026a406042e060bce2b56c77d715c3a4e608c31579d336cb825b09e60e827" "ea5a840bd2f9616a36890c27fd5e97528cb9fcfafa0e6739315bb12786d6c4ee" "f5a7e07642decb17b03483af7c44e93353d2b128de403bf301651954c628c0ab" "e7ce09ff7426c9a290d06531edc4934dd05d9ea29713f9aabff834217dbb08e4" "e28246005845509308f992e6fa8524249e13b65192572c9cc9f412a4c5150373" "d6e59d5d3e1e4ec825322deed1e154251abecff0b2bb6d32ac62b117f623bd50" "125744c0b04c7addbe25d238a4053740fad2ad5e18211662f637dbacb3802331" "15a4c95b442e6e7ef3b4e17f792f3c5b2a96e3f64589ae280dad648d97a64e5a" "1d609285d297920b97b0d230360a8d7c3f930edcf1abe96a1d82356f9a5e228d" "46f5e010e0118cc5aaea1749cc6a15be4dfce27c0a195a0dff40684e2381cf87" "00b463c48742afe509ae7d1dcfce09471f7203e13a118f1256b208017a978b4e" "d1cbc62377e87ed73d97af40bf2bff23033bb29c44cc9f15ecbbcbb53fc88095" "e1befaab4edb07028d6502c8feff0fbfc4c90c8f192d00ca6732f7fc0e80d119" "b5dd9b010ba8ac35e18f25be917f1e2dfa5f391784e54848a8853ae000996337" "1a10896643cce14633f9e2b9f3727761cc528ee7bbbe7e8efeb442e067da1a96" "0d09f49e81c811f4a661ff63b82d2b812ce034aed336903922b06362b8cb0bbe" "3d4df186126c347e002c8366d32016948068d2e9198c496093a96775cc3b3eaa" "919fabfc5cb6165ce07b9d8668f78fe75fe8bd08566006bc87513c29b4f34ade" "c0f4b66aa26aa3fded1cbefe50184a08f5132756523b640f68f3e54fd5f584bd" "957a573d5c7cb49c2f033b9d5a6f77445c782307e2d7ffca0d9b5b8141c49843" "9b4ae6aa7581d529e20e5e503208316c5ef4c7005be49fdb06e5d07160b67adc" "edf6b2f1ff26f0cb155523bd4b83a82f1f19a42c9c77fcec0ebbc796d8931180" "83e0376b5df8d6a3fbdfffb9fb0e8cf41a11799d9471293a810deb7586c131e6" "6bdcff29f32f85a2d99f48377d6bfa362768e86189656f63adbf715ac5c1340b" "78c4238956c3000f977300c8a079a3a8a8d4d9fee2e68bad91123b58a4aa8588" "7661b762556018a44a29477b84757994d8386d6edee909409fabe0631952dad9" "6b5c518d1c250a8ce17463b7e435e9e20faa84f3f7defba8b579d4f5925f60c1" "d14f3df28603e9517eb8fb7518b662d653b25b26e83bd8e129acea042b774298" "0ed3d96a506b89c1029a1ed904b11b5adcebeb2e0c16098c99c0ad95cb124729" "b6c43bb2aea78890cf6bd4a970e6e0277d2daf0075272817ea8bb53f9c6a7f0a" "91c008faf603a28d026957120a5a924a3c8fff0e12331abf5e04c0e9dd310c65" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" "fa2b58bb98b62c3b8cf3b6f02f058ef7827a8e497125de0254f56e373abee088" "68bda5909fa46ce2fa510108d4abfafb75671f721dcad05211d3f78fec8a918a" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "e16a771a13a202ee6e276d06098bc77f008b73bbac4d526f160faa2d76c1dd0e" "4eb6fa2ee436e943b168a0cd8eab11afc0752aebb5d974bba2b2ddc8910fca8f" "117efd35bd4451a2d4ee0180cb2dbfc8601af5c4d9ade3ea575d2afdda0feb82" "81c3de64d684e23455236abde277cda4b66509ef2c28f66e059aa925b8b12534" "5a27cbf4736a5f9be00c35f4961efd29ea72f7e959f856e0ab31051547ce4f29" "b89a4f5916c29a235d0600ad5a0849b1c50fab16c2c518e1d98f0412367e7f97" default))
+ '(debug-on-error t)
  '(package-selected-packages
-   '(f dash s editorconfig jsonrpc autumn-light-theme tangotango-theme transpose-frame dired-sidebar dired-subtree color-theme-approximate aircon-theme undersea-theme white-sand-theme white-theme dream-theme nordless-theme nordic-night-theme nord-theme dakrone-light-theme cyanometric-theme cloud-theme boron-theme underwater-theme tron-legacy-theme melancholy-theme adwaita-dark-theme vampyricdark-theme atom-dark-theme ancient-one-dark-theme zerodark-theme graphviz-dot-mode afternoon-theme acme-theme abyss-theme ample-theme spacemacs-theme yang-mode rust-mode nyan-mode gruvbox-theme gotham-theme erlang dracula-theme cyberpunk-theme))
+   '(compat magit f dash s editorconfig jsonrpc autumn-light-theme tangotango-theme transpose-frame dired-sidebar dired-subtree color-theme-approximate aircon-theme undersea-theme white-sand-theme white-theme dream-theme nordless-theme nordic-night-theme nord-theme dakrone-light-theme cyanometric-theme cloud-theme boron-theme underwater-theme tron-legacy-theme melancholy-theme adwaita-dark-theme vampyricdark-theme atom-dark-theme ancient-one-dark-theme zerodark-theme graphviz-dot-mode afternoon-theme acme-theme abyss-theme ample-theme spacemacs-theme yang-mode rust-mode nyan-mode gruvbox-theme gotham-theme erlang dracula-theme cyberpunk-theme))
  '(safe-local-variable-values '((allout-layout . t) (sh-indent-comment . t)))
  '(scroll-bar-mode nil))
-
 
 ;; "-*-unscii-thin-normal-normal-*-16-*-*-*-m-0-iso10646-1")
 ;; "-*-unscii-thin-normal-normal-*-16-*-*-*-m-0-fontset-auto1"
 ;; (describe-face nil)
-;; (set-face-font 'default "unscii:pixelsize=16:weight=thin:slant=normal:width=normal:spacing=100:scalable=true:antialias=nil")
-;; (set-face-font 'fixed-pitch "unscii:pixelsize=16:weight=thin:slant=normal:width=normal:spacing=100:scalable=true:antialias=nil")
-;; (set-face-font 'markdown-pre-face "unscii:pixelsize=16:weight=thin:slant=normal:width=normal:spacing=100:scalable=true:antialias=nil")
-;; (set-face-font 'markdown-code-face "unscii:pixelsize=16:weight=thin:slant=normal:width=normal:spacing=100:scalable=true:antialias=nil")
-;; (set-face-font 'markdown-inline-code-face "unscii:pixelsize=16:weight=thin:slant=normal:width=normal:spacing=100:scalable=true:antialias=nil")
-;; (set-face-font 'markdown-table-face "unscii:pixelsize=16:weight=thin:slant=normal:width=normal:spacing=100:scalable=true:antialias=nil")
-;; (set-face-font 'variable-pitch "unscii:pixelsize=16:weight=thin:slant=normal:width=normal:spacing=100:scalable=true:antialias=nil")
-;; (set-face-font 'tab-bar "unscii:pixelsize=16:weight=thin:slant=normal:width=normal:spacing=100:scalable=true:antialias=nil")
-;; (set-face-font 'help-key-binding "unscii:pixelsize=16:weight=thin:slant=normal:width=normal:spacing=100:scalable=true:antialias=nil")
-;; (set-face-font 'help-for-help-header "unscii:pixelsize=16:weight=thin:slant=normal:width=normal:spacing=100:scalable=true:antialias=nil")
-;; 
+(set-face-font 'default "-*-unscii-thin-normal-normal-*-16-*-*-*-m-0-iso10646-1")
+(set-face-font 'fixed-pitch "-*-unscii-thin-normal-normal-*-16-*-*-*-m-0-iso10646-1")
+(set-face-font 'markdown-pre-face "-*-unscii-thin-normal-normal-*-16-*-*-*-m-0-iso10646-1")
+(set-face-font 'markdown-code-face "-*-unscii-thin-normal-normal-*-16-*-*-*-m-0-iso10646-1")
+(set-face-font 'markdown-inline-code-face "-*-unscii-thin-normal-normal-*-16-*-*-*-m-0-iso10646-1")
+(set-face-font 'markdown-table-face "-*-unscii-thin-normal-normal-*-16-*-*-*-m-0-iso10646-1")
+(set-face-font 'variable-pitch "-*-unscii-thin-normal-normal-*-16-*-*-*-m-0-iso10646-1")
+(set-face-font 'tab-bar "-*-unscii-thin-normal-normal-*-16-*-*-*-m-0-iso10646-1")
+(set-face-font 'help-key-binding "-*-unscii-thin-normal-normal-*-16-*-*-*-m-0-iso10646-1")
+(set-face-font 'help-for-help-header "-*-unscii-thin-normal-normal-*-16-*-*-*-m-0-iso10646-1")
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(default ((t (:family "unscii" :foundry "nil" :slant normal :weight thin :height 161 :width normal)))))
