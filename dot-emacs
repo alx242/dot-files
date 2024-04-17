@@ -391,23 +391,13 @@ by using nxml's indentation rules."
  '(safe-local-variable-values '((allout-layout . t) (sh-indent-comment . t)))
  '(scroll-bar-mode nil))
 
-;; "-*-unscii-thin-normal-normal-*-16-*-*-*-m-0-iso10646-1")
-;; "-*-unscii-thin-normal-normal-*-16-*-*-*-m-0-fontset-auto1"
-;; (describe-face nil)
-(set-face-font 'default "-*-unscii-thin-normal-normal-*-16-*-*-*-m-0-iso10646-1")
-(set-face-font 'fixed-pitch "-*-unscii-thin-normal-normal-*-16-*-*-*-m-0-iso10646-1")
-(set-face-font 'markdown-pre-face "-*-unscii-thin-normal-normal-*-16-*-*-*-m-0-iso10646-1")
-(set-face-font 'markdown-code-face "-*-unscii-thin-normal-normal-*-16-*-*-*-m-0-iso10646-1")
-(set-face-font 'markdown-inline-code-face "-*-unscii-thin-normal-normal-*-16-*-*-*-m-0-iso10646-1")
-(set-face-font 'markdown-table-face "-*-unscii-thin-normal-normal-*-16-*-*-*-m-0-iso10646-1")
-(set-face-font 'variable-pitch "-*-unscii-thin-normal-normal-*-16-*-*-*-m-0-iso10646-1")
-(set-face-font 'tab-bar "-*-unscii-thin-normal-normal-*-16-*-*-*-m-0-iso10646-1")
-(set-face-font 'help-key-binding "-*-unscii-thin-normal-normal-*-16-*-*-*-m-0-iso10646-1")
-(set-face-font 'help-for-help-header "-*-unscii-thin-normal-normal-*-16-*-*-*-m-0-iso10646-1")
-
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(default ((t (:family "unscii" :foundry "nil" :slant normal :weight thin :height 161 :width normal)))))
+(set-face-attribute 'default nil :font "unscii-16:antialias=false:hinting=true:autohint=false")
+(set-face-attribute 'fixed-pitch nil :font "unscii-16:antialias=false:hinting=true:autohint=false")
+(set-face-attribute 'markdown-pre-face nil :font "unscii-16:antialias=false:hinting=true:autohint=false")
+(set-face-attribute 'markdown-code-face nil :font "unscii-16:antialias=false:hinting=true:autohint=false")
+(set-face-attribute 'markdown-inline-code-face nil :font "unscii-16:antialias=false:hinting=true:autohint=false")
+(set-face-attribute 'markdown-table-face nil :font "unscii-16:antialias=false:hinting=true:autohint=false")
+(set-face-attribute 'variable-pitch nil :font "unscii-16:antialias=false:hinting=true:autohint=false")
+(set-face-attribute 'tab-bar nil :font "unscii-16:antialias=false:hinting=true:autohint=false")
+(set-face-attribute 'help-key-binding nil :font "unscii-16:antialias=false:hinting=true:autohint=false")
+(set-face-attribute 'help-for-help-header nil :font "unscii-16:antialias=false:hinting=true:autohint=false")
