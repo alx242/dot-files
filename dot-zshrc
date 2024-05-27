@@ -118,8 +118,9 @@ function repeat_until_error {
 }
 
 # Do a diff in emacs with file A and B
-function diff_emacs {
-    emacs --eval "(ediff-files \"$1\" \"$2\")"
+function emacs-diff {
+    echo "Diffing '${1}' vs '${2}'"
+    emacsclient -n --eval "(ediff-files \"$1\" \"$2\")";
 }
 
 # Function to see how a specific proc is behaving, limit line length

@@ -260,6 +260,7 @@ by using nxml's indentation rules."
       (indent-for-tab-command)))
 
 (global-set-key (kbd "TAB") 'indent-or-complete)
+(global-set-key (kbd "C-<tab>") 'copilot-accept-completion)
 (global-set-key (kbd "<backtab>") 'copilot-next-completion)
 ; (global-set-key (kbd "<backtab>") 'copilot-previous-completion)
 
