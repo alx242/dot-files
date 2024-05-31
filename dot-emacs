@@ -300,26 +300,18 @@ by using nxml's indentation rules."
 (global-set-key (kbd "s-t") 'multi-vterm)
 (global-set-key (kbd "s-n") 'multi-vterm-next)
 (global-set-key (kbd "s-p") 'multi-vterm-prev)
-(eval-after-load "vterm"
-  '(defun vterm-send-C-k ()
-    "Send `C-k' to libvterm."
-    (interactive)
-    (kill-ring-save (point) (vterm-end-of-line))
-    (vterm-send-key "k" nil nil t)))
+(global-set-key (kbd "s-c") 'vterm-copy-mode)
 
-(defun vterm-counsel-yank-pop-action (orig-fun &rest args)
-  (if (equal major-mode 'vterm-mode)
-      (let ((inhibit-read-only t)
-            (yank-undo-function (lambda (_start _end) (vterm-undo))))
-        (cl-letf (((symbol-function 'insert-for-yank)
-               (lambda (str) (vterm-send-string str t))))
-            (apply orig-fun args)))
-    (apply orig-fun args)))
-(advice-add 'counsel-yank-pop-action :around #'vterm-counsel-yank-pop-action)
+(defun vterm-send-C-k ()
+  "Send `C-k' to libvterm."
+  (interactive)
+  (kill-ring-save (point) (vterm-end-of-line))
+  (vterm-send-key "k" nil nil t))
 
 (setq vterm-kill-buffer-on-exit t)
 (setq vterm-max-scrollback 10000)
 (setq vterm-enable-manipulate-selection-data-by-osc52 t)
+
 
 ;; * * * Keys * * *
 
