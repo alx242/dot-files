@@ -82,6 +82,16 @@
 (global-set-key (kbd "M-o") 'other-window)
 (global-set-key (kbd "M-i") 'previous-window-any-frame)
 
+(global-set-key (kbd "M-s-<up>") 'windmove-swap-states-up)
+(global-set-key (kbd "M-s-<down>") 'windmove-swap-states-down)
+(global-set-key (kbd "M-s-<left>") 'windmove-swap-states-left)
+(global-set-key (kbd "M-s-<right>") 'windmove-swap-states-right)
+
+
+(global-set-key (kbd "s-0") 'delete-window)
+(global-set-key (kbd "s-2") 'split-window-below)
+(global-set-key (kbd "s-3") 'split-window-right)
+
 (require 'transpose-frame)
 (global-set-key (kbd "\C-c\C-m") 'maximize-window)
 (global-set-key (kbd "\C-c\C-b") 'balance-windows)
@@ -157,7 +167,7 @@
 ;; No tabs only spaces
 (setq indent-tabs-mode nil)
 (setq-default indent-tabs-mode nil)
-(setq-default show-trailing-whitespace t)
+(setq-default show-trailing-whitespace nil)
 (setq-default default-indicate-empty-lines t)
 (setq-default line-number-mode t)
 (setq-default column-number-mode t)
@@ -292,12 +302,32 @@ by using nxml's indentation rules."
 
 ;; Kill all buffers
 (defun kill-all-buffers ()
+  "Kill all buffers in emacs...wooops"
   (interactive)
   (mapcar 'kill-buffer (buffer-list))
   (delete-other-windows))
 
 ;; vterm
-(global-set-key (kbd "s-t") 'multi-vterm)
+(global-set-key (kbd "C-x t") 'new-terminal)
+
+(defun new-multi-vterm ()
+  (interactive)
+  (let ((default-directory "~"))
+    (multi-vterm))
+  (dedicate-window)
+  )
+
+(defun dedicate-window (&optional arg)
+  "Set current window to be dedicated.
+   With prefix ARG, undedicate it."
+  (interactive "P")
+  (set-window-dedicated-p (get-buffer-window (current-buffer)) (not arg))
+  (message (if arg
+               "Window '%s' is normal"
+               "Window '%s' is dedicated")
+           (current-buffer)))
+
+(global-set-key (kbd "s-t") 'new-multi-vterm)
 (global-set-key (kbd "s-n") 'multi-vterm-next)
 (global-set-key (kbd "s-p") 'multi-vterm-prev)
 (global-set-key (kbd "s-c") 'vterm-copy-mode)
@@ -312,6 +342,10 @@ by using nxml's indentation rules."
 (setq vterm-max-scrollback 10000)
 (setq vterm-enable-manipulate-selection-data-by-osc52 t)
 
+(defun my-vterm-mode-customizations ()
+  (local-set-key (kbd "C-k") 'vterm-send-C-k))
+
+(add-hook 'vterm-mode-hook 'my-vterm-mode-customizations)
 
 ;; * * * Keys * * *
 

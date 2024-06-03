@@ -37,12 +37,17 @@ alias scpresume="rsync --append-verify --progress --rsh=ssh"
 alias process_port="lsof -n -P -i +c 13"
 alias tail-f="journalctl -f"
 alias battery_info="upower -i /org/freedesktop/UPower/devices/battery_BAT0"
+alias ec="emacsclient -n"
 
 bindkey "\e[1;5C" vi-forward-word    # CTRL+RIGHT
 bindkey "\e[1;5D" vi-backward-word   # CTRL+LEFT
 bindkey "\e\e[C" vi-forward-word     # META+RIGHT
 bindkey "\e\e[D" vi-backward-word    # META+LEFT
 bindkey "\e^?" vi-backward-kill-word # META+BACKSPACE
+
+# vterm current pwd tracking
+# autoload -U add-zsh-hook
+# add-zsh-hook -Uz chpwd (){ print -Pn "\e]2;%0~\a" }
 
 # Fix for zsh compinit: insecure directories, run compaudit for list.
 #
