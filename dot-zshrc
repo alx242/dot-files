@@ -123,7 +123,7 @@ function repeat_until_error {
 }
 
 # Do a diff in emacs with file A and B
-function emacs-diff {
+function ec-diff {
     echo "Diffing '${1}' vs '${2}'"
     emacsclient -n --eval "(ediff-files \"$1\" \"$2\")";
 }

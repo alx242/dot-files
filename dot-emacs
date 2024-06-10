@@ -93,9 +93,9 @@
 (global-set-key (kbd "s-3") 'split-window-right)
 
 (require 'transpose-frame)
-(global-set-key (kbd "\C-c\C-m") 'maximize-window)
-(global-set-key (kbd "\C-c\C-b") 'balance-windows)
-(global-set-key (kbd "\C-c\C-r") 'rotate-frame-clockwise)
+(global-set-key (kbd "s-m") 'maximize-window)
+(global-set-key (kbd "s-b") 'balance-windows)
+(global-set-key (kbd "s-r") 'rotate-frame-clockwise)
 
 ;; ‘transpose-frame’ Swap x-direction and y-direction
 ;;
@@ -331,6 +331,11 @@ by using nxml's indentation rules."
 (global-set-key (kbd "s-n") 'multi-vterm-next)
 (global-set-key (kbd "s-p") 'multi-vterm-prev)
 (global-set-key (kbd "s-c") 'vterm-copy-mode)
+
+(global-set-key (kbd "s-k") '(lambda ()
+                              (interactive)
+                              (vterm-clear)
+                              (vterm-clear-scrollback)))
 
 (defun vterm-send-C-k ()
   "Send `C-k' to libvterm."
