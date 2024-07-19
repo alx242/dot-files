@@ -31,7 +31,7 @@
 ;; after running copilot-login the device activation code will be in
 ;; the clipboard ready to be posted on the URL page ctrl/cmd-v
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/copilot/"))
-(require 'copilot)
+;; (require 'copilot)
 (setq copilot-max-char 1000000)
 
 ;; save desktop to enable getting back in to action ö_Ö
@@ -429,8 +429,12 @@ by using nxml's indentation rules."
       (process-send-eof proc))))
 
 ;; injects the above functions to make sure command-v / c works as intended :)
-(setq interprogram-cut-function 'paste-to-osx)
-(setq interprogram-paste-function 'copy-from-osx)
+(if (eq system-type 'darwin)
+    (lambda()
+      (setq interprogram-cut-function 'paste-to-osx)
+      (setq interprogram-paste-function 'copy-from-osx)
+      )
+    )
 
 ;; Stop sounding the bell in emacs
 (setq ring-bell-function 'ignore)
@@ -463,21 +467,17 @@ by using nxml's indentation rules."
 
 ;; (set-mouse-color "white")
 
-(set-face-attribute 'default nil :font "unscii-16:antialias=false:hinting=true:autohint=false")
-(set-face-attribute 'fixed-pitch nil :font "unscii-16:antialias=false:hinting=true:autohint=false")
-(set-face-attribute 'markdown-pre-face nil :font "unscii-16:antialias=false:hinting=true:autohint=false")
-(set-face-attribute 'markdown-code-face nil :font "unscii-16:antialias=false:hinting=true:autohint=false")
-(set-face-attribute 'markdown-inline-code-face nil :font "unscii-16:antialias=false:hinting=true:autohint=false")
-(set-face-attribute 'markdown-table-face nil :font "unscii-16:antialias=false:hinting=true:autohint=false")
-(set-face-attribute 'variable-pitch nil :font "unscii-16:antialias=false:hinting=true:autohint=false")
-(set-face-attribute 'tab-bar nil :font "unscii-16:antialias=false:hinting=true:autohint=false")
-(set-face-attribute 'help-key-binding nil :font "unscii-16:antialias=false:hinting=true:autohint=false")
-(set-face-attribute 'help-for-help-header nil :font "unscii-16:antialias=false:hinting=true:autohint=false")
-(set-face-attribute 'Info-quoted nil :font "unscii-16:antialias=false:hinting=true:autohint=false")
-(set-face-attribute 'fixed-pitch-serif nil :font "unscii-16:antialias=false:hinting=true:autohint=false")
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+(setq my_font "unscii-12:antialias=false:hinting=true:autohint=false")
+(set-face-attribute 'default nil :font my_font)
+(set-face-attribute 'fixed-pitch nil :font my_font)
+(set-face-attribute 'markdown-pre-face nil :font my_font)
+(set-face-attribute 'markdown-code-face nil :font my_font)
+(set-face-attribute 'markdown-inline-code-face nil :font my_font)
+(set-face-attribute 'markdown-table-face nil :font my_font)
+(set-face-attribute 'variable-pitch nil :font my_font)
+(set-face-attribute 'tab-bar nil :font my_font)
+(set-face-attribute 'help-key-binding nil :font my_font)
+(set-face-attribute 'help-for-help-header nil :font my_font)
+(set-face-attribute 'fixed-pitch-serif nil :font my_font)
+;;(set-face-attribute 'Info-quoted nil :font "unscii-17:antialias=false:hinting=true:autohint=false")
+
