@@ -82,19 +82,26 @@
 (global-set-key (kbd "M-o") 'other-window)
 (global-set-key (kbd "M-i") 'previous-window-any-frame)
 
-(global-set-key (kbd "M-s-<up>") 'windmove-swap-states-up)
-(global-set-key (kbd "M-s-<down>") 'windmove-swap-states-down)
-(global-set-key (kbd "M-s-<left>") 'windmove-swap-states-left)
-(global-set-key (kbd "M-s-<right>") 'windmove-swap-states-right)
+; (global-set-key (kbd "M-s-<up>") 'windmove-swap-states-up)
+; (global-set-key (kbd "M-s-<down>") 'windmove-swap-states-down)
+; (global-set-key (kbd "M-s-<left>") 'windmove-swap-states-left)
+; (global-set-key (kbd "M-s-<right>") 'windmove-swap-states-right)
 
+(global-set-key (kbd "M-s-<left>") 'shrink-window-horizontally)
+(global-set-key (kbd "M-s-<right>") 'enlarge-window-horizontally)
+(global-set-key (kbd "M-s-<down>") 'shrink-window)
+(global-set-key (kbd "M-s-<up>") 'enlarge-window)
 
 (global-set-key (kbd "s-0") 'delete-window)
+(global-set-key (kbd "s-1") 'delete-other-windows)
 (global-set-key (kbd "s-2") 'split-window-below)
 (global-set-key (kbd "s-3") 'split-window-right)
 
 (require 'transpose-frame)
-(global-set-key (kbd "s-m") 'maximize-window)
-(global-set-key (kbd "s-b") 'balance-windows)
+(global-set-key (kbd "s-k") 'kill-buffer)
+(global-set-key (kbd "s-b") 'switch-to-buffer)
+(global-set-key (kbd "s-.") 'maximize-window)
+(global-set-key (kbd "s-,") 'balance-windows)
 (global-set-key (kbd "s-r") 'rotate-frame-clockwise)
 
 ;; ‘transpose-frame’ Swap x-direction and y-direction
