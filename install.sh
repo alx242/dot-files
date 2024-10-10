@@ -48,6 +48,9 @@ ln -s $SRCDIR/dot-newsboat $HOME/.newsboat/config
 mkdir -p $HOME/.config/conky
 ln -s $SRCDIR/conky.conf $HOME/.config/conky/conky.conf
 
+# Starship
+ln -s $SRCDIR/starship.toml $HOME/.config/starship.toml
+
 mkdir -p $DESTDIR/.local/bin
 ln -s "$SRCDIR/backup"  "$DESTDIR/.local/bin"
 ln -s "$SRCDIR/up"  "$DESTDIR/.local/bin"
