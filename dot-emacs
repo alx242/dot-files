@@ -180,7 +180,7 @@
 ;; No tabs only spaces
 (setq indent-tabs-mode nil)
 (setq-default indent-tabs-mode nil)
-(setq-default show-trailing-whitespace nil)
+(setq-default show-trailing-whitespace t)
 (setq-default default-indicate-empty-lines t)
 (setq-default line-number-mode t)
 (setq-default column-number-mode t)
