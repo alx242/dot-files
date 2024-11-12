@@ -323,7 +323,7 @@ by using nxml's indentation rules."
 ;; vterm
 ;; (global-set-key (kbd "C-x t") 'new-terminal)
 
-;; (defun new-multi-vterm ()
+;; (defun multi-vterm-home ()
 ;;   (interactive)
 ;;   (let ((default-directory "~"))
 ;;     (multi-vterm))
@@ -340,11 +340,11 @@ by using nxml's indentation rules."
 ;;                "Window '%s' is dedicated")
 ;;            (current-buffer)))
 
-;; (global-set-key (kbd "s-t") 'new-multi-vterm)
+;; (global-set-key (kbd "s-t") 'multi-vterm-home)
 ;; (global-set-key (kbd "s-n") 'multi-vterm-next)
 ;; (global-set-key (kbd "s-p") 'multi-vterm-prev)
 ;; (global-set-key (kbd "s-c") 'vterm-copy-mode)
-;; 
+
 ;; (global-set-key (kbd "s-k") '(lambda ()
 ;;                               (interactive)
 ;;                               (vterm-clear)
@@ -363,10 +363,10 @@ by using nxml's indentation rules."
 (global-set-key (kbd "s-n") 'next-buffer)
 (global-set-key (kbd "s-p") 'previous-buffer)
 
-(defun my-vterm-mode-customizations ()
-  (local-set-key (kbd "C-k") 'vterm-send-C-k))
+;;(defun my-vterm-mode-customizations ()
+;;  (local-set-key (kbd "C-k") 'vterm-send-C-k))
 
-(add-hook 'vterm-mode-hook 'my-vterm-mode-customizations)
+;;(add-hook 'vterm-mode-hook 'my-vterm-mode-customizations)
 
 ;; * * * Keys * * *
 
