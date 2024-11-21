@@ -2,6 +2,7 @@
 #
 # Requires ttyplot to execute...
 # See here: https://virtuallyfun.com/2018/10/14/ttyplot-a-real-time-plotting-utility-for-the-terminal/
+# And of course: https://github.com/tenox7/ttyplot with lots of examples...
 #
 # Param $1 what to follow
 
