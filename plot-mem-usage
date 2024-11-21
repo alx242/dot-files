@@ -1,0 +1,9 @@
+#!/bin/bash
+#
+# Param $1 what to follow
+
+PROCESS_NAME=$1
+UPDATE_INTERVALL=3
+
+
+{ while true; do ps x -o rss,vsz,etime,command | awk 'NR>1 {$1=int($1/1024); $2=int($2/1024)"M";}{ print ;}' | grep ${PROCESS_NAME} | grep -v grep | awk ' { print $1 }'; sleep ${UPDATE_INTERVALL}; done } | ttyplot -t "MegaByte usage of ${PROCESS_NAME}" -u MB
