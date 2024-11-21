@@ -1,5 +1,7 @@
 #!/bin/bash
 #
+# Requires ttyplot to execute...
+#
 # Param $1 what to follow
 
 PROCESS_NAME=$1
