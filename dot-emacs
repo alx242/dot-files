@@ -93,10 +93,10 @@
 ; (global-set-key (kbd "M-s-<left>") 'windmove-swap-states-left)
 ; (global-set-key (kbd "M-s-<right>") 'windmove-swap-states-right)
 
-(global-set-key (kbd "M-s-<left>") 'shrink-window-horizontally)
-(global-set-key (kbd "M-s-<right>") 'enlarge-window-horizontally)
-(global-set-key (kbd "M-s-<down>") 'shrink-window)
-(global-set-key (kbd "M-s-<up>") 'enlarge-window)
+(global-set-key (kbd "C-s-<left>") 'shrink-window-horizontally)
+(global-set-key (kbd "C-s-<right>") 'enlarge-window-horizontally)
+(global-set-key (kbd "C-s-<down>") 'shrink-window)
+(global-set-key (kbd "C-s-<up>") 'enlarge-window)
 
 (global-set-key (kbd "s-0") 'delete-window)
 (global-set-key (kbd "s-1") 'delete-other-windows)
