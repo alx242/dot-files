@@ -1,13 +1,25 @@
 #!/bin/bash
 #
 # Requires ttyplot to execute...
-# See here: https://virtuallyfun.com/2018/10/14/ttyplot-a-real-time-plotting-utility-for-the-terminal/
-# And of course: https://github.com/tenox7/ttyplot with lots of examples...
 #
-# Param $1 what to follow
+# See here: https://virtuallyfun.com/2018/10/14/ttyplot-a-real-time-plotting-utility-for-the-terminal/
+#           https://github.com/tenox7/ttyplot with lots of examples...
+#
+# Param $1 what to follow and use the color 2
 
-PROCESS_NAME=$1
+PROCESS_NAME=${1:-beam.smp} # Usually doing this for erlang processes
 UPDATE_INTERVALL=3
+COLOR=${2:-1}               # 1 = red
+
+# { while true; do ps x -o rss,vsz,etime,command | \
+#   awk 'NR>1 {$1=int($1/1024); $2=int($2/1024);}{ print ;}' | grep ${PROCESS_NAME} | grep -v grep | \
+#   awk ' { print $1" "$2 }'; sleep ${UPDATE_INTERVALL}; done } | \
+#   ttyplot -2 -t "MegaByte usage of ${PROCESS_NAME} real size and virtual size" -u MB -C $COLOR
 
 
-{ while true; do ps x -o rss,vsz,etime,command | awk 'NR>1 {$1=int($1/1024); $2=int($2/1024)"M";}{ print ;}' | grep ${PROCESS_NAME} | grep -v grep | awk ' { print $1 }'; sleep ${UPDATE_INTERVALL}; done } | ttyplot -t "MegaByte usage of ${PROCESS_NAME}" -u MB
+{ while true; do ps x -o rss,vsz,etime,command | \
+  awk 'NR>1 {$1=int($1/1024); $2=int($2/1024);}{ print ;}' | \
+  grep ${PROCESS_NAME} | \
+  grep -v grep | \
+  awk ' { print $1 }'; sleep ${UPDATE_INTERVALL}; done } | \
+  ttyplot -t "MegaByte usage of ${PROCESS_NAME} real size and virtual size" -u MB -C $COLOR
