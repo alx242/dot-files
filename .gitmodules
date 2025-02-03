@@ -34,9 +34,3 @@
 [submodule "dot-emacs.d/markdown-mode"]
 	path = dot-emacs.d/markdown-mode
 	url = https://github.com/jrblevin/markdown-mode
-[submodule "dot-emacs.d/copilot"]
-	path = dot-emacs.d/copilot
-	url = git@github.com:copilot-emacs/copilot.el.git
-[submodule "dot-emacs.d/copilot-chat"]
-	path = dot-emacs.d/copilot-chat
-	url = git@github.com:chep/copilot-chat.el.git
