@@ -32,10 +32,9 @@
 ;; (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
 (package-initialize)
 
-;; regex re-builder
-(require 're-builder)
-(setq reb-re-syntax 'string)
-
+;; ;; regex re-builder
+;; (require 're-builder)
+;; (setq reb-re-syntax 'string)
 
 ;; co-pilot
 ;; required: brew install nodejs
@@ -51,10 +50,6 @@
 (require 'copilot)
 (setq copilot-max-char 1000000)
 
-;; FIXME: Can't be loaded above markedown?!?!?!
-;; packages: request
-;; (add-to-list 'load-path (expand-file-name "~/.emacs.d/copilot-chat/"))
-;; (load "~/.emacs.d/copilot-chat/copilot-chat.el")
 (require 'markdown-mode)
 (require 'request)
 (require 'copilot-chat)
@@ -65,15 +60,6 @@
 ;;      mac-option-modifier 'none
 ;;      x-select-enable-clipboard t
 
-;; Will update the etags file in case we are saving a correct file (or
-;; rather we save a file with the correct mode)
-;; (add-hook 'after-save-hook (lambda()
-;;                              (if (string-equal mode-name "Erlang")
-;;                                  (update-etags)
-;;                                nil)))
-;; (message (concat "No etags update, mode: " mode-name)))))
-
-;; (add-to-list 'custom-theme-load-path (expand-file-name "~/.emacs.d/themes/"))
 (setq tags-revert-without-query 1)
 
 ;; Force confirmation before exit of emacs
@@ -278,7 +264,6 @@
 (defun my-erlang-mode-hook ()
   "Configuration for Erlang Mode. Add this to `erlang-mode-hook'."
   (setq indent-tabs-mode nil)
-  ;; I use M-. to push to stack (default), and M-* to pop from stack
   ;; Activate the co-pilot
   (copilot-mode)
   (vertico-mode)
@@ -286,7 +271,6 @@
   ;; (flyspell-mode)
   ;; 80 chars
   (display-fill-column-indicator-mode)
-  (set-fill-column 80)
   )
 
 ;;;
