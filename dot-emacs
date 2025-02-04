@@ -27,9 +27,13 @@
 
 ;; Package handling
 (require 'package)
-(add-to-list 'package-archives '("elpa" . "http://elpa.gnu.org/packages/") t)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-;; (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
+(add-to-list 'package-archives
+             '("elpa" . "http://elpa.gnu.org/packages/") t)
+(add-to-list 'package-archives
+             '("melpa" . "https://melpa.org/packages/") t)
+;; (add-to-list
+;;  'package-archives
+;;  '("marmalade" . "http://marmalade-repo.org/packages/") t)
 (package-initialize)
 
 ;; ;; regex re-builder
@@ -157,7 +161,8 @@
 ;; (global-set-key (kbd "C-P") 'enlarge-window)
 ;; (global-set-key (kbd "C-N") 'shrink-window)
 
-;; when cursor is on edge, move to the other side, as in a toroidal space
+;; when cursor is on edge, move to the other side, as in a toroidal
+;; space
 (setq windmove-wrap-around t)
 
 (global-set-key (kbd "S-C-<left>") 'shrink-window-horizontally)
@@ -204,7 +209,8 @@
           (lambda () (flyspell-mode 1)))
 
 ;; * * * Yang * * *
-(autoload 'yang-mode "yang-mode" "Major mode for editing YANG modules." t)
+(autoload 'yang-mode "yang-mode"
+  "Major mode for editing YANG modules." t)
 (add-to-list 'auto-mode-alist '("\\.yang$" . yang-mode))
 ;; To not make emacs laggy when viewing big yang-files
 (setq-default blink-matching-paren-distance nil)
@@ -232,9 +238,11 @@
   ;; Enable LSP automatically for Erlang files
   (add-hook 'erlang-mode-hook #'lsp)
 
-  ;; ELP, added as priority 0 (> -1) so takes priority over the built-in one
+  ;; ELP, added as priority 0 (> -1) so takes priority over the
+  ;; built-in one
   (lsp-register-client
-   (make-lsp-client :new-connection (lsp-stdio-connection '("elp" "server"))
+   (make-lsp-client :new-connection (lsp-stdio-connection
+                                     '("elp" "server"))
                     :major-modes '(erlang-mode)
                     :priority 0
                     :server-id 'erlang-language-platform))
@@ -254,9 +262,10 @@
 (defun consult-ripgrep-erl ()
   "Search for erlang files"
   (interactive)
-  (let ((consult-ripgrep-command "rg --null --line-buffered --color=ansi --max-columns=1000
-
---no-heading --type erlang --type c --line-number . -e ARG OPTS"))
+  (let ((consult-ripgrep-command
+         "rg --null --line-buffered --color=ansi --max-columns=1000
+             --no-heading --type erlang --type c
+             --line-number . -e ARG OPTS"))
     (consult-ripgrep)))
 
 (global-set-key (kbd "s-r") 'consult-ripgrep-erl)
@@ -330,7 +339,8 @@ by using nxml's indentation rules."
   (setq make-backup-files nil)
   (end-of-buffer)
   (end-of-line)
-  (insert (format-time-string "\n\n%a %b %e %R %Z %Y\n\n" (current-time)))
+  (insert (format-time-string "\n\n%a %b %e %R %Z %Y\n\n"
+                              (current-time)))
   ;;(forward-char -1)
   ;;(forward-char 1)
   (end-of-buffer)
@@ -345,53 +355,8 @@ by using nxml's indentation rules."
   (mapcar 'kill-buffer (buffer-list))
   (delete-other-windows))
 
-;; vterm
-;; (global-set-key (kbd "C-x t") 'new-terminal)
-
-;; (defun multi-vterm-home ()
-;;   (interactive)
-;;   (let ((default-directory "~"))
-;;     (multi-vterm))
-;;   (dedicate-window)
-;;   )
-
-;; (defun dedicate-window (&optional arg)
-;;   "Set current window to be dedicated.
-;;    With prefix ARG, undedicate it."
-;;   (interactive "P")
-;;   (set-window-dedicated-p (get-buffer-window (current-buffer)) (not arg))
-;;   (message (if arg
-;;                "Window '%s' is normal"
-;;                "Window '%s' is dedicated")
-;;            (current-buffer)))
-
-;; (global-set-key (kbd "s-t") 'multi-vterm-home)
-;; (global-set-key (kbd "s-n") 'multi-vterm-next)
-;; (global-set-key (kbd "s-p") 'multi-vterm-prev)
-;; (global-set-key (kbd "s-c") 'vterm-copy-mode)
-
-;; (global-set-key (kbd "s-k") '(lambda ()
-;;                               (interactive)
-;;                               (vterm-clear)
-;;                               (vterm-clear-scrollback)))
-
-;; (defun vterm-send-C-k ()
-;;   "Send `C-k' to libvterm."
-;;   (interactive)
-;;   (kill-ring-save (point) (vterm-end-of-line))
-;;   (vterm-send-key "k" nil nil t))
-
-;; (setq vterm-kill-buffer-on-exit t)
-;; (setq vterm-max-scrollback 10000)
-;; (setq vterm-enable-manipulate-selection-data-by-osc52 t)
-
 (global-set-key (kbd "s-n") 'next-buffer)
 (global-set-key (kbd "s-p") 'previous-buffer)
-
-;;(defun my-vterm-mode-customizations ()
-;;  (local-set-key (kbd "C-k") 'vterm-send-C-k))
-
-;;(add-hook 'vterm-mode-hook 'my-vterm-mode-customizations)
 
 ;; * * * Keys * * *
 
@@ -466,7 +431,8 @@ by using nxml's indentation rules."
       (process-send-string proc text)
       (process-send-eof proc))))
 
-;; injects the above functions to make sure command-v / c works as intended :)
+;; injects the above functions to make sure command-v / c works as
+;; intended :)
 (if (eq system-type 'darwin)
     (lambda()
       (setq interprogram-cut-function 'paste-to-osx)
@@ -476,13 +442,6 @@ by using nxml's indentation rules."
 
 ;; Stop sounding the bell in emacs
 (setq ring-bell-function 'ignore)
-
-;; (grep-apply-setting 'grep-find-template
-;;                     "rg -uu -g <F> <R> <D>")
-;;(grep-apply-setting 'grep-find-template
-;; "find <D> <X> -type f <F> -exec rg <C> --no-heading -H  <R> /dev/null {} +")
-
-;; (grep-apply-setting 'grep-template "rg --no-heading -H -uu -g <F> <R> <D>")
 
 ;; * * * README * * *
 (find-file "~/README")
