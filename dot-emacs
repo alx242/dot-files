@@ -44,22 +44,16 @@
 ;; (require 're-builder)
 ;; (setq reb-re-syntax 'string)
 
-;; co-pilot
-;; required: brew install nodejs
-;; packages: editorconfig (melpa)
-;;           jsonrpc (elpa)
-;;           dash (melpa)
-;;           s (melpa)
-;;           f (melpa)
-;;
-;; after running copilot-login the device activation code will be in
-;; the clipboard ready to be posted on the URL page ctrl/cmd-v
-;;(add-to-list 'load-path (expand-file-name "~/.emacs.d/copilot/"))
-(require 'copilot)
-(setq copilot-max-char 1000000)
-
 (require 'markdown-mode)
 (require 'request)
+
+;; Start with copilot-chat-display command
+(use-package copilot-chat
+    :bind (:map global-map
+                ("C-c C-y" . copilot-chat-yank)
+                ("C-c M-y" . copilot-chat-yank-pop)
+                ("C-c C-M-y" . (lambda () (interactive) (copilot-chat-yank-pop -1))))
+    )
 (require 'copilot-chat)
 
 ;; (setq mac-option-key-is-meta nil
@@ -236,11 +230,32 @@
 ;; Access elp command
 (add-to-list 'exec-path "~/.emacs.d/")
 
-(use-package lsp-mode
+;; co-pilot
+;; required: brew install nodejs
+;;
+;; Do not forget to install the language server part with:
+;; copilot-install-server
+;;
+;; After running copilot-login the device activation code will be in the
+;; clipboard ready to be posted on the URL page ctrl/cmd-v (this is what
+;; requuires nodejs)
+;;
+(use-package copilot
+    ;;:config
+    ;; Enable copilot automatically for Erlang files
+    ;; (add-hook 'erlang-mode-hook #'copilot-mode)
+    :vc (:url "https://github.com/copilot-emacs/copilot.el"
+              :rev :newest
+              :branch "main")
+    )
 
-  :config
+(require 'copilot)
+(setq copilot-max-char 1000000)
+
+(use-package lsp-mode
+    :config
   ;; Enable LSP automatically for Erlang files
-  (add-hook 'erlang-mode-hook #'lsp)
+  ;; (add-hook 'erlang-mode-hook #'lsp)
 
   ;; ELP, added as priority 0 (> -1) so takes priority over the
   ;; built-in one
@@ -277,10 +292,14 @@
 (defun my-erlang-mode-hook ()
   "Configuration for Erlang Mode. Add this to `erlang-mode-hook'."
   (setq indent-tabs-mode nil)
+  ;; lsp-mode
+  (lsp-mode)
   ;; Activate the co-pilot
   (copilot-mode)
   (vertico-mode)
   (flyspell-prog-mode)
+  ;; Enable auto-fill mode for text files
+  (turn-on-auto-fill)
   ;; (flyspell-mode)
   ;; 80 chars
   (display-fill-column-indicator-mode)
@@ -477,7 +496,7 @@ by using nxml's indentation rules."
 (set-face-attribute 'help-key-binding nil :font my_font)
 (set-face-attribute 'help-for-help-header nil :font my_font)
 (set-face-attribute 'fixed-pitch-serif nil :font my_font)
-
+(set-face-background 'trailing-whitespace "red")
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
