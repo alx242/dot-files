@@ -23,7 +23,11 @@
 ;; save desktop to enable getting back in to action ö_Ö
 (desktop-save-mode 1)
 
-(setq fill-column 80)
+;; Scroll with precision
+(pixel-scroll-precision-mode 1)
+
+;; Set fill-column to 80 for all files
+(setq-default fill-column 80)
 
 ;; Package handling
 (require 'package)
