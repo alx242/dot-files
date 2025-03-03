@@ -50,8 +50,9 @@
 ;; Start with copilot-chat-display command
 (use-package copilot-chat
     :bind (:map global-map
-                ("C-c C-y" . copilot-chat-yank)
-                ("C-c M-y" . copilot-chat-yank-pop)
+                ("C-c y" . copilot-chat-yank)
+                ("C-c M-y" . copilot-chat-yank)
+                ("C-c C-f" . copilot-chat-fix)
                 ("C-c C-M-y" . (lambda () (interactive) (copilot-chat-yank-pop -1))))
     )
 (require 'copilot-chat)
@@ -269,7 +270,7 @@
 
 (setq lsp-file-watch-threshold 25000)
 
-;; More 
+;; More
 (use-package consult
     :config
   ;; Use Consult to select xref locations with preview
@@ -414,8 +415,8 @@ by using nxml's indentation rules."
 (global-set-key (kbd "\C-z\C-r") 'rgrep)
 (global-set-key "\C-z\C-s" 'tags-apropos)
 (global-set-key (kbd "C-z m") 'menu-bar-open)
-(global-set-key "\C-c\C-f" 'erlang-beginning-of-clause)
-(global-set-key (kbd "\C-c\C-e") 'erlang-next-error)
+(global-set-key "\C-z\C-f" 'erlang-beginning-of-clause)
+(global-set-key (kbd "\C-z\C-e") 'erlang-next-error)
 
 (global-set-key (kbd "M-g") 'goto-line)
 
@@ -445,23 +446,23 @@ by using nxml's indentation rules."
 ;; * * * Copy/Paste * * *
 
 ;; Copy whatever is selected into the mac os x buffer...
-(defun copy-from-osx ()
-  (shell-command-to-string "pbpaste"))
-
-(defun paste-to-osx (text &optional push)
-  (let ((process-connection-type nil))
-    (let ((proc (start-process "pbcopy" "*Messages*" "pbcopy")))
-      (process-send-string proc text)
-      (process-send-eof proc))))
-
-;; injects the above functions to make sure command-v / c works as
-;; intended :)
-(if (eq system-type 'darwin)
-    (lambda()
-      (setq interprogram-cut-function 'paste-to-osx)
-      (setq interprogram-paste-function 'copy-from-osx)
-      )
-    )
+;; (defun copy-from-osx ()
+;;   (shell-command-to-string "pbpaste"))
+;; 
+;; (defun paste-to-osx (text &optional push)
+;;   (let ((process-connection-type nil))
+;;     (let ((proc (start-process "pbcopy" "*Messages*" "pbcopy")))
+;;       (process-send-string proc text)
+;;       (process-send-eof proc))))
+;; 
+;; ;; injects the above functions to make sure command-v / c works as
+;; ;; intended :)
+;; (if (eq system-type 'darwin)
+;;     (lambda()
+;;       (setq interprogram-cut-function 'paste-to-osx)
+;;       (setq interprogram-paste-function 'copy-from-osx)
+;;       )
+;;     )
 
 ;; Stop sounding the bell in emacs
 (setq ring-bell-function 'ignore)
