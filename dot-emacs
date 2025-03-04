@@ -1,16 +1,16 @@
-;; To reload .emacs just do M-x load-file press return twice if it is
+;; Reload .emacs just do M-x load-file press return twice if it is
 ;; the current buffer or just open the correct file...
 
-;; Mac OS allow alt-command and make command meta
-;; (setq mac-option-modifier nil
-;;       ;; mac-command-modifier 'meta
-;;       x-select-enable-clipboard t)
-
 ;; Access to homebrew commands
-(add-to-list 'exec-path "/opt/homebrew/bin/")
+(use-package exec-path-from-shell
+  :ensure t)
 
-;; (setq mac-option-key-is-meta t)
-;; (setq mac-option-key-is-meta t)
+(when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize))
+
+;; * * * Load emacs stuff * * *
+(add-to-list 'load-path "~/.emacs.d/lisp")
+
 (setq mac-allow-anti-aliasing nil)
 (setq mac-right-option-modifier nil)
 (setq mac-command-modifier 'super)
@@ -35,41 +35,40 @@
              '("elpa" . "http://elpa.gnu.org/packages/") t)
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/") t)
-;; (add-to-list
-;;  'package-archives
-;;  '("marmalade" . "http://marmalade-repo.org/packages/") t)
-(package-initialize)
 
 ;; ;; regex re-builder
 ;; (require 're-builder)
 ;; (setq reb-re-syntax 'string)
 
+(use-package markdown-mode
+  :ensure t
+  :mode ("README\\.md\\'" . gfm-mode)
+  :init (setq markdown-command "multimarkdown")
+  :bind (:map markdown-mode-map
+         ("C-c C-e" . markdown-do)))
+
 (require 'markdown-mode)
+
+(use-package request
+    :ensure t)
+
 (require 'request)
 
 ;; Start with copilot-chat-display command
 (use-package copilot-chat
+    :ensure t
     :bind (:map global-map
                 ("C-c y" . copilot-chat-yank)
                 ("C-c M-y" . copilot-chat-yank)
                 ("C-c C-f" . copilot-chat-fix)
                 ("C-c C-M-y" . (lambda () (interactive) (copilot-chat-yank-pop -1))))
     )
-(require 'copilot-chat)
-
-;; (setq mac-option-key-is-meta nil
-;;      mac-command-key-is-meta t
-;;      mac-command-modifier 'meta
-;;      mac-option-modifier 'none
-;;      x-select-enable-clipboard t
+;; (require 'copilot-chat)
 
 (setq tags-revert-without-query 1)
 
 ;; Force confirmation before exit of emacs
 (setq confirm-kill-emacs 'y-or-n-p)
-
-;; * * * Load emacs stuff * * *
-(add-to-list 'load-path "~/.emacs.d/lisp")
 
 ;; * * * Moving around window-buffers * * *
 
@@ -94,6 +93,9 @@
 (global-set-key (kbd "s-1") 'delete-other-windows)
 (global-set-key (kbd "s-2") 'split-window-below)
 (global-set-key (kbd "s-3") 'split-window-right)
+
+(use-package transpose-frame
+   :ensure t)
 
 (require 'transpose-frame)
 (global-set-key (kbd "s-k") 'kill-buffer)
@@ -181,17 +183,6 @@
 
 (setq max-lisp-eval-depth 600)
 
-;; Scrolling
-(setq redisplay-dont-pause t
-  scroll-margin 1
-  scroll-step 1
-  scroll-conservatively 10000
-  scroll-preserve-screen-position 1)
-
-(setq jit-lock-defer-time 0.05)
-;; (setq jit-lock-defer-time 0)
-(setq fast-but-imprecise-scrolling t)
-
 ;; * * * Interactively Do Things * * *
 (require 'ido)
 (ido-mode t)
@@ -213,7 +204,6 @@
 (add-to-list 'auto-mode-alist '("\\.yang$" . yang-mode))
 ;; To not make emacs laggy when viewing big yang-files
 (setq-default blink-matching-paren-distance nil)
-;; (setq-default fast-but-imprecise-scrolling t)
 
 ;; * * * LuX * * *
 (require 'lux-mode)
@@ -232,7 +222,7 @@
 (add-to-list 'exec-path "~/.emacs.d/")
 
 ;; co-pilot
-;; required: brew install nodejs
+;; required: brew install node
 ;;
 ;; Do not forget to install the language server part with:
 ;; copilot-install-server
@@ -248,35 +238,47 @@
     :vc (:url "https://github.com/copilot-emacs/copilot.el"
               :rev :newest
               :branch "main")
+    :ensure t
     )
 
 (require 'copilot)
 (setq copilot-max-char 1000000)
 
-(use-package lsp-mode
-    :config
-  ;; Enable LSP automatically for Erlang files
-  ;; (add-hook 'erlang-mode-hook #'lsp)
+(use-package erlang
+    :ensure t)
 
-  ;; ELP, added as priority 0 (> -1) so takes priority over the
-  ;; built-in one
-  (lsp-register-client
-   (make-lsp-client :new-connection (lsp-stdio-connection
-                                     '("elp" "server"))
-                    :major-modes '(erlang-mode)
-                    :priority 0
-                    :server-id 'erlang-language-platform))
-  )
+(use-package lsp-mode
+    :ensure t
+    :config
+    ;; Enable LSP automatically for Erlang files
+    ;; (add-hook 'erlang-mode-hook #'lsp)
+
+    ;; ELP, added as priority 0 (> -1) so takes priority over the
+    ;; built-in one
+    (lsp-register-client
+     (make-lsp-client :new-connection (lsp-stdio-connection
+                                       '("elp" "server"))
+                      :major-modes '(erlang-mode)
+                      :priority 0
+                      :server-id 'erlang-language-platform))
+    )
 
 (setq lsp-file-watch-threshold 25000)
 
 ;; More
+(use-package vertico
+    :ensure t)
+
+(use-package ispell
+    :ensure t)
+
 (use-package consult
+    :ensure t
     :config
-  ;; Use Consult to select xref locations with preview
-  (setq xref-show-xrefs-function #'consult-xref
-        xref-show-definitions-function #'consult-xref)
-  )
+    ;; Use Consult to select xref locations with preview
+    (setq xref-show-xrefs-function #'consult-xref
+          xref-show-definitions-function #'consult-xref)
+    )
 
 
 (defun consult-ripgrep-erl ()
@@ -306,7 +308,6 @@
   (display-fill-column-indicator-mode)
   )
 
-;;;
 (add-hook 'erlang-mode-hook 'my-erlang-mode-hook)
 
 (add-to-list 'auto-mode-alist '("rebar\\.config$" . erlang-mode))
@@ -338,7 +339,6 @@ by using nxml's indentation rules."
 
 ;; * * * Rst * * *
 (add-to-list 'auto-mode-alist '("\\.rst$" . rst-mode))
-
 
 ;; * * * Internal functions * * *
 ;; Auto-complete using open buffers
@@ -411,7 +411,6 @@ by using nxml's indentation rules."
 ;; Re-mapping Ctrl-Z
 (setq ctrl-z-map (make-keymap))
 (global-set-key "\C-z" ctrl-z-map)
-;;(global-set-key (kbd "\C-z\C-r") 'rgrep)
 (global-set-key (kbd "\C-z\C-r") 'rgrep)
 (global-set-key "\C-z\C-s" 'tags-apropos)
 (global-set-key (kbd "C-z m") 'menu-bar-open)
@@ -426,22 +425,6 @@ by using nxml's indentation rules."
 (load "~/.emacs.d/lisp/diff_region.el")
 (global-set-key (kbd "C-z d") 'diff-region)
 (global-set-key (kbd "C-z n") 'diff-region-now)
-
-;; * * * Mouse * * *
-
-;; Enable mouse support for nox emacs
-(unless window-system
-  (require 'mouse)
-  (xterm-mouse-mode t)
-  (global-set-key [mouse-4] '(lambda ()
-                              (interactive)
-                              (scroll-down 1)))
-  (global-set-key [mouse-5] '(lambda ()
-                              (interactive)
-                              (scroll-up 1)))
-  ;;  (defun track-mouse (e))
-  ;;  (setq mouse-sel-mode t)
-  )
 
 ;; * * * Copy/Paste * * *
 
