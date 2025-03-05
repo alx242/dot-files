@@ -187,6 +187,11 @@
 (require 'ido)
 (ido-mode t)
 
+;; Nice vertical selector using M-x
+(use-package vertico
+    :ensure t)
+(vertico-mode)
+
 ;; * * * Encrypted files * * *
 (require 'ps-ccrypt)
 
@@ -199,9 +204,12 @@
           (lambda () (flyspell-mode 1)))
 
 ;; * * * Yang * * *
+(use-package yang-mode
+    :ensure t)
 (autoload 'yang-mode "yang-mode"
   "Major mode for editing YANG modules." t)
 (add-to-list 'auto-mode-alist '("\\.yang$" . yang-mode))
+
 ;; To not make emacs laggy when viewing big yang-files
 (setq-default blink-matching-paren-distance nil)
 
@@ -266,9 +274,6 @@
 (setq lsp-file-watch-threshold 25000)
 
 ;; More
-(use-package vertico
-    :ensure t)
-
 (use-package ispell
     :ensure t)
 
@@ -299,7 +304,6 @@
   (lsp-mode)
   ;; Activate the co-pilot
   (copilot-mode)
-  (vertico-mode)
   (flyspell-prog-mode)
   ;; Enable auto-fill mode for text files
   (turn-on-auto-fill)
