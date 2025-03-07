@@ -430,27 +430,6 @@ by using nxml's indentation rules."
 (global-set-key (kbd "C-z d") 'diff-region)
 (global-set-key (kbd "C-z n") 'diff-region-now)
 
-;; * * * Copy/Paste * * *
-
-;; Copy whatever is selected into the mac os x buffer...
-;; (defun copy-from-osx ()
-;;   (shell-command-to-string "pbpaste"))
-;; 
-;; (defun paste-to-osx (text &optional push)
-;;   (let ((process-connection-type nil))
-;;     (let ((proc (start-process "pbcopy" "*Messages*" "pbcopy")))
-;;       (process-send-string proc text)
-;;       (process-send-eof proc))))
-;; 
-;; ;; injects the above functions to make sure command-v / c works as
-;; ;; intended :)
-;; (if (eq system-type 'darwin)
-;;     (lambda()
-;;       (setq interprogram-cut-function 'paste-to-osx)
-;;       (setq interprogram-paste-function 'copy-from-osx)
-;;       )
-;;     )
-
 ;; Stop sounding the bell in emacs
 (setq ring-bell-function 'ignore)
 
