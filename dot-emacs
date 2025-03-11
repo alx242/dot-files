@@ -1,5 +1,14 @@
 ;; Reload .emacs just do M-x load-file press return twice if it is
 ;; the current buffer or just open the correct file...
+;;
+;; Some default info
+;;
+;; Describe function: C-h f <function>
+;;
+;; Text scale adjusting
+;; Increase: C-x C-+
+;; Decrease: C-x C--
+;; Reset:    C-x C-0
 
 ;; Access to homebrew commands
 (use-package exec-path-from-shell
