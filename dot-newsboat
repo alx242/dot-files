@@ -3,35 +3,35 @@ auto-reload true
 cookie-cache "~/.newsboat/cookies"
 refresh-on-startup "true"
 reload-time 15
-urls-source "newsblur"
-newsblur-login "alx242"
-newsblur-passwordfile "~/.newsboat/newsblur-pw.txt"
+#urls-source "newsblur"
+#newsblur-login "alx242"
+#newsblur-passwordfile "~/.newsboat/newsblur-pw.txt"
 max-browser-tabs 4
 browser "urlopen %u &"
 # browser "firefox %u"
 show-read-feeds false
-show-read-articles true
+show-read-articles false
 download-full-page true
 reload-time 5
 reload-threads 4
-article-sort-order date-asc
+article-sort-order date-desc
 
 # Default colors
-color background          default   default
-color listnormal          default   default
-color listfocus           white     blue      bold
-color listnormal_unread   default   default
-color listfocus_unread    white     blue      bold
-color info                white     magenta   bold
-color article             default   default
+# color background          default   default
+# color listnormal          default   default
+# color listfocus           white     blue      bold
+# color listnormal_unread   default   default
+# color listfocus_unread    white     blue      bold
+# color info                white     magenta   bold
+# color article             default   default
 
-# color background            white   default
-# color listnormal            red     default
-# color listfocus             black   black   bold
-# color listnormal_unread   white   default
-# color listfocus_unread    white   black   bold
-# color info                white   default bold
-# color article             white   default
+color background            default   default
+color listnormal            default   default
+color listfocus             blue      black   bold
+color listnormal_unread     blue      default
+color listfocus_unread      white     black   bold
+color info                  white     default bold
+color article               default   default
 
 # bind-key o open-in-browser-noninteractively
 # bind-key ^O open-all-unread-in-browser-and-mark-read
