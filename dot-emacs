@@ -252,9 +252,11 @@
     ;;:config
     ;; Enable copilot automatically for Erlang files
     ;; (add-hook 'erlang-mode-hook #'copilot-mode)
-    :vc (:url "https://github.com/copilot-emacs/copilot.el"
-              :rev :newest
-              :branch "main")
+
+    ;; The following is just for emacs-30+
+    ;; :vc (:url "https://github.com/copilot-emacs/copilot.el"
+    ;;           :rev :newest
+    ;;           :branch "main")
     :ensure t
     )
 
