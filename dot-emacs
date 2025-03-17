@@ -26,14 +26,17 @@
 (setq mac-option-modifier 'meta)
 (setq x-select-enable-clipboard t)
 
+;; Mac mouse wheel mode (emacs-mac handling)
+(mac-mouse-wheel-mode t)
+;; Scroll with precision (works for ordinary emacs+30
+;; (pixel-scroll-precision-mode t)
+
 ;; Want to run as a server
 (server-start)
 
 ;; save desktop to enable getting back in to action ö_Ö
 (desktop-save-mode 1)
 
-;; Scroll with precision
-(pixel-scroll-precision-mode 1)
 
 ;; Set fill-column to 80 for all files
 (setq-default fill-column 80)
