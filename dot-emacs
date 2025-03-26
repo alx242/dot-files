@@ -59,6 +59,36 @@
   :bind (:map markdown-mode-map
          ("C-c C-e" . markdown-do)))
 
+;; Terminal
+(use-package vterm
+    :ensure t)
+
+(use-package multi-vterm
+    :bind (:map global-map
+                ("C-c t" . new-multi-vterm)
+                ("C-c n" . multi-vterm-next)
+                ("C-c p" . multi-vterm-prev)
+                ("C-c c" . vterm-copy-mode)
+                ("C-c k" . vterm-clear-kill-history)
+                )
+    :config
+    (setq vterm-max-scrollback 10000)
+    (setq vterm-kill-buffer-on-exit t)
+    ; (setq show-trailing-whitespace 0)
+    :ensure t)
+
+(defun new-multi-vterm ()
+   (interactive)
+   (let ((default-directory "~"))
+     (multi-vterm))
+   )
+
+(defun vterm-clear-kill-history ()
+   (interactive)
+   (vterm-clear-scrollback)
+   (vterm-clear)
+   )
+
 (require 'markdown-mode)
 
 (use-package request
@@ -187,7 +217,7 @@
 ;; No tabs only spaces
 (setq indent-tabs-mode nil)
 (setq-default indent-tabs-mode nil)
-(setq-default show-trailing-whitespace t)
+(setq-default show-trailing-whitespace nil)
 (setq-default default-indicate-empty-lines t)
 (setq-default line-number-mode t)
 (setq-default column-number-mode t)
@@ -321,6 +351,8 @@
   (flyspell-prog-mode)
   ;; Enable auto-fill mode for text files
   (turn-on-auto-fill)
+  ;; Expose whitespaces
+  (setq show-trailing-whitespace t)
   ;; (flyspell-mode)
   ;; 80 chars
   (display-fill-column-indicator-mode)
