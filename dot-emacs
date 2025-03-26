@@ -97,15 +97,6 @@
 
 (require 'request)
 
-;; Start with copilot-chat-display command
-(use-package copilot-chat
-    :ensure t
-    :bind (:map global-map
-                ("C-c y" . copilot-chat-yank)
-                ("C-c M-y" . copilot-chat-yank)
-                ("C-c C-f" . copilot-chat-fix)
-                ("C-c C-M-y" . (lambda () (interactive) (copilot-chat-yank-pop -1))))
-    )
 ;; (require 'copilot-chat)
 
 (setq tags-revert-without-query 1)
@@ -292,10 +283,19 @@
     ;;           :rev :newest
     ;;           :branch "main")
     :ensure t
+    :config
+    (setq copilot-max-char 1000000)    
     )
 
-(require 'copilot)
-(setq copilot-max-char 1000000)
+;; Start with copilot-chat-display command
+(use-package copilot-chat
+    :ensure t
+    :bind (:map global-map
+                ("C-c y" . copilot-chat-yank)
+                ("C-c M-y" . copilot-chat-yank)
+                ("C-c C-f" . copilot-chat-fix)
+                ("C-c C-M-y" . (lambda () (interactive) (copilot-chat-yank-pop -1))))
+    )
 
 (use-package erlang
     :ensure t)
@@ -336,6 +336,8 @@
     (setq lsp-enable-snippet nil)
     (setq read-process-output-max (* 1024 1024)) ;; 1MB
     (setq lsp-idle-delay 0.5)
+    ;; Bigger files
+    (setq lsp-file-watch-threshold 25000)
     ;; ELP, added as priority 0 (> -1) so takes priority over the
     ;; built-in one
     (lsp-register-client
@@ -345,8 +347,6 @@
                       :priority 0
                       :server-id 'erlang-language-platform))
     )
-
-(setq lsp-file-watch-threshold 25000)
 
 ;; More
 (use-package ispell
