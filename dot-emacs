@@ -103,6 +103,12 @@
 ;; Force confirmation before exit of emacs
 (setq confirm-kill-emacs 'y-or-n-p)
 
+;; Tab bar
+(global-set-key (kbd "s-t") 'tab-bar-new-tab)
+(global-set-key (kbd "s-w") 'tab-bar-close-tab)
+(global-set-key (kbd "C-<tab>") 'tab-bar-switch-to-next-tab)
+(global-set-key (kbd "C-S-<tab>") 'tab-bar-switch-to-prev-tab)
+
 ;; * * * Moving around window-buffers * * *
 
 ;; (global-set-key (kbd "C-t") 'customize-face)
@@ -435,7 +441,7 @@ by using nxml's indentation rules."
       (indent-for-tab-command)))
 
 (global-set-key (kbd "TAB") 'indent-or-complete)
-(global-set-key (kbd "C-<tab>") 'copilot-accept-completion)
+(global-set-key (kbd "S-<tab>") 'copilot-accept-completion)
 (global-set-key (kbd "<backtab>") 'copilot-next-completion)
 ; (global-set-key (kbd "<backtab>") 'copilot-previous-completion)
 
