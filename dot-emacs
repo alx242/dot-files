@@ -4,6 +4,7 @@
 ;; Some default info
 ;;
 ;; Describe function: C-h f <function>
+;;          variable: C-h v <variable>
 ;;
 ;; Text scale adjusting
 ;; Increase: C-x C-+
@@ -36,7 +37,6 @@
 
 ;; save desktop to enable getting back in to action ö_Ö
 (desktop-save-mode 1)
-
 
 ;; Set fill-column to 80 for all files
 (setq-default fill-column 80)
@@ -74,6 +74,7 @@
     :config
     (setq vterm-max-scrollback 10000)
     (setq vterm-kill-buffer-on-exit t)
+    (setq vterm-enable-manipulate-selection-data-by-osc52 t) ; Enable vterm cut/paste to macos buffer
     ; (setq show-trailing-whitespace 0)
     :ensure t)
 
