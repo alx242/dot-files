@@ -28,9 +28,9 @@
 (setq x-select-enable-clipboard t)
 
 ;; Mac mouse wheel mode (emacs-mac handling)
-(mac-mouse-wheel-mode t)
+;; (mac-mouse-wheel-mode t)
 ;; Scroll with precision (works for ordinary emacs+30
-;; (pixel-scroll-precision-mode t)
+(pixel-scroll-precision-mode t)
 
 ;; Want to run as a server
 (server-start)
@@ -474,11 +474,12 @@ by using nxml's indentation rules."
 
 ;; * * * Keys * * *
 
+;; FIXME: Not necessary on Emacs 30+ ????
 ;; This stops emacs on mac from complaining about triple-wheel-up/down
-(defun up-triple () (interactive) (scroll-up 5))
-(defun down-triple () (interactive) (scroll-down 5))
-(global-set-key [triple-wheel-down] 'up-triple)
-(global-set-key [triple-wheel-up] 'down-triple)
+;; (defun up-triple () (interactive) (scroll-up 5))
+;; (defun down-triple () (interactive) (scroll-down 5))
+;; (global-set-key [triple-wheel-down] 'up-triple)
+;; (global-set-key [triple-wheel-up] 'down-triple)
 
 ;; Word-walk
 ;;
