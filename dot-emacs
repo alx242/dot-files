@@ -74,7 +74,8 @@
     :config
     (setq vterm-max-scrollback 10000)
     (setq vterm-kill-buffer-on-exit t)
-    (setq vterm-enable-manipulate-selection-data-by-osc52 t) ; Enable vterm cut/paste to macos buffer
+    ;; Enable vterm cut/paste to macos buffer
+    (setq vterm-enable-manipulate-selection-data-by-osc52 t)
     ; (setq show-trailing-whitespace 0)
     :ensure t)
 
