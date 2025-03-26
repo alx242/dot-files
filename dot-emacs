@@ -97,8 +97,6 @@
 
 (require 'request)
 
-;; (require 'copilot-chat)
-
 (setq tags-revert-without-query 1)
 
 ;; Force confirmation before exit of emacs
@@ -287,15 +285,19 @@
     (setq copilot-max-char 1000000)    
     )
 
-;; Start with copilot-chat-display command
+;; Start with copilot-chat-display command, when starting make sure the current
+;; buffer is something that copilot can work with.
 (use-package copilot-chat
     :ensure t
     :bind (:map global-map
+                ("C-c d" . copilot-chat-display)
                 ("C-c y" . copilot-chat-yank)
                 ("C-c M-y" . copilot-chat-yank)
                 ("C-c C-f" . copilot-chat-fix)
                 ("C-c C-M-y" . (lambda () (interactive) (copilot-chat-yank-pop -1))))
+    :after (request org markdown-mode)
     )
+(require 'copilot-chat)
 
 (use-package erlang
     :ensure t)
@@ -464,6 +466,12 @@ by using nxml's indentation rules."
 (global-set-key (kbd "s-p") 'previous-buffer)
 
 ;; * * * Keys * * *
+
+;; This stops emacs on mac from complaining about triple-wheel-up/down
+(defun up-triple () (interactive) (scroll-up 5))
+(defun down-triple () (interactive) (scroll-down 5))
+(global-set-key [triple-wheel-down] 'up-triple)
+(global-set-key [triple-wheel-up] 'down-triple)
 
 ;; Word-walk
 ;;
