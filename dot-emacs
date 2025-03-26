@@ -71,18 +71,21 @@
                 ("C-c p" . multi-vterm-prev)
                 )
     :bind (:map vterm-mode-map
-                ("C-c c" . vterm-copy-mode)
-                ("C-c k" . vterm-clear-kill-history)
+                ("M-c" . vterm-copy-mode)
+                ("s-k" . vterm-clear-kill-history)
                 ("C-y" . vterm-send-C-y)
                 ("S-<prior>" . vterm-send-prior) ; shift-pageup   == pageup
                 ("S-<next>" . vterm-send-next)   ; shift-pagedown == pagedown
+                )
+    :bind (:map vterm-copy-mode-map
+                ("M-c" . vterm-copy-mode)
                 )
     :config
     (setq vterm-max-scrollback 10000)
     (setq vterm-kill-buffer-on-exit t)
     ;; Enable vterm cut/paste to macos buffer
     (setq vterm-enable-manipulate-selection-data-by-osc52 t)
-    ; (setq show-trailing-whitespace 0)
+    ;; (setq show-trailing-whitespace 0)
     :ensure t)
 
 (defun new-multi-vterm ()
