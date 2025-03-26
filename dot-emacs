@@ -5,6 +5,7 @@
 ;;
 ;; Describe function: C-h f <function>
 ;;          variable: C-h v <variable>
+;;          keybind:  C-h k <press a key>
 ;;
 ;; Text scale adjusting
 ;; Increase: C-x C-+
@@ -68,8 +69,13 @@
                 ("C-c t" . new-multi-vterm)
                 ("C-c n" . multi-vterm-next)
                 ("C-c p" . multi-vterm-prev)
+                )
+    :bind (:map vterm-mode-map
                 ("C-c c" . vterm-copy-mode)
                 ("C-c k" . vterm-clear-kill-history)
+                ("C-y" . vterm-send-C-y)
+                ("S-<prior>" . vterm-send-prior) ; shift-pageup   == pageup
+                ("S-<next>" . vterm-send-next)   ; shift-pagedown == pagedown
                 )
     :config
     (setq vterm-max-scrollback 10000)
@@ -474,20 +480,12 @@ by using nxml's indentation rules."
 
 ;; * * * Keys * * *
 
-;; FIXME: Not necessary on Emacs 30+ ????
-;; This stops emacs on mac from complaining about triple-wheel-up/down
-;; (defun up-triple () (interactive) (scroll-up 5))
-;; (defun down-triple () (interactive) (scroll-down 5))
-;; (global-set-key [triple-wheel-down] 'up-triple)
-;; (global-set-key [triple-wheel-up] 'down-triple)
-
 ;; Word-walk
 ;;
 ;; In apple terminal add the ctrl-up and ctrl-down by using \033[1;5A
 ;; and \033[1;5B (\033 is Meta/Esc) as well as ctrl-left/right. Make
 ;; sure the standard shortcuts doesn't catch these...
 ;;
-;; C-h k and then press a key to get current description
 
 (global-set-key (kbd "M-c") 'compile)
 (global-set-key (kbd "M-[ A") 'backward-paragraph) ; Meta+up
