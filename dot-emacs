@@ -28,10 +28,14 @@
 (setq mac-option-modifier 'meta)
 (setq x-select-enable-clipboard t)
 
+
+;; NOTE: So the precision scrolling didn't play nicely with vterm and
+;; pageup/down
+;;
 ;; Mac mouse wheel mode (emacs-mac handling)
 ;; (mac-mouse-wheel-mode t)
 ;; Scroll with precision (works for ordinary emacs+30
-(pixel-scroll-precision-mode t)
+;; (pixel-scroll-precision-mode t)
 
 ;; Want to run as a server
 (server-start)
@@ -74,8 +78,14 @@
                 ("M-c" . vterm-copy-mode)
                 ("s-k" . vterm-clear-kill-history)
                 ("C-y" . vterm-send-C-y)
-                ("S-<prior>" . vterm-send-prior) ; shift-pageup   == pageup
-                ("S-<next>" . vterm-send-next)   ; shift-pagedown == pagedown
+
+                ;; The following seems to be default but didn't work with
+                ;; precision scrolling.
+                ;;
+                ;; ("<prior>" . vterm-send-prior)
+                ;; ("<next>" . vterm-send-next)
+                ;; ("S-<prior>" . scroll-down-command) ; shift-pageup   == pageup
+                ;; ("S-<next>" . scroll-up-command)    ; shift-pagedown == pagedown
                 )
     :bind (:map vterm-copy-mode-map
                 ("M-c" . vterm-copy-mode)
