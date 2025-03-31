@@ -78,7 +78,8 @@
                 ("M-c" . vterm-copy-mode)
                 ("s-k" . vterm-clear-kill-history)
                 ("C-y" . vterm-send-C-y)
-
+                ("M-<left>" . 'backward-word)
+                ("M-<right>" . 'forward-word)
                 ;; The following seems to be default but didn't work with
                 ;; precision scrolling.
                 ;;
@@ -89,12 +90,13 @@
                 )
     :bind (:map vterm-copy-mode-map
                 ("M-c" . vterm-copy-mode)
+                ("s-k" . vterm-clear-kill-history)
                 )
     :config
     (setq vterm-max-scrollback 10000)
     (setq vterm-kill-buffer-on-exit t)
     ;; Enable vterm cut/paste to macos buffer
-    (setq vterm-enable-manipulate-selection-data-by-osc52 t)
+    ;; (setq vterm-enable-manipulate-selection-data-by-osc52 t)
     ;; (setq show-trailing-whitespace 0)
     :ensure t)
 
@@ -160,7 +162,7 @@
 (global-set-key (kbd "s-b") 'switch-to-buffer)
 (global-set-key (kbd "s-.") 'maximize-window)
 (global-set-key (kbd "s-,") 'balance-windows)
-(global-set-key (kbd "C-s-r") 'rotate-frame-clockwise)
+(global-set-key (kbd "C-c r") 'rotate-frame-clockwise)
 
 ;; ‘transpose-frame’ Swap x-direction and y-direction
 ;;
@@ -286,6 +288,7 @@
 
 ;; Access elp command
 (add-to-list 'exec-path "~/.emacs.d/")
+
 
 ;; co-pilot
 ;; required: brew install node
@@ -548,14 +551,94 @@ by using nxml's indentation rules."
  ;; If there is more than one, they won't work right.
  '(column-number-mode t)
  '(copilot-chat-model "claude-3.5-sonnet")
- '(custom-enabled-themes '(nord))
+ '(custom-enabled-themes '(misterioso))
  '(custom-safe-themes
-   '("ee0785c299c1d228ed30cf278aab82cf1fa05a2dc122e425044e758203f097d2" "b5b6396361db4bee9b0c0d7ea678b96b3b55e4217c610038c8d289eb05c426ef" "aa742450bc84284415b398be20bfe1c7e63b58fbbc4beb4f2709ce08f2ca3c92" "7c7026a406042e060bce2b56c77d715c3a4e608c31579d336cb825b09e60e827" "ea5a840bd2f9616a36890c27fd5e97528cb9fcfafa0e6739315bb12786d6c4ee" "f5a7e07642decb17b03483af7c44e93353d2b128de403bf301651954c628c0ab" "e7ce09ff7426c9a290d06531edc4934dd05d9ea29713f9aabff834217dbb08e4" "e28246005845509308f992e6fa8524249e13b65192572c9cc9f412a4c5150373" "d6e59d5d3e1e4ec825322deed1e154251abecff0b2bb6d32ac62b117f623bd50" "125744c0b04c7addbe25d238a4053740fad2ad5e18211662f637dbacb3802331" "15a4c95b442e6e7ef3b4e17f792f3c5b2a96e3f64589ae280dad648d97a64e5a" "1d609285d297920b97b0d230360a8d7c3f930edcf1abe96a1d82356f9a5e228d" "46f5e010e0118cc5aaea1749cc6a15be4dfce27c0a195a0dff40684e2381cf87" "00b463c48742afe509ae7d1dcfce09471f7203e13a118f1256b208017a978b4e" "d1cbc62377e87ed73d97af40bf2bff23033bb29c44cc9f15ecbbcbb53fc88095" "e1befaab4edb07028d6502c8feff0fbfc4c90c8f192d00ca6732f7fc0e80d119" "b5dd9b010ba8ac35e18f25be917f1e2dfa5f391784e54848a8853ae000996337" "1a10896643cce14633f9e2b9f3727761cc528ee7bbbe7e8efeb442e067da1a96" "0d09f49e81c811f4a661ff63b82d2b812ce034aed336903922b06362b8cb0bbe" "3d4df186126c347e002c8366d32016948068d2e9198c496093a96775cc3b3eaa" "919fabfc5cb6165ce07b9d8668f78fe75fe8bd08566006bc87513c29b4f34ade" "c0f4b66aa26aa3fded1cbefe50184a08f5132756523b640f68f3e54fd5f584bd" "957a573d5c7cb49c2f033b9d5a6f77445c782307e2d7ffca0d9b5b8141c49843" "9b4ae6aa7581d529e20e5e503208316c5ef4c7005be49fdb06e5d07160b67adc" "edf6b2f1ff26f0cb155523bd4b83a82f1f19a42c9c77fcec0ebbc796d8931180" "83e0376b5df8d6a3fbdfffb9fb0e8cf41a11799d9471293a810deb7586c131e6" "6bdcff29f32f85a2d99f48377d6bfa362768e86189656f63adbf715ac5c1340b" "78c4238956c3000f977300c8a079a3a8a8d4d9fee2e68bad91123b58a4aa8588" "7661b762556018a44a29477b84757994d8386d6edee909409fabe0631952dad9" "6b5c518d1c250a8ce17463b7e435e9e20faa84f3f7defba8b579d4f5925f60c1" "d14f3df28603e9517eb8fb7518b662d653b25b26e83bd8e129acea042b774298" "0ed3d96a506b89c1029a1ed904b11b5adcebeb2e0c16098c99c0ad95cb124729" "b6c43bb2aea78890cf6bd4a970e6e0277d2daf0075272817ea8bb53f9c6a7f0a" "91c008faf603a28d026957120a5a924a3c8fff0e12331abf5e04c0e9dd310c65" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" "fa2b58bb98b62c3b8cf3b6f02f058ef7827a8e497125de0254f56e373abee088" "68bda5909fa46ce2fa510108d4abfafb75671f721dcad05211d3f78fec8a918a" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "e16a771a13a202ee6e276d06098bc77f008b73bbac4d526f160faa2d76c1dd0e" "4eb6fa2ee436e943b168a0cd8eab11afc0752aebb5d974bba2b2ddc8910fca8f" "117efd35bd4451a2d4ee0180cb2dbfc8601af5c4d9ade3ea575d2afdda0feb82" "81c3de64d684e23455236abde277cda4b66509ef2c28f66e059aa925b8b12534" "5a27cbf4736a5f9be00c35f4961efd29ea72f7e959f856e0ab31051547ce4f29" "b89a4f5916c29a235d0600ad5a0849b1c50fab16c2c518e1d98f0412367e7f97" default))
+   '("74828a8db9af899ca4301f38dd5ef4ed20266613b29715299ac54e8fde98e2f3"
+     "d23adb4d0d0acf5cf4dcdad91e4e70b6c15481bcff4170f28ed2dae90b253d00"
+     "b9c3cad81999816c55bad4904db1c955702cac2de1c8042f8c998455134bcdd6"
+     "71728ca14d7e788011a6b5f25abd89fd643b2c5eac252f29892a2e5ca2a046f0"
+     "09b833239444ac3230f591e35e3c28a4d78f1556b107bafe0eb32b5977204d93"
+     "d5fd482fcb0fe42e849caba275a01d4925e422963d1cd165565b31d3f4189c87"
+     "75b371fce3c9e6b1482ba10c883e2fb813f2cc1c88be0b8a1099773eb78a7176"
+     "51fa6edfd6c8a4defc2681e4c438caf24908854c12ea12a1fbfd4d055a9647a3"
+     "5a0ddbd75929d24f5ef34944d78789c6c3421aa943c15218bac791c199fc897d"
+     "8363207a952efb78e917230f5a4d3326b2916c63237c1f61d7e5fe07def8d378"
+     "5aedf993c7220cbbe66a410334239521d8ba91e1815f6ebde59cecc2355d7757"
+     "18a1d83b4e16993189749494d75e6adb0e15452c80c431aca4a867bcc8890ca9"
+     "4d54e300a780189e56fe605bf81828a3917aae3f0fef64772b0f9fa0fb34635e"
+     "fa10e8ac20bda83daa98777ad934854f4aa87a31587f855e559171e779034556"
+     "9fb69436c074b82a62b78b8d733e6274d0bd16d156f7b094e2afe4345c040c49"
+     "b33955472cb61a721c59c705afda11fea906756d38b3c2eba61698f4e3f82897"
+     "51ec7bfa54adf5fff5d466248ea6431097f5a18224788d0bd7eb1257a4f7b773"
+     "36d4b9573ed57b3c53261cb517eef2353058b7cf95b957f691f5ad066933ae84"
+     "b49f66a2e1724db880692485a5d5bcb9baf28ed2a3a05c7a799fa091f24321da"
+     "285d1bf306091644fb49993341e0ad8bafe57130d9981b680c1dbd974475c5c7"
+     "830877f4aab227556548dc0a28bf395d0abe0e3a0ab95455731c9ea5ab5fe4e1"
+     "7f1d414afda803f3244c6fb4c2c64bea44dac040ed3731ec9d75275b9e831fe5"
+     "7fea145741b3ca719ae45e6533ad1f49b2a43bf199d9afaee5b6135fd9e6f9b8"
+     "efcecf09905ff85a7c80025551c657299a4d18c5fcfedd3b2f2b6287e4edd659"
+     "57a29645c35ae5ce1660d5987d3da5869b048477a7801ce7ab57bfb25ce12d3e"
+     "833ddce3314a4e28411edf3c6efde468f6f2616fc31e17a62587d6a9255f4633"
+     "d89e15a34261019eec9072575d8a924185c27d3da64899905f8548cbd9491a36"
+     "2b0fcc7cc9be4c09ec5c75405260a85e41691abb1ee28d29fcd5521e4fca575b"
+     "00445e6f15d31e9afaa23ed0d765850e9cd5e929be5e8e63b114a3346236c44c"
+     "5a4cdc4365122d1a17a7ad93b6e3370ffe95db87ed17a38a94713f6ffe0d8ceb"
+     "a951814eee8d4a0c3f92ddc6016c6fe86e1af7e94db52f1daa90772f418ec460"
+     "ee0785c299c1d228ed30cf278aab82cf1fa05a2dc122e425044e758203f097d2"
+     "b5b6396361db4bee9b0c0d7ea678b96b3b55e4217c610038c8d289eb05c426ef"
+     "aa742450bc84284415b398be20bfe1c7e63b58fbbc4beb4f2709ce08f2ca3c92"
+     "7c7026a406042e060bce2b56c77d715c3a4e608c31579d336cb825b09e60e827"
+     "ea5a840bd2f9616a36890c27fd5e97528cb9fcfafa0e6739315bb12786d6c4ee"
+     "f5a7e07642decb17b03483af7c44e93353d2b128de403bf301651954c628c0ab"
+     "e7ce09ff7426c9a290d06531edc4934dd05d9ea29713f9aabff834217dbb08e4"
+     "e28246005845509308f992e6fa8524249e13b65192572c9cc9f412a4c5150373"
+     "d6e59d5d3e1e4ec825322deed1e154251abecff0b2bb6d32ac62b117f623bd50"
+     "125744c0b04c7addbe25d238a4053740fad2ad5e18211662f637dbacb3802331"
+     "15a4c95b442e6e7ef3b4e17f792f3c5b2a96e3f64589ae280dad648d97a64e5a"
+     "1d609285d297920b97b0d230360a8d7c3f930edcf1abe96a1d82356f9a5e228d"
+     "46f5e010e0118cc5aaea1749cc6a15be4dfce27c0a195a0dff40684e2381cf87"
+     "00b463c48742afe509ae7d1dcfce09471f7203e13a118f1256b208017a978b4e"
+     "d1cbc62377e87ed73d97af40bf2bff23033bb29c44cc9f15ecbbcbb53fc88095"
+     "e1befaab4edb07028d6502c8feff0fbfc4c90c8f192d00ca6732f7fc0e80d119"
+     "b5dd9b010ba8ac35e18f25be917f1e2dfa5f391784e54848a8853ae000996337"
+     "1a10896643cce14633f9e2b9f3727761cc528ee7bbbe7e8efeb442e067da1a96"
+     "0d09f49e81c811f4a661ff63b82d2b812ce034aed336903922b06362b8cb0bbe"
+     "3d4df186126c347e002c8366d32016948068d2e9198c496093a96775cc3b3eaa"
+     "919fabfc5cb6165ce07b9d8668f78fe75fe8bd08566006bc87513c29b4f34ade"
+     "c0f4b66aa26aa3fded1cbefe50184a08f5132756523b640f68f3e54fd5f584bd"
+     "957a573d5c7cb49c2f033b9d5a6f77445c782307e2d7ffca0d9b5b8141c49843"
+     "9b4ae6aa7581d529e20e5e503208316c5ef4c7005be49fdb06e5d07160b67adc"
+     "edf6b2f1ff26f0cb155523bd4b83a82f1f19a42c9c77fcec0ebbc796d8931180"
+     "83e0376b5df8d6a3fbdfffb9fb0e8cf41a11799d9471293a810deb7586c131e6"
+     "6bdcff29f32f85a2d99f48377d6bfa362768e86189656f63adbf715ac5c1340b"
+     "78c4238956c3000f977300c8a079a3a8a8d4d9fee2e68bad91123b58a4aa8588"
+     "7661b762556018a44a29477b84757994d8386d6edee909409fabe0631952dad9"
+     "6b5c518d1c250a8ce17463b7e435e9e20faa84f3f7defba8b579d4f5925f60c1"
+     "d14f3df28603e9517eb8fb7518b662d653b25b26e83bd8e129acea042b774298"
+     "0ed3d96a506b89c1029a1ed904b11b5adcebeb2e0c16098c99c0ad95cb124729"
+     "b6c43bb2aea78890cf6bd4a970e6e0277d2daf0075272817ea8bb53f9c6a7f0a"
+     "91c008faf603a28d026957120a5a924a3c8fff0e12331abf5e04c0e9dd310c65"
+     "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476"
+     "fa2b58bb98b62c3b8cf3b6f02f058ef7827a8e497125de0254f56e373abee088"
+     "68bda5909fa46ce2fa510108d4abfafb75671f721dcad05211d3f78fec8a918a"
+     "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879"
+     "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4"
+     "e16a771a13a202ee6e276d06098bc77f008b73bbac4d526f160faa2d76c1dd0e"
+     "4eb6fa2ee436e943b168a0cd8eab11afc0752aebb5d974bba2b2ddc8910fca8f"
+     "117efd35bd4451a2d4ee0180cb2dbfc8601af5c4d9ade3ea575d2afdda0feb82"
+     "81c3de64d684e23455236abde277cda4b66509ef2c28f66e059aa925b8b12534"
+     "5a27cbf4736a5f9be00c35f4961efd29ea72f7e959f856e0ab31051547ce4f29"
+     "b89a4f5916c29a235d0600ad5a0849b1c50fab16c2c518e1d98f0412367e7f97" default))
  '(debug-on-error t)
+ '(menu-bar-mode t)
  '(package-selected-packages
-   '(consult-lsp orderless vertico copilot-chat copilot lsp-mode request compat magit f dash s editorconfig jsonrpc autumn-light-theme tangotango-theme transpose-frame dired-sidebar dired-subtree color-theme-approximate aircon-theme undersea-theme white-sand-theme white-theme dream-theme nordless-theme nordic-night-theme nord-theme dakrone-light-theme cyanometric-theme cloud-theme boron-theme underwater-theme tron-legacy-theme melancholy-theme adwaita-dark-theme vampyricdark-theme atom-dark-theme ancient-one-dark-theme zerodark-theme graphviz-dot-mode afternoon-theme acme-theme abyss-theme ample-theme spacemacs-theme yang-mode rust-mode nyan-mode gruvbox-theme gotham-theme erlang dracula-theme cyberpunk-theme))
+   '(clues-theme consult copilot copilot-chat cyberpunk-theme erlang
+                 exec-path-from-shell lsp-mode multi-vterm solarized-theme
+                 soothe-theme transpose-frame vertico yang-mode zenburn-theme))
  '(safe-local-variable-values '((allout-layout . t) (sh-indent-comment . t)))
- '(scroll-bar-mode nil))
+ '(scroll-bar-mode nil)
+ '(tab-bar-mode t)
+ '(tab-bar-show nil))
 
 ;; (set-mouse-color "white")
 
@@ -574,4 +657,7 @@ by using nxml's indentation rules."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(vterm-color-blue ((t (:inherit term-color-blue :foreground "SteelBlue" :slant normal :weight thin :height 160 :width normal :foundry "nil" :family "unscii"))))
+ '(vterm-color-magenta ((t (:inherit term-color-magenta :foreground "MediumPurple3"))))
+ '(vterm-color-red ((t (:inherit term-color-red :foreground "firebrick2" :slant normal :weight thin :height 160 :width normal :foundry "nil" :family "unscii"))))
+ '(vterm-color-yellow ((t (:inherit term-color-yellow :foreground "DarkGoldenrod3")))))
