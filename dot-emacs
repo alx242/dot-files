@@ -329,10 +329,10 @@
 (require 'copilot-chat)
 
 (use-package flycheck
-    :ensure t
-    ;; :config
-    ;; (add-hook 'after-init-hook #'global-flycheck-mode)
-    )
+  :ensure t
+  ;; :config
+  ;; (add-hook 'after-init-hook #'global-flycheck-mode)
+  )
 
 (use-package erlang
     :ensure t)
@@ -557,7 +557,7 @@ by using nxml's indentation rules."
  ;; If there is more than one, they won't work right.
  '(column-number-mode t)
  '(copilot-chat-model "claude-3.5-sonnet")
- '(custom-enabled-themes '(misterioso))
+ '(custom-enabled-themes '(solarized-dark))
  '(custom-safe-themes
    '("74828a8db9af899ca4301f38dd5ef4ed20266613b29715299ac54e8fde98e2f3"
      "d23adb4d0d0acf5cf4dcdad91e4e70b6c15481bcff4170f28ed2dae90b253d00"
@@ -645,7 +645,7 @@ by using nxml's indentation rules."
  '(scroll-bar-mode nil)
  '(tab-bar-mode t)
  '(tab-bar-show 1)
- '(vterm-environment '("TERM_PROGRAM=Apple_Terminal"))
+ '(vterm-environment '("TERM_PROGRAM=Apple_Terminal")))
 
 ;; (set-mouse-color "white")
 
