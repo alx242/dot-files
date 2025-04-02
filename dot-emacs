@@ -78,8 +78,8 @@
                 ("M-c" . vterm-copy-mode)
                 ("s-k" . vterm-clear-kill-history)
                 ("C-y" . vterm-send-C-y)
-                ("M-<left>" . 'backward-word)
-                ("M-<right>" . 'forward-word)
+                ("M-<left>" . 'vterm-send-M-b)
+                ("M-<right>" . 'vterm-send-M-f)
                 ;; The following seems to be default but didn't work with
                 ;; precision scrolling.
                 ;;
@@ -327,6 +327,12 @@
     :after (request org markdown-mode)
     )
 (require 'copilot-chat)
+
+(use-package flycheck
+    :ensure t
+    ;; :config
+    ;; (add-hook 'after-init-hook #'global-flycheck-mode)
+    )
 
 (use-package erlang
     :ensure t)
@@ -638,7 +644,8 @@ by using nxml's indentation rules."
  '(safe-local-variable-values '((allout-layout . t) (sh-indent-comment . t)))
  '(scroll-bar-mode nil)
  '(tab-bar-mode t)
- '(tab-bar-show nil))
+ '(tab-bar-show 1)
+ '(vterm-environment '("TERM_PROGRAM=Apple_Terminal"))
 
 ;; (set-mouse-color "white")
 
