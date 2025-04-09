@@ -32,10 +32,8 @@
 ;; NOTE: So the precision scrolling didn't play nicely with vterm and
 ;; pageup/down
 ;;
-;; Mac mouse wheel mode (emacs-mac handling)
-;; (mac-mouse-wheel-mode t)
 ;; Scroll with precision (works for ordinary emacs+30
-;; (pixel-scroll-precision-mode t)
+(pixel-scroll-precision-mode t)
 
 ;; Want to run as a server
 (server-start)
@@ -65,52 +63,52 @@
          ("C-c C-e" . markdown-do)))
 
 ;; Terminal
-(use-package vterm
-    :ensure t)
+;; (use-package vterm
+;;     :ensure t)
+;; 
+;; (use-package multi-vterm
+;;     :bind (:map global-map
+;;                 ("C-c t" . new-multi-vterm)
+;;                 ("C-c n" . multi-vterm-next)
+;;                 ("C-c p" . multi-vterm-prev)
+;;                 )
+;;     :bind (:map vterm-mode-map
+;;                 ("M-c" . vterm-copy-mode)
+;;                 ("s-k" . vterm-clear-kill-history)
+;;                 ("C-y" . vterm-send-C-y)
+;;                 ("M-<left>" . 'vterm-send-M-b)
+;;                 ("M-<right>" . 'vterm-send-M-f)
+;;                 ;; The following seems to be default but didn't work with
+;;                 ;; precision scrolling.
+;;                 ;;
+;;                 ;; ("<prior>" . vterm-send-prior)
+;;                 ;; ("<next>" . vterm-send-next)
+;;                 ;; ("S-<prior>" . scroll-down-command) ; shift-pageup   == pageup
+;;                 ;; ("S-<next>" . scroll-up-command)    ; shift-pagedown == pagedown
+;;                 )
+;;     :bind (:map vterm-copy-mode-map
+;;                 ("M-c" . vterm-copy-mode)
+;;                 ("s-k" . vterm-clear-kill-history)
+;;                 )
+;;     :config
+;;     (setq vterm-max-scrollback 10000)
+;;     (setq vterm-kill-buffer-on-exit t)
+;;     ;; Enable vterm cut/paste to macos buffer
+;;     ;; (setq vterm-enable-manipulate-selection-data-by-osc52 t)
+;;     ;; (setq show-trailing-whitespace 0)
+;;     :ensure t)
 
-(use-package multi-vterm
-    :bind (:map global-map
-                ("C-c t" . new-multi-vterm)
-                ("C-c n" . multi-vterm-next)
-                ("C-c p" . multi-vterm-prev)
-                )
-    :bind (:map vterm-mode-map
-                ("M-c" . vterm-copy-mode)
-                ("s-k" . vterm-clear-kill-history)
-                ("C-y" . vterm-send-C-y)
-                ("M-<left>" . 'vterm-send-M-b)
-                ("M-<right>" . 'vterm-send-M-f)
-                ;; The following seems to be default but didn't work with
-                ;; precision scrolling.
-                ;;
-                ;; ("<prior>" . vterm-send-prior)
-                ;; ("<next>" . vterm-send-next)
-                ;; ("S-<prior>" . scroll-down-command) ; shift-pageup   == pageup
-                ;; ("S-<next>" . scroll-up-command)    ; shift-pagedown == pagedown
-                )
-    :bind (:map vterm-copy-mode-map
-                ("M-c" . vterm-copy-mode)
-                ("s-k" . vterm-clear-kill-history)
-                )
-    :config
-    (setq vterm-max-scrollback 10000)
-    (setq vterm-kill-buffer-on-exit t)
-    ;; Enable vterm cut/paste to macos buffer
-    ;; (setq vterm-enable-manipulate-selection-data-by-osc52 t)
-    ;; (setq show-trailing-whitespace 0)
-    :ensure t)
+;; (defun new-multi-vterm ()
+;;    (interactive)
+;;    (let ((default-directory "~"))
+;;      (multi-vterm))
+;;    )
 
-(defun new-multi-vterm ()
-   (interactive)
-   (let ((default-directory "~"))
-     (multi-vterm))
-   )
-
-(defun vterm-clear-kill-history ()
-   (interactive)
-   (vterm-clear-scrollback)
-   (vterm-clear)
-   )
+;; (defun vterm-clear-kill-history ()
+;;    (interactive)
+;;    (vterm-clear-scrollback)
+;;    (vterm-clear)
+;;    )
 
 (require 'markdown-mode)
 
@@ -133,7 +131,7 @@
 ;; * * * Moving around window-buffers * * *
 
 ;; (global-set-key (kbd "C-t") 'customize-face)
-(global-set-key (kbd "C-t") 'customize-themes)
+;; (global-set-key (kbd "C-t") 'customize-themes)
 (global-set-key (kbd "C-f") 'menu-set-font)
 (windmove-default-keybindings 'super)
 (global-set-key (kbd "M-o") 'other-window)
@@ -557,7 +555,7 @@ by using nxml's indentation rules."
  ;; If there is more than one, they won't work right.
  '(column-number-mode t)
  '(copilot-chat-model "claude-3.5-sonnet")
- '(custom-enabled-themes '(solarized-dark))
+ '(custom-enabled-themes '(solarized-selenized-white))
  '(custom-safe-themes
    '("74828a8db9af899ca4301f38dd5ef4ed20266613b29715299ac54e8fde98e2f3"
      "d23adb4d0d0acf5cf4dcdad91e4e70b6c15481bcff4170f28ed2dae90b253d00"
@@ -639,8 +637,8 @@ by using nxml's indentation rules."
  '(menu-bar-mode t)
  '(package-selected-packages
    '(clues-theme consult copilot copilot-chat cyberpunk-theme erlang
-                 exec-path-from-shell lsp-mode multi-vterm solarized-theme
-                 soothe-theme transpose-frame vertico yang-mode zenburn-theme))
+                 exec-path-from-shell lsp-mode solarized-theme soothe-theme
+                 transpose-frame vertico yang-mode zenburn-theme))
  '(safe-local-variable-values '((allout-layout . t) (sh-indent-comment . t)))
  '(scroll-bar-mode nil)
  '(tab-bar-mode t)
@@ -664,6 +662,9 @@ by using nxml's indentation rules."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(org-level-1 ((t (:inherit variable-pitch :foreground "#d04a00" :height 1.0))))
+ '(org-level-2 ((t (:inherit variable-pitch :foreground "#1d9700" :height 1.0))))
+ '(org-level-3 ((t (:inherit variable-pitch :extend nil :foreground "#0064e4" :height 1.0))))
  '(vterm-color-blue ((t (:inherit term-color-blue :foreground "SteelBlue" :slant normal :weight thin :height 160 :width normal :foundry "nil" :family "unscii"))))
  '(vterm-color-magenta ((t (:inherit term-color-magenta :foreground "MediumPurple3"))))
  '(vterm-color-red ((t (:inherit term-color-red :foreground "firebrick2" :slant normal :weight thin :height 160 :width normal :foundry "nil" :family "unscii"))))
