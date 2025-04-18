@@ -562,7 +562,7 @@ by using nxml's indentation rules."
  ;; If there is more than one, they won't work right.
  '(column-number-mode t)
  '(copilot-chat-model "claude-3.5-sonnet")
- '(custom-enabled-themes '(modus-operandi-tritanopia))
+ '(custom-enabled-themes '(nord))
  '(custom-safe-themes
    '("74828a8db9af899ca4301f38dd5ef4ed20266613b29715299ac54e8fde98e2f3"
      "d23adb4d0d0acf5cf4dcdad91e4e70b6c15481bcff4170f28ed2dae90b253d00"
@@ -643,10 +643,10 @@ by using nxml's indentation rules."
  '(debug-on-error t)
  '(menu-bar-mode t)
  '(package-selected-packages
-   '(auto-dim-other-buffers clues-theme consult copilot copilot-chat
-                            cyberpunk-theme erlang exec-path-from-shell lsp-mode
-                            solarized-theme soothe-theme transpose-frame vertico
-                            yang-mode zenburn-theme))
+   '(auto-dim-other-buffers consult copilot copilot-chat erlang
+                            exec-path-from-shell flycheck lsp-mode multi-vterm
+                            nord-theme nordic-night-theme transpose-frame
+                            vertico yang-mode))
  '(safe-local-variable-values '((allout-layout . t) (sh-indent-comment . t)))
  '(scroll-bar-mode nil)
  '(tab-bar-mode t)
