@@ -279,7 +279,12 @@
 (setq-default blink-matching-paren-distance nil)
 
 ;; * * * LuX * * *
-(require 'lux-mode)
+(use-package lux-mode
+    :ensure t
+    :config
+    (setq show-trailing-whitespace t)
+    )
+(add-to-list 'auto-mode-alist '("\\.lux$" . lux-mode))
 
 ;; * * * 80 colums * * *
 (require 'column-marker)
@@ -561,8 +566,8 @@ by using nxml's indentation rules."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(column-number-mode t)
- '(copilot-chat-model "claude-3.5-sonnet")
- '(custom-enabled-themes '(nord))
+ '(copilot-chat-default-model "claude-3.7-sonnet-thought")
+ '(custom-enabled-themes '(modus-vivendi-tinted))
  '(custom-safe-themes
    '("74828a8db9af899ca4301f38dd5ef4ed20266613b29715299ac54e8fde98e2f3"
      "d23adb4d0d0acf5cf4dcdad91e4e70b6c15481bcff4170f28ed2dae90b253d00"
@@ -670,6 +675,7 @@ by using nxml's indentation rules."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(auto-dim-other-buffers ((t nil)))
  '(org-level-1 ((t (:inherit variable-pitch :foreground "#d04a00" :height 1.0))))
  '(org-level-2 ((t (:inherit variable-pitch :foreground "#1d9700" :height 1.0))))
  '(org-level-3 ((t (:inherit variable-pitch :extend nil :foreground "#0064e4" :height 1.0))))
