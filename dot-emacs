@@ -342,7 +342,7 @@
     :ensure t
     :bind (:map global-map
                 ("C-c C-d" . gptel)
-                ("C-c C-c" . gptel-send))
+                ("C-c RET" . gptel-send))
     :config
     (setq gptel-model 'claude-3.5-sonnet
           gptel-backend (gptel-make-gh-copilot "Copilot")))
@@ -352,6 +352,14 @@
   ;; :config
   ;; (add-hook 'after-init-hook #'global-flycheck-mode)
   )
+
+(use-package magit-gptcommit
+  :ensure t
+  :after magit
+  :config
+  (setq magit-gptcommit-model "claude-3.5-sonnet") ;; optional, if you want to specify model
+  :bind (:map magit-status-mode-map
+              ("C-c C-g" . magit-gptcommit)))
 
 (use-package erlang
     :ensure t)
