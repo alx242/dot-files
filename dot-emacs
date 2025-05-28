@@ -167,7 +167,7 @@
 (global-set-key (kbd "s-b") 'switch-to-buffer)
 (global-set-key (kbd "s-.") 'maximize-window)
 (global-set-key (kbd "s-,") 'balance-windows)
-(global-set-key (kbd "C-c r") 'rotate-frame-clockwise)
+(global-set-key (kbd "C-c C-r") 'rotate-frame-clockwise)
 
 ;; ‘transpose-frame’ Swap x-direction and y-direction
 ;;
@@ -324,19 +324,28 @@
     (setq copilot-max-char 1000000)    
     )
 
-;; Start with copilot-chat-display command, when starting make sure the current
-;; buffer is something that copilot can work with.
-(use-package copilot-chat
+;; ;; Start with copilot-chat-display command, when starting make sure the current
+;; ;; buffer is something that copilot can work with.
+;; (use-package copilot-chat
+;;     :ensure t
+;;     :bind (:map global-map
+;;                 ("C-c d" . copilot-chat-display)
+;;                 ("C-c y" . copilot-chat-yank)
+;;                 ("C-c M-y" . copilot-chat-yank)
+;;                 ("C-c C-f" . copilot-chat-fix)
+;;                 ("C-c C-M-y" . (lambda () (interactive) (copilot-chat-yank-pop -1))))
+;;     :after (request org markdown-mode)
+;;     )
+;; (require 'copilot-chat)
+
+(use-package gptel
     :ensure t
     :bind (:map global-map
-                ("C-c d" . copilot-chat-display)
-                ("C-c y" . copilot-chat-yank)
-                ("C-c M-y" . copilot-chat-yank)
-                ("C-c C-f" . copilot-chat-fix)
-                ("C-c C-M-y" . (lambda () (interactive) (copilot-chat-yank-pop -1))))
-    :after (request org markdown-mode)
-    )
-(require 'copilot-chat)
+                ("C-c C-d" . gptel)
+                ("C-c C-c" . gptel-send))
+    :config
+    (setq gptel-model 'claude-3.5-sonnet
+          gptel-backend (gptel-make-gh-copilot "Copilot")))
 
 (use-package flycheck
   :ensure t
