@@ -347,19 +347,21 @@
     (setq gptel-model 'claude-3.5-sonnet
           gptel-backend (gptel-make-gh-copilot "Copilot")))
 
+(defun magit-generate-commit-msg ()
+  (interactive)
+  (let ((diff (shell-command-to-string "git diff --cached")))
+    (gptel-request
+     (format "Generate a concise git commit message for these changes:\n%s" diff)
+     :callback (lambda (response _)
+                (with-current-buffer "COMMIT_EDITMSG"
+                  (insert response)))
+     :system "You are a helpful assistant that generates concise, conventional git commit messages.")))
+
 (use-package flycheck
   :ensure t
   ;; :config
   ;; (add-hook 'after-init-hook #'global-flycheck-mode)
   )
-
-(use-package magit-gptcommit
-  :ensure t
-  :after magit
-  :config
-  (setq magit-gptcommit-model "claude-3.5-sonnet") ;; optional, if you want to specify model
-  :bind (:map magit-status-mode-map
-              ("C-c C-g" . magit-gptcommit)))
 
 (use-package erlang
     :ensure t)
