@@ -167,7 +167,7 @@
 (global-set-key (kbd "s-b") 'switch-to-buffer)
 (global-set-key (kbd "s-.") 'maximize-window)
 (global-set-key (kbd "s-,") 'balance-windows)
-(global-set-key (kbd "C-c C-r") 'rotate-frame-clockwise)
+(global-set-key (kbd "C-c C-SPC") 'rotate-frame-clockwise)
 
 ;; ‘transpose-frame’ Swap x-direction and y-direction
 ;;
@@ -342,7 +342,9 @@
     :ensure t
     :bind (:map global-map
                 ("C-c C-d" . gptel)
-                ("C-c RET" . gptel-send))
+                ("C-c C-r" . gptel-review)
+                ("C-c RET" . gptel-send)
+                )
     :config
     (setq gptel-model 'claude-3.5-sonnet
           gptel-backend (gptel-make-gh-copilot "Copilot")))
@@ -393,29 +395,6 @@
                :type string
                :description "The content to write to the file"))
  :category "filesystem")                ; An arbitrary label for grouping
-
-
-;; (gptel-make-tool create-file
-;;   "Create a file with specified content"
-;;   '((filename :description "Name of file to create" :type string :required t)
-;;     (content :description "Content to write to file" :type string :required t))
-;;   (lambda (filename content)
-;;     (let ((expanded-filename (expand-file-name filename)))
-;;       (allow-local-variables
-;;         (with-temp-buffer
-;;           (insert content)
-;;           (write-file expanded-filename)
-;;           (format "File '%s' created successfully" expanded-filename))))))
-
-;; (gptel-make-tool create-file
-;;   "Create a file with specified content"
-;;   '((filename :description "Name of file to create" :type string :required t)
-;;     (content :description "Content to write to file" :type string :required t))
-;;   (lambda (filename content)
-;;     (with-temp-buffer
-;;       (insert content)
-;;       (write-file filename)
-;;       (format "File '%s' created successfully" filename))))
 
 (use-package flycheck
   :ensure t
