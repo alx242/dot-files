@@ -62,6 +62,10 @@
   :bind (:map markdown-mode-map
          ("C-c C-e" . markdown-do)))
 
+(use-package magit
+    :ensure t)
+(require 'magit)
+
 ;; Dim unfocused buffers
 
 (use-package auto-dim-other-buffers
@@ -168,7 +172,7 @@
 (global-set-key (kbd "s-b") 'switch-to-buffer)
 (global-set-key (kbd "s-.") 'maximize-window)
 (global-set-key (kbd "s-,") 'balance-windows)
-(global-set-key (kbd "C-c C-SPC") 'rotate-frame-clockwise)
+(global-set-key (kbd "s-r") 'rotate-frame-clockwise)
 
 ;; ‘transpose-frame’ Swap x-direction and y-direction
 ;;
@@ -492,7 +496,8 @@
              --line-number . -e ARG OPTS"))
     (consult-ripgrep)))
 
-(global-set-key (kbd "s-r") 'consult-ripgrep-erl)
+(define-key magit-mode-map (kbd "C-x C-r") nil)
+(global-set-key (kbd "C-x C-r") 'consult-ripgrep-erl)
 
 (defun my-erlang-mode-hook ()
   "Configuration for Erlang Mode. Add this to `erlang-mode-hook'."
@@ -613,11 +618,11 @@ by using nxml's indentation rules."
 ;; Re-mapping Ctrl-Z
 (setq ctrl-z-map (make-keymap))
 (global-set-key "\C-z" ctrl-z-map)
-(global-set-key (kbd "\C-z\C-r") 'rgrep)
-(global-set-key "\C-z\C-s" 'tags-apropos)
-(global-set-key (kbd "C-z m") 'menu-bar-open)
-(global-set-key "\C-z\C-f" 'erlang-beginning-of-clause)
-(global-set-key (kbd "\C-z\C-e") 'erlang-next-error)
+(global-set-key (kbd "\C-z C-r") 'rgrep)
+(global-set-key "\C-z C-s" 'tags-apropos)
+(global-set-key (kbd "\C-z m") 'menu-bar-open)
+(global-set-key "\C-z C-f" 'erlang-beginning-of-clause)
+(global-set-key (kbd "\C-z C-e") 'erlang-next-error)
 
 (global-set-key (kbd "M-g") 'goto-line)
 
@@ -632,7 +637,7 @@ by using nxml's indentation rules."
 (setq ring-bell-function 'ignore)
 
 ;; * * * README * * *
-(find-file "~/README") ; Want to make sure that my README is always available :)
+;; (find-file "~/README") ; Want to make sure that my README is always available :)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
