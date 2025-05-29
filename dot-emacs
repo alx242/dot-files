@@ -12,6 +12,12 @@
 ;; Decrease: C-x C--
 ;; Reset:    C-x C-0
 
+;; Turn of c-wheel scrolling. It is to fast and unprecise
+(global-unset-key (kbd "<C-wheel-up>"))
+(global-unset-key (kbd "<C-wheel-down>"))
+;; (global-set-key (kbd "<C-wheel-up>") 'tab-bar-switch-to-next-tab)
+;; (global-set-key (kbd "<C-wheel-down>") 'tab-bar-switch-to-prev-tab)
+
 ;; Access to homebrew commands
 (use-package exec-path-from-shell
   :ensure t)
@@ -74,52 +80,58 @@
 (auto-dim-other-buffers-mode t)
 
 ;; Terminal
-;; (use-package vterm
-;;     :ensure t)
-;; 
-;; (use-package multi-vterm
-;;     :bind (:map global-map
-;;                 ("C-c t" . new-multi-vterm)
-;;                 ("C-c n" . multi-vterm-next)
-;;                 ("C-c p" . multi-vterm-prev)
-;;                 )
-;;     :bind (:map vterm-mode-map
-;;                 ("M-c" . vterm-copy-mode)
-;;                 ("s-k" . vterm-clear-kill-history)
-;;                 ("C-y" . vterm-send-C-y)
-;;                 ("M-<left>" . 'vterm-send-M-b)
-;;                 ("M-<right>" . 'vterm-send-M-f)
-;;                 ;; The following seems to be default but didn't work with
-;;                 ;; precision scrolling.
-;;                 ;;
-;;                 ;; ("<prior>" . vterm-send-prior)
-;;                 ;; ("<next>" . vterm-send-next)
-;;                 ;; ("S-<prior>" . scroll-down-command) ; shift-pageup   == pageup
-;;                 ;; ("S-<next>" . scroll-up-command)    ; shift-pagedown == pagedown
-;;                 )
-;;     :bind (:map vterm-copy-mode-map
-;;                 ("M-c" . vterm-copy-mode)
-;;                 ("s-k" . vterm-clear-kill-history)
-;;                 )
-;;     :config
-;;     (setq vterm-max-scrollback 10000)
-;;     (setq vterm-kill-buffer-on-exit t)
-;;     ;; Enable vterm cut/paste to macos buffer
-;;     ;; (setq vterm-enable-manipulate-selection-data-by-osc52 t)
-;;     ;; (setq show-trailing-whitespace 0)
-;;     :ensure t)
+(use-package vterm
+    :ensure t)
 
-;; (defun new-multi-vterm ()
-;;    (interactive)
-;;    (let ((default-directory "~"))
-;;      (multi-vterm))
-;;    )
+(use-package multi-vterm
+    :bind (:map global-map
+                ("C-c t" . new-multi-vterm)
+                ("C-c n" . multi-vterm-next)
+                ("C-c p" . multi-vterm-prev)
+                )
+    :bind (:map vterm-mode-map
+                ("M-c" . vterm-copy-mode)
+                ("s-k" . vterm-clear-kill-history)
+                ("C-y" . vterm-send-C-y)
+                ("M-<left>" . 'vterm-send-M-b)
+                ("M-<right>" . 'vterm-send-M-f)
+                ;; The following seems to be default but didn't work with
+                ;; precision scrolling.
+                ;;
+                ;; ("<prior>" . vterm-send-prior)
+                ;; ("<next>" . vterm-send-next)
+                ;; ("S-<prior>" . scroll-down-command) ; shift-pageup   == pageup
+                ;; ("S-<next>" . scroll-up-command)    ; shift-pagedown == pagedown
+                )
+    :bind (:map vterm-copy-mode-map
+                ("M-c" . vterm-copy-mode)
+                ("C-g" . vterm-copy-mode)
+                ("s-k" . vterm-clear-kill-history)
+                )
+    :config
+    (setq vterm-max-scrollback 10000)
+    (setq vterm-kill-buffer-on-exit t)
+    ;; Enable vterm cut/paste to macos buffer
+    ;; (setq vterm-enable-manipulate-selection-data-by-osc52 t)
+    ;; (setq show-trailing-whitespace 0)
+    :ensure t)
 
-;; (defun vterm-clear-kill-history ()
-;;    (interactive)
-;;    (vterm-clear-scrollback)
-;;    (vterm-clear)
-;;    )
+;; Any selection when using vterm is copied to the kill-ring
+(add-hook 'vterm-mode-hook
+          (lambda ()
+            (setq-local mouse-drag-copy-region t)))
+
+(defun new-multi-vterm ()
+   (interactive)
+   (let ((default-directory "~"))
+     (multi-vterm))
+   )
+
+(defun vterm-clear-kill-history ()
+   (interactive)
+   (vterm-clear-scrollback)
+   (vterm-clear)
+   )
 
 (require 'markdown-mode)
 
