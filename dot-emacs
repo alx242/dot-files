@@ -342,12 +342,15 @@
     :ensure t
     :bind (:map global-map
                 ("C-c C-d" . gptel)
-                ("C-c C-r" . gptel-review)
-                ("C-c RET" . gptel-send)
-                )
+                ("C-c C-r" . gptel-review))
+    :bind (:map gptel-mode-map
+                ("C-c C-c" . gptel-send))
     :config
+    ;(define-key gptel-mode-map (kbd "C-c C-c") 'gptel-send)
     (setq gptel-model 'claude-3.5-sonnet
           gptel-backend (gptel-make-gh-copilot "Copilot")))
+
+(require 'gptel)
 
 (defun magit-generate-commit-msg ()
   "Generate a commit message from staged changes using AI."
@@ -376,25 +379,38 @@
                :description "the name of the buffer whose contents are to be retrieved"))
  :category "emacs")                     ; An arbitrary label for grouping
 
-(gptel-make-tool
- :name "create_file"                    ; javascript-style  snake_case name
- :function (lambda (path filename content)   ; the function that runs
-             (let ((full-path (expand-file-name filename path)))
-               (with-temp-buffer
-                 (insert content)
-                 (write-file full-path))
-               (format "Created file %s in %s" filename path)))
- :description "Create a new file with the specified content"
- :args (list '(:name "path"             ; a list of argument specifications
-               :type string
-               :description "The directory where to create the file")
-             '(:name "filename"
-               :type string
-               :description "The name of the file to create")
-             '(:name "content"
-               :type string
-               :description "The content to write to the file"))
- :category "filesystem")                ; An arbitrary label for grouping
+;; (gptel-make-tool
+;;  :name "read_buffer"                    ; javascript-style snake_case name
+;;  :function (lambda (buffer)                  ; the function that will run
+;;              (unless (buffer-live-p (get-buffer buffer))
+;;                (error "error: buffer %s is not live." buffer))
+;;              (with-current-buffer  buffer
+;;                (buffer-substring-no-properties (point-min) (point-max))))
+;;  :description "return the contents of an emacs buffer"
+;;  :args (list '(:name "buffer"
+;;                :type string            ; :type value must be a symbol
+;;                :description "the name of the buffer whose contents are to be retrieved"))
+;;  :category "emacs")                     ; An arbitrary label for grouping
+;; 
+;; (gptel-make-tool
+;;  :name "create_file"                    ; javascript-style  snake_case name
+;;  :function (lambda (path filename content)   ; the function that runs
+;;              (let ((full-path (expand-file-name filename path)))
+;;                (with-temp-buffer
+;;                  (insert content)
+;;                  (write-file full-path))
+;;                (format "Created file %s in %s" filename path)))
+;;  :description "Create a new file with the specified content"
+;;  :args (list '(:name "path"             ; a list of argument specifications
+;;                :type string
+;;                :description "The directory where to create the file")
+;;              '(:name "filename"
+;;                :type string
+;;                :description "The name of the file to create")
+;;              '(:name "content"
+;;                :type string
+;;                :description "The content to write to the file"))
+;;  :category "filesystem")                ; An arbitrary label for grouping
 
 (use-package flycheck
   :ensure t
