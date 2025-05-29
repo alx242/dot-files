@@ -321,7 +321,7 @@
     ;;           :branch "main")
     :ensure t
     :config
-    (setq copilot-max-char 1000000)    
+    (setq copilot-max-char 1000000)
     )
 
 ;; ;; Start with copilot-chat-display command, when starting make sure the current
