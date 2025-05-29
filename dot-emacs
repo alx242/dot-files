@@ -132,6 +132,7 @@
 ;; Tab bar
 (global-set-key (kbd "s-t") 'tab-bar-new-tab)
 (global-set-key (kbd "s-w") 'tab-bar-close-tab)
+(define-key magit-mode-map (kbd "C-<tab>") nil) ; unbind in magit first
 (global-set-key (kbd "C-<tab>") 'tab-bar-switch-to-next-tab)
 (global-set-key (kbd "C-S-<tab>") 'tab-bar-switch-to-prev-tab)
 
@@ -631,8 +632,7 @@ by using nxml's indentation rules."
 (setq ring-bell-function 'ignore)
 
 ;; * * * README * * *
-(find-file "~/README")
-(switch-to-buffer "README")
+(find-file "~/README") ; Want to make sure that my README is always available :)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
