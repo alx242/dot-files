@@ -350,8 +350,6 @@
 (defun magit-generate-commit-msg ()
   "Generate a commit message from staged changes using AI."
   (interactive)
-  (unless (magit-staged-files)
-    (user-error "No staged changes found"))
   (let ((diff (shell-command-to-string "git diff --cached")))
     (if (string-empty-p diff)
         (user-error "No diff content found in staged changes")
