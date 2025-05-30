@@ -34,7 +34,6 @@
 (setq mac-option-modifier 'meta)
 (setq x-select-enable-clipboard t)
 
-
 ;; NOTE: So the precision scrolling didn't play nicely with vterm and
 ;; pageup/down
 ;;
@@ -95,13 +94,6 @@
                 ("C-y" . vterm-send-C-y)
                 ("M-<left>" . 'vterm-send-M-b)
                 ("M-<right>" . 'vterm-send-M-f)
-                ;; The following seems to be default but didn't work with
-                ;; precision scrolling.
-                ;;
-                ;; ("<prior>" . vterm-send-prior)
-                ;; ("<next>" . vterm-send-next)
-                ;; ("S-<prior>" . scroll-down-command) ; shift-pageup   == pageup
-                ;; ("S-<next>" . scroll-up-command)    ; shift-pagedown == pagedown
                 )
     :bind (:map vterm-copy-mode-map
                 ("M-c" . vterm-copy-mode)
@@ -154,6 +146,8 @@
 (define-key magit-mode-map (kbd "C-<tab>") nil) ; unbind in magit first
 (global-set-key (kbd "C-<tab>") 'tab-bar-switch-to-next-tab)
 (global-set-key (kbd "C-S-<tab>") 'tab-bar-switch-to-prev-tab)
+(define-key magit-mode-map (kbd "C-x C-t") nil) ; unbind switch rows
+(global-set-key (kbd "C-x C-t") 'tab-bar-mode)
 
 ;; * * * Moving around window-buffers * * *
 
@@ -163,11 +157,6 @@
 (windmove-default-keybindings 'super)
 (global-set-key (kbd "M-o") 'other-window)
 (global-set-key (kbd "M-i") 'previous-window-any-frame)
-
-; (global-set-key (kbd "M-s-<up>") 'windmove-swap-states-up)
-; (global-set-key (kbd "M-s-<down>") 'windmove-swap-states-down)
-; (global-set-key (kbd "M-s-<left>") 'windmove-swap-states-left)
-; (global-set-key (kbd "M-s-<right>") 'windmove-swap-states-right)
 
 (global-set-key (kbd "C-s-<left>") 'shrink-window-horizontally)
 (global-set-key (kbd "C-s-<right>") 'enlarge-window-horizontally)
@@ -244,9 +233,6 @@
 ;;        |            D            |      |                 |       |
 ;;        +-------------------------+      +-----------------+-------+
 
-;; (global-set-key (kbd "C-P") 'enlarge-window)
-;; (global-set-key (kbd "C-N") 'shrink-window)
-
 ;; when cursor is on edge, move to the other side, as in a toroidal
 ;; space
 (setq windmove-wrap-around t)
@@ -319,7 +305,6 @@
 ;; Access elp command
 (add-to-list 'exec-path "~/.emacs.d/")
 
-
 ;; co-pilot
 ;; required: brew install node
 ;;
@@ -344,34 +329,19 @@
     (setq copilot-max-char 1000000)
     )
 
-;; ;; Start with copilot-chat-display command, when starting make sure the current
-;; ;; buffer is something that copilot can work with.
-;; (use-package copilot-chat
-;;     :ensure t
-;;     :bind (:map global-map
-;;                 ("C-c d" . copilot-chat-display)
-;;                 ("C-c y" . copilot-chat-yank)
-;;                 ("C-c M-y" . copilot-chat-yank)
-;;                 ("C-c C-f" . copilot-chat-fix)
-;;                 ("C-c C-M-y" . (lambda () (interactive) (copilot-chat-yank-pop -1))))
-;;     :after (request org markdown-mode)
-;;     )
-;; (require 'copilot-chat)
 
-(define-key magit-mode-map (kbd "C-c C-d") nil) ; unbind in magit first
+(global-unset-key (kbd "C-c C-d"))
 (use-package gptel
     :ensure t
     :bind (:map global-map
                 ("C-c C-d" . gptel)
                 ("C-c C-a" . gptel-add)
-                ("C-c C-r" . gptel-review))
+                ("C-c C-r" . gptel-rewrite))
     :bind (:map gptel-mode-map
                 ("C-c C-c" . gptel-send))
     :config
-    ;(define-key gptel-mode-map (kbd "C-c C-c") 'gptel-send)
     (setq gptel-model 'claude-3.5-sonnet
           gptel-backend (gptel-make-gh-copilot "Copilot")))
-
 (require 'gptel)
 
 (defun magit-generate-commit-msg ()
@@ -384,7 +354,7 @@
             (format "Generate a concise git commit message for these changes:\n%s" diff)
           :callback (lambda (response _)
                       (with-current-buffer "COMMIT_EDITMSG"
-                        ;; (erase-buffer) Not sure about this :P 
+                        ;; (erase-buffer) Not sure about this :P
                         (insert response)))
           :system "You are a helpful assistant that generates concise, conventional git commit messages."))))
 
@@ -401,38 +371,25 @@
                :description "the name of the buffer whose contents are to be retrieved"))
  :category "emacs")                     ; An arbitrary label for grouping
 
-;; (gptel-make-tool
-;;  :name "read_buffer"                    ; javascript-style snake_case name
-;;  :function (lambda (buffer)                  ; the function that will run
-;;              (unless (buffer-live-p (get-buffer buffer))
-;;                (error "error: buffer %s is not live." buffer))
-;;              (with-current-buffer  buffer
-;;                (buffer-substring-no-properties (point-min) (point-max))))
-;;  :description "return the contents of an emacs buffer"
-;;  :args (list '(:name "buffer"
-;;                :type string            ; :type value must be a symbol
-;;                :description "the name of the buffer whose contents are to be retrieved"))
-;;  :category "emacs")                     ; An arbitrary label for grouping
-;; 
-;; (gptel-make-tool
-;;  :name "create_file"                    ; javascript-style  snake_case name
-;;  :function (lambda (path filename content)   ; the function that runs
-;;              (let ((full-path (expand-file-name filename path)))
-;;                (with-temp-buffer
-;;                  (insert content)
-;;                  (write-file full-path))
-;;                (format "Created file %s in %s" filename path)))
-;;  :description "Create a new file with the specified content"
-;;  :args (list '(:name "path"             ; a list of argument specifications
-;;                :type string
-;;                :description "The directory where to create the file")
-;;              '(:name "filename"
-;;                :type string
-;;                :description "The name of the file to create")
-;;              '(:name "content"
-;;                :type string
-;;                :description "The content to write to the file"))
-;;  :category "filesystem")                ; An arbitrary label for grouping
+(gptel-make-tool
+ :name "create_file"                    ; javascript-style  snake_case name
+ :function (lambda (path filename content)   ; the function that runs
+             (let ((full-path (expand-file-name filename path)))
+               (with-temp-buffer
+                 (insert content)
+                 (write-file full-path))
+               (format "Created file %s in %s" filename path)))
+ :description "Create a new file with the specified content"
+ :args (list '(:name "path"             ; a list of argument specifications
+               :type string
+               :description "The directory where to create the file")
+             '(:name "filename"
+               :type string
+               :description "The name of the file to create")
+             '(:name "content"
+               :type string
+               :description "The content to write to the file"))
+ :category "filesystem")                ; An arbitrary label for grouping
 
 (use-package flycheck
   :ensure t
@@ -503,7 +460,6 @@
           xref-show-definitions-function #'consult-xref)
     )
 
-
 (defun consult-ripgrep-erl ()
   "Search for erlang files"
   (interactive)
@@ -515,6 +471,7 @@
 
 (define-key magit-mode-map (kbd "C-x C-r") nil)
 (global-set-key (kbd "C-x C-r") 'consult-ripgrep-erl)
+(global-set-key (kbd "C-x r") 'rgrep)
 
 (defun my-erlang-mode-hook ()
   "Configuration for Erlang Mode. Add this to `erlang-mode-hook'."
@@ -631,15 +588,6 @@ by using nxml's indentation rules."
 (global-set-key (kbd "M-<up>") 'backward-paragraph)
 (global-set-key (kbd "M-<left>") 'backward-word)
 (global-set-key (kbd "M-<right>") 'forward-word)
-
-;; Re-mapping Ctrl-Z
-(setq ctrl-z-map (make-keymap))
-(global-set-key "\C-z" ctrl-z-map)
-(global-set-key (kbd "\C-z C-r") 'rgrep)
-(global-set-key "\C-z C-s" 'tags-apropos)
-(global-set-key (kbd "\C-z m") 'menu-bar-open)
-(global-set-key "\C-z C-f" 'erlang-beginning-of-clause)
-(global-set-key (kbd "\C-z C-e") 'erlang-next-error)
 
 (global-set-key (kbd "M-g") 'goto-line)
 
