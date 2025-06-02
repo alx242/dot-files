@@ -109,8 +109,10 @@
                 ("s-k" . vterm-clear-kill-history)
                 )
     :config
+    (add-hook 'after-init-hook (define-key vterm-mode-map [double-mouse-1] #'mark-word))
     (setq vterm-max-scrollback 10000)
     (setq vterm-kill-buffer-on-exit t)
+    (pixel-scroll-precision-mode nil)
     ;; Enable vterm cut/paste to macos buffer
     ;; (setq vterm-enable-manipulate-selection-data-by-osc52 t)
     ;; (setq show-trailing-whitespace 0)
@@ -119,7 +121,8 @@
 ;; Any selection when using vterm is copied to the kill-ring
 (add-hook 'vterm-mode-hook
           (lambda ()
-            (setq-local mouse-drag-copy-region t)))
+            (setq-local mouse-drag-copy-region t)
+            ))
 
 (defun new-multi-vterm ()
    (interactive)
@@ -355,10 +358,12 @@
 ;;     )
 ;; (require 'copilot-chat)
 
+(define-key magit-mode-map (kbd "C-c C-d") nil) ; unbind in magit first
 (use-package gptel
     :ensure t
     :bind (:map global-map
                 ("C-c C-d" . gptel)
+                ("C-c C-a" . gptel-add)
                 ("C-c C-r" . gptel-review))
     :bind (:map gptel-mode-map
                 ("C-c C-c" . gptel-send))
