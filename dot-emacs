@@ -471,7 +471,7 @@
 
 (define-key magit-mode-map (kbd "C-x C-r") nil)
 (global-set-key (kbd "C-x C-r") 'consult-ripgrep-erl)
-(global-set-key (kbd "C-x r") 'rgrep)
+(global-set-key (kbd "C-c r") 'rgrep)
 
 (defun my-erlang-mode-hook ()
   "Configuration for Erlang Mode. Add this to `erlang-mode-hook'."
@@ -594,9 +594,9 @@ by using nxml's indentation rules."
 ;; * * * Diff regions * * *
 ;; Select first region and execute diff-region and then select second
 ;; region and do diff-region-now
-(load "~/.emacs.d/lisp/diff_region.el")
-(global-set-key (kbd "C-z d") 'diff-region)
-(global-set-key (kbd "C-z n") 'diff-region-now)
+;; (load "~/.emacs.d/lisp/diff_region.el")
+;; (global-set-key (kbd "C-c d d") 'diff-region)
+;; (global-set-key (kbd "C-c d n") 'diff-region-now)
 
 ;; Stop sounding the bell in emacs
 (setq ring-bell-function 'ignore)
