@@ -142,14 +142,13 @@
 
 ;; Tab bar
 (define-key magit-mode-map (kbd "C-c C-t") nil) ; unbind in magit first
-(global-set-key (kbd "C-c C-t") 'tab-bar-mode)
+(global-set-key (kbd "C-c C-b") 'tab-bar-mode)
 (global-set-key (kbd "s-t") 'tab-bar-new-tab)
 (global-set-key (kbd "s-w") 'tab-bar-close-tab)
 (define-key magit-mode-map (kbd "C-<tab>") nil) ; unbind in magit first
 (global-set-key (kbd "C-<tab>") 'tab-bar-switch-to-next-tab)
 (global-set-key (kbd "C-S-<tab>") 'tab-bar-switch-to-prev-tab)
 (define-key magit-mode-map (kbd "C-x C-t") nil) ; unbind switch rows
-(global-set-key (kbd "C-x C-t") 'tab-bar-mode)
 
 ;; * * * Moving around window-buffers * * *
 
@@ -715,14 +714,3 @@ by using nxml's indentation rules."
 (set-face-attribute 'help-for-help-header nil :font my_font)
 (set-face-attribute 'fixed-pitch-serif nil :font my_font)
 (set-face-background 'trailing-whitespace "red")
-
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(auto-dim-other-buffers ((t nil)))
- '(org-level-1 ((t (:inherit variable-pitch :foreground "#d04a00" :height 1.0))))
- '(org-level-2 ((t (:inherit variable-pitch :foreground "#1d9700" :height 1.0))))
- '(org-level-3 ((t (:inherit variable-pitch :extend nil :foreground "#0064e4" :height 1.0))))
-)
