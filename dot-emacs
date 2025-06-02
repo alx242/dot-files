@@ -113,8 +113,8 @@
 ;; Any selection when using vterm is copied to the kill-ring
 (add-hook 'vterm-mode-hook
           (lambda ()
-            (setq-local mouse-drag-copy-region t)
-            ))
+            (pixel-scroll-precision-mode 0)
+            (setq-local mouse-drag-copy-region t)))
 
 (defun new-multi-vterm ()
    (interactive)
@@ -141,6 +141,8 @@
 (setq confirm-kill-emacs 'y-or-n-p)
 
 ;; Tab bar
+(define-key magit-mode-map (kbd "C-c C-t") nil) ; unbind in magit first
+(global-set-key (kbd "C-c C-t") 'tab-bar-mode)
 (global-set-key (kbd "s-t") 'tab-bar-new-tab)
 (global-set-key (kbd "s-w") 'tab-bar-close-tab)
 (define-key magit-mode-map (kbd "C-<tab>") nil) ; unbind in magit first
@@ -315,19 +317,19 @@
 ;; clipboard ready to be posted on the URL page ctrl/cmd-v (this is what
 ;; requuires nodejs)
 ;;
-(use-package copilot
-    ;;:config
-    ;; Enable copilot automatically for Erlang files
-    ;; (add-hook 'erlang-mode-hook #'copilot-mode)
-
-    ;; The following is just for emacs-30+
-    ;; :vc (:url "https://github.com/copilot-emacs/copilot.el"
-    ;;           :rev :newest
-    ;;           :branch "main")
-    :ensure t
-    :config
-    (setq copilot-max-char 1000000)
-    )
+;; (use-package copilot
+;;     ;;:config
+;;     ;; Enable copilot automatically for Erlang files
+;;     ;; (add-hook 'erlang-mode-hook #'copilot-mode)
+;; 
+;;     ;; The following is just for emacs-30+
+;;     ;; :vc (:url "https://github.com/copilot-emacs/copilot.el"
+;;     ;;           :rev :newest
+;;     ;;           :branch "main")
+;;     :ensure t
+;;     ; :config
+;;     ;(setq copilot-max-char 1000000)
+;;     )
 
 
 (global-unset-key (kbd "C-c C-d"))
@@ -479,7 +481,7 @@
   ;; lsp-mode - done via use-package
   ;; (lsp-mode)
   ;; Activate the co-pilot
-  (copilot-mode)
+  ;; (copilot-mode)
   (flyspell-prog-mode)
   ;; Enable auto-fill mode for text files
   (turn-on-auto-fill)
@@ -723,7 +725,4 @@ by using nxml's indentation rules."
  '(org-level-1 ((t (:inherit variable-pitch :foreground "#d04a00" :height 1.0))))
  '(org-level-2 ((t (:inherit variable-pitch :foreground "#1d9700" :height 1.0))))
  '(org-level-3 ((t (:inherit variable-pitch :extend nil :foreground "#0064e4" :height 1.0))))
- '(vterm-color-blue ((t (:inherit term-color-blue :foreground "SteelBlue" :slant normal :weight thin :height 160 :width normal :foundry "nil" :family "unscii"))))
- '(vterm-color-magenta ((t (:inherit term-color-magenta :foreground "MediumPurple3"))))
- '(vterm-color-red ((t (:inherit term-color-red :foreground "firebrick2" :slant normal :weight thin :height 160 :width normal :foundry "nil" :family "unscii"))))
- '(vterm-color-yellow ((t (:inherit term-color-yellow :foreground "DarkGoldenrod3")))))
+)
