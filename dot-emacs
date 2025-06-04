@@ -79,54 +79,54 @@
 (auto-dim-other-buffers-mode t)
 
 ;; Terminal
-(use-package vterm
-    :ensure t)
-
-(use-package multi-vterm
-    :bind (:map global-map
-                ("C-c t" . new-multi-vterm)
-                ("C-c n" . multi-vterm-next)
-                ("C-c p" . multi-vterm-prev)
-                )
-    :bind (:map vterm-mode-map
-                ("M-c" . vterm-copy-mode)
-                ("s-k" . vterm-clear-kill-history)
-                ("C-y" . vterm-send-C-y)
-                ("M-<left>" . 'vterm-send-M-b)
-                ("M-<right>" . 'vterm-send-M-f)
-                )
-    :bind (:map vterm-copy-mode-map
-                ("M-c" . vterm-copy-mode)
-                ("C-g" . vterm-copy-mode)
-                ("s-k" . vterm-clear-kill-history)
-                )
-    :config
-    (add-hook 'after-init-hook (define-key vterm-mode-map [double-mouse-1] #'mark-word))
-    (setq vterm-max-scrollback 10000)
-    (setq vterm-kill-buffer-on-exit t)
-    (pixel-scroll-precision-mode nil)
-    ;; Enable vterm cut/paste to macos buffer
-    ;; (setq vterm-enable-manipulate-selection-data-by-osc52 t)
-    ;; (setq show-trailing-whitespace 0)
-    :ensure t)
-
-;; Any selection when using vterm is copied to the kill-ring
-(add-hook 'vterm-mode-hook
-          (lambda ()
-            (pixel-scroll-precision-mode 0)
-            (setq-local mouse-drag-copy-region t)))
-
-(defun new-multi-vterm ()
-   (interactive)
-   (let ((default-directory "~"))
-     (multi-vterm))
-   )
-
-(defun vterm-clear-kill-history ()
-   (interactive)
-   (vterm-clear-scrollback)
-   (vterm-clear)
-   )
+;; (use-package vterm
+;;     :ensure t)
+;; 
+;; (use-package multi-vterm
+;;     :bind (:map global-map
+;;                 ("C-c t" . new-multi-vterm)
+;;                 ("C-c n" . multi-vterm-next)
+;;                 ("C-c p" . multi-vterm-prev)
+;;                 )
+;;     :bind (:map vterm-mode-map
+;;                 ("M-c" . vterm-copy-mode)
+;;                 ("s-k" . vterm-clear-kill-history)
+;;                 ("C-y" . vterm-send-C-y)
+;;                 ("M-<left>" . 'vterm-send-M-b)
+;;                 ("M-<right>" . 'vterm-send-M-f)
+;;                 )
+;;     :bind (:map vterm-copy-mode-map
+;;                 ("M-c" . vterm-copy-mode)
+;;                 ("C-g" . vterm-copy-mode)
+;;                 ("s-k" . vterm-clear-kill-history)
+;;                 )
+;;     :config
+;;     (add-hook 'after-init-hook (define-key vterm-mode-map [double-mouse-1] #'mark-word))
+;;     (setq vterm-max-scrollback 10000)
+;;     (setq vterm-kill-buffer-on-exit t)
+;;     (pixel-scroll-precision-mode nil)
+;;     ;; Enable vterm cut/paste to macos buffer
+;;     ;; (setq vterm-enable-manipulate-selection-data-by-osc52 t)
+;;     ;; (setq show-trailing-whitespace 0)
+;;     :ensure t)
+;; 
+;; ;; Any selection when using vterm is copied to the kill-ring
+;; (add-hook 'vterm-mode-hook
+;;           (lambda ()
+;;             (pixel-scroll-precision-mode 0)
+;;             (setq-local mouse-drag-copy-region t)))
+;; 
+;; (defun new-multi-vterm ()
+;;    (interactive)
+;;    (let ((default-directory "~"))
+;;      (multi-vterm))
+;;    )
+;; 
+;; (defun vterm-clear-kill-history ()
+;;    (interactive)
+;;    (vterm-clear-scrollback)
+;;    (vterm-clear)
+;;    )
 
 (require 'markdown-mode)
 
