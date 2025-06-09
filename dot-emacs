@@ -305,32 +305,6 @@
 
 ;; Access elp command
 (add-to-list 'exec-path "~/.emacs.d/")
-
-;; co-pilot
-;; required: brew install node
-;;
-;; Do not forget to install the language server part with:
-;; copilot-install-server
-;;
-;; After running copilot-login the device activation code will be in the
-;; clipboard ready to be posted on the URL page ctrl/cmd-v (this is what
-;; requuires nodejs)
-;;
-;; (use-package copilot
-;;     ;;:config
-;;     ;; Enable copilot automatically for Erlang files
-;;     ;; (add-hook 'erlang-mode-hook #'copilot-mode)
-;; 
-;;     ;; The following is just for emacs-30+
-;;     ;; :vc (:url "https://github.com/copilot-emacs/copilot.el"
-;;     ;;           :rev :newest
-;;     ;;           :branch "main")
-;;     :ensure t
-;;     ; :config
-;;     ;(setq copilot-max-char 1000000)
-;;     )
-
-
 (global-unset-key (kbd "C-c C-d"))
 (use-package gptel
     :ensure t
@@ -480,7 +454,6 @@
   ;; lsp-mode - done via use-package
   ;; (lsp-mode)
   ;; Activate the co-pilot
-  ;; (copilot-mode)
   (flyspell-prog-mode)
   ;; Enable auto-fill mode for text files
   (turn-on-auto-fill)
@@ -529,14 +502,9 @@ by using nxml's indentation rules."
   "Complete if point is at end of a word, otherwise indent line."
   (interactive)
   (if (looking-at "\\>")
-      (or (copilot-accept-completion)
-          (dabbrev-expand nil))
+      (dabbrev-expand nil)
       (indent-for-tab-command)))
-
 (global-set-key (kbd "TAB") 'indent-or-complete)
-(global-set-key (kbd "S-<tab>") 'copilot-accept-completion)
-(global-set-key (kbd "<backtab>") 'copilot-next-completion)
-; (global-set-key (kbd "<backtab>") 'copilot-previous-completion)
 
 ;; Insert a timestamp at the end of a file (diary stuff)
 (defun insert-date-stamp ()
@@ -611,8 +579,7 @@ by using nxml's indentation rules."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(column-number-mode t)
- '(copilot-chat-default-model "claude-3.7-sonnet-thought")
- '(custom-enabled-themes '(modus-vivendi-tinted))
+ '(custom-enabled-themes '(misterioso))
  '(custom-safe-themes
    '("74828a8db9af899ca4301f38dd5ef4ed20266613b29715299ac54e8fde98e2f3"
      "d23adb4d0d0acf5cf4dcdad91e4e70b6c15481bcff4170f28ed2dae90b253d00"
@@ -693,8 +660,7 @@ by using nxml's indentation rules."
  '(debug-on-error t)
  '(menu-bar-mode t)
  '(package-selected-packages
-   '(auto-dim-other-buffers consult copilot copilot-chat erlang
-                            exec-path-from-shell flycheck lsp-mode multi-vterm
+   '(auto-dim-other-buffers consult erlang exec-path-from-shell flycheck lsp-mode
                             nord-theme nordic-night-theme transpose-frame
                             vertico yang-mode))
  '(safe-local-variable-values '((allout-layout . t) (sh-indent-comment . t)))
