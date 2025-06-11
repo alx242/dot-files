@@ -179,61 +179,6 @@
 (global-set-key (kbd "s-,") 'balance-windows)
 (global-set-key (kbd "s-r") 'rotate-frame-clockwise)
 
-;; ‘transpose-frame’ Swap x-direction and y-direction
-;;
-;;        +------------+------------+      +----------------+--------+
-;;        |            |     B      |      |        A       |        |
-;;        |     A      +------------+      |                |        |
-;;        |            |     C      |  =>  +--------+-------+   D    |
-;;        +------------+------------+      |   B    |   C   |        |
-;;        |            D            |      |        |       |        |
-;;        +-------------------------+      +--------+-------+--------+
-;; ‘flip-frame’ Flip vertically
-;;
-;;        +------------+------------+      +------------+------------+
-;;        |            |     B      |      |            D            |
-;;        |     A      +------------+      +------------+------------+
-;;        |            |     C      |  =>  |            |     C      |
-;;        +------------+------------+      |     A      +------------+
-;;        |            D            |      |            |     B      |
-;;        +-------------------------+      +------------+------------+
-;; ‘flop-frame’ Flop horizontally
-;;
-;;        +------------+------------+      +------------+------------+
-;;        |            |     B      |      |     B      |            |
-;;        |     A      +------------+      +------------+     A      |
-;;        |            |     C      |  =>  |     C      |            |
-;;        +------------+------------+      +------------+------------+
-;;        |            D            |      |            D            |
-;;        +-------------------------+      +-------------------------+
-;; ‘rotate-frame’ Rotate 180 degrees
-;;
-;;        +------------+------------+      +-------------------------+
-;;        |            |     B      |      |            D            |
-;;        |     A      +------------+      +------------+------------+
-;;        |            |     C      |  =>  |     C      |            |
-;;        +------------+------------+      +------------+     A      |
-;;        |            D            |      |     B      |            |
-;;        +-------------------------+      +------------+------------+
-;; ‘rotate-frame-clockwise’ Rotate 90 degrees clockwise
-;;
-;;        +------------+------------+      +-------+-----------------+
-;;        |            |     B      |      |       |        A        |
-;;        |     A      +------------+      |       |                 |
-;;        |            |     C      |  =>  |   D   +--------+--------+
-;;        +------------+------------+      |       |   C    |   B    |
-;;        |            D            |      |       |        |        |
-;;        +-------------------------+      +-------+--------+--------+
-;; ‘rotate-frame-anti-clockwise’ Rotate 90 degrees anti-clockwise
-;;
-;;        +------------+------------+      +--------+--------+-------+
-;;        |            |     B      |      |   B    |   C    |       |
-;;        |     A      +------------+      |        |        |       |
-;;        |            |     C      |  =>  +--------+--------+   D   |
-;;        +------------+------------+      |        A        |       |
-;;        |            D            |      |                 |       |
-;;        +-------------------------+      +-----------------+-------+
-
 ;; when cursor is on edge, move to the other side, as in a toroidal
 ;; space
 (setq windmove-wrap-around t)
@@ -309,13 +254,14 @@
 (use-package gptel
     :ensure t
     :bind (:map global-map
-                ("C-c C-d" . gptel)
+                ("C-c C-g" . gptel)
                 ("C-c C-a" . gptel-add)
-                ("C-c C-r" . gptel-rewrite))
+                ("C-c C-d" . gptel-rewrite))
     :bind (:map gptel-mode-map
                 ("C-c C-c" . gptel-send))
     :config
     (setq gptel-model 'claude-3.5-sonnet
+          gptel-use-curl 'nil
           gptel-backend (gptel-make-gh-copilot "Copilot")))
 (require 'gptel)
 
@@ -446,7 +392,7 @@
 
 (define-key magit-mode-map (kbd "C-x C-r") nil)
 (global-set-key (kbd "C-x C-r") 'consult-ripgrep-erl)
-(global-set-key (kbd "C-c r") 'rgrep)
+(global-set-key (kbd "C-c C-r") 'rgrep)
 
 (defun my-erlang-mode-hook ()
   "Configuration for Erlang Mode. Add this to `erlang-mode-hook'."
