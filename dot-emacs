@@ -255,13 +255,13 @@
     :ensure t
     :bind (:map global-map
                 ("C-c C-g" . gptel)
-                ("C-c C-a" . gptel-add)
+                ("C-c C-f" . gptel-add)
                 ("C-c C-d" . gptel-rewrite))
     :bind (:map gptel-mode-map
                 ("C-c C-c" . gptel-send))
     :config
     (setq gptel-model 'claude-3.5-sonnet
-          gptel-use-curl 'nil
+          gptel-use-curl 't
           gptel-backend (gptel-make-gh-copilot "Copilot")))
 (require 'gptel)
 
