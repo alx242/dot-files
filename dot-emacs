@@ -18,6 +18,15 @@
 ;; (global-set-key (kbd "<C-wheel-up>") 'tab-bar-switch-to-next-tab)
 ;; (global-set-key (kbd "<C-wheel-down>") 'tab-bar-switch-to-prev-tab)
 
+
+;; Auto-save scratch buffer
+(use-package persistent-scratch
+  :ensure t
+  :config
+  (persistent-scratch-autosave-mode 1)
+  (persistent-scratch-setup-default)
+  )
+
 ;; Access to homebrew commands
 (use-package exec-path-from-shell
   :ensure t)
@@ -164,10 +173,17 @@
 (global-set-key (kbd "C-s-<down>") 'shrink-window)
 (global-set-key (kbd "C-s-<up>") 'enlarge-window)
 
-(global-set-key (kbd "s-0") 'delete-window)
-(global-set-key (kbd "s-1") 'delete-other-windows)
-(global-set-key (kbd "s-2") 'split-window-below)
-(global-set-key (kbd "s-3") 'split-window-right)
+;; (global-set-key (kbd "s-0") 'delete-window)
+;; (global-set-key (kbd "s-1") 'delete-other-windows)
+;; (global-set-key (kbd "s-2") 'split-window-below)
+;; (global-set-key (kbd "s-3") 'split-window-right)
+
+(global-set-key (kbd "s-1") (lambda () (interactive) (tab-bar-select-tab 1)))
+(global-set-key (kbd "s-2") (lambda () (interactive) (tab-bar-select-tab 2)))
+(global-set-key (kbd "s-3") (lambda () (interactive) (tab-bar-select-tab 3)))
+(global-set-key (kbd "s-4") (lambda () (interactive) (tab-bar-select-tab 4)))
+(global-set-key (kbd "s-5") (lambda () (interactive) (tab-bar-select-tab 5)))
+(global-set-key (kbd "s-6") (lambda () (interactive) (tab-bar-select-tab 6)))
 
 (use-package transpose-frame
    :ensure t)
