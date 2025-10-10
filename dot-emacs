@@ -27,6 +27,41 @@
   (persistent-scratch-setup-default)
   )
 
+;; Force height of compilation window
+(setq compilation-window-height 15)
+
+;; Always for a new window for compilation
+;; (defun my-compilation-display-buffer (buffer alist)
+;;   "Always display compilation buffer in a new window."
+;;   (let ((window (split-window-below)))
+;;     (set-window-buffer window buffer)
+;;     window))
+
+;; Totally replace my compilation buffer. Makes sure we are not generating
+;; duplicate compilations windows.
+(add-to-list 'display-buffer-alist
+             '("\\*compilation\\*" 
+               (display-buffer-reuse-window display-buffer-below-selected)
+               (window-height . 15)))
+
+;; Auto-close compilation window in case compilation is successful (slight delay)
+(defun compile-notify-and-close (buffer string)
+  "Show notification and auto-close compilation window on success."
+  (let ((buffer-name (buffer-name buffer)))
+    ;; Bara för riktiga compilation-buffers
+    (when (string-equal buffer-name "*compilation*")
+      (if (string-match "^finished" string)
+          (progn
+            (message "Compilation successful!")
+            (run-with-timer 1.5 nil
+                            (lambda (buf)
+                              (let ((win (get-buffer-window buf)))
+                                (when win (delete-window win))))
+                            buffer))
+        (message "Compilation failed - check *compilation* buffer")))))
+
+(add-hook 'compilation-finish-functions 'compile-notify-and-close)
+
 ;; Access to homebrew commands
 (use-package exec-path-from-shell
   :ensure t)
@@ -47,7 +82,7 @@
 ;; pageup/down
 ;;
 ;; Scroll with precision (works for ordinary emacs+30
-(pixel-scroll-precision-mode t)
+(pixel-scroll-precision-mode nil)
 
 ;; Want to run as a server
 (server-start)
@@ -267,6 +302,8 @@
 ;; Access elp command
 (add-to-list 'exec-path "~/.emacs.d/")
 (global-unset-key (kbd "C-c C-d"))
+
+;; LLM done right
 (use-package gptel
     :ensure t
     :bind (:map global-map
@@ -276,8 +313,17 @@
     :bind (:map gptel-mode-map
                 ("C-c C-c" . gptel-send))
     :config
-    (setq gptel-model 'claude-3.5-sonnet
+    (setq gptel-model 'claude-sonnet-4.5
           gptel-use-curl 't
+
+          ;; Auto-scroll to the end of the file when gptel responds
+          gptel-post-response-functions (list (lambda (start end)
+                                                (goto-char end)
+                                                (recenter -3)))
+
+          ;; Remove meta-data at end of saved chat file
+          gptel-org-branching-context 'nil
+
           gptel-backend (gptel-make-gh-copilot "Copilot")))
 (require 'gptel)
 
@@ -294,39 +340,6 @@
                         ;; (erase-buffer) Not sure about this :P
                         (insert response)))
           :system "You are a helpful assistant that generates concise, conventional git commit messages."))))
-
-(gptel-make-tool
- :name "read_buffer"                    ; javascript-style snake_case name
- :function (lambda (buffer)                  ; the function that will run
-             (unless (buffer-live-p (get-buffer buffer))
-               (error "error: buffer %s is not live." buffer))
-             (with-current-buffer  buffer
-               (buffer-substring-no-properties (point-min) (point-max))))
- :description "return the contents of an emacs buffer"
- :args (list '(:name "buffer"
-               :type string            ; :type value must be a symbol
-               :description "the name of the buffer whose contents are to be retrieved"))
- :category "emacs")                     ; An arbitrary label for grouping
-
-(gptel-make-tool
- :name "create_file"                    ; javascript-style  snake_case name
- :function (lambda (path filename content)   ; the function that runs
-             (let ((full-path (expand-file-name filename path)))
-               (with-temp-buffer
-                 (insert content)
-                 (write-file full-path))
-               (format "Created file %s in %s" filename path)))
- :description "Create a new file with the specified content"
- :args (list '(:name "path"             ; a list of argument specifications
-               :type string
-               :description "The directory where to create the file")
-             '(:name "filename"
-               :type string
-               :description "The name of the file to create")
-             '(:name "content"
-               :type string
-               :description "The content to write to the file"))
- :category "filesystem")                ; An arbitrary label for grouping
 
 (use-package flycheck
   :ensure t
@@ -642,3 +655,13 @@ by using nxml's indentation rules."
 (set-face-attribute 'help-for-help-header nil :font my_font)
 (set-face-attribute 'fixed-pitch-serif nil :font my_font)
 (set-face-background 'trailing-whitespace "red")
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(auto-dim-other-buffers ((t nil)))
+ '(markdown-header-face-1 ((t (:background "#F0F0F0" :foreground "#3C3C3C" :overline "#A7A7A7" :weight bold :height 1.0))))
+ '(org-level-1 ((t (:inherit variable-pitch :foreground "#d04a00" :height 1.0))))
+ '(org-level-2 ((t (:inherit variable-pitch :foreground "#1d9700" :height 1.0))))
+ '(org-level-3 ((t (:inherit variable-pitch :extend nil :foreground "#0064e4" :height 1.0)))))
