@@ -123,54 +123,55 @@
 (auto-dim-other-buffers-mode t)
 
 ;; Terminal
-;; (use-package vterm
-;;     :ensure t)
-;; 
-;; (use-package multi-vterm
-;;     :bind (:map global-map
-;;                 ("C-c t" . new-multi-vterm)
-;;                 ("C-c n" . multi-vterm-next)
-;;                 ("C-c p" . multi-vterm-prev)
-;;                 )
-;;     :bind (:map vterm-mode-map
-;;                 ("M-c" . vterm-copy-mode)
-;;                 ("s-k" . vterm-clear-kill-history)
-;;                 ("C-y" . vterm-send-C-y)
-;;                 ("M-<left>" . 'vterm-send-M-b)
-;;                 ("M-<right>" . 'vterm-send-M-f)
-;;                 )
-;;     :bind (:map vterm-copy-mode-map
-;;                 ("M-c" . vterm-copy-mode)
-;;                 ("C-g" . vterm-copy-mode)
-;;                 ("s-k" . vterm-clear-kill-history)
-;;                 )
-;;     :config
-;;     (add-hook 'after-init-hook (define-key vterm-mode-map [double-mouse-1] #'mark-word))
-;;     (setq vterm-max-scrollback 10000)
-;;     (setq vterm-kill-buffer-on-exit t)
-;;     (pixel-scroll-precision-mode nil)
-;;     ;; Enable vterm cut/paste to macos buffer
-;;     ;; (setq vterm-enable-manipulate-selection-data-by-osc52 t)
-;;     ;; (setq show-trailing-whitespace 0)
-;;     :ensure t)
-;; 
-;; ;; Any selection when using vterm is copied to the kill-ring
-;; (add-hook 'vterm-mode-hook
-;;           (lambda ()
-;;             (pixel-scroll-precision-mode 0)
-;;             (setq-local mouse-drag-copy-region t)))
-;; 
-;; (defun new-multi-vterm ()
-;;    (interactive)
-;;    (let ((default-directory "~"))
-;;      (multi-vterm))
-;;    )
-;; 
-;; (defun vterm-clear-kill-history ()
-;;    (interactive)
-;;    (vterm-clear-scrollback)
-;;    (vterm-clear)
-;;    )
+(use-package vterm
+    :ensure t)
+
+(use-package multi-vterm
+    :bind (:map global-map
+                ("C-c t" . new-multi-vterm)
+                ("C-c n" . multi-vterm-next)
+                ("C-c p" . multi-vterm-prev)
+                )
+    :bind (:map vterm-mode-map
+                ("M-c" . vterm-copy-mode)
+                ("s-k" . vterm-clear-kill-history)
+                ("C-y" . vterm-send-C-y)
+                ("<deletechar>" . vterm-send-C-d)
+                ("M-<left>" . 'vterm-send-M-b)
+                ("M-<right>" . 'vterm-send-M-f)
+                )
+    :bind (:map vterm-copy-mode-map
+                ("M-c" . vterm-copy-mode)
+                ("C-g" . vterm-copy-mode)
+                ("s-k" . vterm-clear-kill-history)
+                )
+    :config
+    (add-hook 'after-init-hook (define-key vterm-mode-map [double-mouse-1] #'mark-word))
+    (setq vterm-max-scrollback 10000)
+    (setq vterm-kill-buffer-on-exit t)
+    (pixel-scroll-precision-mode nil)
+    ;; Enable vterm cut/paste to macos buffer
+    ;; (setq vterm-enable-manipulate-selection-data-by-osc52 t)
+    ;; (setq show-trailing-whitespace 0)
+    :ensure t)
+
+;; Any selection when using vterm is copied to the kill-ring
+(add-hook 'vterm-mode-hook
+          (lambda ()
+            (pixel-scroll-precision-mode 0)
+            (setq-local mouse-drag-copy-region t)))
+
+(defun new-multi-vterm ()
+   (interactive)
+   (let ((default-directory "~"))
+     (multi-vterm))
+   )
+
+(defun vterm-clear-kill-history ()
+   (interactive)
+   (vterm-clear-scrollback)
+   (vterm-clear)
+   )
 
 (require 'markdown-mode)
 
@@ -203,6 +204,13 @@
 (global-set-key (kbd "M-o") 'other-window)
 (global-set-key (kbd "M-i") 'previous-window-any-frame)
 
+;; Swap windows meta+super+arrow
+(global-set-key (kbd "M-s-<left>")  'windmove-swap-states-left)
+(global-set-key (kbd "M-s-<right>") 'windmove-swap-states-right)
+(global-set-key (kbd "M-s-<up>")    'windmove-swap-states-up)
+(global-set-key (kbd "M-s-<down>")  'windmove-swap-states-down)
+
+;; Resize windows ctrl+super-arrow
 (global-set-key (kbd "C-s-<left>") 'shrink-window-horizontally)
 (global-set-key (kbd "C-s-<right>") 'enlarge-window-horizontally)
 (global-set-key (kbd "C-s-<down>") 'shrink-window)
@@ -408,6 +416,11 @@
           xref-show-definitions-function #'consult-xref)
     )
 
+;; Ripgrep package
+(use-package rg
+  :ensure t
+  )
+
 (defun consult-ripgrep-erl ()
   "Search for erlang files"
   (interactive)
@@ -419,7 +432,7 @@
 
 (define-key magit-mode-map (kbd "C-x C-r") nil)
 (global-set-key (kbd "C-x C-r") 'consult-ripgrep-erl)
-(global-set-key (kbd "C-c C-r") 'rgrep)
+(global-set-key (kbd "C-c C-r") 'rg)
 
 (defun my-erlang-mode-hook ()
   "Configuration for Erlang Mode. Add this to `erlang-mode-hook'."
@@ -648,7 +661,17 @@ by using nxml's indentation rules."
 (set-face-attribute 'default nil :font my_font)
 (set-face-attribute 'fixed-pitch nil :font my_font)
 (set-face-attribute 'variable-pitch nil :font my_font)
-(set-face-attribute 'tab-bar nil :font my_font)
+;(set-face-attribute 'tab-bar nil :font my_font)
+(set-face-attribute 'tab-bar nil
+                    :background "#3b4252")  ; background
+
+(set-face-attribute 'tab-bar-tab nil
+                    :background "#5e81ac"   ; active tab
+                    :foreground "#eceff4")
+
+(set-face-attribute 'tab-bar-tab-inactive nil
+                    :background "#4c566a"   ; inactive tabs
+                    :foreground "#d8dee9")
 (set-face-attribute 'help-key-binding nil :font my_font)
 (set-face-attribute 'help-for-help-header nil :font my_font)
 (set-face-attribute 'fixed-pitch-serif nil :font my_font)
