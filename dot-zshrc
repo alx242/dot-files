@@ -49,8 +49,8 @@ bindkey "\e\e[D" vi-backward-word    # META+LEFT
 bindkey "\e^?" vi-backward-kill-word # META+BACKSPACE
 
 # vterm current pwd tracking
-# autoload -U add-zsh-hook
-# add-zsh-hook -Uz chpwd (){ print -Pn "\e]2;%0~\a" }
+autoload -U add-zsh-hook
+add-zsh-hook -Uz chpwd (){ print -Pn "\e]2;%0~\a" }
 
 # Fix for zsh compinit: insecure directories, run compaudit for list.
 #
