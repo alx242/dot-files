@@ -664,7 +664,7 @@ by using nxml's indentation rules."
  '(safe-local-variable-values '((allout-layout . t) (sh-indent-comment . t)))
  '(scroll-bar-mode nil)
  '(tab-bar-mode t)
- '(tab-bar-show 1)
+ '(tab-bar-show t)
  '(vterm-environment '("TERM_PROGRAM=Apple_Terminal")))
 
 ;; (set-mouse-color "white")
