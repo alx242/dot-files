@@ -135,10 +135,30 @@
     :bind (:map vterm-mode-map
                 ("M-c" . vterm-copy-mode)
                 ("s-k" . vterm-clear-kill-history)
-                ("C-y" . vterm-send-C-y)
+                ;; ("C-y" . vterm-send-C-y)
+
+                ;; Share buffer between terminal and emacs :/
+                ("C-y" . vterm-yank)
+                ("M-y" . vterm-yank-pop)
+                ("s-v" . vterm-yank)
+
+                ;; Remember C-x is used for emacs specfics...
+                ("C-c C-x" . vterm-send-C-x)
+                ("C-c C-q" . vterm-send-C-q)
+
                 ("<deletechar>" . vterm-send-C-d)
                 ("M-<left>" . 'vterm-send-M-b)
                 ("M-<right>" . 'vterm-send-M-f)
+
+                ;; Mouse handling as terminal-like
+                ("<mouse-4>" . vterm-wheel-up)
+                ("<mouse-5>" . vterm-wheel-down)
+                ("<wheel-up>" . vterm-wheel-up)
+                ("<wheel-down>" . vterm-wheel-down)
+
+                ;; Line scrolling
+                ("S-<up>" . my-vterm-scroll-line-up)
+                ("S-<down>" . my-vterm-scroll-line-down)
                 )
     :bind (:map vterm-copy-mode-map
                 ("M-c" . vterm-copy-mode)
@@ -146,7 +166,31 @@
                 ("s-k" . vterm-clear-kill-history)
                 )
     :config
+    ;; Instantly copy any text marked with the mouse
     (add-hook 'after-init-hook (define-key vterm-mode-map [double-mouse-1] #'mark-word))
+
+    ;; Make sure the mouse works terminal-like as possible
+    (defun vterm-wheel-up (event)
+      "Handle wheel up in vterm."
+      (interactive "e")
+      (dotimes (_ 3)
+        (vterm-send-key "<up>")))
+
+    (defun vterm-wheel-down (event)
+      "Handle wheel down in vterm."
+      (interactive "e")
+      (dotimes (_ 3)
+        (vterm-send-key "<down>")))
+
+    (defun my-vterm-scroll-line-up ()
+      "Scroll vterm buffer one line up."
+      (interactive)
+      (scroll-down 1))
+
+    (defun my-vterm-scroll-line-down ()
+      "Scroll vterm buffer one line down."
+      (interactive)
+      (scroll-up 1))
 
     ;; Smaller scrollback is faster
     (setq vterm-max-scrollback 10000)
@@ -162,8 +206,9 @@
     ;; Make sure to get latest compilation :)
     (setq vterm-always-compile-module t)
 
-    ;; Enable vterm cut/paste to macos buffer
-    ;; (setq vterm-enable-manipulate-selection-data-by-osc52 t)
+    ;; Enable OSC 52 för clipboard sync
+    (setq vterm-enable-manipulate-selection-data-by-osc52 t)
+
     ;; (setq show-trailing-whitespace 0)
     :ensure t)
 
