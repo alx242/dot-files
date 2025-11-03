@@ -18,7 +18,6 @@
 ;; (global-set-key (kbd "<C-wheel-up>") 'tab-bar-switch-to-next-tab)
 ;; (global-set-key (kbd "<C-wheel-down>") 'tab-bar-switch-to-prev-tab)
 
-
 ;; Auto-save scratch buffer
 (use-package persistent-scratch
   :ensure t
@@ -30,17 +29,10 @@
 ;; Force height of compilation window
 (setq compilation-window-height 15)
 
-;; Always for a new window for compilation
-;; (defun my-compilation-display-buffer (buffer alist)
-;;   "Always display compilation buffer in a new window."
-;;   (let ((window (split-window-below)))
-;;     (set-window-buffer window buffer)
-;;     window))
-
 ;; Totally replace my compilation buffer. Makes sure we are not generating
 ;; duplicate compilations windows.
 (add-to-list 'display-buffer-alist
-             '("\\*compilation\\*" 
+             '("\\*compilation\\*"
                (display-buffer-reuse-window display-buffer-below-selected)
                (window-height . 15)))
 
@@ -138,13 +130,13 @@
                 ;; ("C-y" . vterm-send-C-y)
 
                 ;; Share buffer between terminal and emacs :/
-                ("C-y" . vterm-yank)
                 ("M-y" . vterm-yank-pop)
                 ("s-v" . vterm-yank)
 
                 ;; Remember C-x is used for emacs specfics...
                 ("C-c C-x" . vterm-send-C-x)
                 ("C-c C-q" . vterm-send-C-q)
+                ("C-y" . vterm-send-C-y)
 
                 ("<deletechar>" . vterm-send-C-d)
                 ("M-<left>" . 'vterm-send-M-b)
@@ -159,6 +151,8 @@
                 ;; Line scrolling
                 ("S-<up>" . my-vterm-scroll-line-up)
                 ("S-<down>" . my-vterm-scroll-line-down)
+                ("<prior>" . vterm-send-prior)
+                ("<next>" . vterm-send-next)
                 )
     :bind (:map vterm-copy-mode-map
                 ("M-c" . vterm-copy-mode)
@@ -260,6 +254,7 @@
 (windmove-default-keybindings 'super)
 (global-set-key (kbd "M-o") 'other-window)
 (global-set-key (kbd "M-i") 'previous-window-any-frame)
+(global-set-key (kbd "C-x z") 'tab-window-detach)
 
 ;; Swap windows meta+super+arrow
 (global-set-key (kbd "M-s-<left>")  'windmove-swap-states-left)
