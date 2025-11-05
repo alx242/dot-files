@@ -143,10 +143,10 @@
                 ("M-<right>" . 'vterm-send-M-f)
 
                 ;; Mouse handling as terminal-like
-                ("<mouse-4>" . vterm-wheel-up)
-                ("<mouse-5>" . vterm-wheel-down)
-                ("<wheel-up>" . vterm-wheel-up)
-                ("<wheel-down>" . vterm-wheel-down)
+                ;; ("<mouse-4>" . vterm-wheel-up)
+                ;; ("<mouse-5>" . vterm-wheel-down)
+                ;; ("<wheel-up>" . vterm-wheel-up)
+                ;; ("<wheel-down>" . vterm-wheel-down)
 
                 ;; Line scrolling
                 ("S-<up>" . my-vterm-scroll-line-up)
@@ -164,17 +164,17 @@
     (add-hook 'after-init-hook (define-key vterm-mode-map [double-mouse-1] #'mark-word))
 
     ;; Make sure the mouse works terminal-like as possible
-    (defun vterm-wheel-up (event)
-      "Handle wheel up in vterm."
-      (interactive "e")
-      (dotimes (_ 3)
-        (vterm-send-key "<up>")))
-
-    (defun vterm-wheel-down (event)
-      "Handle wheel down in vterm."
-      (interactive "e")
-      (dotimes (_ 3)
-        (vterm-send-key "<down>")))
+    ;; (defun vterm-wheel-up (event)
+    ;;   "Handle wheel up in vterm."
+    ;;   (interactive "e")
+    ;;   (dotimes (_ 3)
+    ;;     (vterm-send-key "<up>")))
+    ;;
+    ;; (defun vterm-wheel-down (event)
+    ;;   "Handle wheel down in vterm."
+    ;;   (interactive "e")
+    ;;   (dotimes (_ 3)
+    ;;     (vterm-send-key "<down>")))
 
     (defun my-vterm-scroll-line-up ()
       "Scroll vterm buffer one line up."
@@ -410,6 +410,7 @@
 
 (use-package lsp-mode
     :ensure t
+    :defer t ;; Lazy mode, load when necessary
     :config
     ;; Enable LSP automatically for Erlang files
     ;; (add-hook 'erlang-mode-hook #'lsp)
@@ -703,6 +704,7 @@ by using nxml's indentation rules."
                             vertico yang-mode))
  '(safe-local-variable-values '((allout-layout . t) (sh-indent-comment . t)))
  '(scroll-bar-mode nil)
+ '(tool-bar-mode nil)
  '(tab-bar-mode t)
  '(tab-bar-show t)
  '(vterm-environment '("TERM_PROGRAM=Apple_Terminal")))
