@@ -125,13 +125,17 @@
                 ("C-c p" . multi-vterm-prev)
                 )
     :bind (:map vterm-mode-map
-                ("M-c" . vterm-copy-mode)
+                ("s-c" . vterm-copy-mode)
                 ("s-k" . vterm-clear-kill-history)
                 ;; ("C-y" . vterm-send-C-y)
 
                 ;; Share buffer between terminal and emacs :/
                 ("M-y" . vterm-yank-pop)
                 ("s-v" . vterm-yank)
+
+                ;; Need these emacs stuffs from vterm
+                ("M-:" . eval-expression)
+                ("M-c" . compile)
 
                 ;; Remember C-x is used for emacs specfics...
                 ("C-c C-x" . vterm-send-C-x)
@@ -155,7 +159,7 @@
                 ("<next>" . vterm-send-next)
                 )
     :bind (:map vterm-copy-mode-map
-                ("M-c" . vterm-copy-mode)
+                ("s-c" . vterm-copy-mode)
                 ("C-g" . vterm-copy-mode)
                 ("s-k" . vterm-clear-kill-history)
                 )
@@ -370,8 +374,11 @@
                 ("C-c g" . gptel)
                 ("C-c f" . gptel-add)
                 ("C-c d" . gptel-rewrite))
+    ;; Always start gptel-mode for my chats
     :bind (:map gptel-mode-map
                 ("C-c C-c" . gptel-send))
+    :mode (("gptel-.*\\.md\\'" . gptel-mode)
+           ("chat\\.md\\'" . gptel-mode))
     :config
     (setq gptel-model 'claude-sonnet-4.5)
     (setq gptel-use-curl t)
