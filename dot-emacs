@@ -228,6 +228,19 @@
    (vterm-clear)
    )
 
+(defun my-resize-non-vterm-windows-to-80 ()
+  "Resize all non-vterm windows to 80 columns."
+  (interactive)
+  (let ((target-width 80))
+    (dolist (window (window-list))
+      (unless (with-current-buffer (window-buffer window)
+                (eq major-mode 'vterm-mode))
+        (let ((delta (- target-width (window-width window))))
+          (unless (zerop delta)
+            (window-resize window delta t)))))))
+
+(global-set-key (kbd "C-c w 8") 'my-resize-non-vterm-windows-to-80)
+
 (require 'markdown-mode)
 
 (use-package request
