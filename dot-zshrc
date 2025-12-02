@@ -49,8 +49,39 @@ bindkey "\e\e[D" vi-backward-word    # META+LEFT
 bindkey "\e^?" vi-backward-kill-word # META+BACKSPACE
 
 # vterm current pwd tracking
-autoload -U add-zsh-hook
-add-zsh-hook -Uz chpwd (){ print -Pn "\e]2;%0~\a" }
+# autoload -U add-zsh-hook
+# add-zsh-hook -Uz chpwd (){ print -Pn "\e]2;%0~\a" }
+if [[ "$INSIDE_EMACS" = 'vterm' ]]; then
+    function vterm_printf() {
+        if [ -n "$TMUX" ] && ([ "${TERM%%-*}" = "tmux" ] || [ "${TERM%%-*}" = "screen" ]); then
+            printf "\ePtmux;\e\e]%s\007\e\\" "$1"
+        elif [ "${TERM%%-*}" = "screen" ]; then
+            printf "\eP\e]%s\007\e\\" "$1"
+        else
+            printf "\e]%s\e\\" "$1"
+        fi
+    }
+
+    function vterm_cmd() {
+        local vterm_elisp
+        vterm_elisp=""
+        while [ $# -gt 0 ]; do
+            vterm_elisp="$vterm_elisp""$(printf '"%s" ' "$(printf "%s" "$1" | sed -e 's|\\|\\\\|g' -e 's|"|\\"|g')")"
+            shift
+        done
+        vterm_printf "51;E$vterm_elisp"
+    }
+
+    function vterm_prompt_end() {
+        vterm_printf "51;A$(whoami)@$(hostname):$(pwd)"
+    }
+
+    autoload -U add-zsh-hook
+    add-zsh-hook -Uz chpwd (){
+        vterm_printf "51;A$(whoami)@$(hostname):$(pwd)"
+        print -Pn "\e]2;%0~\a"
+    }
+fi
 
 # Fix for zsh compinit: insecure directories, run compaudit for list.
 #
@@ -142,6 +173,9 @@ function unzipmulti {
 # Supplies auto completion for ordinary python
 export PYTHONSTARTUP=${HOME}/.pythonrc
 
+# Riggrep config
+export RIPGREP_CONFIG_PATH=${HOME}/.ripgreprc
+
 # Erlang inet config:
 # http://www.erlang.org/doc/apps/erts/inet_cfg.html
 export ERL_INETRC=${HOME}/.inetrc
@@ -160,6 +194,9 @@ then
 fi
 
 eval "$(starship init zsh)"
+
+# Install: pyenv install 3.14.0
+# Set global active: pyenv global 3.14.0
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init - zsh)"
