@@ -441,6 +441,18 @@
 	       :description "The content to write to the file"))
  :category "filesystem")                ; An arbitrary label for grouping
 
+(gptel-make-tool
+ :name "create_directory"
+ :function (lambda (path)
+             (make-directory path t)  ; t = create parents
+             (format "Created directory: %s" path))
+ :description "Create a directory (including parent directories if needed)"
+ :args (list '(:name "path"
+               :type string
+               :description "The directory path to create (e.g. ~/myapp/src)"))
+ :category "filesystem")
+
+
 (defun magit-generate-commit-msg ()
   "Generate a commit message from staged changes using AI."
   (interactive)
@@ -475,7 +487,7 @@
     (setq eglot-sync-connect nil)  ; Async connect
     (setq eglot-events-buffer-size 0)  ; Reduce logging
     (setq eglot-autoshutdown t)  ; Close server after last buffer is closed
-    (setq eglot-send-changes-idle-time 0.5)) ; Less idle
+    (setq eglot-send-changes-idle-time 0.5) ; Less idle
 
     ;; Disable inlay hints in eglot
     (setq eglot-ignored-server-capabilities '(:inlayHintProvider))
