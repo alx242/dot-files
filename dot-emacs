@@ -248,6 +248,24 @@
 
 ;; (global-set-key (kbd "C-c w 8") 'my-resize-non-vterm-windows-to-80)
 
+;; Convert region
+(defun dos2unix-region (start end)
+  "Convert DOS line endings and non-breaking spaces to Unix format."
+  (interactive "r")
+  (save-excursion
+    (save-restriction
+      (narrow-to-region start end)
+
+      ;; DOS line endings
+      (goto-char (point-min))
+      (while (search-forward "\r\n" nil t)
+        (replace-match "\n" nil t))
+
+      ;; Non-breaking spaces
+      (goto-char (point-min))
+      (while (re-search-forward "\u00A0" nil t) ; NBSP
+        (replace-match " " nil t)))))           ; Regular space
+
 (use-package request
     :ensure t)
 
