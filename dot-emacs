@@ -95,16 +95,11 @@
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/") t)
 
-;; ;; regex re-builder
-;; (require 're-builder)
-;; (setq reb-re-syntax 'string)
-
 (use-package magit
     :ensure t)
 (require 'magit)
 
 ;; Dim unfocused buffers
-
 (use-package auto-dim-other-buffers
     :ensure t)
 
@@ -142,12 +137,6 @@
                 ("M-<left>" . 'vterm-send-M-b)
                 ("M-<right>" . 'vterm-send-M-f)
 
-                ;; Mouse handling as terminal-like
-                ;; ("<mouse-4>" . vterm-wheel-up)
-                ;; ("<mouse-5>" . vterm-wheel-down)
-                ;; ("<wheel-up>" . vterm-wheel-up)
-                ;; ("<wheel-down>" . vterm-wheel-down)
-
                 ;; Line scrolling
                 ("S-<up>" . my-vterm-scroll-line-up)
                 ("S-<down>" . my-vterm-scroll-line-down)
@@ -163,19 +152,6 @@
     ;; Instantly copy any text marked with the mouse
     (add-hook 'after-init-hook (define-key vterm-mode-map [double-mouse-1] #'mark-word))
 
-    ;; Make sure the mouse works terminal-like as possible
-    ;; (defun vterm-wheel-up (event)
-    ;;   "Handle wheel up in vterm."
-    ;;   (interactive "e")
-    ;;   (dotimes (_ 3)
-    ;;     (vterm-send-key "<up>")))
-    ;;
-    ;; (defun vterm-wheel-down (event)
-    ;;   "Handle wheel down in vterm."
-    ;;   (interactive "e")
-    ;;   (dotimes (_ 3)
-    ;;     (vterm-send-key "<down>")))
-
     (defun my-compile-from-vterm-dir ()
       "Run compile from vterm's current directory."
       (interactive)
@@ -184,8 +160,6 @@
                  default-directory ; Använd bara default-directory direkt!
                  default-directory)))
         (call-interactively 'compile)))
-
-    ;; (global-set-key (kbd "M-c") 'my-compile-from-vterm-dir)
 
     (defun my-vterm-scroll-line-up ()
       "Scroll vterm buffer one line up."
@@ -307,11 +281,6 @@
 (global-set-key (kbd "C-s-<right>") 'enlarge-window-horizontally)
 (global-set-key (kbd "C-s-<down>") 'shrink-window)
 (global-set-key (kbd "C-s-<up>") 'enlarge-window)
-
-;; (global-set-key (kbd "s-0") 'delete-window)
-;; (global-set-key (kbd "s-1") 'delete-other-windows)
-;; (global-set-key (kbd "s-2") 'split-window-below)
-;; (global-set-key (kbd "s-3") 'split-window-right)
 
 (global-set-key (kbd "s-1") (lambda () (interactive) (tab-bar-select-tab 1)))
 (global-set-key (kbd "s-2") (lambda () (interactive) (tab-bar-select-tab 2)))
@@ -451,12 +420,12 @@
     (if (string-empty-p diff)
         (user-error "No diff content found in staged changes")
         (gptel-request
-            (format "Generate a concise git commit message for these changes:\n%s" diff)
+            (format "Generate a concise git commit message for these changes. Output ONLY the commit message text, no markdown, no code blocks, no explanations:\n\n:\n%s" diff)
           :callback (lambda (response _)
                       (with-current-buffer "COMMIT_EDITMSG"
                         ;; (erase-buffer) Not sure about this :P
                         (insert response)))
-          :system "You are a helpful assistant that generates concise, conventional git commit messages."))))
+          :system "You are a helpful assistant that generates concise, conventional git commit messages. Output only the commit message. No markdown formatting. No explanations."))))
 
 (use-package flycheck
   :ensure t
@@ -501,9 +470,6 @@
     ;; Enable ELP
     (add-to-list 'eglot-server-programs
                  '(erlang-mode . ("elp" "server"))))
-
-;; (add-to-list 'auto-mode-alist '("\\.erl\\'" . erlang-mode))
-;; (add-to-list 'auto-mode-alist '("\\.hrl\\'" . erlang-mode))
 
 ;; Completion (fungerar bra med eglot)
 ;; (use-package company
