@@ -7,7 +7,6 @@ DESTDIR="$HOME"
 SRCDIR="$HOME/dot-files"
 SRCITEMS=(
     bash_profile
-    inetrc
     inputrc
     irbrc
     tigrc

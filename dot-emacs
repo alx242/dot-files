@@ -404,6 +404,10 @@
     :config
     (setq gptel-model 'claude-sonnet-4.5)
     (setq gptel-use-curl t)
+
+    ;; Enable tools by default
+    (setq gptel-use-tools t)
+
     ;; Auto-scroll to the end of the file when gptel responds
     (setq gptel-post-response-functions (list (lambda (start end)
                                                 (goto-char end)
@@ -411,6 +415,9 @@
     ;; Remove meta-data at end of saved chat file
     (setq enable-local-variables nil)
     (setq gptel-backend (gptel-make-gh-copilot "Copilot"))
+
+    ;; Load tools from list/gptel-tools.el
+    (require 'gptel-tools)
     )
 (require 'gptel)
 (add-to-list 'auto-mode-alist '("\\.chat\\'" . markdown-mode))
@@ -419,41 +426,7 @@
             (when (string-match-p "\\.chat\\'" (or buffer-file-name ""))
               (gptel-mode 1))))
 
-;; Some gptel tools. Activate the tools by launching 'gptel-tools' and select
-;; which should be active.
-(gptel-make-tool
- :name "create_file"                    ; javascript-style  snake_case name
- :function (lambda (path filename content)   ; the function that runs
-             (let ((full-path (expand-file-name filename path)))
-               (with-temp-buffer
-                 (insert content)
-                 (write-file full-path))
-               (format "Created file %s in %s" filename path)))
- :description "Create a new file with the specified content"
- :args (list '(:name "path"             ; a list of argument specifications
-	       :type string
-	       :description "The directory where to create the file")
-             '(:name "filename"
-	       :type string
-	       :description "The name of the file to create")
-             '(:name "content"
-	       :type string
-	       :description "The content to write to the file"))
- :category "filesystem")                ; An arbitrary label for grouping
-
-(gptel-make-tool
- :name "create_directory"
- :function (lambda (path)
-             (make-directory path t)  ; t = create parents
-             (format "Created directory: %s" path))
- :description "Create a directory (including parent directories if needed)"
- :args (list '(:name "path"
-               :type string
-               :description "The directory path to create (e.g. ~/myapp/src)"))
- :category "filesystem")
-
-
-(defun magit-generate-commit-msg ()
+(defun gptel-commit-msg ()
   "Generate a commit message from staged changes using AI."
   (interactive)
   (let ((diff (shell-command-to-string "git diff --cached")))
@@ -767,9 +740,9 @@ by using nxml's indentation rules."
                             vertico yang-mode))
  '(safe-local-variable-values '((allout-layout . t) (sh-indent-comment . t)))
  '(scroll-bar-mode nil)
- '(tool-bar-mode nil)
  '(tab-bar-mode t)
  '(tab-bar-show t)
+ '(tool-bar-mode nil)
  '(vterm-environment '("TERM_PROGRAM=Apple_Terminal")))
 
 ;; (set-mouse-color "white")
