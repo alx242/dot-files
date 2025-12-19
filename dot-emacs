@@ -26,6 +26,26 @@
   (persistent-scratch-setup-default)
   )
 
+
+;; Display the time in the mode-line
+(setq display-time-format "%H:%M"              ; Format
+      display-time-default-load-average nil    ; Skip load display
+      display-time-interval 60)                ; Update
+
+;; Own mode-line to display time
+(setq mode-line-end-spaces
+      '(:eval (propertize (format-time-string " %H:%M ")
+                          'face '(:foreground "#88c0d0"
+                                  :background "#3b4252"
+                                  :weight bold))))
+
+;; Align to the right (optional)
+(setq-default mode-line-format
+  (append
+   (butlast mode-line-format 1)
+   '((:eval (propertize " " 'display '(space :align-to (- right 8))))
+     mode-line-end-spaces)))
+
 ;; Force height of compilation window
 (setq compilation-window-height 15)
 
