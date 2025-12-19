@@ -480,6 +480,10 @@
     (setq eglot-extend-to-xref nil)
     (setq eglot-events-buffer-size 0)
 
+    ;; Disable W0026 diagnostics for all Erlang files (unexported function)
+    (setq-default eglot-workspace-configuration
+                  '(:elp (:diagnostics (:disabled ["W0026"]))))
+
     ;; Reject workspace file watching requests
     (cl-defmethod eglot-register-capability
         :around (server (method (eql workspace/didChangeWatchedFiles)) _id &rest _params)
