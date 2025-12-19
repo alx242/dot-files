@@ -219,8 +219,9 @@
 
 (defun new-multi-vterm ()
    (interactive)
-   (let ((default-directory "~"))
-     (multi-vterm))
+   ;; (let ((default-directory "~"))
+   ;; )
+   (multi-vterm)
    )
 
 (defun vterm-clear-kill-history ()
@@ -494,14 +495,6 @@
     ;; Enable ELP
     (add-to-list 'eglot-server-programs
                  '(erlang-mode . ("elp" "server"))))
-
-;; Completion (fungerar bra med eglot)
-;; (use-package company
-;;   :ensure t
-;;   :hook (eglot-managed-mode . company-mode)
-;;   :config
-;;   (setq company-idle-delay 0.3)
-;;   (setq company-minimum-prefix-length 2))
 
 ;; More
 (use-package ispell
