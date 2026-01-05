@@ -209,4 +209,4 @@ eval "$(starship init zsh)"
 # Set global active: pyenv global 3.14.0
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init - zsh)"
+[[ -d $PYENV_ROOT/bin ]] && eval "$(pyenv init - zsh)"
