@@ -149,6 +149,7 @@
                 ("M-c" . my-compile-from-vterm-dir)
 
                 ;; Remember C-x is used for emacs specfics...
+                ("C-c C-c" . vterm-send-C-c)
                 ("C-c C-x" . vterm-send-C-x)
                 ("C-c C-q" . vterm-send-C-q)
                 ("C-y" . vterm-send-C-y)
@@ -403,18 +404,15 @@
 (use-package gptel
     :ensure t
     :bind (:map global-map
-                ("C-c g" . gptel)
-                ("C-c f" . gptel-add)
-                ("C-c d" . gptel-rewrite))
+                ("C-c C-g" . gptel)
+                ("C-c C-f" . gptel-add)
+                ("C-c C-d" . gptel-rewrite))
     ;; Always start gptel-mode for my chats
     :bind (:map gptel-mode-map
                 ("C-c C-c" . gptel-send))
     :config
     (setq gptel-model 'claude-sonnet-4.5)
     (setq gptel-use-curl t)
-
-    ;; Enable tools by default
-    (setq gptel-use-tools t)
 
     ;; Auto-scroll to the end of the file when gptel responds
     (setq gptel-post-response-functions (list (lambda (start end)
@@ -424,29 +422,26 @@
     (setq enable-local-variables nil)
     (setq gptel-backend (gptel-make-gh-copilot "Copilot"))
 
-    ;; Load tools from list/gptel-tools.el
-    (require 'gptel-tools)
     )
+
 (require 'gptel)
+
+;; As a agent gptel gets a bunch of tools to work as a code assistant
+(use-package gptel-agent
+    :bind (:map global-map
+                ("C-c C-a" . gptel-agent))
+    :ensure t)
+
+;; Make sure the chate files have gptel mode on them
 (add-to-list 'auto-mode-alist '("\\.chat\\'" . markdown-mode))
 (add-hook 'markdown-mode-hook
           (lambda ()
             (when (string-match-p "\\.chat\\'" (or buffer-file-name ""))
               (gptel-mode 1))))
 
-(defun gptel-commit-msg ()
-  "Generate a commit message from staged changes using AI."
-  (interactive)
-  (let ((diff (shell-command-to-string "git diff --cached")))
-    (if (string-empty-p diff)
-        (user-error "No diff content found in staged changes")
-        (gptel-request
-            (format "Generate a concise git commit message for these changes. Output ONLY the commit message text, no markdown, no code blocks, no explanations:\n\n:\n%s" diff)
-          :callback (lambda (response _)
-                      (with-current-buffer "COMMIT_EDITMSG"
-                        ;; (erase-buffer) Not sure about this :P
-                        (insert response)))
-          :system "You are a helpful assistant that generates concise, conventional git commit messages. Output only the commit message. No markdown formatting. No explanations."))))
+;; Nice feature to create commit messages
+(use-package gptel-commit
+    :ensure t)
 
 (use-package flycheck
   :ensure t
