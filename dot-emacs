@@ -410,7 +410,7 @@
     :bind (:map gptel-mode-map
                 ("C-c C-c" . gptel-send))
     :config
-    (setq gptel-model 'claude-sonnet-4.5)
+    (setq gptel-model 'claude-haiku-4.5)
     (setq gptel-use-curl t)
 
     ;; Auto-scroll to the end of the file when gptel responds
@@ -725,9 +725,9 @@ by using nxml's indentation rules."
  '(debug-on-error t)
  '(menu-bar-mode t)
  '(package-selected-packages
-   '(auto-dim-other-buffers consult erlang exec-path-from-shell flycheck lsp-mode
-                            nord-theme nordic-night-theme transpose-frame
-                            vertico yang-mode))
+   '(auto-dim-other-buffers consult erlang exec-path-from-shell flycheck
+                            gptel-agent gptel-commit nord-theme transpose-frame
+                            yang-mode))
  '(safe-local-variable-values '((allout-layout . t) (sh-indent-comment . t)))
  '(scroll-bar-mode nil)
  '(tab-bar-mode t)
