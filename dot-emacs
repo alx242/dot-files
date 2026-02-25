@@ -403,22 +403,60 @@
 (use-package gptel
     :ensure t
     :bind (:map global-map
-                ("C-c g" . gptel)
-                ("C-c f" . gptel-add)
-                ("C-c d" . gptel-rewrite))
+                ("C-c C-g" . gptel)
+                ("C-c C-f" . gptel-add)
+                ("C-c C-d" . gptel-rewrite))
     ;; Always start gptel-mode for my chats
     :bind (:map gptel-mode-map
                 ("C-c C-c" . gptel-send))
+
     :config
-    (setq gptel-model 'claude-haiku-4.5)
-    (setq gptel-use-curl t)
+    (setq
+     ;; Model
+     gptel-model 'claude-haiku-4.5
+     ;; gptel-model "gpt-5.2")
+
+     ;; Default Backend
+     gptel-backend (gptel-make-gh-copilot "Copilot")
+
+     ;; Extra Backends - not easy to access yet...:/
+     gptel-backends (list
+                     ;; Copilot, login registered using sso
+                     (gptel-make-gh-copilot "Copilot")
+
+                     ;; OpenRouter Backend
+                     (gptel-make-openai "OpenRouter"
+                       :key (getenv "OPENROUTER_API_KEY")
+                       :host "openrouter.ai"
+                       :endpoint "/api/v1/chat/completions"
+                       :stream t
+                       :models '(openai/gpt-3.5-turbo
+                                 mistralai/mixtral-8x7b-instruct
+                                 meta-llama/codellama-34b-instruct
+                                 codellama/codellama-70b-instruct
+                                 google/palm-2-codechat-bison-32k
+                                 google/gemini-pro))
+
+                     ;; OpenAI
+                     (gptel-make-openai "OpenAI"
+                       :key (getenv "OPENAI_API_KEY")
+                       :stream t)
+
+                     ;; Anthropic/Claude backend
+                     (gptel-make-anthropic "Claude"
+                       :stream t
+                       :key (getenv "ANTHTROPIC_API_KEY")
+                       :models '("claude-3-opus-20240229" "claude-3-sonnet-20240229" "claude-3-haiku-20240307")
+                       )
+                     )
+     )
+    ;; (setq gptel-use-curl t)
 
     ;; Auto-scroll to the end of the file when gptel responds
     (setq gptel-post-response-functions (list (lambda (start end)
                                                 (goto-char end)
                                                 (recenter -3))))
 
-    (setq gptel-backend (gptel-make-gh-copilot "Copilot"))
     )
 (require 'gptel)
 (add-to-list 'auto-mode-alist '("\\.chat\\'" . markdown-mode))
