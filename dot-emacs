@@ -56,6 +56,10 @@
                (display-buffer-reuse-window display-buffer-below-selected)
                (window-height . 15)))
 
+(use-package magit
+    :ensure t
+    :demand t)
+
 ;; Auto-close compilation window in case compilation is successful (slight delay)
 (defun compile-notify-and-close (buffer string)
   "Show notification and auto-close compilation window on success."
@@ -115,9 +119,6 @@
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/") t)
 
-(use-package magit
-    :ensure t)
-(require 'magit)
 
 ;; Dim unfocused buffers
 (use-package auto-dim-other-buffers
@@ -138,7 +139,6 @@
     :bind (:map vterm-mode-map
                 ("s-c" . vterm-copy-mode)
                 ("s-k" . vterm-clear-kill-history)
-                ;; ("C-y" . vterm-send-C-y)
 
                 ;; Share buffer between terminal and emacs :/
                 ("M-y" . vterm-yank-pop)
@@ -409,9 +409,10 @@
                 ("C-c C-d" . gptel-rewrite))
     ;; Always start gptel-mode for my chats
     :bind (:map gptel-mode-map
+                ("C-c C-o" . gptel-menu)
                 ("C-c C-c" . gptel-send))
     :config
-    (setq gptel-model 'claude-sonnet-4.5)
+    (setq gptel-model 'claude-opus-4.6)
     (setq gptel-use-curl t)
 
     ;; Auto-scroll to the end of the file when gptel responds
@@ -422,6 +423,12 @@
     (setq enable-local-variables nil)
     (setq gptel-backend (gptel-make-gh-copilot "Copilot"))
 
+    ;; This is the default value. Big changes can result in a lot of
+    ;; interaction. If set to nil to avoid thse it is good to phrase the prompt
+    ;; so that it asks before doing any modification :)
+    ;;
+    ;; (setq gptel-confirm-tools-calls 'auto)
+
     )
 
 (require 'gptel)
@@ -429,8 +436,12 @@
 ;; As a agent gptel gets a bunch of tools to work as a code assistant
 (use-package gptel-agent
     :bind (:map global-map
-                ("C-c C-a" . gptel-agent))
-    :ensure t)
+                ("C-c C-t" . gptel-agent))
+    :ensure t
+    :config
+    (setf (alist-get 'programming gptel-directives)
+          "You are a large language model and a careful programmer. Provide code and only code as output without any additional text, prompt or note. Read and follow the instructions in AGENTS.md in the project root before proceeding.")
+    )
 
 ;; Make sure the chate files have gptel mode on them
 (add-to-list 'auto-mode-alist '("\\.chat\\'" . markdown-mode))
@@ -738,8 +749,7 @@ by using nxml's indentation rules."
  '(scroll-bar-mode nil)
  '(tab-bar-mode t)
  '(tab-bar-show t)
- '(tool-bar-mode nil)
- '(vterm-environment '("TERM_PROGRAM=Apple_Terminal")))
+ '(tool-bar-mode nil))
 
 ;; (set-mouse-color "white")
 
