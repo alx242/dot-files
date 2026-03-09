@@ -132,9 +132,9 @@
 
 (use-package multi-vterm
     :bind (:map global-map
-                ("C-c t" . new-multi-vterm)
-                ("C-c n" . multi-vterm-next)
-                ("C-c p" . multi-vterm-prev)
+                ("C-c C-t" . new-multi-vterm)
+                ("C-c C-n" . multi-vterm-next)
+                ("C-c C-p" . multi-vterm-prev)
                 )
     :bind (:map vterm-mode-map
                 ("s-c" . vterm-copy-mode)
@@ -439,12 +439,24 @@
 ;; As a agent gptel gets a bunch of tools to work as a code assistant
 (use-package gptel-agent
     :bind (:map global-map
-                ("C-c C-t" . gptel-agent))
+                ("C-c C-a" . gptel-agent))
     :ensure t
     :config
     (setf (alist-get 'programming gptel-directives)
           "You are a large language model and a careful programmer. Provide code and only code as output without any additional text, prompt or note. Read and follow the instructions in AGENTS.md in the project root before proceeding.")
     )
+
+(defun gptel-cycle-all-tools ()
+  "Cycle all tool sections using gptel-markdown-cycle-block."
+  (interactive)
+  (save-excursion
+    (goto-char (point-min))
+    (while (re-search-forward "^``` tool" nil t)
+      (goto-char (line-beginning-position))
+      (gptel-markdown-cycle-block)
+      (forward-line 1))))
+
+(define-key gptel-mode-map (kbd "C-c c") 'gptel-cycle-all-tools)
 
 ;; Make sure the chate files have gptel mode on them
 (add-to-list 'auto-mode-alist '("\\.chat\\'" . markdown-mode))
@@ -781,6 +793,7 @@ by using nxml's indentation rules."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(auto-dim-other-buffers ((t nil)))
+ '(fixed-pitch ((t (:slant normal :weight thin :width normal :foundry "nil" :family "unscii"))))
  '(markdown-header-face-1 ((t (:background "#F0F0F0" :foreground "#3C3C3C" :overline "#A7A7A7" :weight bold :height 1.0))))
  '(org-level-1 ((t (:inherit variable-pitch :foreground "#d04a00" :height 1.0))))
  '(org-level-2 ((t (:inherit variable-pitch :foreground "#1d9700" :height 1.0))))
