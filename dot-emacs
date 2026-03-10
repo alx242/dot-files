@@ -415,6 +415,10 @@
                 ("C-c C-o" . gptel-menu)
                 ("C-c C-c" . gptel-send))
     :config
+    ;; Remove meta-data at end of saved chat file
+    (setq enable-local-variables nil)
+
+    (setq gptel-backend (gptel-make-gh-copilot "Copilot"))
     (setq gptel-model 'claude-opus-4.6)
     (setq gptel-use-curl t)
 
@@ -422,15 +426,13 @@
     (setq gptel-post-response-functions (list (lambda (start end)
                                                 (goto-char end)
                                                 (recenter -3))))
-    ;; Remove meta-data at end of saved chat file
-    (setq enable-local-variables nil)
-    (setq gptel-backend (gptel-make-gh-copilot "Copilot"))
 
     ;; This is the default value. Big changes can result in a lot of
     ;; interaction. If set to nil to avoid thse it is good to phrase the prompt
     ;; so that it asks before doing any modification :)
     ;;
     ;; (setq gptel-confirm-tools-calls 'auto)
+
 
     )
 
@@ -460,10 +462,6 @@
 
 ;; Make sure the chate files have gptel mode on them
 (add-to-list 'auto-mode-alist '("\\.chat\\'" . markdown-mode))
-(add-hook 'markdown-mode-hook
-          (lambda ()
-            (when (string-match-p "\\.chat\\'" (or buffer-file-name ""))
-              (gptel-mode 1))))
 
 ;; Nice feature to create commit messages
 (use-package gptel-commit
@@ -757,9 +755,9 @@ by using nxml's indentation rules."
  '(debug-on-error t)
  '(menu-bar-mode t)
  '(package-selected-packages
-   '(auto-dim-other-buffers consult erlang exec-path-from-shell flycheck lsp-mode
-                            nord-theme nordic-night-theme transpose-frame
-                            vertico yang-mode))
+   '(auto-dim-other-buffers consult erlang exec-path-from-shell flycheck
+                            gptel-agent gptel-commit nord-theme transpose-frame
+                            yang-mode))
  '(safe-local-variable-values '((allout-layout . t) (sh-indent-comment . t)))
  '(scroll-bar-mode nil)
  '(tab-bar-mode t)

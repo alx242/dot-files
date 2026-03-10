@@ -203,6 +203,8 @@ then
   source $EXTRA
 fi
 
+source .keys
+
 eval "$(starship init zsh)"
 
 # Install: pyenv install 3.X.Y
