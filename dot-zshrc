@@ -197,13 +197,16 @@ export ERL_COMPILER_OPTIONS=[debug_info]
 export JAVA_DIRS=""
 export PYTHON_DIRS=""
 export ERLANG_DIRS=""
-EXTRA=${HOME}/.zsh/extra.bashrc
+EXTRA=${HOME}/.zsh/extra.rc
 if [ -e $EXTRA ]
 then
   source $EXTRA
 fi
 
-source .keys
+if [ -e ${HOME}/.keys ]
+then
+    source ${HOME}/.keys
+fi
 
 eval "$(starship init zsh)"
 

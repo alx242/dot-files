@@ -60,6 +60,10 @@
     :ensure t
     :demand t)
 
+(use-package magit-section
+  :ensure t
+  :demand t)
+
 ;; Auto-close compilation window in case compilation is successful (slight delay)
 (defun compile-notify-and-close (buffer string)
   "Show notification and auto-close compilation window on success."
@@ -132,9 +136,9 @@
 
 (use-package multi-vterm
     :bind (:map global-map
-                ("C-c C-t" . new-multi-vterm)
-                ("C-c C-n" . multi-vterm-next)
-                ("C-c C-p" . multi-vterm-prev)
+                ("C-c t" . new-multi-vterm)
+                ("C-c n" . multi-vterm-next)
+                ("C-c p" . multi-vterm-prev)
                 )
     :bind (:map vterm-mode-map
                 ("s-c" . vterm-copy-mode)
@@ -280,7 +284,7 @@
 (define-key magit-mode-map (kbd "C-<tab>") nil) ; unbind in magit first
 (global-set-key (kbd "C-<tab>") 'tab-bar-switch-to-next-tab)
 (global-set-key (kbd "C-S-<tab>") 'tab-bar-switch-to-prev-tab)
-(define-key magit-mode-map (kbd "C-x C-t") nil) ; unbind switch rows
+
 
 ;; * * * Moving around window-buffers * * *
 
@@ -291,6 +295,8 @@
 (global-set-key (kbd "M-o") 'other-window)
 (global-set-key (kbd "M-i") 'previous-window-any-frame)
 (global-set-key (kbd "C-x z") 'tab-window-detach)
+
+
 
 ;; Swap windows meta+super+arrow
 (global-set-key (kbd "M-s-<left>")  'windmove-swap-states-left)
@@ -676,7 +682,8 @@ by using nxml's indentation rules."
  '(column-number-mode t)
  '(custom-enabled-themes '(misterioso))
  '(custom-safe-themes
-   '("74828a8db9af899ca4301f38dd5ef4ed20266613b29715299ac54e8fde98e2f3"
+   '("3da6101810df2607bc08d0542c34095dcd27ecd5a49ca6e6bcf2fc0d7de59cb3"
+     "74828a8db9af899ca4301f38dd5ef4ed20266613b29715299ac54e8fde98e2f3"
      "d23adb4d0d0acf5cf4dcdad91e4e70b6c15481bcff4170f28ed2dae90b253d00"
      "b9c3cad81999816c55bad4904db1c955702cac2de1c8042f8c998455134bcdd6"
      "71728ca14d7e788011a6b5f25abd89fd643b2c5eac252f29892a2e5ca2a046f0"
@@ -756,8 +763,10 @@ by using nxml's indentation rules."
  '(menu-bar-mode t)
  '(package-selected-packages
    '(auto-dim-other-buffers consult erlang exec-path-from-shell flycheck
-                            gptel-agent gptel-commit nord-theme transpose-frame
-                            yang-mode))
+                            gptel-agent gptel-commit lux-mode magit
+                            markdown-mode multi-vterm nord-theme request rg
+                            solarized-theme transpose-frame treemacs vertico
+                            yang-mode zenburn-theme))
  '(safe-local-variable-values '((allout-layout . t) (sh-indent-comment . t)))
  '(scroll-bar-mode nil)
  '(tab-bar-mode t)
