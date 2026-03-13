@@ -40,3 +40,6 @@
        cmd = emacs --eval \"(ediff-files \\\"$LOCAL\\\" \\\"$REMOTE\\\")\"
 [pull]
 	rebase = true
+
+[url "git@github.com:"]
+    insteadOf = https://github.com/
