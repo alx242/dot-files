@@ -220,6 +220,7 @@
 (add-hook 'vterm-mode-hook
           (lambda ()
             (pixel-scroll-precision-mode 0)
+            (global-goto-address-mode 1)
             (setq-local mouse-drag-copy-region t)))
 
 (defun new-multi-vterm ()
