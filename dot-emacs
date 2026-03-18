@@ -408,6 +408,8 @@
               ("C-c C-e" . markdown-do)))
 (require 'markdown-mode)
 
+;; Make pragma-info be read
+(setq enable-local-variables t)
 (add-to-list 'auto-mode-alist '("README$" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.mdp$" . markdown-mode))
 
@@ -427,7 +429,7 @@
                 ("C-c C-c" . gptel-send))
     :config
     ;; Remove meta-data at end of saved chat file
-    (setq enable-local-variables nil)
+    ;; (setq enable-local-variables nil)
 
     (setq gptel-backend (gptel-make-gh-copilot "Copilot"))
     (setq gptel-model 'claude-opus-4.6)
