@@ -435,6 +435,10 @@
     (setq gptel-model 'claude-opus-4.6)
     (setq gptel-use-curl t)
 
+    ;; Some logging can be useful. Ends up in *gptel-log* buffer. It is quite
+    ;; talkative
+    ;; (setq gptel-log-level 'info)
+
     ;; Auto-scroll to the end of the file when gptel responds
     (setq gptel-post-response-functions (list (lambda (start end)
                                                 (goto-char end)
@@ -472,6 +476,60 @@
       (forward-line 1))))
 
 (define-key gptel-mode-map (kbd "C-c c") 'gptel-cycle-all-tools)
+
+(defun gptel-compact-session (&optional keep-last)
+  "Compact session, keeping KEEP-LAST recent messages (default 2)."
+  (interactive "P")
+  (let* ((keep (or keep-last 2))
+         (content (buffer-substring-no-properties (point-min) (point-max)))
+         ;; Hitta de senaste meddelandena att behålla
+         (parts (split-string content "\n### " t))
+         (old-parts (butlast parts keep))
+         (recent-parts (last parts keep))
+         (old-content (string-join old-parts "\n### ")))
+    (when (< (length old-parts) 1)
+      (user-error "Not enough history to compact"))
+    (gptel-request
+     (concat "Summarize this conversation concisely. "
+             "Key decisions, code produced, open issues:\n\n"
+             old-content)
+     :system "Summarize technically and concisely."
+     :callback
+     (lambda (response info)
+       (when response
+         (with-current-buffer (plist-get info :buffer)
+           (erase-buffer)
+           (insert "# Compacted Summary\n\n")
+           (insert response)
+           (insert "\n\n---\n\n")
+           ;; Behåll senaste meddelandena
+           (dolist (part recent-parts)
+             (insert "### " part "\n"))
+           (goto-char (point-max))
+           (message "✓ Compacted! Kept last %d messages" keep)))))))
+
+(define-key gptel-mode-map (kbd "C-c k") 'gptel-compact-session)
+
+(defvar gptel-line-warning-threshold 16000
+  "Warn when gptel buffer exceeds this many lines.")
+
+(defvar gptel-line-warning-shown nil
+  "Track if warning has been shown for current threshold.")
+(make-variable-buffer-local 'gptel-line-warning-shown)
+
+(defun gptel-check-buffer-size ()
+  "Warn if gptel buffer is getting large."
+  (when (and gptel-mode
+             (not gptel-line-warning-shown)
+             (> (count-lines (point-min) (point-max))
+                gptel-line-warning-threshold))
+    (setq gptel-line-warning-shown t)
+    (message "⚠️ gptel session has %d lines! Consider running C-c k to compact."
+             (count-lines (point-min) (point-max)))))
+
+(add-hook 'gptel-post-response-functions
+          (lambda (_start _end)
+            (gptel-check-buffer-size)))
 
 ;; Make sure the chate files have gptel mode on them
 (add-to-list 'auto-mode-alist '("\\.chat\\'" . markdown-mode))
@@ -687,7 +745,7 @@ by using nxml's indentation rules."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(column-number-mode t)
- '(custom-enabled-themes '(sanityinc-tomorrow-blue))
+ '(custom-enabled-themes '(nord))
  '(custom-safe-themes
    '("6fc9e40b4375d9d8d0d9521505849ab4d04220ed470db0b78b700230da0a86c1"
      "04aa1c3ccaee1cc2b93b246c6fbcd597f7e6832a97aaeac7e5891e6863236f9f"
@@ -773,13 +831,7 @@ by using nxml's indentation rules."
      "b89a4f5916c29a235d0600ad5a0849b1c50fab16c2c518e1d98f0412367e7f97" default))
  '(debug-on-error t)
  '(menu-bar-mode t)
- '(package-selected-packages
-   '(auto-dim-other-buffers color-theme-sanityinc-tomorrow consult erlang
-                            exec-path-from-shell flycheck gptel-agent
-                            gptel-commit lux-mode magit markdown-mode
-                            multi-vterm nord-theme persistent-scratch request rg
-                            solarized-theme transpose-frame treemacs vertico
-                            yang-mode zenburn-theme))
+ '(package-selected-packages nil)
  '(safe-local-variable-values '((allout-layout . t) (sh-indent-comment . t)))
  '(scroll-bar-mode nil)
  '(tab-bar-mode t)
