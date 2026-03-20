@@ -222,5 +222,6 @@ eval "$(starship init zsh)"
 # 
 # Reinstall packages
 # pip install -r requirements.txt
-export PYENV_ROOT="$HOME/.pyenv/"
+export PYENV_ROOT="${HOME}/.pyenv/"
 if [[ -d $PYENV_ROOT ]] eval "$(pyenv init - zsh)"
+
