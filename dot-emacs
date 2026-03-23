@@ -504,7 +504,7 @@
 
 (define-key gptel-mode-map (kbd "C-c k") 'gptel-compact-session)
 
-(defvar gptel-line-warning-threshold 16000
+(defvar gptel-line-warning-threshold 12000
   "Warn when gptel buffer exceeds this many lines.")
 
 (defvar gptel-line-warning-shown nil
