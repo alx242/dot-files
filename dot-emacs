@@ -525,6 +525,16 @@
           (lambda (_start _end)
             (gptel-check-buffer-size)))
 
+(defun my-remove-gptel-local-vars ()
+  "Remove gptel file-local variables before saving."
+  (when (derived-mode-p 'markdown-mode)
+    (save-excursion
+      (goto-char (point-max))
+      (when (re-search-backward "^<!-- Local Variables:" nil t)
+        (delete-region (point) (point-max))))))
+
+(add-hook 'before-save-hook #'my-remove-gptel-local-vars)
+
 ;; Make sure the chate files have gptel mode on them
 (add-to-list 'auto-mode-alist '("\\.chat\\'" . markdown-mode))
 
