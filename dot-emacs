@@ -435,10 +435,6 @@
     (setq gptel-model 'claude-opus-4.6)
     (setq gptel-use-curl t)
 
-    ;; Some logging can be useful. Ends up in *gptel-log* buffer. It is quite
-    ;; talkative
-    ;; (setq gptel-log-level 'info)
-
     ;; Auto-scroll to the end of the file when gptel responds
     (setq gptel-post-response-functions (list (lambda (start end)
                                                 (goto-char end)
@@ -449,8 +445,6 @@
     ;; so that it asks before doing any modification :)
     ;;
     ;; (setq gptel-confirm-tools-calls 'auto)
-
-
     )
 
 (require 'gptel)
