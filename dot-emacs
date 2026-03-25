@@ -845,7 +845,7 @@ by using nxml's indentation rules."
  '(safe-local-variable-values '((allout-layout . t) (sh-indent-comment . t)))
  '(scroll-bar-mode nil)
  '(tab-bar-mode t)
- '(tab-bar-show t)
+ '(tab-bar-show 1)
  '(tool-bar-mode nil))
 
 ;; (set-mouse-color "white")
