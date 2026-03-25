@@ -835,7 +835,13 @@ by using nxml's indentation rules."
      "b89a4f5916c29a235d0600ad5a0849b1c50fab16c2c518e1d98f0412367e7f97" default))
  '(debug-on-error t)
  '(menu-bar-mode t)
- '(package-selected-packages nil)
+ '(package-selected-packages
+   '(auto-dim-other-buffers color-theme-sanityinc-tomorrow consult erlang
+                            exec-path-from-shell flycheck gptel-agent
+                            gptel-commit lux-mode magit markdown-mode
+                            multi-vterm nord-theme persistent-scratch request rg
+                            solarized-theme transpose-frame treemacs vertico
+                            yang-mode zenburn-theme))
  '(safe-local-variable-values '((allout-layout . t) (sh-indent-comment . t)))
  '(scroll-bar-mode nil)
  '(tab-bar-mode t)
