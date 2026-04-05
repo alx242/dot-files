@@ -453,6 +453,8 @@
 (use-package gptel-agent
     :bind (:map global-map
                 ("C-c C-a" . gptel-agent))
+    :bind (:map gptel-mode-map
+                ("C-c C-a" . gptel-agent))
     :ensure t
     :config
     (setf (alist-get 'programming gptel-directives)
