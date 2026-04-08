@@ -136,9 +136,9 @@
 
 (use-package multi-vterm
     :bind (:map global-map
-                ("C-c t" . new-multi-vterm)
-                ("C-c n" . multi-vterm-next)
-                ("C-c p" . multi-vterm-prev)
+                ("C-c C-t" . new-multi-vterm)
+                ("C-c C-n" . multi-vterm-next)
+                ("C-c C-p" . multi-vterm-prev)
                 )
     :bind (:map vterm-mode-map
                 ("s-c" . vterm-copy-mode)
@@ -416,6 +416,17 @@
 (add-hook 'markdown-mode-hook
           (lambda () (flyspell-mode 1)))
 
+(defun my-gptel-openrouter-auth ()
+  "Retrieve OpenRouter authentication information from .authinfo file."
+  (let* ((api "api")
+         (host "openrouter.ai")
+         (matches (auth-source-search :port "API" :host host)))
+    (when matches
+      (let ((entry (car matches)))
+        (list (funcall (plist-get entry :secret-function)
+                       (car (plist-get entry :secret-fields)))
+              host))))
+
 ;; LLM done right
 (use-package gptel
     :ensure t
@@ -425,14 +436,29 @@
                 ("C-c C-d" . gptel-rewrite))
     ;; Always start gptel-mode for my chats
     :bind (:map gptel-mode-map
+                ("C-c C-t" . new-multi-vterm)
                 ("C-c C-o" . gptel-menu)
                 ("C-c C-c" . gptel-send))
     :config
     ;; Remove meta-data at end of saved chat file
     ;; (setq enable-local-variables nil)
 
-    (setq gptel-backend (gptel-make-gh-copilot "Copilot"))
-    (setq gptel-model 'claude-opus-4.6)
+    ;; OpenRouter Backend
+    (setq gptel-backend (gptel-make-openai "OpenRouter"
+                          :key (my-gptel-openrouter-auth)
+                          :host "openrouter.ai"
+                          :endpoint "/api/v1/chat/completions"
+                          :stream t
+                          :models '(openai/gpt-3.5-turbo
+                                    mistralai/mixtral-8x7b-instruct
+                                    meta-llama/codellama-34b-instruct
+                                    codellama/codellama-70b-instruct
+                                    google/palm-2-codechat-bison-32k
+                                    google/gemini-pro)))
+
+    (setq gptel-model 'openai/gpt-3.5-turbo)
+    ;; (setq gptel-backend (gptel-make-gh-copilot "Copilot"))
+    ;; (setq gptel-model 'claude-opus-4.6)
     (setq gptel-use-curl t)
 
     ;; Auto-scroll to the end of the file when gptel responds
@@ -454,6 +480,7 @@
     :bind (:map global-map
                 ("C-c C-a" . gptel-agent))
     :bind (:map gptel-mode-map
+                ("C-c C-t" . new-multi-vterm)
                 ("C-c C-a" . gptel-agent))
     :ensure t
     :config
