@@ -26,7 +26,6 @@
   (persistent-scratch-setup-default)
   )
 
-
 ;; Display the time in the mode-line
 (setq display-time-format "%H:%M"              ; Format
       display-time-default-load-average nil    ; Skip load display
@@ -141,6 +140,10 @@
                 ("C-c C-p" . multi-vterm-prev)
                 )
     :bind (:map vterm-mode-map
+                ("C-c C-t" . new-multi-vterm)
+                ("C-c C-n" . multi-vterm-next)
+                ("C-c C-p" . multi-vterm-prev)
+
                 ("s-c" . vterm-copy-mode)
                 ("s-k" . vterm-clear-kill-history)
 
@@ -416,17 +419,6 @@
 (add-hook 'markdown-mode-hook
           (lambda () (flyspell-mode 1)))
 
-(defun my-gptel-openrouter-auth ()
-  "Retrieve OpenRouter authentication information from .authinfo file."
-  (let* ((api "api")
-         (host "openrouter.ai")
-         (matches (auth-source-search :port "API" :host host)))
-    (when matches
-      (let ((entry (car matches)))
-        (list (funcall (plist-get entry :secret-function)
-                       (car (plist-get entry :secret-fields)))
-              host))))
-
 ;; LLM done right
 (use-package gptel
     :ensure t
@@ -440,25 +432,23 @@
                 ("C-c C-o" . gptel-menu)
                 ("C-c C-c" . gptel-send))
     :config
-    ;; Remove meta-data at end of saved chat file
-    ;; (setq enable-local-variables nil)
-
     ;; OpenRouter Backend
-    (setq gptel-backend (gptel-make-openai "OpenRouter"
-                          :key (my-gptel-openrouter-auth)
-                          :host "openrouter.ai"
-                          :endpoint "/api/v1/chat/completions"
-                          :stream t
-                          :models '(openai/gpt-3.5-turbo
-                                    mistralai/mixtral-8x7b-instruct
-                                    meta-llama/codellama-34b-instruct
-                                    codellama/codellama-70b-instruct
-                                    google/palm-2-codechat-bison-32k
-                                    google/gemini-pro)))
+    (gptel-make-openai "OpenRouter"
+      :key (auth-source-pick-first-password :host "openrouter.ai" :user "api" :port "API")
+      :host "openrouter.ai"
+      :endpoint "/api/v1/chat/completions"
+      :stream t
+      :models '(openai/gpt-3.5-turbo
+                mistralai/mixtral-8x7b-instruct
+                meta-llama/codellama-34b-instruct
+                codellama/codellama-70b-instruct
+                google/palm-2-codechat-bison-32k
+                google/gemini-pro))
 
-    (setq gptel-model 'openai/gpt-3.5-turbo)
-    ;; (setq gptel-backend (gptel-make-gh-copilot "Copilot"))
+    ;; Copilot - Using default gptel-model
+    (setq gptel-backend (gptel-make-gh-copilot "Copilot"))
     ;; (setq gptel-model 'claude-opus-4.6)
+
     (setq gptel-use-curl t)
 
     ;; Auto-scroll to the end of the file when gptel responds
