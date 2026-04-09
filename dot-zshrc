@@ -12,6 +12,10 @@ export LANG=en_US.UTF-8
 # `noglob <command>` as well
 unsetopt nomatch
 
+# Make sure new installed stuff instantly gets available available for tab-completion
+
+zstyle ':completion:*' rehash true
+
 # Aliases
 
 # Set appropriate ls alias
@@ -224,4 +228,3 @@ eval "$(starship init zsh)"
 # pip install -r requirements.txt
 export PYENV_ROOT="${HOME}/.pyenv/"
 if [[ -d $PYENV_ROOT ]] eval "$(pyenv init - zsh)"
-
