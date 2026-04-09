@@ -207,11 +207,6 @@ then
   source $EXTRA
 fi
 
-if [ -e ${HOME}/.keys ]
-then
-    source ${HOME}/.keys
-fi
-
 eval "$(starship init zsh)"
 
 # Install: pyenv install 3.X.Y
