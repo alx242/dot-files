@@ -421,7 +421,7 @@
                 ("C-c C-d" . gptel-rewrite))
     ;; Always start gptel-mode for my chats
     :bind (:map gptel-mode-map
-                ("C-c C-t" . new-multi-vterm)
+                ("C-c C-t" . multi-vterm)
                 ("C-c C-o" . gptel-menu)
                 ("C-c C-c" . gptel-send))
     :config
@@ -463,7 +463,7 @@
     :bind (:map global-map
                 ("C-c C-a" . gptel-agent))
     :bind (:map gptel-mode-map
-                ("C-c C-t" . new-multi-vterm)
+                ("C-c C-t" . multi-vterm)
                 ("C-c C-a" . gptel-agent))
     :ensure t
     :config
