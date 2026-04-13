@@ -135,12 +135,12 @@
 
 (use-package multi-vterm
     :bind (:map global-map
-                ("C-c C-t" . new-multi-vterm)
+                ("C-c C-t" . multi-vterm)
                 ("C-c C-n" . multi-vterm-next)
                 ("C-c C-p" . multi-vterm-prev)
                 )
     :bind (:map vterm-mode-map
-                ("C-c C-t" . new-multi-vterm)
+                ("C-c C-t" . multi-vterm)
                 ("C-c C-n" . multi-vterm-next)
                 ("C-c C-p" . multi-vterm-prev)
 
@@ -226,13 +226,6 @@
             ;; Allow clickable links
             (goto-address-mode t)
             (setq-local mouse-drag-copy-region t)))
-
-(defun new-multi-vterm ()
-   (interactive)
-   ;; (let ((default-directory "~"))
-   ;; )
-   (multi-vterm)
-   )
 
 (defun vterm-clear-kill-history ()
    (interactive)
@@ -478,71 +471,21 @@
           "You are a large language model and a careful programmer. Provide code and only code as output without any additional text, prompt or note. Read and follow the instructions in AGENTS.md in the project root before proceeding.")
     )
 
-(defun gptel-cycle-all-tools ()
-  "Cycle all tool sections using gptel-markdown-cycle-block."
-  (interactive)
-  (save-excursion
-    (goto-char (point-min))
-    (while (re-search-forward "^``` tool" nil t)
-      (goto-char (line-beginning-position))
-      (gptel-markdown-cycle-block)
-      (forward-line 1))))
+(require 'gptel-integrations)
 
-(define-key gptel-mode-map (kbd "C-c c") 'gptel-cycle-all-tools)
+;; Will popup a login window in your browser
+(use-package mcp
+  :ensure t
+  :config
+  (setq mcp-hub-servers
+        '(("jira" .
+           (:command "npx"
+            :args ("-y" "mcp-remote@latest" "https://mcp.atlassian.com/v1/mcp"
+                        "--resource" "https://sedona.atlassian.net/")
+            ))))
+  )
 
-(defun gptel-compact-session (&optional keep-last)
-  "Compact session, keeping KEEP-LAST recent messages (default 2)."
-  (interactive "P")
-  (let* ((keep (or keep-last 2))
-         (content (buffer-substring-no-properties (point-min) (point-max)))
-         ;; Hitta de senaste meddelandena att behålla
-         (parts (split-string content "\n### " t))
-         (old-parts (butlast parts keep))
-         (recent-parts (last parts keep))
-         (old-content (string-join old-parts "\n### ")))
-    (when (< (length old-parts) 1)
-      (user-error "Not enough history to compact"))
-    (gptel-request
-     (concat "Summarize this conversation concisely. "
-             "Key decisions, code produced, open issues:\n\n"
-             old-content)
-     :system "Summarize technically and concisely."
-     :callback
-     (lambda (response info)
-       (when response
-         (with-current-buffer (plist-get info :buffer)
-           (erase-buffer)
-           (insert "# Compacted Summary\n\n")
-           (insert response)
-           (insert "\n\n---\n\n")
-           ;; Behåll senaste meddelandena
-           (dolist (part recent-parts)
-             (insert "### " part "\n"))
-           (goto-char (point-max))
-           (message "✓ Compacted! Kept last %d messages" keep)))))))
-
-(define-key gptel-mode-map (kbd "C-c k") 'gptel-compact-session)
-
-(defvar gptel-line-warning-threshold 12000
-  "Warn when gptel buffer exceeds this many lines.")
-
-(defvar gptel-line-warning-shown nil
-  "Track if warning has been shown for current threshold.")
-(make-variable-buffer-local 'gptel-line-warning-shown)
-
-(defun gptel-check-buffer-size ()
-  "Warn if gptel buffer is getting large."
-  (when (and gptel-mode
-             (not gptel-line-warning-shown)
-             (> (count-lines (point-min) (point-max))
-                gptel-line-warning-threshold))
-    (setq gptel-line-warning-shown t)
-    (message "⚠️ gptel session has %d lines! Consider running C-c k to compact."
-             (count-lines (point-min) (point-max)))))
-
-(add-hook 'gptel-post-response-functions
-          (lambda (_start _end)
-            (gptel-check-buffer-size)))
+(gptel-mcp-connect '("jira"))
 
 (defun my-remove-gptel-local-vars ()
   "Remove gptel file-local variables before saving."
@@ -859,7 +802,7 @@ by using nxml's indentation rules."
  '(package-selected-packages
    '(auto-dim-other-buffers color-theme-sanityinc-tomorrow consult erlang
                             exec-path-from-shell flycheck gptel-agent
-                            gptel-commit lux-mode magit markdown-mode
+                            gptel-commit lux-mode magit markdown-mode mcp
                             multi-vterm nord-theme persistent-scratch request rg
                             solarized-theme transpose-frame treemacs vertico
                             yang-mode zenburn-theme))
