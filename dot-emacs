@@ -136,13 +136,13 @@
 (use-package multi-vterm
     :bind (:map global-map
                 ("C-c C-t" . multi-vterm)
-                ("C-c C-n" . multi-vterm-next)
-                ("C-c C-p" . multi-vterm-prev)
+                ("C-c C-." . multi-vterm-next)
+                ("C-c C-," . multi-vterm-prev)
                 )
     :bind (:map vterm-mode-map
                 ("C-c C-t" . multi-vterm)
-                ("C-c C-n" . multi-vterm-next)
-                ("C-c C-p" . multi-vterm-prev)
+                ("C-c C-." . multi-vterm-next)
+                ("C-c C-," . multi-vterm-prev)
 
                 ("s-c" . vterm-copy-mode)
                 ("s-k" . vterm-clear-kill-history)
