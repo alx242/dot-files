@@ -31,6 +31,10 @@
       display-time-default-load-average nil    ; Skip load display
       display-time-interval 60)                ; Update
 
+;; Fullscreen as a regular app and not macos fullscreen
+(setq ns-use-native-fullscreen nil)
+(global-set-key (kbd "C-c F") 'toggle-frame-fullscreen)
+
 ;; Own mode-line to display time
 (setq mode-line-end-spaces
       '(:eval (propertize (format-time-string " %H:%M ")
