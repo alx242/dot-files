@@ -141,7 +141,7 @@
                 ("C-c C-," . multi-vterm-prev)
 
                 ("s-c" . vterm-copy-mode)
-                ("s-k" . vterm-clear-kill-history)
+                ("s-k" . my-vterm-clear-kill-history)
 
                 ;; Share buffer between terminal and emacs :/
                 ("M-y" . vterm-yank-pop)
@@ -166,16 +166,16 @@
                 ("S-<down>" . my-vterm-scroll-line-down)
                 ("<prior>" . vterm-send-prior)
                 ("<next>" . vterm-send-next)
+
+                ;; Instantly copy any text marked with the mouse
+                ([double-mouse-1] . my-vterm-mark-and-copy-word)
                 )
     :bind (:map vterm-copy-mode-map
                 ("s-c" . vterm-copy-mode)
                 ("C-g" . vterm-copy-mode)
-                ("s-k" . vterm-clear-kill-history)
+                ("s-k" . my-vterm-clear-kill-history)
                 )
     :config
-    ;; Instantly copy any text marked with the mouse
-    (add-hook 'after-init-hook (define-key vterm-mode-map [double-mouse-1] #'mark-word))
-
     (defun my-compile-from-vterm-dir ()
       "Run compile from vterm's current directory."
       (interactive)
@@ -194,6 +194,22 @@
       "Scroll vterm buffer one line down."
       (interactive)
       (scroll-up 1))
+
+    (defun my-vterm-clear-kill-history ()
+      (interactive)
+      (vterm-clear-scrollback)
+      (vterm-clear)
+      )
+
+    (defun my-vterm-mark-and-copy-word (event)
+      "Mark word at mouse click and copy it to kill-ring."
+      (interactive "e")
+      (mouse-set-point event)
+      (let ((bounds (bounds-of-thing-at-point 'word)))
+        (when bounds
+          (goto-char (car bounds))
+          (set-mark (cdr bounds))
+          (kill-ring-save (car bounds) (cdr bounds)))))
 
     ;; Smaller scrollback is faster
     (setq vterm-max-scrollback 10000)
@@ -223,12 +239,6 @@
             (goto-address-mode t)
             (setq-local mouse-drag-copy-region t)))
 
-(defun vterm-clear-kill-history ()
-   (interactive)
-   (vterm-clear-scrollback)
-   (vterm-clear)
-   )
-
 (defun my-resize-non-vterm-windows-to-80 ()
   "Resize all non-vterm windows to 80 columns."
   (interactive)
@@ -239,8 +249,6 @@
         (let ((delta (- target-width (window-width window))))
           (unless (zerop delta)
             (window-resize window delta t)))))))
-
-;; (global-set-key (kbd "C-c w 8") 'my-resize-non-vterm-windows-to-80)
 
 ;; Convert region
 (defun dos2unix-region (start end)
@@ -321,6 +329,14 @@
 (global-set-key (kbd "s-.") 'my-resize-non-vterm-windows-to-80)
 (global-set-key (kbd "s-,") 'balance-windows)
 (global-set-key (kbd "s-r") 'rotate-frame-clockwise)
+
+;; Double click borders to balance windows
+(global-set-key [vertical-line double-mouse-1] 'balance-windows)
+(global-set-key [mode-line double-mouse-1] 'balance-windows)
+(global-set-key [vertical-scroll-bar double-mouse-1] 'balance-windows)
+(global-set-key [bottom-divider double-mouse-1] 'balance-windows)
+(global-set-key [right-divider double-mouse-1] 'balance-windows)
+(global-set-key [left-divider double-mouse-1] 'balance-windows)
 
 ;; when cursor is on edge, move to the other side, as in a toroidal
 ;; space
