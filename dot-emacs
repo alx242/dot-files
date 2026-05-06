@@ -491,8 +491,13 @@
 
 (add-hook 'before-save-hook #'my-remove-gptel-local-vars)
 
-;; Make sure the chate files have gptel mode on them
-(add-to-list 'auto-mode-alist '("\\.chat\\'" . markdown-mode))
+;; Make sure the chat/gptel files have gptel-mode on them
+(add-to-list 'auto-mode-alist '("\\.\\(gptel\\|chat\\)\\'" . markdown-mode))
+(add-hook 'markdown-mode-hook
+          (lambda ()
+            (when (and buffer-file-name
+                       (string-match-p "\\.\\(gptel\\|chat\\)\\'" buffer-file-name))
+              (gptel-mode 1))))
 
 ;; Nice feature to create commit messages
 (use-package gptel-commit
