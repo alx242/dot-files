@@ -487,6 +487,7 @@
           "You are a large language model and a careful programmer. Provide code and only code as output without any additional text, prompt or note. Read and follow the instructions in AGENTS.md in the project root before proceeding.")
     )
 
+;; mcp requirement
 (require 'gptel-integrations)
 
 ;; Will popup a login window in your browser
@@ -588,6 +589,15 @@
 ;; Spelling
 (setq ispell-program-name "hunspell")
 (setq ispell-dictionary "sv_SE,en_US")
+
+(with-eval-after-load 'ispell
+  ;; Register combo-dictionary för hunspell
+  (add-to-list
+   'ispell-local-dictionary-alist
+   '("sv_SE,en_US" "[A-Za-zÅÄÖåäö]" "[^A-Za-zÅÄÖåäö]" "[']" nil ("-d" "sv_SE,en_US") nil utf-8))
+  ;; Extra glue för hunspell multi-dict
+  (ispell-set-spellchecker-params)
+  (ispell-hunspell-add-multi-dic "sv_SE,en_US"))
 
 ;; More conveniant file/search walking...
 (use-package consult
