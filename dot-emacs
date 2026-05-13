@@ -433,7 +433,6 @@
     :ensure t
     :bind (:map global-map
                 ("C-c C-g" . gptel)
-                ("C-c C-f" . gptel-add)
                 ("C-c C-d" . gptel-rewrite))
     ;; Always start gptel-mode for my chats
     :bind (:map gptel-mode-map
@@ -603,6 +602,7 @@
 (use-package consult
     :ensure t
     :bind (:map global-map
+                ("C-c C-f" . consult-fd)
                 ("C-x b" . consult-buffer))
     :config
     ;; Use Consult to select xref locations with preview
