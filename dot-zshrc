@@ -22,7 +22,8 @@ zstyle ':completion:*' rehash true
 case $(uname -s) in
     Darwin|FreeBSD)
         HPATH="$(/opt/homebrew/bin/brew --prefix)"
-        PATH="${HPATH}/sbin:${HPATH}/bin:${HPATH}/gawk/libexec/gnubin:${PATH}"
+        export PATH="${HPATH}/sbin:${HPATH}/bin:${HPATH}/gawk/libexec/gnubin:${PATH}"
+        export PATH="/opt/homebrew/opt/curl/bin:$PATH"
         if [ -d $(brew --prefix)/opt/erlang/lib/erlang/man ]; then
             export MANPATH=$MANPATH:$(brew --prefix)/opt/erlang/lib/erlang/man
         fi
