@@ -759,6 +759,24 @@ by using nxml's indentation rules."
 ;; * * * README * * *
 ;; (find-file "~/README") ; Want to make sure that my README is always available :)
 
+;; * * * ccrypt auto-save/close * * *
+(defvar my/ccrypt-idle-timeout 300
+  "Seconds of inactivity before a .cpt-buffer is autosaved and closed.")
+
+(defun my/ccrypt-autosave-and-kill-buffer ()
+  (when (and (buffer-file-name)
+             (string-match-p "\\.cpt\\'" (buffer-file-name)))
+    (when (buffer-modified-p)
+      (save-buffer))
+    (kill-buffer (current-buffer))))
+
+(run-with-idle-timer my/ccrypt-idle-timeout t
+  (lambda ()
+    (dolist (buf (buffer-list))
+      (with-current-buffer buf
+        (my/ccrypt-autosave-and-kill-buffer)))))
+
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
