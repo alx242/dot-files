@@ -453,6 +453,14 @@
                 google/palm-2-codechat-bison-32k
                 google/gemini-pro))
 
+    ;; Local LLM
+    (gptel-make-ollama "Ollama"
+      :host "localhost:11434"
+      :stream t
+      :models '(ministral-3:latest
+                codellama:latest
+                mistral:latest))
+
     ;; Copilot - Using default gptel-model
     (setq gptel-backend (gptel-make-gh-copilot "Copilot"))
     ;; (setq gptel-model 'claude-opus-4.6)
