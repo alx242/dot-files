@@ -135,6 +135,7 @@
                 ("C-c C-t" . my-ghostel-new)
                 ("C-c C-." . ghostel-next)
                 ("C-c C-," . ghostel-previous))
+
     :bind (:map ghostel-semi-char-mode-map
                 ("C-c C-t" . my-ghostel-new)
                 ("C-c C-." . ghostel-next)
@@ -150,6 +151,10 @@
                 ;; Need these emacs stuffs from ghostel
                 ("M-:" . eval-expression)
                 ("M-c" . my-compile-from-ghostel-dir)
+
+                ;; Switch tabs
+                ("C-<tab>" . tab-bar-switch-to-next-tab)
+                ("C-S-<tab>" . tab-bar-switch-to-prev-tab)
 
                 ;; Instantly copy any text marked with the mouse
                 ([double-mouse-1] . my-ghostel-mark-and-copy-word))
@@ -413,7 +418,6 @@
       :host "localhost:11434"
       :stream t
       :models '(ministral-3:latest
-                codellama:latest
                 mistral:latest))
 
     ;; Copilot - Using default gptel-model
@@ -427,6 +431,7 @@
                                                 (goto-char end)
                                                 (recenter -3))))
 
+    (setq gptel-model 'claude-opus-4.7)
     ;; This is the default value. Big changes can result in a lot of
     ;; interaction. If set to nil to avoid thse it is good to phrase the prompt
     ;; so that it asks before doing any modification :)
