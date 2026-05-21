@@ -150,7 +150,7 @@
 
                 ;; Need these emacs stuffs from ghostel
                 ("M-:" . eval-expression)
-                ("M-c" . my-compile-from-ghostel-dir)
+                ("M-c" . ghostel-compile)
 
                 ;; Switch tabs
                 ("C-<tab>" . tab-bar-switch-to-next-tab)
@@ -160,12 +160,6 @@
                 ([double-mouse-1] . my-ghostel-mark-and-copy-word))
     :ensure t
     :config
-    (defun my-compile-from-ghostel-dir ()
-      "Run compile from ghostel's current directory."
-      (interactive)
-      (let ((default-directory default-directory))
-        (call-interactively 'compile)))
-
     (defun my-ghostel-clear-kill-history ()
       (interactive)
       (ghostel-clear-scrollback)
