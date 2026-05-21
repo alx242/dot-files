@@ -68,7 +68,7 @@
   "Show notification and auto-close compilation window on success."
   (let ((buffer-name (buffer-name buffer)))
     ;; Bara för riktiga compilation-buffers
-    (when (string-equal buffer-name "*compilation*")
+    (when (member buffer-name '("*compilation*" "*ghostel-compile*"))
       (if (string-match "^finished" string)
           (progn
             (message "Compilation successful!")
@@ -77,7 +77,7 @@
                               (let ((win (get-buffer-window buf)))
                                 (when win (delete-window win))))
                             buffer))
-        (message "Compilation failed - check *compilation* buffer")))))
+        (message "Compilation failed - check %s buffer" buffer-name)))))
 
 (add-hook 'compilation-finish-functions 'compile-notify-and-close)
 (setq compilation-scroll-output t)
@@ -138,8 +138,8 @@
                 ("C-c C-." . ghostel-next)
                 ("C-c C-," . ghostel-previous)
 
-                ("M-<right>" . forward-word)
-                ("M-<left>"  . backward-word)
+                ("M-<right>" . my-ghostel-forward-word)
+                ("M-<left>"  . my-ghostel-backward-word)
 
                 ("s-c" . ghostel-copy-mode)
                 ("s-k" . my-ghostel-clear-kill-history)
@@ -160,6 +160,16 @@
                 ([double-mouse-1] . my-ghostel-mark-and-copy-word))
     :ensure t
     :config
+    (defun my-ghostel-forward-word ()
+      "Send M-f to the ghostel terminal."
+      (interactive)
+      (ghostel-send-key "f" "alt"))
+
+    (defun my-ghostel-backward-word ()
+      "Send M-b to the ghostel terminal."
+      (interactive)
+      (ghostel-send-key "b" "alt"))
+
     (defun my-ghostel-clear-kill-history ()
       (interactive)
       (ghostel-clear-scrollback)
