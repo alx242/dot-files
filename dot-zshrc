@@ -8,6 +8,9 @@ export EDITOR="emacsclient"
 # Override language
 export LANG=en_US.UTF-8
 
+# Enable mouse scrolling in less
+export LESS="--mouse -R"
+
 # zsh - turn off globbing "*qwerty*"-stuff for zsh. Can be done via
 # `noglob <command>` as well
 unsetopt nomatch
