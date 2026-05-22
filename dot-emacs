@@ -444,6 +444,7 @@
                 ("C-c C-t" . my-ghostel-new)
                 ("C-c C-a" . gptel-agent))
     :ensure t
+    :demand t ; load directly to get access to tools
     :config
     (setf (alist-get 'programming gptel-directives)
           "You are a large language model and a careful programmer. Provide code and only code as output without any additional text, prompt or note. Read and follow the instructions in AGENTS.md in the project root before proceeding.")
@@ -481,6 +482,22 @@
             (when (and buffer-file-name
                        (string-match-p "\\.\\(gptel\\|chat\\)\\'" buffer-file-name))
               (gptel-mode 1))))
+
+(defun gptel-hide-all-tools ()
+  "Hide all tool sections in current gptel buffer."
+  (interactive)
+  (save-excursion
+    (goto-char (point-min))
+    (while (re-search-forward "^``` tool" nil t)
+      (goto-char (line-beginning-position))
+      (gptel-markdown-cycle-block)
+      (forward-line 1))))
+
+(add-hook 'gptel-mode-hook
+          (lambda ()
+            (when (and buffer-file-name
+                       (string-match-p "\\.gptel\\'" buffer-file-name))
+              (run-with-timer 0.2 nil #'gptel-hide-all-tools))))
 
 ;; Nice feature to create commit messages
 (use-package gptel-commit
