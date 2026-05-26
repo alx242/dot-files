@@ -138,11 +138,13 @@
                 ("C-c C-." . ghostel-next)
                 ("C-c C-," . ghostel-previous)
 
-                ("M-<right>" . my-ghostel-forward-word)
-                ("M-<left>"  . my-ghostel-backward-word)
+                ("C-y" . (lambda () (interactive) (ghostel-send-key "y" "ctrl")))
+                ("C-k" . (lambda () (interactive) (ghostel-send-key "k" "ctrl")))
+                ("M-<right>" . (lambda () (interactive) (ghostel-send-key "f" "alt")))
+                ("M-<left>"  . (lambda () (interactive) (ghostel-send-key "b" "alt")))
 
-                ("s-c" . ghostel-copy-mode)
-                ("s-k" . my-ghostel-clear-kill-history)
+                ("C-c c" . ghostel-copy-mode)
+                ("C-c k" . my-ghostel-clear-kill-history)
 
                 ;; Share buffer between terminal and emacs :/
                 ("M-y" . ghostel-yank-pop)
@@ -160,15 +162,6 @@
                 ([double-mouse-1] . my-ghostel-mark-and-copy-word))
     :ensure t
     :config
-    (defun my-ghostel-forward-word ()
-      "Send M-f to the ghostel terminal."
-      (interactive)
-      (ghostel-send-key "f" "alt"))
-
-    (defun my-ghostel-backward-word ()
-      "Send M-b to the ghostel terminal."
-      (interactive)
-      (ghostel-send-key "b" "alt"))
 
     (defun my-ghostel-clear-kill-history ()
       (interactive)
@@ -206,6 +199,11 @@
             ;; Allow clickable links
             (goto-address-mode t)
             (setq-local mouse-drag-copy-region t)))
+
+(with-eval-after-load 'ghostel
+  (define-key ghostel-readonly-mode-map [down-mouse-1] 'mouse-drag-region)
+  (define-key ghostel-readonly-mode-map [mouse-1] 'mouse-set-point)
+  (define-key ghostel-readonly-mode-map [drag-mouse-1] 'mouse-set-region))
 
 (defun my-resize-non-term-windows-to-80 ()
   "Resize all non-terminal windows to 80 columns."
