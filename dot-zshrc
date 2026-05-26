@@ -227,3 +227,8 @@ eval "$(starship init zsh)"
 # pip install -r requirements.txt
 export PYENV_ROOT="${HOME}/.pyenv/"
 if [[ -d $PYENV_ROOT ]] eval "$(pyenv init - zsh)"
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/alex/.lmstudio/bin"
+# End of LM Studio CLI section
+

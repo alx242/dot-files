@@ -402,16 +402,30 @@
                 ("C-c C-o" . gptel-menu)
                 ("C-c C-c" . gptel-send))
     :config
+    ;; Turn off thinking
+    ;; (setq-local gptel-temperature 0)
+
     ;; Local LLM
     (gptel-make-ollama "Ollama"
       :host "localhost:11434"
       :stream t
-      :models '(gemma4:e4b
-                mistral:latest
+      :models '(qwen3:1.7b
+                gemma4:e2b
                 ))
 
+    ;; Local LMStudio
+    (setq gptel-backend
+          (gptel-make-openai "LM Studio"
+            :host "localhost:1234"
+            :protocol "http"
+            :endpoint "/v1/chat/completions"
+            :key "not-needed"
+            :models '(qwen/qwen3-1.7b
+                      google/gemma-4-e2b))
+          )
+
     ;; Copilot - Using default gptel-model
-    (setq gptel-backend (gptel-make-gh-copilot "Copilot"))
+    (gptel-make-gh-copilot "Copilot")
     ;; (setq gptel-model 'claude-opus-4.6)
 
     ;; Google - Gemini
@@ -419,17 +433,12 @@
       :key (auth-source-pick-first-password :host "gemini" :user "apikey")
       :stream t)
 
-    ;; Turn off thinking
-    ;; (setq-local gptel-temperature 0)
-
     (setq gptel-use-curl t)
 
     ;; Auto-scroll to the end of the file when gptel responds
     (setq gptel-post-response-functions (list (lambda (start end)
                                                 (goto-char end)
                                                 (recenter -3))))
-
-    (setq gptel-model 'claude-opus-4.7)
     )
 
 (require 'gptel)
