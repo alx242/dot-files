@@ -726,9 +726,6 @@ by using nxml's indentation rules."
 ;; Stop sounding the bell in emacs
 (setq ring-bell-function 'ignore)
 
-;; * * * README * * *
-;; (find-file "~/README") ; Want to make sure that my README is always available :)
-
 ;; * * * ccrypt auto-save/close * * *
 (defvar my/ccrypt-idle-timeout 300
   "Seconds of inactivity before a .cpt-buffer is autosaved and closed.")
@@ -745,11 +742,6 @@ by using nxml's indentation rules."
     (dolist (buf (buffer-list))
       (with-current-buffer buf
         (my/ccrypt-autosave-and-kill-buffer)))))
-
-;; Put all the custom set parts in a seperate file
-(setq custom-file (expand-file-name "~/.emacs-custom.el"))
-(when (file-exists-p custom-file)
-  (load custom-file))
 
 ;; Some static face parts
 (setq my_font "unscii-16:antialias=false:hinting=true:autohint=false")
@@ -771,3 +763,8 @@ by using nxml's indentation rules."
 (set-face-attribute 'help-for-help-header nil :font my_font)
 (set-face-attribute 'fixed-pitch-serif nil :font my_font)
 (set-face-background 'trailing-whitespace "red")
+
+;; Put all the custom set parts in a seperate file
+(setq custom-file (expand-file-name "~/.emacs-custom.el"))
+(when (file-exists-p custom-file)
+  (load custom-file))
