@@ -415,7 +415,10 @@
       :endpoint "/v1/chat/completions"
       :key "not-needed"
       :models '(qwen/qwen3-1.7b
-                google/gemma-4-e2b))
+                qwen/qwen3.5-9b
+                google/gemma-3-4b
+                google/gemma-4-e2b
+                google/gemma-4-e4b))
 
     ;; Copilot - Using default gptel-model
     (gptel-make-gh-copilot "Copilot")
