@@ -209,15 +209,26 @@
   (define-key ghostel-readonly-mode-map [drag-mouse-1] 'mouse-set-region))
 
 (defun my-resize-non-term-windows-to-80 ()
-  "Resize all non-terminal windows to 80 columns."
+  "Resize non-terminal windows to 80 columns and balance the rest.
+Terminal windows (ghostel/vterm) share the remaining horizontal
+space evenly."
   (interactive)
   (let ((target-width 80))
+    ;; Clear out former preserved size to start fresh
     (dolist (window (window-list))
-      (unless (with-current-buffer (window-buffer window)
-                (derived-mode-p 'ghostel-mode 'vterm-mode))
-        (let ((delta (- target-width (window-width window))))
-          (unless (zerop delta)
-            (window-resize window delta t)))))))
+      (window-preserve-size window t nil))
+    (balance-windows)
+    ;; Set non-terminal windows to 80 chars mark the size as preserved
+    (dolist (window (window-list))
+      (with-current-buffer (window-buffer window)
+        (unless (derived-mode-p 'ghostel-mode 'vterm-mode)
+          (let ((delta (- target-width (window-width window))))
+            (unless (zerop delta)
+              (ignore-errors (window-resize window delta t))))
+          (window-preserve-size window t t))))
+    ;; balance-windows will respect preserved sizes so only terminal windows are
+    ;; evened out
+    (balance-windows)))
 
 ;; Convert region
 (defun dos2unix-region (start end)
