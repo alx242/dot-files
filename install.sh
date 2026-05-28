@@ -40,7 +40,5 @@ ln -s $SRCDIR/dot-newsboat $HOME/.newsboat/config
 ln -s $SRCDIR/starship.toml $HOME/.config/starship.toml
 
 mkdir -p $DESTDIR/.local/bin
-ln -s "$SRCDIR/backup"  "$DESTDIR/.local/bin"
-ln -s "$SRCDIR/randomwallpaper" "$DESTDIR/.local/bin"
 ln -s "$SRCDIR/urlopen" "$DESTDIR/.local/bin"
 mkdir -p $HOME/.zsh
