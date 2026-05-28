@@ -15,8 +15,8 @@ export LANG=en_US.UTF-8
 # `noglob <command>` as well
 unsetopt nomatch
 
-# Make sure new installed stuff instantly gets available available for tab-completion
-
+# Make sure new installed stuff instantly gets available available for
+# tab-completion
 zstyle ':completion:*' rehash true
 
 # Aliases
@@ -65,41 +65,6 @@ bindkey "\e[1;5D" vi-backward-word   # CTRL+LEFT
 bindkey "\e\e[C" vi-forward-word     # META+RIGHT
 bindkey "\e\e[D" vi-backward-word    # META+LEFT
 bindkey "\e^?" vi-backward-kill-word # META+BACKSPACE
-
-# vterm current pwd tracking
-# autoload -U add-zsh-hook
-# add-zsh-hook -Uz chpwd (){ print -Pn "\e]2;%0~\a" }
-if [[ "$INSIDE_EMACS" = 'vterm' ]]; then
-    function vterm_printf() {
-        if [ -n "$TMUX" ] && ([ "${TERM%%-*}" = "tmux" ] || [ "${TERM%%-*}" = "screen" ]); then
-            printf "\ePtmux;\e\e]%s\007\e\\" "$1"
-        elif [ "${TERM%%-*}" = "screen" ]; then
-            printf "\eP\e]%s\007\e\\" "$1"
-        else
-            printf "\e]%s\e\\" "$1"
-        fi
-    }
-
-    function vterm_cmd() {
-        local vterm_elisp
-        vterm_elisp=""
-        while [ $# -gt 0 ]; do
-            vterm_elisp="$vterm_elisp""$(printf '"%s" ' "$(printf "%s" "$1" | sed -e 's|\\|\\\\|g' -e 's|"|\\"|g')")"
-            shift
-        done
-        vterm_printf "51;E$vterm_elisp"
-    }
-
-    function vterm_prompt_end() {
-        vterm_printf "51;A$(whoami)@$(hostname):$(pwd)"
-    }
-
-    autoload -U add-zsh-hook
-    add-zsh-hook -Uz chpwd (){
-        vterm_printf "51;A$(whoami)@$(hostname):$(pwd)"
-        print -Pn "\e]2;%0~\a"
-    }
-fi
 
 # Fix for zsh compinit: insecure directories, run compaudit for list.
 #

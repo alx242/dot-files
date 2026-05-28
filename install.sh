@@ -14,6 +14,7 @@ SRCITEMS=(
     gitconfig
     zshrc
     mg
+    ripgreprc
 )
 
 mkdir -p $HOME/.config

@@ -1,0 +1,8 @@
+# Definiera yang filtyp
+--type-add=yang:*.yang
+
+# Definiera lux filtyp
+--type-add=lux:*.{lux,luxinc}
+
+# Definiera erlang templates
+--type-add=erlang:*.{erl,hrl,app.src}
