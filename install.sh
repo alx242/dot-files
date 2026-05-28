@@ -6,16 +6,12 @@ INSTALLDIR=`pwd`
 DESTDIR="$HOME"
 SRCDIR="$HOME/dot-files"
 SRCITEMS=(
-    bash_profile
     inputrc
-    irbrc
     tigrc
     pythonrc
     emacs
     emacs.d
     gitconfig
-    tmux.conf
-    alacritty.yml
     zshrc
     mg
 )
@@ -36,27 +32,15 @@ for SRCITEM in ${SRCITEMS[*]} ; do
     ln -s "$SRCDIR/dot-$SRCITEM" "$DESTDIR/.$DESTITEM"
 done
 
-# tmux-next
-ln -s $HOME/.tmux.conf $HOME/.tmux-next.conf
-
 # Newsboat
 mkdir -p $HOME/.newsboat
 ln -s $SRCDIR/dot-newsboat $HOME/.newsboat/config
-
-# Conky
-mkdir -p $HOME/.config/conky
-ln -s $SRCDIR/conky.conf $HOME/.config/conky/conky.conf
 
 # Starship
 ln -s $SRCDIR/starship.toml $HOME/.config/starship.toml
 
 mkdir -p $DESTDIR/.local/bin
 ln -s "$SRCDIR/backup"  "$DESTDIR/.local/bin"
-ln -s "$SRCDIR/up"  "$DESTDIR/.local/bin"
-ln -s "$SRCDIR/vol_up" "$DESTDIR/.local/bin"
-ln -s "$SRCDIR/vol_down" "$DESTDIR/.local/bin"
-ln -s "$SRCDIR/nvidiarun" "$DESTDIR/.local/bin"
 ln -s "$SRCDIR/randomwallpaper" "$DESTDIR/.local/bin"
 ln -s "$SRCDIR/urlopen" "$DESTDIR/.local/bin"
-ln -s "$SRCDIR/conky-restart" "$DESTDIR/.local/bin"
 mkdir -p $HOME/.zsh
