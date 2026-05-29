@@ -1,1 +1,23 @@
+# Caches
+.cache/
+cache/
+elpa/
+ac-comphist.dat
 network-security.data
+url/
+request/
+tramp
+
+# Sessions / persistent state
+.emacs.desktop*
+SessionDesktop.el
+.persistent-scratch
+auto-save-list/
+ido.last
+eshell/
+projects
+transient/
+
+# LSP / DAP
+.lsp*
+.dap-breakpoints
