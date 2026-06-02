@@ -419,9 +419,20 @@ horizontal space evenly."
     (setq gptel-use-curl t)
 
     ;; Auto-scroll to the end of the file when gptel responds, and land
-    ;; point on the next prompt line. Both helpers come built-in with gptel.
+    ;; point on the next prompt line.
     (add-hook 'gptel-post-stream-hook #'gptel-auto-scroll)
-    (add-hook 'gptel-post-response-functions #'gptel-end-of-response)
+    (defun my-gptel-goto-next-prompt (_beg end)
+      "Place point on the line after the next gptel prompt prefix following END."
+      (let ((prefix (gptel-prompt-prefix-string)))
+        (when (and prefix (not (string-empty-p prefix)))
+          (goto-char end)
+          (when (re-search-forward
+                 (concat "^" (regexp-quote (string-trim-right prefix)) " ?")
+                 nil t)
+            (let ((target (point)))
+              (dolist (win (get-buffer-window-list (current-buffer) nil t))
+                (set-window-point win target)))))))
+    (add-hook 'gptel-post-response-functions #'my-gptel-goto-next-prompt)
     )
 
 ;; As a agent gptel gets a bunch of tools to work as a code assistant
