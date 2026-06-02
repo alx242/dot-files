@@ -418,11 +418,10 @@ horizontal space evenly."
 
     (setq gptel-use-curl t)
 
-    ;; Auto-scroll to the end of the file when gptel responds
-    (defun my-gptel-scroll-to-end (_start end)
-      (goto-char end)
-      (recenter -3))
-    (add-hook 'gptel-post-response-functions #'my-gptel-scroll-to-end)
+    ;; Auto-scroll to the end of the file when gptel responds, and land
+    ;; point on the next prompt line. Both helpers come built-in with gptel.
+    (add-hook 'gptel-post-stream-hook #'gptel-auto-scroll)
+    (add-hook 'gptel-post-response-functions #'gptel-end-of-response)
     )
 
 ;; As a agent gptel gets a bunch of tools to work as a code assistant
