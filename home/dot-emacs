@@ -207,8 +207,8 @@
 
 (defun my-resize-non-term-windows-to-80 ()
   "Resize non-terminal windows to 80 columns and balance the rest.
-Terminal windows (ghostel/vterm) share the remaining horizontal
-space evenly."
+Terminal-like windows (ghostel/vterm/gptel) share the remaining
+horizontal space evenly."
   (interactive)
   (let ((target-width 80))
     ;; Clear out former preserved size to start fresh
@@ -217,13 +217,14 @@ space evenly."
     ;; Set non-terminal windows to 80 chars and mark size as preserved
     (dolist (window (window-list))
       (with-current-buffer (window-buffer window)
-        (unless (derived-mode-p 'ghostel-mode 'vterm-mode)
+        (unless (or (derived-mode-p 'ghostel-mode 'vterm-mode)
+                    (bound-and-true-p gptel-mode))
           (let ((delta (- target-width (window-width window))))
             (unless (zerop delta)
               (ignore-errors (window-resize window delta t))))
           (window-preserve-size window t t))))
-    ;; balance-windows respects preserved sizes, so only terminal
-    ;; windows end up sharing the remaining space evenly.
+    ;; balance-windows respects preserved sizes, so only terminal-like
+    ;; (ghostel/vterm/gptel) windows end up sharing the remaining space evenly.
     (balance-windows)))
 
 ;; Convert region
@@ -406,14 +407,14 @@ space evenly."
                 google/gemma-4-e2b
                 google/gemma-4-e4b))
 
-    ;; Copilot - Using default gptel-model
-    (gptel-make-gh-copilot "Copilot")
-    ;; (setq gptel-model 'claude-opus-4.6)
-
     ;; Google - Gemini
     (gptel-make-gemini "Gemini"
       :key (auth-source-pick-first-password :host "gemini" :user "apikey")
       :stream t)
+
+    ;; Copilot - default backend
+    (setq gptel-backend (gptel-make-gh-copilot "Copilot")
+          gptel-model   'claude-opus-4.7)
 
     (setq gptel-use-curl t)
 
