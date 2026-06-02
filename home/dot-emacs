@@ -214,8 +214,7 @@ space evenly."
     ;; Clear out former preserved size to start fresh
     (dolist (window (window-list))
       (window-preserve-size window t nil))
-    (balance-windows)
-    ;; Set non-terminal windows to 80 chars mark the size as preserved
+    ;; Set non-terminal windows to 80 chars and mark size as preserved
     (dolist (window (window-list))
       (with-current-buffer (window-buffer window)
         (unless (derived-mode-p 'ghostel-mode 'vterm-mode)
@@ -223,8 +222,8 @@ space evenly."
             (unless (zerop delta)
               (ignore-errors (window-resize window delta t))))
           (window-preserve-size window t t))))
-    ;; balance-windows will respect preserved sizes so only terminal windows are
-    ;; evened out
+    ;; balance-windows respects preserved sizes, so only terminal
+    ;; windows end up sharing the remaining space evenly.
     (balance-windows)))
 
 ;; Convert region
@@ -254,11 +253,12 @@ space evenly."
 (setq confirm-kill-emacs 'y-or-n-p)
 
 ;; Tab bar
-(define-key magit-mode-map (kbd "C-c C-t") nil) ; unbind in magit first
+(with-eval-after-load 'magit
+  (define-key magit-mode-map (kbd "C-c C-t") nil) ; unbind in magit first
+  (define-key magit-mode-map (kbd "C-<tab>") nil)) ; unbind in magit first
 (global-set-key (kbd "C-c C-b") 'tab-bar-mode)
 (global-set-key (kbd "s-t") 'tab-bar-new-tab)
 (global-set-key (kbd "s-w") 'tab-bar-close-tab)
-(define-key magit-mode-map (kbd "C-<tab>") nil) ; unbind in magit first
 (global-set-key (kbd "C-<tab>") 'tab-bar-switch-to-next-tab)
 (global-set-key (kbd "C-S-<tab>") 'tab-bar-switch-to-prev-tab)
 
@@ -359,17 +359,10 @@ space evenly."
     )
 (add-to-list 'auto-mode-alist '("\\.lux$" . lux-mode))
 
-;; * * * 80 colums * * *
-(require 'column-marker)
-
 ;; * * * Erlang * * *
 ;; Try and get a working erlang environment
 (setenv "ERL_COMPILER_OPTIONS" "[debug_info]")
 (setenv "ERL_NO_FAIL_ON_WARNING" "true")
-
-;; Access elp command
-(add-to-list 'exec-path "~/.emacs.d/")
-(global-unset-key (kbd "C-c C-d"))
 
 ;; * * * Markdown * * *
 (use-package markdown-mode
@@ -384,7 +377,6 @@ space evenly."
 
 ;; Make pragma-info be read
 (setq enable-local-variables t)
-(add-to-list 'auto-mode-alist '("README$" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.mdp$" . markdown-mode))
 
 (add-hook 'markdown-mode-hook
@@ -437,7 +429,6 @@ space evenly."
     :bind (:map global-map
                 ("C-c C-a" . gptel-agent))
     :bind (:map gptel-mode-map
-                ("C-c C-t" . my-ghostel-new)
                 ("C-c C-a" . gptel-agent))
     :ensure t
     :demand t ; load directly to get access to tools
@@ -657,7 +648,8 @@ If body is needed: blank line, then wrap at 72 chars."
              --line-number . -e ARG OPTS"))
     (consult-ripgrep)))
 
-(define-key magit-mode-map (kbd "C-x C-r") nil)
+(with-eval-after-load 'magit
+  (define-key magit-mode-map (kbd "C-x C-r") nil))
 (global-set-key (kbd "C-x C-r") 'consult-ripgrep-erl)
 (global-set-key (kbd "C-c C-r") 'rg)
 
@@ -681,8 +673,6 @@ If body is needed: blank line, then wrap at 72 chars."
 (add-to-list 'auto-mode-alist '("relx\\.config$" . erlang-mode))
 (add-to-list 'auto-mode-alist '("system\\.config$" . erlang-mode))
 (add-to-list 'auto-mode-alist '("\\.app\\.src$" . erlang-mode))
-
-(setq load-path (cons  "~/.emacs.d/emacs" load-path))
 
 ;; * * * XML * * *
 (defun pretty-print-xml-region (begin end)
@@ -745,12 +735,6 @@ by using nxml's indentation rules."
 ;;
 
 (global-set-key (kbd "M-c") 'compile)
-(global-set-key (kbd "M-[ A") 'backward-paragraph) ; Meta+up
-(global-set-key (kbd "M-[ B") 'forward-paragraph)  ; Meta+down
-(global-set-key (kbd "ESC <up>") 'backward-paragraph) ; Meta+up
-(global-set-key (kbd "ESC <down>") 'forward-paragraph)  ; Meta+down
-(global-set-key (kbd "M-[ C") 'forward-word)       ; Meta+down
-(global-set-key (kbd "M-[ D") 'backward-word)      ; Meta+up
 
 (global-set-key (kbd "M-p") 'backward-paragraph) ; Meta+p
 (global-set-key (kbd "M-n") 'forward-paragraph)  ; Meta+n
@@ -783,10 +767,15 @@ by using nxml's indentation rules."
       (save-buffer))
     (kill-buffer (current-buffer))))
 
-(defvar my/ccrypt-timer nil)
-(when my/ccrypt-timer (cancel-timer my/ccrypt-timer))
+(defvar my/ccrypt-timer nil
+  "Idle timer used to autosave/close .cpt buffers.")
 
-;; Protect against multiple timers
+;; Cancel any previous timer (e.g. when reloading this file) before
+;; starting a new one, to avoid stacking multiple timers.
+(when my/ccrypt-timer
+  (cancel-timer my/ccrypt-timer)
+  (setq my/ccrypt-timer nil))
+
 (setq my/ccrypt-timer
       (run-with-idle-timer my/ccrypt-idle-timeout t
                            (lambda ()
