@@ -554,8 +554,24 @@ session. Include: (1) the user's goal and task, (2) key facts and decisions, \
            (message "New session: %s" name)))))))
 
 ;; Nice feature to create commit messages
-(use-package gptel-commit
-    :ensure t)
+(defvar my-gptel-commit-prompt
+  "You are an expert at writing Git commit messages.
+Generate ONLY the commit message, plain text, no markdown, no code fences.
+Subject line ≤50 chars, imperative mood, no trailing period.
+If body is needed: blank line, then wrap at 72 chars."
+  "System prompt for `gptel-commit'.")
+
+(defun gptel-commit ()
+  "Generate a commit message for staged changes using gptel."
+  (interactive)
+  (let ((diff (shell-command-to-string "git diff --cached")))
+    (when (string-empty-p (string-trim diff))
+      (user-error "No staged changes"))
+    (gptel-request diff
+      :system my-gptel-commit-prompt
+      :buffer (current-buffer)
+      :position (point)
+      :stream t)))
 
 (use-package flycheck
   :ensure t
