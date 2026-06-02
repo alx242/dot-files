@@ -329,11 +329,9 @@ space evenly."
 (setq-default column-number-mode t)
 (setq vc-follow-symlinks t) ; Auto follow symlinks
 
-(setq max-lisp-eval-depth 600)
-
 ;; * * * Interactively Do Things * * *
-(require 'ido)
-(ido-mode t)
+;; (require 'ido)
+;; (ido-mode t)
 
 ;; Nice vertical selector using M-x
 (use-package vertico
