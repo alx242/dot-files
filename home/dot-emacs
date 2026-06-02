@@ -70,7 +70,7 @@
 (defun compile-notify-and-close (buffer string)
   "Show notification and auto-close compilation window on success."
   (let ((buffer-name (buffer-name buffer)))
-    ;; Bara för riktiga compilation-buffers
+    ;; Only for real compilation buffers
     (when (member buffer-name '("*compilation*" "*ghostel-compile*"))
       (if (string-match "^finished" string)
           (progn
@@ -95,11 +95,9 @@
 ;; * * * Load emacs stuff * * *
 (add-to-list 'load-path "~/.emacs.d/lisp")
 
-(setq mac-allow-anti-aliasing nil)
 (setq mac-right-option-modifier nil)
 (setq mac-command-modifier 'super)
 (setq mac-option-modifier 'meta)
-(setq x-select-enable-clipboard t)
 
 ;; Scroll with precision (works for ordinary emacs+30
 (pixel-scroll-precision-mode t)
@@ -109,7 +107,7 @@
 ;; Want to run as a server
 (server-start)
 
-;; save desktop to enable getting back in to action ö_Ö
+;; Save desktop to enable getting back into action
 (desktop-save-mode 1)
 
 ;; Set fill-column to 80 for all files
@@ -121,7 +119,6 @@
              '("elpa" . "http://elpa.gnu.org/packages/") t)
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/") t)
-
 
 ;; Dim unfocused buffers
 (use-package auto-dim-other-buffers
@@ -251,9 +248,7 @@ space evenly."
 (use-package request
     :ensure t)
 
-(require 'request)
-
-(setq tags-revert-without-query 1)
+(setq tags-revert-without-query t)
 
 ;; Force confirmation before exit of emacs
 (setq confirm-kill-emacs 'y-or-n-p)
@@ -272,7 +267,7 @@ space evenly."
 
 ;; (global-set-key (kbd "C-t") 'customize-face)
 ;; (global-set-key (kbd "C-t") 'customize-themes)
-(global-set-key (kbd "C-f") 'menu-set-font)
+;; (global-set-key (kbd "C-f") 'menu-set-font)
 (windmove-default-keybindings 'super)
 (global-set-key (kbd "M-o") 'other-window)
 (global-set-key (kbd "M-i") 'previous-window-any-frame)
@@ -302,7 +297,6 @@ space evenly."
 (use-package transpose-frame
    :ensure t)
 
-(require 'transpose-frame)
 (global-set-key (kbd "s-k") 'kill-buffer)
 (global-set-key (kbd "s-b") 'switch-to-buffer)
 ;; (global-set-key (kbd "s-.") 'maximize-window)
@@ -324,11 +318,6 @@ space evenly."
 
 ;; Focus follows mouse pointer
 (setq mouse-autoselect-window t)
-
-(global-set-key (kbd "S-C-<left>") 'shrink-window-horizontally)
-(global-set-key (kbd "S-C-<right>") 'enlarge-window-horizontally)
-(global-set-key (kbd "S-C-<down>") 'shrink-window)
-(global-set-key (kbd "S-C-<up>") 'enlarge-window)
 
 ;; * * * General variables * * *
 ;; No tabs only spaces
@@ -394,7 +383,6 @@ space evenly."
               ("M-p" . outline-previous-heading)
               ("TAB" . markdown-cycle)
               ("C-c C-e" . markdown-do)))
-(require 'markdown-mode)
 
 ;; Make pragma-info be read
 (setq enable-local-variables t)
@@ -416,9 +404,6 @@ space evenly."
                 ("C-c C-o" . gptel-menu)
                 ("C-c C-c" . gptel-send))
     :config
-    ;; Turn off thinking
-    ;; (setq-local gptel-temperature 0)
-
     ;; Local LMStudio
     (gptel-make-openai "LM Studio"
       :host "localhost:1234"
@@ -443,12 +428,11 @@ space evenly."
     (setq gptel-use-curl t)
 
     ;; Auto-scroll to the end of the file when gptel responds
-    (setq gptel-post-response-functions (list (lambda (start end)
-                                                (goto-char end)
-                                                (recenter -3))))
+    (defun my-gptel-scroll-to-end (_start end)
+      (goto-char end)
+      (recenter -3))
+    (add-hook 'gptel-post-response-functions #'my-gptel-scroll-to-end)
     )
-
-(require 'gptel)
 
 ;; As a agent gptel gets a bunch of tools to work as a code assistant
 (use-package gptel-agent
@@ -503,12 +487,14 @@ space evenly."
           (gptel-markdown-cycle-block)))
       (forward-line 1))))
 
-;; Make sure when loading old gptel session that all tool blocks are closed
-(add-hook 'gptel-mode-hook
-          (lambda ()
-            (when (and buffer-file-name
-                       (string-match-p "\\.gptel\\'" buffer-file-name))
-              (run-with-timer 0.2 nil #'gptel-hide-all-tools))))
+;; Make sure when loading old gptel session that all tool blocks are closed.
+;; Use find-file-hook so we know the buffer content is fully loaded (no timer).
+(defun my-gptel-hide-tools-on-find-file ()
+  (when (and buffer-file-name
+             (string-match-p "\\.gptel\\'" buffer-file-name)
+             (bound-and-true-p gptel-mode))
+    (gptel-hide-all-tools)))
+(add-hook 'find-file-hook #'my-gptel-hide-tools-on-find-file)
 
 (defun gptel-summarize-to-new-session ()
   "Summarize the current gptel session and start a new one with the summary."
@@ -602,9 +588,8 @@ If body is needed: blank line, then wrap at 72 chars."
     (setopt eglot-server-programs
             (assq-delete-all 'erlang-mode eglot-server-programs))
 
-    ;; Disable file watching för alla LSP servers
+    ;; Disable file watching for all LSP servers
     (setq eglot-extend-to-xref nil)
-    (setq eglot-events-buffer-size 0)
 
     ;; Disable W0026 diagnostics for all Erlang files (unexported function)
     (setq-default eglot-workspace-configuration
@@ -640,11 +625,11 @@ If body is needed: blank line, then wrap at 72 chars."
 (setq ispell-dictionary "sv_SE,en_US")
 
 (with-eval-after-load 'ispell
-  ;; Register combo-dictionary för hunspell
+  ;; Register combo dictionary for hunspell
   (add-to-list
    'ispell-local-dictionary-alist
    '("sv_SE,en_US" "[A-Za-zÅÄÖåäö]" "[^A-Za-zÅÄÖåäö]" "[']" nil ("-d" "sv_SE,en_US") nil utf-8))
-  ;; Extra glue för hunspell multi-dict
+  ;; Extra glue for hunspell multi-dict
   (ispell-set-spellchecker-params)
   (ispell-hunspell-add-multi-dic "sv_SE,en_US"))
 
@@ -740,23 +725,14 @@ by using nxml's indentation rules."
   (interactive "*")
   (message "starting to date stamp the line...")
   (setq make-backup-files nil)
-  (end-of-buffer)
+  (goto-char (point-max))
   (end-of-line)
   (insert (format-time-string "\n\n%a %b %e %R %Z %Y\n\n"
                               (current-time)))
-  ;;(forward-char -1)
-  ;;(forward-char 1)
-  (end-of-buffer)
+  (goto-char (point-max))
   (end-of-line)
   (message "starting to date stamp the line - finished.")
   )
-
-;; Kill all buffers
-(defun kill-all-buffers ()
-  "Kill all buffers in emacs...wooops"
-  (interactive)
-  (mapcar 'kill-buffer (buffer-list))
-  (delete-other-windows))
 
 (global-set-key (kbd "s-n") 'next-buffer)
 (global-set-key (kbd "s-p") 'previous-buffer)
@@ -809,11 +785,16 @@ by using nxml's indentation rules."
       (save-buffer))
     (kill-buffer (current-buffer))))
 
-(run-with-idle-timer my/ccrypt-idle-timeout t
-  (lambda ()
-    (dolist (buf (buffer-list))
-      (with-current-buffer buf
-        (my/ccrypt-autosave-and-kill-buffer)))))
+(defvar my/ccrypt-timer nil)
+(when my/ccrypt-timer (cancel-timer my/ccrypt-timer))
+
+;; Protect against multiple timers
+(setq my/ccrypt-timer
+      (run-with-idle-timer my/ccrypt-idle-timeout t
+                           (lambda ()
+                             (dolist (buf (buffer-list))
+                               (with-current-buffer buf
+                                 (my/ccrypt-autosave-and-kill-buffer))))))
 
 ;; Some static face parts
 (setq my_font "unscii-16:antialias=false:hinting=true:autohint=false")
