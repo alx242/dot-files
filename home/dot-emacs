@@ -506,38 +506,51 @@ horizontal space evenly."
         (model    gptel-model)
         (sysmsg   gptel--system-message))
     (message "Summarizing gptel session...")
-    (gptel-request
-     nil
-     :system
-     "You will be given an ongoing conversation. Produce a concise but \
-complete summary in English that can be used as starting context for a new \
-session. Include: (1) the user's goal and task, (2) key facts and decisions, \
-(3) code/artifacts produced (brief reference, not full contents), \
-(4) open questions and next steps. Output only the summary, no meta-text."
-     :buffer src-buf
-     :context (list src-buf backend model sysmsg)
-     :callback
-     (lambda (response info)
-       (if (not (stringp response))
-           (message "Summarization failed.")
+    (let* ((gptel-use-tools nil)
+           (gptel-tools nil)
+           (convo (with-current-buffer src-buf
+                    (buffer-substring-no-properties (point-min) (point-max))))
+           (question (concat
+                      "Below is a transcript of a previous chat session "
+                      "between a user and an assistant. Produce a concise but "
+                      "complete summary in English that can be used as starting "
+                      "context for a new session. Include: (1) the user's goal "
+                      "and task, (2) key facts and decisions, (3) code/artifacts "
+                      "produced (brief reference, not full contents), (4) open "
+                      "questions and next steps. Output only the summary, no "
+                      "meta-text.\n\n=== TRANSCRIPT START ===\n"
+                      convo
+                      "\n=== TRANSCRIPT END ===")))
+      (gptel-request
+       question
+       :system "You are a helpful assistant that summarizes chat sessions."
+       :context (list src-buf backend model sysmsg)
+       :callback
+       (lambda (response info)
          (let* ((ctx (plist-get info :context))
-                (orig-buf (nth 0 ctx))
-                (gptel-backend (nth 1 ctx))
-                (gptel-model   (nth 2 ctx))
-                (orig-sysmsg   (nth 3 ctx))
-                (name (generate-new-buffer-name
-                       (format "*%s-continued*" (buffer-name orig-buf))))
-                (new-buf (gptel name nil nil t)))
-           (with-current-buffer new-buf
-             (setq-local gptel--system-message orig-sysmsg)
-             (goto-char (point-max))
-             (insert (or (gptel-response-prefix-string) "")
-                     "Summary of previous session:\n\n"
-                     response
-                     "\n\n"
-                     (or (gptel-prompt-prefix-string) "")))
-           (pop-to-buffer new-buf)
-           (message "New session: %s" name)))))))
+                (orig-buf (nth 0 ctx)))
+           (if (or (not (stringp response)) (string-empty-p response))
+               (message "Summarization failed: response=%S status=%S error=%S http=%S"
+                        response
+                        (plist-get info :status)
+                        (plist-get info :error)
+                        (plist-get info :http-status))
+             (let* ((gptel-backend (nth 1 ctx))
+                    (gptel-model   (nth 2 ctx))
+                    (orig-sysmsg   (nth 3 ctx))
+                    (name (generate-new-buffer-name
+                           (format "*%s-continued*" (buffer-name orig-buf))))
+                    (new-buf (gptel name nil nil t)))
+               (with-current-buffer new-buf
+                 (setq-local gptel--system-message orig-sysmsg)
+                 (goto-char (point-max))
+                 (insert (or (gptel-response-prefix-string) "")
+                         "Summary of previous session:\n\n"
+                         response
+                         "\n\n"
+                         (or (gptel-prompt-prefix-string) "")))
+               (pop-to-buffer new-buf)
+               (message "New session: %s" name)))))))))
 
 ;; Nice feature to create commit messages
 (defvar my-gptel-commit-prompt
