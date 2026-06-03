@@ -66,7 +66,8 @@
                 ("C-x C-l" . magit-log-head))
     )
 
-;; Auto-close compilation window in case compilation is successful (slight delay)
+;; Auto-close compilation window in case compilation is successful (slight
+;; delay)
 (defun compile-notify-and-close (buffer string)
   "Show notification and auto-close compilation window on success."
   (let ((buffer-name (buffer-name buffer)))
@@ -138,10 +139,14 @@
                 ("C-c C-." . ghostel-next)
                 ("C-c C-," . ghostel-previous)
 
-                ("C-y" . (lambda () (interactive) (ghostel-send-key "y" "ctrl")))
-                ("C-k" . (lambda () (interactive) (ghostel-send-key "k" "ctrl")))
-                ("M-<right>" . (lambda () (interactive) (ghostel-send-key "f" "alt")))
-                ("M-<left>"  . (lambda () (interactive) (ghostel-send-key "b" "alt")))
+                ("C-y" . (lambda () (interactive)
+                           (ghostel-send-key "y" "ctrl")))
+                ("C-k" . (lambda () (interactive)
+                           (ghostel-send-key "k" "ctrl")))
+                ("M-<right>" . (lambda () (interactive)
+                                 (ghostel-send-key "f" "alt")))
+                ("M-<left>"  . (lambda () (interactive)
+                                 (ghostel-send-key "b" "alt")))
 
                 ("C-c c" . ghostel-copy-mode)
                 ("C-c k" . my-ghostel-clear-kill-history)
@@ -177,11 +182,6 @@
           (goto-char (car bounds))
           (set-mark (cdr bounds))
           (kill-ring-save (car bounds) (cdr bounds)))))
-
-    ;; Smaller scrollback is faster (ghostel uses BYTES, not lines — ~1MB)
-    ;;    (setq ghostel-max-scrollback 1000000)
-    ;;    (setq ghostel-kill-buffer-on-exit t)
-    ;;    (pixel-scroll-precision-mode nil)
 
     ;; Make sure to get latest native module compiled
     (setq ghostel-module-auto-install 'download)
@@ -422,7 +422,8 @@ horizontal space evenly."
     ;; point on the next prompt line.
     (add-hook 'gptel-post-stream-hook #'gptel-auto-scroll)
     (defun my-gptel-goto-next-prompt (_beg end)
-      "Place point on the line after the next gptel prompt prefix following END."
+      "Place point on the line after the next gptel prompt
+prefix following END."
       (let ((prefix (gptel-prompt-prefix-string)))
         (when (and prefix (not (string-empty-p prefix)))
           (goto-char end)
@@ -445,7 +446,10 @@ horizontal space evenly."
     :demand t ; load directly to get access to tools
     :config
     (setf (alist-get 'programming gptel-directives)
-          "You are a large language model and a careful programmer. Provide code and only code as output without any additional text, prompt or note. Read and follow the instructions in AGENTS.md in the project root before proceeding.")
+          "You are a large language model and a careful programmer.
+ Provide code and only code as output without any additional text,
+ prompt or note. Read and follow the instructions in AGENTS.md in
+ the project root before proceeding.")
     )
 
 ;; mcp requirement
@@ -468,7 +472,8 @@ horizontal space evenly."
 (add-hook 'markdown-mode-hook
           (lambda ()
             (when (and buffer-file-name
-                       (string-match-p "\\.\\(gptel\\|chat\\)\\'" buffer-file-name))
+                       (string-match-p "\\.\\(gptel\\|chat\\)\\'"
+                                       buffer-file-name))
               (gptel-mode 1))))
 
 ;; Hides all tool blocks
@@ -510,17 +515,18 @@ horizontal space evenly."
            (gptel-tools nil)
            (convo (with-current-buffer src-buf
                     (buffer-substring-no-properties (point-min) (point-max))))
-           (question (concat
-                      "Below is a transcript of a previous chat session "
-                      "between a user and an assistant. Produce a concise but "
-                      "complete summary in English that can be used as starting "
-                      "context for a new session. Include: (1) the user's goal "
-                      "and task, (2) key facts and decisions, (3) code/artifacts "
-                      "produced (brief reference, not full contents), (4) open "
-                      "questions and next steps. Output only the summary, no "
-                      "meta-text.\n\n=== TRANSCRIPT START ===\n"
-                      convo
-                      "\n=== TRANSCRIPT END ===")))
+           (question
+            (concat
+             "Below is a transcript of a previous chat session "
+             "between a user and an assistant. Produce a concise but "
+             "complete summary in English that can be used as starting "
+             "context for a new session. Include: (1) the user's goal "
+             "and task, (2) key facts and decisions, (3) code/artifacts "
+             "produced (brief reference, not full contents), (4) open "
+             "questions and next steps. Output only the summary, no "
+             "meta-text.\n\n=== TRANSCRIPT START ===\n"
+             convo
+             "\n=== TRANSCRIPT END ===")))
       (gptel-request
        question
        :system "You are a helpful assistant that summarizes chat sessions."
@@ -530,7 +536,8 @@ horizontal space evenly."
          (let* ((ctx (plist-get info :context))
                 (orig-buf (nth 0 ctx)))
            (if (or (not (stringp response)) (string-empty-p response))
-               (message "Summarization failed: response=%S status=%S error=%S http=%S"
+               (message "Summarization failed:
+ response=%S status=%S error=%S http=%S"
                         response
                         (plist-get info :status)
                         (plist-get info :error)
@@ -641,7 +648,8 @@ If body is needed: blank line, then wrap at 72 chars."
   ;; Register combo dictionary for hunspell
   (add-to-list
    'ispell-local-dictionary-alist
-   '("sv_SE,en_US" "[A-Za-zÅÄÖåäö]" "[^A-Za-zÅÄÖåäö]" "[']" nil ("-d" "sv_SE,en_US") nil utf-8))
+   '("sv_SE,en_US" "[A-Za-zÅÄÖåäö]" "[^A-Za-zÅÄÖåäö]" "[']" nil
+     ("-d" "sv_SE,en_US") nil utf-8))
   ;; Extra glue for hunspell multi-dict
   (ispell-set-spellchecker-params)
   (ispell-hunspell-add-multi-dic "sv_SE,en_US"))
