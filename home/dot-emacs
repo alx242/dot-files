@@ -476,6 +476,18 @@ prefix following END."
                                        buffer-file-name))
               (gptel-mode 1))))
 
+;; Strip gptel file-local variables before saving to avoid accumulation
+;; of <!-- Local Variables: ... --> blocks in chat files.
+(defun my-remove-gptel-local-vars ()
+  "Remove gptel file-local variables before saving."
+  (when (derived-mode-p 'markdown-mode)
+    (save-excursion
+      (goto-char (point-max))
+      (when (re-search-backward "^<!-- Local Variables:" nil t)
+        (delete-region (point) (point-max))))))
+
+(add-hook 'before-save-hook #'my-remove-gptel-local-vars)
+
 ;; Hides all tool blocks
 (defun gptel-hide-all-tools ()
   "Hide all tool sections in current gptel buffer, only if not already hidden."
