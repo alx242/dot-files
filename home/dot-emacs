@@ -149,6 +149,8 @@
                                  (ghostel-send-key "b" "alt")))
 
                 ("C-c c" . ghostel-copy-mode)
+                ("S-<prior>" . ghostel-copy-mode)
+                ("S-<next>" . ghostel-copy-mode)
                 ("C-c k" . my-ghostel-clear-kill-history)
 
                 ;; Share buffer between terminal and emacs :/
@@ -418,22 +420,53 @@ horizontal space evenly."
 
     (setq gptel-use-curl t)
 
-    ;; Auto-scroll to the end of the file when gptel responds, and land
-    ;; point on the next prompt line.
-    (add-hook 'gptel-post-stream-hook #'gptel-auto-scroll)
-    (defun my-gptel-goto-next-prompt (_beg end)
-      "Place point on the line after the next gptel prompt
-prefix following END."
-      (let ((prefix (gptel-prompt-prefix-string)))
-        (when (and prefix (not (string-empty-p prefix)))
-          (goto-char end)
-          (when (re-search-forward
-                 (concat "^" (regexp-quote (string-trim-right prefix)) " ?")
-                 nil t)
-            (let ((target (point)))
-              (dolist (win (get-buffer-window-list (current-buffer) nil t))
-                (set-window-point win target)))))))
-    (add-hook 'gptel-post-response-functions #'my-gptel-goto-next-prompt)
+    ;; Auto-scroll while streaming, and land point on the next `### '
+    ;; prompt line when the response is done. Works for every window
+    ;; that shows the gptel buffer, even when that buffer isn't in
+    ;; focus (so I can keep working in another buffer while waiting).
+
+    (defun my-gptel-auto-scroll ()
+      "Gently keep point visible in all windows showing the current buffer.
+Replacement for `gptel-auto-scroll' that does not jump a whole
+page and that works even if the gptel buffer is not focused."
+      (let ((buf (current-buffer))
+            (pt  (point)))
+        (dolist (win (get-buffer-window-list buf nil t))
+          (set-window-point win pt)
+          (unless (pos-visible-in-window-p pt win)
+            (with-selected-window win
+              (save-excursion
+                (goto-char pt)
+                (recenter -1)))))))
+
+    (defun my-gptel-goto-next-prompt (_beg _end)
+      "Place point right after the trailing `### ' prompt prefix.
+Updates point in the buffer and in every window showing it, so
+it works even when the gptel buffer is not the selected window."
+      (let* ((buf    (current-buffer))
+             (prefix (gptel-prompt-prefix-string))
+             (target (save-excursion
+                       (goto-char (point-max))
+                       (if (and prefix
+                                (not (string-empty-p prefix))
+                                (re-search-backward
+                                 (concat "^"
+                                         (regexp-quote (string-trim-right prefix))
+                                         " ?")
+                                 nil t))
+                           (match-end 0)
+                         (point-max)))))
+        (goto-char target)
+        (dolist (win (get-buffer-window-list buf nil t))
+          (set-window-point win target)
+          (with-selected-window win
+            (save-excursion
+              (goto-char target)
+              (recenter -3))))))
+
+    (remove-hook 'gptel-post-stream-hook       #'gptel-auto-scroll)
+    (add-hook    'gptel-post-stream-hook       #'my-gptel-auto-scroll)
+    (add-hook    'gptel-post-response-functions #'my-gptel-goto-next-prompt)
     )
 
 ;; As a agent gptel gets a bunch of tools to work as a code assistant
