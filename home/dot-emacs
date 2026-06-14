@@ -130,12 +130,12 @@
 ;; Terminal
 (use-package ghostel
     :bind (:map global-map
-                ("C-c C-t" . my-ghostel-new)
+                ("C-c C-t" . ghostel-new)
                 ("C-c C-." . ghostel-next)
                 ("C-c C-," . ghostel-previous))
 
     :bind (:map ghostel-semi-char-mode-map
-                ("C-c C-t" . my-ghostel-new)
+                ("C-c C-t" . ghostel-new)
                 ("C-c C-." . ghostel-next)
                 ("C-c C-," . ghostel-previous)
 
@@ -151,7 +151,7 @@
                 ("C-c c" . ghostel-copy-mode)
                 ("S-<prior>" . ghostel-copy-mode)
                 ("S-<next>" . ghostel-copy-mode)
-                ("C-c k" . my-ghostel-clear-kill-history)
+                ("C-c k" . ghostel-clear-kill-history)
 
                 ;; Share buffer between terminal and emacs :/
                 ("M-y" . ghostel-yank-pop)
@@ -166,16 +166,16 @@
                 ("C-S-<tab>" . tab-bar-switch-to-prev-tab)
 
                 ;; Instantly copy any text marked with the mouse
-                ([double-mouse-1] . my-ghostel-mark-and-copy-word))
+                ([double-mouse-1] . ghostel-mark-and-copy-word))
     :ensure t
     :config
 
-    (defun my-ghostel-clear-kill-history ()
+    (defun ghostel-clear-kill-history ()
       (interactive)
       (ghostel-clear-scrollback)
       (ghostel-clear))
 
-    (defun my-ghostel-mark-and-copy-word (event)
+    (defun ghostel-mark-and-copy-word (event)
       "Mark word at mouse click and copy it to kill-ring."
       (interactive "e")
       (mouse-set-point event)
@@ -189,7 +189,7 @@
     (setq ghostel-module-auto-install 'download)
     )
 
-(defun my-ghostel-new ()
+(defun ghostel-new ()
   "Always create a NEW ghostel terminal (not switch to existing)."
   (interactive)
   (ghostel '(4)))
@@ -389,11 +389,10 @@ horizontal space evenly."
 (use-package gptel
     :ensure t
     :bind (:map global-map
-                ("C-c C-g" . gptel)
-                ("C-c C-d" . gptel-rewrite))
+                ("C-c C-g" . gptel))
     ;; Always start gptel-mode for my chats
     :bind (:map gptel-mode-map
-                ("C-c C-t" . my-ghostel-new)
+                ("C-c C-t" . ghostel-new)
                 ("C-c C-o" . gptel-menu)
                 ("C-c C-c" . gptel-send))
     :config
@@ -417,6 +416,9 @@ horizontal space evenly."
     ;; Copilot - default backend
     (setq gptel-backend (gptel-make-gh-copilot "Copilot")
           gptel-model   'claude-opus-4.7)
+
+    ;; Allow bigger claude context windows
+    (setq gptel-max-tokens 2000)
 
     (setq gptel-use-curl t)
 
