@@ -397,16 +397,15 @@ horizontal space evenly."
                 ("C-c C-c" . gptel-send))
     :config
     ;; Local LMStudio
-    (gptel-make-openai "LM Studio"
+    ;;(gptel-make-openai "LM Studio"
+    (gptel-make-anthropic  "LM Studio - Anthropic"
       :host "localhost:1234"
       :protocol "http"
-      :endpoint "/v1/chat/completions"
+      :endpoint "/v1/messages"
+      ;; :endpoint "/v1/chat/completions"
       :key "not-needed"
-      :models '(qwen/qwen3-1.7b
-                qwen/qwen3.5-9b
-                google/gemma-3-4b
-                google/gemma-4-e2b
-                google/gemma-4-e4b))
+      :models '(gemma-4-e4b
+                granite-4.1-3b))
 
     ;; Google - Gemini
     (gptel-make-gemini "Gemini"
@@ -415,10 +414,10 @@ horizontal space evenly."
 
     ;; Copilot - default backend
     (setq gptel-backend (gptel-make-gh-copilot "Copilot")
-          gptel-model   'claude-opus-4.7)
+          gptel-model   'claude-opus-4.8)
 
     ;; Allow bigger claude context windows
-    (setq gptel-max-tokens 2000)
+    (setq gptel-max-tokens 32000)
 
     (setq gptel-use-curl t)
 
