@@ -41,11 +41,14 @@
           gptel-model   'claude-opus-4.8)
 
     (setq gptel-use-curl t)
+
+    ;; Turn off tool confirmation by default
+    (setq gptel-confirm-tool-calls nil)
+
     ;; Auto-scroll while streaming, and land point on the next `### '
     ;; prompt line when the response is done. Works for every window
     ;; that shows the gptel buffer, even when that buffer isn't in
-    ;; focus (so I can keep working in another buffer while waiting).
-
+    ;; focus (so I can keep working in another buffer while waiting).    
     (defun my-gptel-auto-scroll ()
       "Gently keep point visible in all windows showing the current buffer.
 Replacement for `gptel-auto-scroll' that does not jump a whole
