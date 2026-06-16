@@ -22,23 +22,29 @@
     :config
     ;; Local LMStudio
     ;;(gptel-make-openai "LM Studio"
-    (gptel-make-anthropic  "LM Studio - Anthropic"
-      :host "localhost:1234"
-      :protocol "http"
-      :endpoint "/v1/messages"
-      ;; :endpoint "/v1/chat/completions"
-      :key "not-needed"
-      :models '(gemma-4-e4b
-                granite-4.1-3b))
+    ;; (gptel-make-anthropic  "LM Studio - Anthropic"
+    ;;   :host "localhost:1234"
+    ;;   :protocol "http"
+    ;;   :endpoint "/v1/messages"
+    ;;   ;; :endpoint "/v1/chat/completions"
+    ;;   :key "not-needed"
+    ;;   :models '(gemma-4-e4b
+    ;;             granite-4.1-3b))
 
+    ;; Llama.cpp offers an OpenAI compatible API
+    (gptel-make-openai "llama-cpp"  ; Any name
+      :stream t                     ; Stream responses
+      :protocol "http"
+      :host "localhost:8080"        ; Llama.cpp server location
+      :models '(current))           ; Any names, doesn't matter for Llama
     ;; Google - Gemini
     (gptel-make-gemini "Gemini"
       :key (auth-source-pick-first-password :host "gemini" :user "apikey")
       :stream t)
 
     ;; Copilot - default backend
-    (setq gptel-backend (gptel-make-gh-copilot "Copilot")
-          gptel-model   'claude-opus-4.8)
+    (setq gptel-backend (gptel-make-gh-copilot "Copilot" :stream t)
+          gptel-model    'claude-opus-4.8)
 
     (setq gptel-use-curl t)
 
@@ -133,17 +139,26 @@ it works even when the gptel buffer is not the selected window."
                                        buffer-file-name))
               (gptel-mode 1))))
 
-;; Strip gptel file-local variables before saving to avoid accumulation
-;; of <!-- Local Variables: ... --> blocks in chat files.
-(defun my-remove-gptel-local-vars ()
-  "Remove gptel file-local variables before saving."
-  (when (derived-mode-p 'markdown-mode)
-    (save-excursion
-      (goto-char (point-max))
-      (when (re-search-backward "^<!-- Local Variables:" nil t)
-        (delete-region (point) (point-max))))))
+;; Never let a saved response token limit govern a re-opened session.
+;;
+;; `gptel-agent' sets `gptel-max-tokens' buffer-locally (8192), and
+;; `gptel--save-state' persists that as a file-local variable in the
+;; .gptel file.  On re-open the cap is restored and can silently
+;; truncate responses.  Clearing the buffer-local value on `gptel-mode'
+;; entry makes the cap a runtime setting again (global default or the
+;; per-session menu), and because the value becomes nil the next save
+;; will `delete-file-local-variable' it -- so existing files self-heal.
+;;
+;; NOTE: We deliberately do NOT strip the whole Local Variables block.
+;; gptel updates that block in place (it does not accumulate), and it
+;; carries useful restore data (gptel--bounds, model, backend, tools).
+(defun my-gptel-reset-max-tokens ()
+  "Drop any buffer-local `gptel-max-tokens' restored from a chat file."
+  (when (and buffer-file-name
+             (string-match-p "\\.\\(gptel\\|chat\\)\\'" buffer-file-name))
+    (kill-local-variable 'gptel-max-tokens)))
 
-(add-hook 'before-save-hook #'my-remove-gptel-local-vars)
+(add-hook 'gptel-mode-hook #'my-gptel-reset-max-tokens)
 
 ;; Hides all tool blocks
 (defun gptel-hide-all-tools ()
