@@ -20,16 +20,8 @@
                 ("C-c C-o" . gptel-menu)
                 ("C-c C-c" . gptel-send))
     :config
-    ;; Local LMStudio
-    ;;(gptel-make-openai "LM Studio"
-    ;; (gptel-make-anthropic  "LM Studio - Anthropic"
-    ;;   :host "localhost:1234"
-    ;;   :protocol "http"
-    ;;   :endpoint "/v1/messages"
-    ;;   ;; :endpoint "/v1/chat/completions"
-    ;;   :key "not-needed"
-    ;;   :models '(gemma-4-e4b
-    ;;             granite-4.1-3b))
+    ;; OpenAI
+    (gptel-make-openai-oauth "OpenAI-sub")
 
     ;; Llama.cpp offers an OpenAI compatible API
     (gptel-make-openai "llama-cpp"  ; Any name
@@ -113,6 +105,28 @@ it works even when the gptel buffer is not the selected window."
  Provide code and only code as output without any additional text,
  prompt or note. Read and follow the instructions in AGENTS.md in
  the project root before proceeding.")
+
+    ;; Keep gptel's agent/skill awareness current with the working
+    ;; directory.  Skills are resolved relative to `default-directory'
+    ;; and the project root, so `M-x cd' can change which skills are in
+    ;; scope; `gptel-agent-update' rescans both agents and skills (and
+    ;; rebuilds the `Agent' tool enum and gptel-agent/gptel-plan
+    ;; presets).
+    (defun my-gptel-agent-refresh-on-cd (&rest _)
+      "Rescan gptel agents and skills after `cd' changes the directory."
+      (when (fboundp 'gptel-agent-update)
+        (condition-case err
+            (progn
+              (gptel-agent-update)
+              (when (eq this-command 'cd)
+                (message "gptel-agent: %d agents, %d skills for %s"
+                         (length gptel-agent--agents)
+                         (length gptel-agent--skills)
+                         (abbreviate-file-name default-directory))))
+          (error (message "gptel-agent refresh failed: %s"
+                          (error-message-string err))))))
+
+    (advice-add 'cd :after #'my-gptel-agent-refresh-on-cd)
     )
 
 ;; mcp requirement

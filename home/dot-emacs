@@ -124,8 +124,7 @@
 ;; Dim unfocused buffers
 (use-package auto-dim-other-buffers
     :ensure t)
-
-(auto-dim-other-buffers-mode t)
+; (auto-dim-other-buffers-mode t)
 
 ;; Terminal
 (use-package ghostel
