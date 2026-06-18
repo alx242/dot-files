@@ -23,20 +23,23 @@
     ;; OpenAI
     (gptel-make-openai-oauth "OpenAI-sub")
 
+    ;; Mistral offers an OpenAI compatible API
+    (gptel-make-openai "MistralLeChat"  ;Any name you want
+      :host "api.mistral.ai"
+      :endpoint "/v1/chat/completions"
+      :protocol "https"
+      :key (auth-source-pick-first-password :host "api.mistral.ai" :user "apikey")
+      :models '("mistral-small"))
+
     ;; Llama.cpp offers an OpenAI compatible API
     (gptel-make-openai "llama-cpp"  ; Any name
       :stream t                     ; Stream responses
       :protocol "http"
       :host "localhost:8080"        ; Llama.cpp server location
       :models '(current))           ; Any names, doesn't matter for Llama
-    ;; Google - Gemini
-    (gptel-make-gemini "Gemini"
-      :key (auth-source-pick-first-password :host "gemini" :user "apikey")
-      :stream t)
 
     ;; Copilot - default backend
-    (setq gptel-backend (gptel-make-gh-copilot "Copilot" :stream t)
-          gptel-model    'claude-opus-4.8)
+    (gptel-make-gh-copilot "Copilot" :stream t)
 
     (setq gptel-use-curl t)
 
