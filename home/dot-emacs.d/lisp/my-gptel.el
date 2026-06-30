@@ -28,7 +28,15 @@
       :stream t
       )
 
-    ;; Llama.cpp offers an OpenAI compatible API
+    ;; Mistral offers an OpenAI compatible API
+    (gptel-make-openai "Mistral"
+      :host "api.mistral.ai"
+      :endpoint "/v1/chat/completions"
+      :protocol "https"
+      :key (auth-source-pick-first-password :host "api.mistral.ai" :user "apikey")
+      :models '("mistral-small"))
+
+    ;; Ollama offers an OpenAI compatible API
     (gptel-make-openai "Local LLM"
       :stream t
       :protocol "http"
