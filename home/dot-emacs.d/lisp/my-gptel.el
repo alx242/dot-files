@@ -20,15 +20,22 @@
                 ("C-c C-o" . gptel-menu)
                 ("C-c C-c" . gptel-send))
     :config
+    ;; markdown mode left a bunch of ugly meta-comments that did not collapse
+    (setq gptel-default-mode 'org-mode)
+
     ;; OpenAI
-    (gptel-make-openai-oauth "OpenAI-sub")
+    (gptel-make-openai-oauth "OpenAI-sub"
+      :stream t
+      )
 
     ;; Llama.cpp offers an OpenAI compatible API
-    (gptel-make-openai "llama-cpp"  ; Any name
-      :stream t                     ; Stream responses
+    (gptel-make-openai "Local LLM"
+      :stream t
       :protocol "http"
-      :host "localhost:8080"        ; Llama.cpp server location
-      :models '(current))           ; Any names, doesn't matter for Llama
+      :host "localhost:8080"
+      :models '(gemma4:e4b
+                gemma4:12b))
+
     ;; Google - Gemini
     (gptel-make-gemini "Gemini"
       :key (auth-source-pick-first-password :host "gemini" :user "apikey")
@@ -36,7 +43,7 @@
 
     ;; Copilot - default backend
     (setq gptel-backend (gptel-make-gh-copilot "Copilot" :stream t)
-          gptel-model    'claude-opus-4.8)
+          gptel-model    'claude-opus-4.7)
 
     (setq gptel-use-curl t)
 
@@ -90,6 +97,20 @@ it works even when the gptel buffer is not the selected window."
     (add-hook    'gptel-post-stream-hook       #'my-gptel-auto-scroll)
     (add-hook    'gptel-post-response-functions #'my-gptel-goto-next-prompt)
     )
+
+;; Fix gptel-mode:s org-mode a bit
+(add-hook 'gptel-mode-hook
+          (lambda ()
+            (when (derived-mode-p 'org-mode)
+              (local-set-key (kbd "M-<up>") 'backward-paragraph)
+              (local-set-key (kbd "M-<down>") 'forward-paragraph)
+              (local-set-key (kbd "M-<left>") #'left-word)
+              (local-set-key (kbd "M-<right>") #'right-word)
+              (visual-line-mode 1)
+              ;; `org-startup-folded' is `showeverything', which forces drawers
+              ;; open. Re-hide them so the PROPERTIES and tools drawer is
+              ;; collapsed when opening saved chat files.
+              (org-fold-hide-drawer-all))))
 
 ;; As a agent gptel gets a bunch of tools to work as a code assistant
 (use-package gptel-agent
@@ -145,8 +166,8 @@ it works even when the gptel buffer is not the selected window."
   )
 
 ;; Make sure the chat/gptel files have gptel-mode on them
-(add-to-list 'auto-mode-alist '("\\.\\(gptel\\|chat\\)\\'" . markdown-mode))
-(add-hook 'markdown-mode-hook
+(add-to-list 'auto-mode-alist '("\\.\\(gptel\\|chat\\)\\'" . org-mode))
+(add-hook 'org-mode-hook
           (lambda ()
             (when (and buffer-file-name
                        (string-match-p "\\.\\(gptel\\|chat\\)\\'"
@@ -173,31 +194,6 @@ it works even when the gptel buffer is not the selected window."
     (kill-local-variable 'gptel-max-tokens)))
 
 (add-hook 'gptel-mode-hook #'my-gptel-reset-max-tokens)
-
-;; Hides all tool blocks
-(defun gptel-hide-all-tools ()
-  "Hide all tool sections in current gptel buffer, only if not already hidden."
-  (interactive)
-  (save-excursion
-    (goto-char (point-min))
-    (while (re-search-forward "^``` tool" nil t)
-      (goto-char (line-beginning-position))
-      (let ((already-hidden
-             (save-excursion
-               (forward-line 1)
-               (eq (get-char-property (point) 'invisible) t))))
-        (unless already-hidden
-          (gptel-markdown-cycle-block)))
-      (forward-line 1))))
-
-;; Make sure when loading old gptel session that all tool blocks are closed.
-;; Use find-file-hook so we know the buffer content is fully loaded (no timer).
-(defun my-gptel-hide-tools-on-find-file ()
-  (when (and buffer-file-name
-             (string-match-p "\\.gptel\\'" buffer-file-name)
-             (bound-and-true-p gptel-mode))
-    (gptel-hide-all-tools)))
-(add-hook 'find-file-hook #'my-gptel-hide-tools-on-find-file)
 
 (defun gptel-summarize-to-new-session ()
   "Summarize the current gptel session and start a new one with the summary."
