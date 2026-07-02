@@ -166,12 +166,18 @@ it works even when the gptel buffer is not the selected window."
 (use-package mcp
   :ensure t
   :config
+
+  ;; Installed mcp-remote with `npm install -g mcp-remote`
+  ;; Update with `npm update -g mcp-remote` when necessary
+  ;; Re-auth can be done with:
+  ;;
+  ;; mcp-remote https://mcp.atlassian.com/v1/mcp --resource
+  ;; https://sedona.atlassian.net/
   (setq mcp-hub-servers
-        '(("jira" .
-           (:command "npx"
-            :args ("-y" "mcp-remote@latest" "https://mcp.atlassian.com/v1/mcp"
-                        "--resource" "https://sedona.atlassian.net/")
-            ))))
+      '(("jira" .
+         (:command "mcp-remote"
+          :args ("https://mcp.atlassian.com/v1/mcp"
+                 "--resource" "https://sedona.atlassian.net/")))))
   )
 
 ;; Make sure the chat/gptel files have gptel-mode on them

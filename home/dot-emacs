@@ -63,8 +63,14 @@
     :ensure t
     :demand t
     :bind (:map global-map
+                ("C-x C-g" . magit-status-here)
                 ("C-x C-l" . magit-log-head))
-    )
+    :config
+    ;; Ensure the globalized magit-auto-revert-mode is defined immediately.
+    ;; Its normal autoload-based initialization can be skipped when another
+    ;; package (e.g. forge) pulls magit in before after-init-hook runs,
+    ;; leaving `magit-auto-revert-mode' unbound and breaking refresh.
+    (require 'magit-autorevert))
 
 ;; Auto-close compilation window in case compilation is successful (slight
 ;; delay)
@@ -663,23 +669,21 @@ by using nxml's indentation rules."
 ;; Some static face parts
 (setq my_font "unscii-16:antialias=false:hinting=true:autohint=false")
 (set-face-attribute 'default nil :font my_font)
-(set-face-attribute 'fixed-pitch nil :font my_font)
-(set-face-attribute 'variable-pitch nil :font my_font)
-;(set-face-attribute 'tab-bar nil :font my_font)
-(set-face-attribute 'tab-bar nil
-                    :background "#3b4252")  ; background
+;; Borrow whatever color the active theme uses for these semantic
+;; roles — automatically updates on theme switch, no hooks required.
+(set-face-attribute 'bold nil
+                     :weight 'normal :slant 'normal
+                     :inherit 'font-lock-keyword-face)
 
-(set-face-attribute 'tab-bar-tab nil
-                    :background "#5e81ac"   ; active tab
-                    :foreground "#eceff4")
+(set-face-attribute 'italic nil
+                     :weight 'normal :slant 'normal
+                     :inherit 'font-lock-string-face)
 
-(set-face-attribute 'tab-bar-tab-inactive nil
-                    :background "#4c566a"   ; inactive tabs
-                    :foreground "#d8dee9")
-(set-face-attribute 'help-key-binding nil :font my_font)
-(set-face-attribute 'help-for-help-header nil :font my_font)
-(set-face-attribute 'fixed-pitch-serif nil :font my_font)
-(set-face-background 'trailing-whitespace "red")
+(set-face-attribute 'bold-italic nil
+                     :weight 'normal :slant 'normal
+                     :inherit 'font-lock-constant-face)
+
+(setq x-underline-at-descent-line t)
 
 ;; Put all the custom set parts in a seperate file
 (setq custom-file (expand-file-name "~/.emacs-custom.el"))
