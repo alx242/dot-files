@@ -109,6 +109,7 @@ it works even when the gptel buffer is not the selected window."
 ;; Fix gptel-mode:s org-mode a bit
 (add-hook 'gptel-mode-hook
           (lambda ()
+            (gptel-highlight-mode 1)
             (when (derived-mode-p 'org-mode)
               (local-set-key (kbd "M-<up>") 'backward-paragraph)
               (local-set-key (kbd "M-<down>") 'forward-paragraph)

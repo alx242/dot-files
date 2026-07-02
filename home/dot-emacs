@@ -188,10 +188,21 @@
     (setq ghostel-module-auto-install 'download)
     )
 
+(defun my-ghostel--display-in-new-window (buffer alist)
+  "Display BUFFER in a freshly split window, never reusing an existing one.
+Splits the root window so a new session cannot replace another window."
+  (let* ((root (frame-root-window))
+         (window (or (split-window root nil 'right)
+                     (split-window root nil 'below))))
+    (window--display-buffer buffer window 'window alist)))
+
 (defun ghostel-new ()
-  "Always create a NEW ghostel terminal (not switch to existing)."
+  "Always create a NEW ghostel terminal in a new window."
   (interactive)
-  (ghostel '(4)))
+  (let ((display-buffer-overriding-action
+         '((my-ghostel--display-in-new-window)
+           (inhibit-same-window . t))))
+    (ghostel '(4))))
 
 ;; Any selection when using ghostel is copied to the kill-ring
 (add-hook 'ghostel-mode-hook
@@ -200,6 +211,32 @@
             ;; Allow clickable links
             (goto-address-mode t)
             (setq-local mouse-drag-copy-region t)))
+
+(defun my-ghostel-close-tab-if-last-window ()
+  "Close windows showing the killed ghostel buffer, or its tab if alone.
+Runs from buffer-local `kill-buffer-hook'.  If the ghostel buffer is the
+only window in a tab and more than one tab exists, close that tab instead
+of just deleting the window."
+  (let ((buffer (current-buffer))
+        (tabs (tab-bar-tabs)))
+    (dolist (window (get-buffer-window-list buffer 'no-minibuf t))
+      (when (window-live-p window)
+        (let* ((frame (window-frame window))
+               (frame-windows (window-list frame 'no-minibuf)))
+          (cond
+           ;; Sole window in its tab, and other tabs exist: close the tab.
+           ((and (= 1 (length frame-windows))
+                 (eq (car frame-windows) window)
+                 (> (length tabs) 1))
+            (with-selected-frame frame (tab-bar-close-tab)))
+           ;; Otherwise delete the window if it's not the only one.
+           ((> (length frame-windows) 1)
+            (delete-window window))))))))
+
+(add-hook 'ghostel-mode-hook
+          (lambda ()
+            (add-hook 'kill-buffer-hook
+                      #'my-ghostel-close-tab-if-last-window nil t)))
 
 (with-eval-after-load 'ghostel
   (define-key ghostel-readonly-mode-map [down-mouse-1] 'mouse-drag-region)
