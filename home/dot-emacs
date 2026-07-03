@@ -70,7 +70,12 @@
     ;; Its normal autoload-based initialization can be skipped when another
     ;; package (e.g. forge) pulls magit in before after-init-hook runs,
     ;; leaving `magit-auto-revert-mode' unbound and breaking refresh.
-    (require 'magit-autorevert))
+    (require 'magit-autorevert)
+    ;; Speed up magit-status: skip the tags header, which shells out to
+    ;; `git describe --long --tags' — slow (>1s) in repos with many tags.
+    ;; Use `M-x magit-show-refs' if you need tag info.
+    (remove-hook 'magit-status-headers-hook 'magit-insert-tags-header))
+
 
 ;; Auto-close compilation window in case compilation is successful (slight
 ;; delay)
