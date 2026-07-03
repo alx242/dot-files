@@ -195,6 +195,10 @@
           (set-mark (cdr bounds))
           (kill-ring-save (car bounds) (cdr bounds)))))
 
+    ;; Make sure host that is not aware og ghostel works with ordinary input
+    ;; chars
+    (setq ghostel-ssh-install-terminfo t)
+
     ;; Make sure to get latest native module compiled
     (setq ghostel-module-auto-install 'download)
     )
