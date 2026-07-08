@@ -24,9 +24,6 @@
         name = Alexander Schüssler
         email = alex@xalx.net
 
-[includeIf "gitdir:~/work/"]
-        path = ~/.work.gitconfig
-
 [color]
         ui = true
 [push]
@@ -43,3 +40,9 @@
 
 [url "git@github.com:/tailf"]
     insteadOf = https://github.com/tailf
+
+[github]
+	user = alx242
+
+[includeIf "gitdir:~/work/"]
+        path = ~/.work.gitconfig
