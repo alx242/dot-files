@@ -35,6 +35,9 @@
 ;; (setq ns-use-native-fullscreen nil)
 (global-set-key (kbd "C-c F") 'toggle-frame-fullscreen)
 
+;; Prefer iBuffer
+(global-set-key (kbd "C-x C-b") #'ibuffer)
+
 ;; Own mode-line to display time
 (setq mode-line-end-spaces
       '(:eval (propertize (format-time-string " %H:%M ")
