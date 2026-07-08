@@ -74,8 +74,15 @@
     ;; Speed up magit-status: skip the tags header, which shells out to
     ;; `git describe --long --tags' — slow (>1s) in repos with many tags.
     ;; Use `M-x magit-show-refs' if you need tag info.
-    (remove-hook 'magit-status-headers-hook 'magit-insert-tags-header))
-
+    (remove-hook 'magit-status-headers-hook 'magit-insert-tags-header)
+    ;; Don't auto-refresh the status buffer after every magit command.
+    ;; On big monorepos (e.g. trunk) a full refresh is ~17s cold / ~6s warm,
+    ;; which makes every action feel like a hang.  Explicit `g' still works.
+    (setq magit-refresh-status-buffer nil)
+    ;; The "or-recent" variant runs `git log' for recent commits even when
+    ;; nothing is unpushed — ~5s on large histories.  Show only actual unpushed.
+    (remove-hook 'magit-status-sections-hook 'magit-insert-unpushed-to-upstream-or-recent)
+    (add-hook    'magit-status-sections-hook 'magit-insert-unpushed-to-upstream t))
 
 ;; Auto-close compilation window in case compilation is successful (slight
 ;; delay)
@@ -259,26 +266,18 @@ of just deleting the window."
   (define-key ghostel-readonly-mode-map [drag-mouse-1] 'mouse-set-region))
 
 (defun my-resize-non-term-windows-to-80 ()
-  "Resize non-terminal windows to 80 columns and balance the rest.
-Terminal-like windows (ghostel/vterm/gptel) share the remaining
-horizontal space evenly."
+  "Resize non-terminal windows to 80 columns.
+Terminal-like windows (ghostel/vterm/gptel) are left untouched and
+absorb the remaining horizontal space."
   (interactive)
   (let ((target-width 80))
-    ;; Clear out former preserved size to start fresh
-    (dolist (window (window-list))
-      (window-preserve-size window t nil))
-    ;; Set non-terminal windows to 80 chars and mark size as preserved
     (dolist (window (window-list))
       (with-current-buffer (window-buffer window)
         (unless (or (derived-mode-p 'ghostel-mode 'vterm-mode)
                     (bound-and-true-p gptel-mode))
           (let ((delta (- target-width (window-width window))))
             (unless (zerop delta)
-              (ignore-errors (window-resize window delta t))))
-          (window-preserve-size window t t))))
-    ;; balance-windows respects preserved sizes, so only terminal-like
-    ;; (ghostel/vterm/gptel) windows end up sharing the remaining space evenly.
-    (balance-windows)))
+              (ignore-errors (window-resize window delta t)))))))))
 
 ;; Convert region
 (defun dos2unix-region (start end)
