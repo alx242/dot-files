@@ -677,7 +677,7 @@ by using nxml's indentation rules."
                                (with-current-buffer buf
                                  (my/ccrypt-autosave-and-kill-buffer))))))
 
-;; Some static face parts
+;; Some static face parts. This is configured to remove all anti-aliasing.
 (setq my_font "unscii-16:antialias=false:hinting=true:autohint=false")
 (set-face-attribute 'default nil :font my_font)
 ;; Borrow whatever color the active theme uses for these semantic
