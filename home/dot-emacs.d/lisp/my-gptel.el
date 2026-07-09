@@ -107,6 +107,14 @@ it works even when the gptel buffer is not the selected window."
     )
 
 ;; Fix gptel-mode:s org-mode a bit
+(defun my-gptel-fold-tool-blocks ()
+  "Fold every #+begin_tool ... #+end_tool block in the buffer.
+Leaves #+begin_src and #+begin_example blocks untouched."
+  (save-excursion
+    (goto-char (point-min))
+    (while (re-search-forward "^[ \t]*#\\+begin_tool\\b" nil t)
+      (org-fold-hide-block-toggle 'hide))))
+
 (add-hook 'gptel-mode-hook
           (lambda ()
             (gptel-highlight-mode 1)
@@ -116,10 +124,12 @@ it works even when the gptel buffer is not the selected window."
               (local-set-key (kbd "M-<left>") #'left-word)
               (local-set-key (kbd "M-<right>") #'right-word)
               (visual-line-mode 1)
-              ;; `org-startup-folded' is `showeverything', which forces drawers
-              ;; open. Re-hide them so the PROPERTIES and tools drawer is
-              ;; collapsed when opening saved chat files.
-              (org-fold-hide-drawer-all))))
+              ;; `org-startup-folded' is `showeverything', which forces
+              ;; drawers and blocks open. Re-hide the PROPERTIES drawer and
+              ;; only the #+begin_tool ... #+end_tool blocks so that
+              ;; #+begin_src/#+begin_example blocks stay visible.
+              (org-fold-hide-drawer-all)
+              (my-gptel-fold-tool-blocks))))
 
 ;; As a agent gptel gets a bunch of tools to work as a code assistant
 (use-package gptel-agent
