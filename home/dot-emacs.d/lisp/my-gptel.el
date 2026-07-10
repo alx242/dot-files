@@ -74,8 +74,20 @@
       :stream t)
 
     ;; Copilot - default backend
-    (setq gptel-backend (gptel-make-gh-copilot "Copilot" :stream t)
-          gptel-model    'claude-opus-4.7)
+    (gptel-make-gh-copilot "Copilot" :stream t)
+
+    ;; Pick the correct model for this emacs session once at startup
+    (defun gptel-pick-model-once (&rest _)
+      "Prompt for a gptel model the first time gptel is launched."
+      (let* ((models (gptel-backend-models gptel-backend))
+             (choice (completing-read
+                      "Model: "
+                      (mapcar (lambda (m) (format "%s" m)) models)
+                      nil t)))
+        (setq gptel-model (intern choice)))
+      (advice-remove 'gptel #'gptel-pick-model-once))
+
+    (advice-add 'gptel :before #'gptel-pick-model-once)
 
     (setq gptel-use-curl t)
 
