@@ -28,6 +28,30 @@
       :stream t
       )
 
+    (gptel-make-openai "MammouthAI"
+      :host "api.mammouth.ai"
+      :key (auth-source-pick-first-password :host "api.mammouth.ai" :user "apikey")
+      :models '("glm-5"
+                "glm-5.2"
+                "gpt-5.5"
+                "gemini-3.5-flash"
+                "gpt-5.3-codex"
+                "deepseek-v4-flash"
+                "deepseek-v4-pro"
+                "kimi-k2.6"
+                "qwen3-coder"
+                "qwen3-coder-flash"
+                "qwen3.5-9b"
+                "qwen3.7-plus"
+                "qwen3.7-max"
+                "claude-sonnet-4"
+                "claude-sonnet-4-5"
+                "claude-sonnet-4-6"
+                "claude-opus-4-6"
+                "claude-opus-4-7"
+                "claude-opus-4-8"
+                ))
+
     ;; Mistral offers an OpenAI compatible API
     (gptel-make-openai "Mistral"
       :host "api.mistral.ai"
