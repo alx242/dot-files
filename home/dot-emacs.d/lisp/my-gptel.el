@@ -66,7 +66,32 @@
       :endpoint "/v1/chat/completions"
       :protocol "https"
       :key (auth-source-pick-first-password :host "api.mistral.ai" :user "apikey")
-      :models '("mistral-small"))
+      :models '("devstral-medium-latest"
+                "mistral-medium-latest"
+                "mistral-medium-3-5"
+                "mistral-large-latest"
+                )
+      )
+
+    (gptel-make-openai "BergetAI"
+      :host "api.berget.ai"
+      :endpoint "/v1/chat/completions"
+      :key (auth-source-pick-first-password :host "api.berget.ai" :user "apikey")
+      :stream t
+      :models '("openai/gpt-oss"
+                "mistral/medium-3.5"
+                "mistral/small"
+                "zai/glm-4.7" ; deepseek-r1
+                "moonshot/kimi-2.6"
+                "google/gemma4"
+                "BAAI/bge-reranker-base"
+                "kb/whisper"
+                "nb/whisper"
+                "openai/whisper-large-v3"
+                "meta/llama-3.3"
+                "meta/llama-3.1"
+                )
+      )
 
     ;; Ollama offers an OpenAI compatible API
     (gptel-make-openai "Local"
