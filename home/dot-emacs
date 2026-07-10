@@ -87,6 +87,23 @@
     (remove-hook 'magit-status-sections-hook 'magit-insert-unpushed-to-upstream-or-recent)
     (add-hook    'magit-status-sections-hook 'magit-insert-unpushed-to-upstream t))
 
+;; GitHub/GitLab PR + issue integration for Magit.
+;; The environment-specific filter (author = your GH username) lives in
+;; ~/.emacs-custom.el under `forge-status-buffer-default-topic-filters'.
+(use-package forge
+    :ensure t
+    :after magit
+    :config
+    ;; Don't insert PR/issue/discussion sections into magit-status.
+    ;; On large repos the DB query is ~6s per refresh.  Access on demand via
+    ;; the keys below or `forge-list-pullreqs' / `forge-list-issues'.
+    ;; (remove-hook 'magit-status-sections-hook 'forge-insert-pullreqs)
+    ;; (remove-hook 'magit-status-sections-hook 'forge-insert-issues)
+    ;; (remove-hook 'magit-status-sections-hook 'forge-insert-discussions)
+    (with-eval-after-load 'magit
+      (define-key magit-status-mode-map (kbd "N") #'forge-list-pullreqs)
+      (define-key magit-status-mode-map (kbd "I") #'forge-list-issues)))
+
 ;; Auto-close compilation window in case compilation is successful (slight
 ;; delay)
 (defun compile-notify-and-close (buffer string)
@@ -318,7 +335,6 @@ of just deleting the window."
 (global-set-key (kbd "C-<tab>") 'tab-bar-switch-to-next-tab)
 (global-set-key (kbd "C-S-<tab>") 'tab-bar-switch-to-prev-tab)
 
-
 ;; * * * Moving around window-buffers * * *
 
 ;; (global-set-key (kbd "C-t") 'customize-face)
@@ -328,8 +344,6 @@ of just deleting the window."
 (global-set-key (kbd "M-o") 'other-window)
 (global-set-key (kbd "M-i") 'previous-window-any-frame)
 (global-set-key (kbd "C-x z") 'tab-window-detach)
-
-
 
 ;; Swap windows meta+super+arrow
 (global-set-key (kbd "M-s-<left>")  'windmove-swap-states-left)
