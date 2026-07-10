@@ -268,19 +268,19 @@ of just deleting the window."
   (define-key ghostel-readonly-mode-map [mouse-1] 'mouse-set-point)
   (define-key ghostel-readonly-mode-map [drag-mouse-1] 'mouse-set-region))
 
-(defun my-resize-non-term-windows-to-80 ()
-  "Resize non-terminal windows to 80 columns.
-Terminal-like windows (ghostel/vterm/gptel) are left untouched and
-absorb the remaining horizontal space."
-  (interactive)
-  (let ((target-width 80))
-    (dolist (window (window-list))
-      (with-current-buffer (window-buffer window)
-        (unless (or (derived-mode-p 'ghostel-mode 'vterm-mode)
-                    (bound-and-true-p gptel-mode))
-          (let ((delta (- target-width (window-width window))))
-            (unless (zerop delta)
-              (ignore-errors (window-resize window delta t)))))))))
+;; (defun my-resize-non-term-windows-to-80 ()
+;;   "Resize non-terminal windows to 80 columns.
+;; Terminal-like windows (ghostel/vterm/gptel) are left untouched and
+;; absorb the remaining horizontal space."
+;;   (interactive)
+;;   (let ((target-width 80))
+;;     (dolist (window (window-list))
+;;       (with-current-buffer (window-buffer window)
+;;         (unless (or (derived-mode-p 'ghostel-mode 'vterm-mode)
+;;                     (bound-and-true-p gptel-mode))
+;;           (let ((delta (- target-width (window-width window))))
+;;             (unless (zerop delta)
+;;               (ignore-errors (window-resize window delta t)))))))))
 
 ;; Convert region
 (defun dos2unix-region (start end)
@@ -356,7 +356,7 @@ absorb the remaining horizontal space."
 (global-set-key (kbd "s-k") 'kill-buffer)
 (global-set-key (kbd "s-b") 'switch-to-buffer)
 ;; (global-set-key (kbd "s-.") 'maximize-window)
-(global-set-key (kbd "s-.") 'my-resize-non-term-windows-to-80)
+;; (global-set-key (kbd "s-.") 'my-resize-non-term-windows-to-80)
 (global-set-key (kbd "s-,") 'balance-windows)
 (global-set-key (kbd "s-r") 'rotate-frame-clockwise)
 
@@ -700,3 +700,9 @@ by using nxml's indentation rules."
 (setq custom-file (expand-file-name "~/.emacs-custom.el"))
 (when (file-exists-p custom-file)
   (load custom-file))
+
+;; Prettier package manager (will replace package-list-packages)
+(use-package paradox
+  :ensure t
+  :config
+  (paradox-enable))
