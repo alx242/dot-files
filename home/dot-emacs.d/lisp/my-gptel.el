@@ -12,8 +12,8 @@
 ;; LLM done right
 (use-package gptel
     :ensure t
-    :bind (:map global-map
-                ("C-c C-g" . gptel))
+    ;; :bind (:map global-map
+    ;;             ("C-x C-g" . gptel))
     ;; Always start gptel-mode for my chats
     :bind (:map gptel-mode-map
                 ("C-c C-t" . ghostel-new)
@@ -24,11 +24,11 @@
     (setq gptel-default-mode 'org-mode)
 
     ;; OpenAI
-    (gptel-make-openai-oauth "OpenAI-sub"
+    (gptel-make-openai-oauth "Codex"
       :stream t
       )
 
-    (gptel-make-openai "MammouthAI"
+    (gptel-make-openai "Mammouth"
       :host "api.mammouth.ai"
       :key (auth-source-pick-first-password :host "api.mammouth.ai" :user "apikey")
       :models '("glm-5"
@@ -61,7 +61,7 @@
       :models '("mistral-small"))
 
     ;; Ollama offers an OpenAI compatible API
-    (gptel-make-openai "Local LLM"
+    (gptel-make-openai "Local"
       :stream t
       :protocol "http"
       :host "localhost:8080"
@@ -170,9 +170,9 @@ Leaves #+begin_src and #+begin_example blocks untouched."
 ;; As a agent gptel gets a bunch of tools to work as a code assistant
 (use-package gptel-agent
     :bind (:map global-map
-                ("C-c C-a" . gptel-agent))
+                ("C-x C-a" . gptel-agent))
     :bind (:map gptel-mode-map
-                ("C-c C-a" . gptel-agent))
+                ("C-x C-a" . gptel-agent))
     :ensure t
     :demand t ; load directly to get access to tools
     :config
