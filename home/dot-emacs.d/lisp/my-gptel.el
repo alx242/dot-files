@@ -24,32 +24,40 @@
     (setq gptel-default-mode 'org-mode)
 
     ;; OpenAI
-    (gptel-make-openai-oauth "Codex"
-      :stream t
-      )
+    (setq gptel-backend (gptel-make-openai-oauth "Codex"
+                          :stream t
+                          :models '(gpt-5.2
+                                    gpt-5.3-codex
+                                    gpt-5.3-codex-spark
+                                    gpt-5.4-mini
+                                    gpt-5.4
+                                    gpt-5.5
+                                    gpt-5.6-sol
+                                    gpt-5.6-terra
+                                    gpt-5.6-luna)))
 
     (gptel-make-openai "Mammouth"
       :host "api.mammouth.ai"
       :key (auth-source-pick-first-password :host "api.mammouth.ai" :user "apikey")
-      :models '("glm-5"
-                "glm-5.2"
-                "gpt-5.5"
-                "gemini-3.5-flash"
-                "gpt-5.3-codex"
-                "deepseek-v4-flash"
-                "deepseek-v4-pro"
-                "kimi-k2.6"
-                "qwen3-coder"
-                "qwen3-coder-flash"
-                "qwen3.5-9b"
-                "qwen3.7-plus"
-                "qwen3.7-max"
-                "claude-sonnet-4"
-                "claude-sonnet-4-5"
-                "claude-sonnet-4-6"
-                "claude-opus-4-6"
-                "claude-opus-4-7"
-                "claude-opus-4-8"
+      :models '(glm-5
+                glm-5.2
+                gpt-5.5
+                gemini-3.5-flash
+                gpt-5.3-codex
+                deepseek-v4-flash
+                deepseek-v4-pro
+                kimi-k2.6
+                qwen3-coder
+                qwen3-coder-flash
+                qwen3.5-9b
+                qwen3.7-plus
+                qwen3.7-max
+                claude-sonnet-4
+                claude-sonnet-4-5
+                claude-sonnet-4-6
+                claude-opus-4-6
+                claude-opus-4-7
+                claude-opus-4-8
                 ))
 
     ;; Mistral offers an OpenAI compatible API
@@ -91,6 +99,15 @@
 
     (setq gptel-use-curl t)
 
+    ;; Create Codex buffers clean from gptel-max-tokens warning
+    (defun gptel-disable-max-tokens-for-codex (&rest _)
+      (when (and (boundp 'gptel-backend)
+                 (equal (gptel-backend-name gptel-backend) "Codex")
+                 (local-variable-p 'gptel-max-tokens))
+        (kill-local-variable 'gptel-max-tokens)))
+
+    (advice-add 'gptel-send :before #'gptel-disable-max-tokens-for-codex)
+    
     ;; Turn off tool confirmation by default
     (setq gptel-confirm-tool-calls nil)
 
