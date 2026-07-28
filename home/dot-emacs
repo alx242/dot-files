@@ -408,7 +408,8 @@ of just deleting the window."
 (vertico-mode)
 
 ;; * * * Encrypted files * * *
-(require 'ps-ccrypt)
+;; Only load if it exists
+(require 'ps-ccrypt nil t)
 
 ;; * * * Yang * * *
 (use-package yang-mode
