@@ -21,77 +21,41 @@
                 ("C-c C-c" . gptel-send))
     :config
     ;; markdown mode left a bunch of ugly meta-comments that did not collapse
-    (setq gptel-default-mode 'org-mode)
+    ;; (setq gptel-default-mode 'org-mode)
 
     ;; OpenAI
-    (setq gptel-backend (gptel-make-openai-oauth "Codex"
-                          :stream t
-                          :models '(gpt-5.2
-                                    gpt-5.3-codex
-                                    gpt-5.3-codex-spark
-                                    gpt-5.4-mini
-                                    gpt-5.4
-                                    gpt-5.5
-                                    gpt-5.6-sol
-                                    gpt-5.6-terra
-                                    gpt-5.6-luna)))
+    (gptel-make-openai-oauth "Codex"
+      :stream t)
 
-    (gptel-make-openai "Mammouth"
-      :host "api.mammouth.ai"
-      :key (auth-source-pick-first-password :host "api.mammouth.ai" :user "apikey")
-      :models '(glm-5
-                glm-5.2
-                gpt-5.5
-                gemini-3.5-flash
-                gpt-5.3-codex
-                deepseek-v4-flash
-                deepseek-v4-pro
-                kimi-k2.6
-                qwen3-coder
-                qwen3-coder-flash
-                qwen3.5-9b
-                qwen3.7-plus
-                qwen3.7-max
-                claude-sonnet-4
-                claude-sonnet-4-5
-                claude-sonnet-4-6
-                claude-opus-4-6
-                claude-opus-4-7
-                claude-opus-4-8
-                ))
+    (setq gptel-backend
+          (gptel-make-openai "Mammouth"
+            :host "api.mammouth.ai"
+            :key (auth-source-pick-first-password :host "api.mammouth.ai" :user "apikey")
+            :models '(glm-5
+                      glm-5.2
 
-    ;; Mistral offers an OpenAI compatible API
-    (gptel-make-openai "Mistral"
-      :host "api.mistral.ai"
-      :endpoint "/v1/chat/completions"
-      :protocol "https"
-      :key (auth-source-pick-first-password :host "api.mistral.ai" :user "apikey")
-      :models '("devstral-medium-latest"
-                "mistral-medium-latest"
-                "mistral-medium-3-5"
-                "mistral-large-latest"
-                )
-      )
+                      gpt-5.5
+                      gpt-5.6-luna
+                      gpt-5.6-sol
+                      gpt-5.6-terra
+                      
+                      gemini-3.5-flash
 
-    (gptel-make-openai "BergetAI"
-      :host "api.berget.ai"
-      :endpoint "/v1/chat/completions"
-      :key (auth-source-pick-first-password :host "api.berget.ai" :user "apikey")
-      :stream t
-      :models '("openai/gpt-oss"
-                "mistral/medium-3.5"
-                "mistral/small"
-                "zai/glm-4.7" ; deepseek-r1
-                "moonshot/kimi-2.6"
-                "google/gemma4"
-                "BAAI/bge-reranker-base"
-                "kb/whisper"
-                "nb/whisper"
-                "openai/whisper-large-v3"
-                "meta/llama-3.3"
-                "meta/llama-3.1"
-                )
-      )
+                      gpt-5.3-codex
+
+                      deepseek-v4-flash
+                      deepseek-v4-pro
+
+                      kimi-k3
+
+                      claude-sonnet-4-5
+                      claude-sonnet-4-6
+                      claude-sonnet-5
+                      claude-opus-4-6
+                      claude-opus-4-7
+                      claude-opus-4-8
+                      ))
+          )
 
     ;; Ollama offers an OpenAI compatible API
     (gptel-make-openai "Local"
@@ -101,14 +65,8 @@
       :models '(gemma4:e4b
                 gemma4:12b))
 
-    ;; Google - Gemini
-    (gptel-make-gemini "Gemini"
-      :key (auth-source-pick-first-password :host "gemini" :user "apikey")
-      :stream t)
-
     ;; Copilot - default backend
     (gptel-make-gh-copilot "Copilot" :stream t)
-
     ;; Pick the correct model for this emacs session once at startup
     (defun gptel-pick-model-once (&rest _)
       "Prompt for a gptel model the first time gptel is launched."
@@ -196,7 +154,7 @@ Leaves #+begin_src and #+begin_example blocks untouched."
 (add-hook 'gptel-mode-hook
           (lambda ()
             (gptel-highlight-mode 1)
-            (when (derived-mode-p 'org-mode)
+            (when (derived-mode-p 'markdown-mode)
               (local-set-key (kbd "M-<up>") 'backward-paragraph)
               (local-set-key (kbd "M-<down>") 'forward-paragraph)
               (local-set-key (kbd "M-<left>") #'left-word)
@@ -269,8 +227,8 @@ Leaves #+begin_src and #+begin_example blocks untouched."
   )
 
 ;; Make sure the chat/gptel files have gptel-mode on them
-(add-to-list 'auto-mode-alist '("\\.\\(gptel\\|chat\\)\\'" . org-mode))
-(add-hook 'org-mode-hook
+(add-to-list 'auto-mode-alist '("\\.\\(gptel\\|chat\\)\\'" . markdown-mode))
+(add-hook 'markdown-mode-hook
           (lambda ()
             (when (and buffer-file-name
                        (string-match-p "\\.\\(gptel\\|chat\\)\\'"
