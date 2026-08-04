@@ -36,7 +36,6 @@ stow -d "$SRCDIR" -t "$HOME" --dotfiles -R home
 
 # starship.toml -> ~/.config/starship.toml
 backup_if_regular "$HOME/.config/starship.toml"
-backup_if_regular "$HOME/.config/ghostty/config"
 stow -d "$SRCDIR" -t "$HOME/.config" -R config
 
 # urlopen -> ~/.local/bin/urlopen
