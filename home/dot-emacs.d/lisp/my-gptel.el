@@ -21,32 +21,30 @@
                 ("C-c C-c" . gptel-send))
     :config
     ;; markdown mode left a bunch of ugly meta-comments that did not collapse
-    ;; (setq gptel-default-mode 'org-mode)
+    (setq gptel-default-mode 'org-mode)
 
     ;; OpenAI
     (gptel-make-openai-oauth "Codex"
       :stream t)
 
-    (setq gptel-backend
-          (gptel-make-openai "Mammouth"
-            :host "api.mammouth.ai"
-            :key (auth-source-pick-first-password :host "api.mammouth.ai" :user "apikey")
-            :models '(gpt-5.5
-                      gpt-5.6-luna
-                      gpt-5.6-sol
-                      gpt-5.6-terra
-                      
-                      deepseek-v4-flash
-                      deepseek-v4-pro
+    (gptel-make-openai "Mammouth"
+      :host "api.mammouth.ai"
+      :key (auth-source-pick-first-password :host "api.mammouth.ai" :user "apikey")
+      :models '(gpt-5.5
+                gpt-5.6-luna
+                gpt-5.6-sol
+                gpt-5.6-terra
 
-                      kimi-k3
+                deepseek-v4-flash
+                deepseek-v4-pro
 
-                      claude-sonnet-4-6
-                      claude-sonnet-5
-                      claude-opus-4-7
-                      claude-opus-4-8
-                      ))
-          )
+                kimi-k3
+
+                claude-sonnet-4-6
+                claude-sonnet-5
+                claude-opus-4-7
+                claude-opus-4-8
+                ))
 
     ;; Swedish AI provider
     (gptel-make-openai "BergetAI"
@@ -68,7 +66,9 @@
                 gemma4:12b))
 
     ;; Copilot - default backend
-    (gptel-make-gh-copilot "Copilot" :stream t)
+    (setq gptel-backend
+          (gptel-make-gh-copilot "Copilot" :stream t)
+          )
     ;; Pick the correct model for this emacs session once at startup
     (defun gptel-pick-model-once (&rest _)
       "Prompt for a gptel model the first time gptel is launched."
@@ -156,7 +156,7 @@ Leaves #+begin_src and #+begin_example blocks untouched."
 (add-hook 'gptel-mode-hook
           (lambda ()
             (gptel-highlight-mode 1)
-            (when (derived-mode-p 'markdown-mode)
+            (when (derived-mode-p 'org-mode)
               (local-set-key (kbd "M-<up>") 'backward-paragraph)
               (local-set-key (kbd "M-<down>") 'forward-paragraph)
               (local-set-key (kbd "M-<left>") #'left-word)
@@ -229,8 +229,8 @@ Leaves #+begin_src and #+begin_example blocks untouched."
   )
 
 ;; Make sure the chat/gptel files have gptel-mode on them
-(add-to-list 'auto-mode-alist '("\\.\\(gptel\\|chat\\)\\'" . markdown-mode))
-(add-hook 'markdown-mode-hook
+(add-to-list 'auto-mode-alist '("\\.\\(gptel\\|chat\\)\\'" . org-mode))
+(add-hook 'org-mode-hook
           (lambda ()
             (when (and buffer-file-name
                        (string-match-p "\\.\\(gptel\\|chat\\)\\'"

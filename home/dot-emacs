@@ -18,6 +18,14 @@
 ;; (global-set-key (kbd "<C-wheel-up>") 'tab-bar-switch-to-next-tab)
 ;; (global-set-key (kbd "<C-wheel-down>") 'tab-bar-switch-to-prev-tab)
 
+;; Emacs in terminal
+(xterm-mouse-mode 1)
+(setq mouse-autoselect-window t)   ;; optional
+
+(use-package clipetty
+    :ensure t
+    :hook (after-init . global-clipetty-mode))
+
 ;; Auto-save scratch buffer
 (use-package persistent-scratch
   :ensure t
@@ -67,7 +75,7 @@
     :demand t
     :bind (:map global-map
                 ("C-x C-g" . magit-status-here)
-                ("C-x C-l" . magit-log-head))
+                ("C-x C-l" . magit-log))
     :config
     ;; Ensure the globalized magit-auto-revert-mode is defined immediately.
     ;; Its normal autoload-based initialization can be skipped when another
