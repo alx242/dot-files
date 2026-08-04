@@ -75,7 +75,7 @@
     :demand t
     :bind (:map global-map
                 ("C-x C-g" . magit-status-here)
-                ("C-x C-l" . magit-log))
+                ("C-x C-l" . magit-log-head))
     :config
     ;; Ensure the globalized magit-auto-revert-mode is defined immediately.
     ;; Its normal autoload-based initialization can be skipped when another
@@ -375,10 +375,10 @@ of just deleting the window."
 (use-package transpose-frame
    :ensure t)
 
-(global-set-key (kbd "s-k") 'kill-buffer)
-(global-set-key (kbd "s-b") 'switch-to-buffer)
-(global-set-key (kbd "s-.") 'balance-windows-area)
-(global-set-key (kbd "s-,") 'balance-windows)
+;; (global-set-key (kbd "s-k") 'kill-buffer)
+;; (global-set-key (kbd "s-b") 'switch-to-buffer)
+(global-set-key (kbd "C-x .") 'balance-windows-area)
+(global-set-key (kbd "C-x ,") 'balance-windows)
 (global-set-key (kbd "s-r") 'rotate-frame-clockwise)
 
 ;; Double click borders to balance windows
