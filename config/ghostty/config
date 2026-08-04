@@ -16,3 +16,4 @@ keybind = cmd+down=goto_split:down
 cursor-style = block
 cursor-style-blink = true
 shell-integration-features = no-cursor
+window-title-font-family = unscii
