@@ -1,0 +1,18 @@
+font-family = unscii
+font-style = 16-full
+font-size = 16
+bold-is-bright = true
+# font-style-bold = false
+font-family-bold-italic = false
+
+macos-option-as-alt = left
+
+clipboard-write = allow
+clipboard-read = allow
+keybind = cmd+left=goto_split:left
+keybind = cmd+right=goto_split:right
+keybind = cmd+up=goto_split:up
+keybind = cmd+down=goto_split:down
+cursor-style = block
+cursor-style-blink = true
+shell-integration-features = no-cursor
