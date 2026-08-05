@@ -22,6 +22,11 @@
 (xterm-mouse-mode 1)
 (setq mouse-autoselect-window t)   ;; optional
 
+;; A bit more lean display
+(when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+(when (fboundp 'tool-bar-mode)   (tool-bar-mode -1))
+(menu-bar-mode -1)
+
 (use-package clipetty
     :ensure t
     :hook (after-init . global-clipetty-mode))

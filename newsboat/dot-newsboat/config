@@ -10,7 +10,9 @@ show-read-articles true
 download-full-page true
 reload-time 5
 reload-threads 4
-article-sort-order date-desc
+
+# Sorting latest first
+article-sort-order date-asc
 
 # Prune everything on quit
 cleanup-on-quit true
