@@ -12,24 +12,37 @@
 ;; Decrease: C-x C--
 ;; Reset:    C-x C-0
 
+;; Make sure we are loading the latest stuff when starting emacs
+(setq load-prefer-newer t)
+
 ;; Turn of c-wheel scrolling. It is to fast and unprecise
 (global-unset-key (kbd "<C-wheel-up>"))
 (global-unset-key (kbd "<C-wheel-down>"))
 ;; (global-set-key (kbd "<C-wheel-up>") 'tab-bar-switch-to-next-tab)
 ;; (global-set-key (kbd "<C-wheel-down>") 'tab-bar-switch-to-prev-tab)
 
-;; Emacs in terminal
-(xterm-mouse-mode 1)
-(setq mouse-autoselect-window t)   ;; optional
-
-;; A bit more lean display
-(when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
-(when (fboundp 'tool-bar-mode)   (tool-bar-mode -1))
-(menu-bar-mode -1)
+;; Copy pase works between tty-emacs and the rest
 
 (use-package clipetty
+  :ensure t
+  :demand t
+  :config
+  (global-clipetty-mode 1))
+
+;; Kitty keyboard protocol / Real keyboard events such as super-key sent into a
+;; tty emacs
+(use-package kkp
     :ensure t
-    :hook (after-init . global-clipetty-mode))
+    :demand t
+    :config
+    (global-kkp-mode 1))
+
+;; Use a slimmer vertical bar in tty emacs
+(set-display-table-slot standard-display-table 'vertical-border ?\u2502)
+(set-face-foreground 'vertical-border "gray30")
+
+;; Emacs in terminal - set customer-variable xterm-mouse-mode
+(setq mouse-autoselect-window t)
 
 ;; Auto-save scratch buffer
 (use-package persistent-scratch
@@ -343,10 +356,10 @@ of just deleting the window."
   (define-key magit-mode-map (kbd "C-c C-t") nil) ; unbind in magit first
   (define-key magit-mode-map (kbd "C-<tab>") nil)) ; unbind in magit first
 (global-set-key (kbd "C-c C-b") 'tab-bar-mode)
-(global-set-key (kbd "s-t") 'tab-bar-new-tab)
-(global-set-key (kbd "s-w") 'tab-bar-close-tab)
-(global-set-key (kbd "C-<tab>") 'tab-bar-switch-to-next-tab)
-(global-set-key (kbd "C-S-<tab>") 'tab-bar-switch-to-prev-tab)
+(global-set-key (kbd "C-x t") 'tab-bar-new-tab)
+(global-set-key (kbd "C-x w") 'tab-bar-close-tab)
+(global-set-key (kbd "M-<tab>") 'tab-bar-switch-to-next-tab)
+(global-set-key (kbd "M-S-<tab>") 'tab-bar-switch-to-prev-tab)
 
 ;; * * * Moving around window-buffers * * *
 
@@ -382,9 +395,9 @@ of just deleting the window."
 
 ;; (global-set-key (kbd "s-k") 'kill-buffer)
 ;; (global-set-key (kbd "s-b") 'switch-to-buffer)
-(global-set-key (kbd "C-x .") 'balance-windows-area)
-(global-set-key (kbd "C-x ,") 'balance-windows)
-(global-set-key (kbd "s-r") 'rotate-frame-clockwise)
+(global-set-key (kbd "C-x C-.") 'balance-windows-area)
+(global-set-key (kbd "C-x C-,") 'balance-windows)
+;; (global-set-key (kbd "s-r") 'rotate
 
 ;; Double click borders to balance windows
 (global-set-key [vertical-line double-mouse-1] 'balance-windows)
@@ -732,4 +745,5 @@ by using nxml's indentation rules."
 (use-package paradox
   :ensure t
   :config
+  (setq paradox-execute-asynchronously nil)
   (paradox-enable))
