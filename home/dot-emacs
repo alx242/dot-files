@@ -201,6 +201,9 @@
                 ("C-c C-t" . ghostel-new)
                 ("C-c C-." . ghostel-next)
                 ("C-c C-," . ghostel-previous)
+                ("C-_" . (lambda ()
+                             (interactive)
+                             (ghostel--write-pty ghostel--term "\C-_")))
 
                 ("C-y" . (lambda () (interactive)
                            (ghostel-send-key "y" "ctrl")))

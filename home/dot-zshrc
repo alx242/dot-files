@@ -61,17 +61,12 @@ ec() {
 }
 
 bindkey -e
+bindkey '^_'      undo
 bindkey "\e[1;5C" forward-word
 bindkey "\e[1;5D" backward-word
 bindkey "\e\e[C"  forward-word
 bindkey "\e\e[D"  backward-word
 bindkey "\e^?"    backward-kill-word
-
-# bindkey "\e[1;5C" vi-forward-word    # CTRL+RIGHT
-# bindkey "\e[1;5D" vi-backward-word   # CTRL+LEFT
-# bindkey "\e\e[C" vi-forward-word     # META+RIGHT
-# bindkey "\e\e[D" vi-backward-word    # META+LEFT
-# bindkey "\e^?" vi-backward-kill-word # META+BACKSPACE
 
 # Fix for zsh compinit: insecure directories, run compaudit for list.
 #
