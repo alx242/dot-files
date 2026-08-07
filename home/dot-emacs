@@ -252,6 +252,9 @@
     ;; chars
     (setq ghostel-ssh-install-terminfo t)
 
+    ;; Line mode enables undo and vaious other ordinary terminal thingies.
+    (setq ghostel-initial-input-mode 'line)
+
     ;; Make sure to get latest native module compiled
     (setq ghostel-module-auto-install 'download)
     )
