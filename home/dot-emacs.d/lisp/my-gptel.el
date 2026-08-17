@@ -258,6 +258,9 @@ Leaves #+begin_src and #+begin_example blocks untouched."
 
 (add-hook 'gptel-mode-hook #'my-gptel-reset-max-tokens)
 
+(advice-add 'gptel-get-tool :around
+            (lambda (orig path) (ignore-errors (funcall orig path))))
+
 (defun gptel-summarize-to-new-session ()
   "Summarize the current gptel session and start a new one with the summary."
   (interactive)
