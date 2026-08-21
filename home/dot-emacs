@@ -284,25 +284,20 @@ Splits the root window so a new session cannot replace another window."
             (setq-local mouse-drag-copy-region t)))
 
 (defun my-ghostel-close-tab-if-last-window ()
-  "Close windows showing the killed ghostel buffer, or its tab if alone.
-Runs from buffer-local `kill-buffer-hook'.  If the ghostel buffer is the
-only window in a tab and more than one tab exists, close that tab instead
-of just deleting the window."
+  "Close the tab showing the killed ghostel buffer, if it is alone there.
+Runs from buffer-local `kill-buffer-hook'.  The tab is closed only when the
+ghostel buffer is the sole window of that tab and more than one tab exists.
+If the tab has other windows, or it is the last tab, nothing is done."
   (let ((buffer (current-buffer))
         (tabs (tab-bar-tabs)))
     (dolist (window (get-buffer-window-list buffer 'no-minibuf t))
       (when (window-live-p window)
         (let* ((frame (window-frame window))
                (frame-windows (window-list frame 'no-minibuf)))
-          (cond
-           ;; Sole window in its tab, and other tabs exist: close the tab.
-           ((and (= 1 (length frame-windows))
-                 (eq (car frame-windows) window)
-                 (> (length tabs) 1))
-            (with-selected-frame frame (tab-bar-close-tab)))
-           ;; Otherwise delete the window if it's not the only one.
-           ((> (length frame-windows) 1)
-            (delete-window window))))))))
+          (when (and (= 1 (length frame-windows))
+                     (eq (car frame-windows) window)
+                     (> (length tabs) 1))
+            (with-selected-frame frame (tab-bar-close-tab))))))))
 
 (add-hook 'ghostel-mode-hook
           (lambda ()
