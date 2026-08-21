@@ -79,6 +79,10 @@ fi
 autoload -Uz compinit
 compinit
 
+# Better word walking
+autoload -U select-word-style
+select-word-style bash          # alnum only: stops at _ / . -
+
 # Repeat a command (including all params) until a error happens
 # (return code =/= 0)
 function repeat_until_error {
