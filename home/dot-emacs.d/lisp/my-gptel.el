@@ -25,7 +25,10 @@
 
     ;; OpenAI
     (gptel-make-openai-oauth "Codex"
-      :stream t)
+      :stream t
+      :request-params
+      '(:reasoning (:effort "high")) ;; Makes gpt a bit smarter
+      )
 
     (gptel-make-openai "Mammouth"
       :host "api.mammouth.ai"

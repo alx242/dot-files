@@ -113,23 +113,6 @@
     (remove-hook 'magit-status-sections-hook 'magit-insert-unpushed-to-upstream-or-recent)
     (add-hook    'magit-status-sections-hook 'magit-insert-unpushed-to-upstream t))
 
-;; GitHub/GitLab PR + issue integration for Magit.
-;; The environment-specific filter (author = your GH username) lives in
-;; ~/.emacs-custom.el under `forge-status-buffer-default-topic-filters'.
-(use-package forge
-    :ensure t
-    :after magit
-    :config
-    ;; Don't insert PR/issue/discussion sections into magit-status.
-    ;; On large repos the DB query is ~6s per refresh.  Access on demand via
-    ;; the keys below or `forge-list-pullreqs' / `forge-list-issues'.
-    ;; (remove-hook 'magit-status-sections-hook 'forge-insert-pullreqs)
-    ;; (remove-hook 'magit-status-sections-hook 'forge-insert-issues)
-    ;; (remove-hook 'magit-status-sections-hook 'forge-insert-discussions)
-    (with-eval-after-load 'magit
-      (define-key magit-status-mode-map (kbd "N") #'forge-list-pullreqs)
-      (define-key magit-status-mode-map (kbd "I") #'forge-list-issues)))
-
 ;; Auto-close compilation window in case compilation is successful (slight
 ;; delay)
 (defun compile-notify-and-close (buffer string)
@@ -591,6 +574,11 @@ If the tab has other windows, or it is the last tab, nothing is done."
     (setq xref-show-xrefs-function #'consult-xref
           xref-show-definitions-function #'consult-xref)
     )
+
+;; A bit more aggressive asynchronous search
+(setq consult-async-input-debounce 0.05
+      consult-async-input-throttle 0.1
+      consult-async-refresh-delay 0.05)
 
 ;; Ripgrep package
 (use-package rg
