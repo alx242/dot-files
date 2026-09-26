@@ -30,43 +30,18 @@
       '(:reasoning (:effort "high")) ;; Makes gpt a bit smarter
       )
 
-    (gptel-make-openai "Mammouth"
-      :host "api.mammouth.ai"
-      :key (auth-source-pick-first-password :host "api.mammouth.ai" :user "apikey")
-      :models '(gpt-5.5
-                gpt-5.6-luna
-                gpt-5.6-sol
-                gpt-5.6-terra
-
-                deepseek-v4-flash
-                deepseek-v4-pro
-
-                kimi-k3
-
-                claude-sonnet-4-6
-                claude-sonnet-5
-                claude-opus-4-7
-                claude-opus-4-8
-                ))
-
     ;; Swedish AI provider
     (gptel-make-openai "BergetAI"
       :host "api.berget.ai"
       :endpoint "/v1/chat/completions"
       :key (auth-source-pick-first-password :host "api.berget.ai" :user "apikey")
       :stream t
-      :models '(kimi-2.6
-                kimi-3
+      :models '(Qwen3.5-2B
+                GLM-5.3-Flash
+                Kimi-K3
                 gemma-4-31B-it
                 ))
 
-    ;; Ollama offers an OpenAI compatible API
-    (gptel-make-openai "Local"
-      :stream t
-      :protocol "http"
-      :host "localhost:8080"
-      :models '(gemma4:e4b
-                gemma4:12b))
 
     ;; Copilot - default backend
     (setq gptel-backend
