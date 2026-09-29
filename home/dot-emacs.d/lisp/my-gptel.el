@@ -24,11 +24,20 @@
     (setq gptel-default-mode 'org-mode)
 
     ;; OpenAI
-    (gptel-make-openai-oauth "Codex"
-      :stream t
-      :request-params
-      '(:reasoning (:effort "high")) ;; Makes gpt a bit smarter
-      )
+    (setq gptel-backend
+          (gptel-make-openai-oauth "Codex"
+            :stream t
+            ;; :request-params '(:reasoning (:effort "high"))
+            ;; none, low, medium (the default), high, xhigh, and max
+            :request-params '(:reasoning (:effort "xhigh"))
+            :models '(gpt-5.6-sol
+                      gpt-5.6-terra
+                      gpt-5.6-luna
+                      gpt-6-astra
+                      gpt-6-sol
+                      gpt-6-luna
+                      ))
+          )
 
     ;; Swedish AI provider
     (gptel-make-openai "BergetAI"
@@ -43,10 +52,9 @@
                 ))
 
 
-    ;; Copilot - default backend
-    (setq gptel-backend
-          (gptel-make-gh-copilot "Copilot" :stream t)
-          )
+    ;; Copilot
+    (gptel-make-gh-copilot "Copilot" :stream t)
+
     ;; Pick the correct model for this emacs session once at startup
     (defun gptel-pick-model-once (&rest _)
       "Prompt for a gptel model the first time gptel is launched."
@@ -239,63 +247,153 @@ Leaves #+begin_src and #+begin_example blocks untouched."
 (advice-add 'gptel-get-tool :around
             (lambda (orig path) (ignore-errors (funcall orig path))))
 
+(defcustom my-gptel-summary-chunk-characters 50000
+  "Maximum number of transcript characters in one summary request.
+
+This is deliberately character-based: gptel does not provide a
+preflight tokenizer.  50,000 characters is usually about 12K--17K
+tokens, leaving ample room for prompts, output, and tokenization
+variation."
+  :type 'integer
+  :group 'gptel)
+
+(defun my-gptel--summary-chunks (text limit)
+  "Split TEXT into chunks no longer than LIMIT characters.
+Prefer splitting at a newline without creating tiny chunks."
+  (let ((start 0)
+        chunks)
+    (while (< start (length text))
+      (let* ((hard-end (min (length text) (+ start limit)))
+             (newline (and (< hard-end (length text))
+                           (cl-position ?\n text :start start :end hard-end
+                                        :from-end t)))
+             (end (if (and newline (> newline (+ start (/ limit 2))))
+                      (1+ newline)
+                    hard-end)))
+        (push (substring text start end) chunks)
+        (setq start end)))
+    (nreverse chunks)))
+
+(defun my-gptel--summary-request (text prompt backend model callback)
+  "Ask gptel to summarize TEXT according to PROMPT, then call CALLBACK.
+Use BACKEND and MODEL.  CALLBACK receives (RESPONSE INFO)."
+  (let ((gptel-backend backend)
+        (gptel-model model)
+        (gptel-use-tools nil)
+        (gptel-tools nil)
+        (gptel-use-context nil)
+        (gptel-stream nil))
+    (gptel-request
+     (concat prompt "\n\n=== INPUT START ===\n" text "\n=== INPUT END ===")
+     :system "Summarize faithfully. Preserve concrete facts, identifiers, decisions, code changes, errors, and unfinished work. Output only the summary."
+     :stream nil
+     :callback callback)))
+
+(defun my-gptel--summarize-chunks
+    (chunks prompt backend model done fail &optional summaries index)
+  "Summarize CHUNKS sequentially according to PROMPT.
+Use BACKEND and MODEL, then call DONE with the summaries.  Call FAIL
+with RESPONSE and INFO if a request fails."
+  (let ((index (or index 1)))
+    (if (null chunks)
+        (funcall done (nreverse summaries))
+      (message "Summarizing session chunk %d (%d remaining)..."
+               index (length chunks))
+      (my-gptel--summary-request
+       (car chunks) (format prompt index) backend model
+       (lambda (response info)
+         (cond
+          ;; Reasoning is delivered through the callback separately from the
+          ;; final answer, even for some non-streaming reasoning models.
+          ((and (consp response) (eq (car response) 'reasoning)))
+          ((and (stringp response) (not (string-empty-p response)))
+           (my-gptel--summarize-chunks
+            (cdr chunks) prompt backend model done fail
+            (cons response summaries) (1+ index)))
+          ((null response)
+           (funcall fail response info))))))))
+
+(defun my-gptel--merge-summaries
+    (summaries backend model done fail &optional pass)
+  "Recursively merge SUMMARIES until one remains, then call DONE.
+Use BACKEND and MODEL.  Call FAIL with RESPONSE and INFO on failure."
+  (if (= (length summaries) 1)
+      (funcall done (car summaries))
+    (let* ((pass (or pass 1))
+           (joined (mapconcat
+                    (lambda (summary)
+                      (concat "--- CHUNK SUMMARY ---\n" summary))
+                    summaries "\n\n"))
+           (groups (my-gptel--summary-chunks
+                    joined my-gptel-summary-chunk-characters)))
+      (message "Merging summaries, pass %d (%d groups)..."
+               pass (length groups))
+      (my-gptel--summarize-chunks
+       groups
+       (concat "This is group %d of intermediate summaries from one "
+               "chronological chat. Merge it into a compact handoff summary. "
+               "Remove duplication but preserve goals, facts, identifiers, "
+               "decisions, changes, results, failures, and unresolved work.")
+       backend model
+       (lambda (merged)
+         (my-gptel--merge-summaries
+          merged backend model done fail (1+ pass)))
+       fail))))
+
 (defun gptel-summarize-to-new-session ()
-  "Summarize the current gptel session and start a new one with the summary."
+  "Summarize the current gptel session in chunks and continue in a new one."
   (interactive)
   (unless (bound-and-true-p gptel-mode)
     (user-error "Not a gptel buffer"))
-  (let ((src-buf  (current-buffer))
-        (backend  gptel-backend)
-        (model    gptel-model)
-        (sysmsg   gptel--system-message))
-    (message "Summarizing gptel session...")
-    (let* ((gptel-use-tools nil)
-           (gptel-tools nil)
-           (convo (with-current-buffer src-buf
-                    (buffer-substring-no-properties (point-min) (point-max))))
-           (question
-            (concat
-             "Below is a transcript of a previous chat session "
-             "between a user and an assistant. Produce a concise but "
-             "complete summary in English that can be used as starting "
-             "context for a new session. Include: (1) the user's goal "
-             "and task, (2) key facts and decisions, (3) code/artifacts "
-             "produced (brief reference, not full contents), (4) open "
-             "questions and next steps. Output only the summary, no "
-             "meta-text.\n\n=== TRANSCRIPT START ===\n"
-             convo
-             "\n=== TRANSCRIPT END ===")))
-      (gptel-request
-       question
-       :system "You are a helpful assistant that summarizes chat sessions."
-       :context (list src-buf backend model sysmsg)
-       :callback
-       (lambda (response info)
-         (let* ((ctx (plist-get info :context))
-                (orig-buf (nth 0 ctx)))
-           (if (or (not (stringp response)) (string-empty-p response))
-               (message "Summarization failed:
- response=%S status=%S error=%S http=%S"
-                        response
-                        (plist-get info :status)
-                        (plist-get info :error)
-                        (plist-get info :http-status))
-             (let* ((gptel-backend (nth 1 ctx))
-                    (gptel-model   (nth 2 ctx))
-                    (orig-sysmsg   (nth 3 ctx))
-                    (name (generate-new-buffer-name
-                           (format "*%s-continued*" (buffer-name orig-buf))))
-                    (new-buf (gptel name nil nil t)))
-               (with-current-buffer new-buf
-                 (setq-local gptel--system-message orig-sysmsg)
-                 (goto-char (point-max))
-                 (insert (or (gptel-response-prefix-string) "")
-                         "Summary of previous session:\n\n"
-                         response
-                         "\n\n"
-                         (or (gptel-prompt-prefix-string) "")))
-               (pop-to-buffer new-buf)
-               (message "New session: %s" name)))))))))
+  (let* ((src-buf (current-buffer))
+         (backend gptel-backend)
+         (model gptel-model)
+         (sysmsg gptel-system-prompt)
+         (convo (buffer-substring-no-properties (point-min) (point-max)))
+         (chunks (my-gptel--summary-chunks
+                  convo my-gptel-summary-chunk-characters))
+         (fail
+          (lambda (response info)
+            (display-warning
+             'my-gptel
+             (format (concat "Session summarization failed:\n"
+                             "response=%S\nstatus=%S\nerror=%S\nhttp=%S")
+                     response
+                     (plist-get info :status)
+                     (plist-get info :error)
+                     (plist-get info :http-status))
+             :error)))
+         (finish
+          (lambda (summary)
+            (when (buffer-live-p src-buf)
+              (let* ((gptel-backend backend)
+                     (gptel-model model)
+                     (name (generate-new-buffer-name
+                            (format "*%s-continued*" (buffer-name src-buf))))
+                     (new-buf (gptel name nil nil t)))
+                (with-current-buffer new-buf
+                  (setq-local gptel-system-prompt sysmsg)
+                  (goto-char (point-max))
+                  (insert "Continuation context from the previous session:\n\n"
+                          summary
+                          "\n\n"
+                          (or (gptel-prompt-prefix-string) "")))
+                (pop-to-buffer new-buf)
+                (message "New summarized session: %s" name))))))
+    (message "Summarizing %d session chunk%s..."
+             (length chunks) (if (= (length chunks) 1) "" "s"))
+    (my-gptel--summarize-chunks
+     chunks
+     (concat "This is chunk %d of a long chronological chat transcript. "
+             "Produce a compact handoff summary of this chunk. Preserve "
+             "information needed to continue the work, including file paths, "
+             "symbol names, commands, decisions, observed results, failures, "
+             "and unresolved tasks.")
+     backend model
+     (lambda (summaries)
+       (my-gptel--merge-summaries
+        summaries backend model finish fail))
+     fail)))
 
 ;; Nice feature to create commit messages
 (defvar my-gptel-commit-prompt
