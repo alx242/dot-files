@@ -35,6 +35,7 @@
                       gpt-5.6-luna
                       gpt-6-astra
                       gpt-6-sol
+                      gpt-6.1-sol
                       gpt-6-luna
                       ))
           )
@@ -53,7 +54,11 @@
 
 
     ;; Copilot
-    (gptel-make-gh-copilot "Copilot" :stream t)
+    (gptel-make-gh-copilot "Copilot"
+      :stream t
+      :models '(claude-opus-5.5
+                claude-opus-5)
+      )
 
     ;; Pick the correct model for this emacs session once at startup
     (defun gptel-pick-model-once (&rest _)
