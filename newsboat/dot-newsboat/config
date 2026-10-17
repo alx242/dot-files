@@ -21,9 +21,9 @@ delete-read-articles-on-quit true
 # Coloring
 color background            default   default
 color listnormal            default   default
-color listfocus             blue      black   bold
+color listfocus             black     green bold
+color listfocus_unread      black     green bold
 color listnormal_unread     blue      default
-color listfocus_unread      white     black   bold
 color info                  white     default bold
 color article               default   default
 

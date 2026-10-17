@@ -444,6 +444,12 @@ If the tab has other windows, or it is the last tab, nothing is done."
 ;; Only load if it exists
 (require 'ps-ccrypt nil t)
 
+;; For gpg prompting
+(setq epa-pinentry-mode 'loopback)
+
+;; New default for auth-sources
+(setq auth-sources '("~/.authinfo.gpg"))
+
 ;; * * * Yang * * *
 (use-package yang-mode
     :ensure t)

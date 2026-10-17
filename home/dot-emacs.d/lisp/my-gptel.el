@@ -7,7 +7,8 @@
 ;; Loaded from .emacs via (require 'my-gptel).  The file lives in
 ;; ~/.emacs.d/lisp which is already on `load-path'.
 
-;;; Code:
+;; Use my version - during gptel development
+;; (add-to-list 'load-path (expand-file-name "~/devel/gptel"))
 
 ;; LLM done right
 (use-package gptel
@@ -23,35 +24,44 @@
     ;; markdown mode left a bunch of ugly meta-comments that did not collapse
     (setq gptel-default-mode 'org-mode)
 
+    ;; Simple English directive, the condensed standalone prompt from
+    ;; https://github.com/AminBlg/SimpleEnglish (prompts/system-prompt.md).
+    ;; Select it with `gptel-menu' or `gptel-system-prompt' (C-c <RET> s).
+    (let ((file (expand-file-name "prompts/simple-english.md"
+                                  user-emacs-directory)))
+      (when (file-readable-p file)
+        (setf (alist-get 'simple-english gptel-directives)
+              (with-temp-buffer
+                (insert-file-contents file)
+                (buffer-string)))))
+
     ;; OpenAI
-    (setq gptel-backend
-          (gptel-make-openai-oauth "Codex"
-            :stream t
-            ;; :request-params '(:reasoning (:effort "high"))
-            ;; none, low, medium (the default), high, xhigh, and max
-            :request-params '(:reasoning (:effort "xhigh"))
-            :models '(gpt-5.6-sol
-                      gpt-5.6-terra
-                      gpt-5.6-luna
-                      gpt-6-astra
-                      gpt-6-sol
-                      gpt-6.1-sol
-                      gpt-6-luna
-                      ))
-          )
+    (gptel-make-openai-oauth "Codex"
+      :stream t
+      ;; :request-params '(:reasoning (:effort "high"))
+      ;; none, low, medium (the default), high, xhigh, and max
+      :request-params '(:reasoning (:effort "xhigh"))
+      :models '(gpt-5.6-sol
+                gpt-5.6-terra
+                gpt-5.6-luna
+                gpt-6-astra
+                gpt-6.1-sol
+                ))
 
     ;; Swedish AI provider
     (gptel-make-openai "BergetAI"
       :host "api.berget.ai"
       :endpoint "/v1/chat/completions"
-      :key (auth-source-pick-first-password :host "api.berget.ai" :user "apikey")
+      :key (lambda ()
+             (auth-source-pick-first-password
+              :host "api.berget.ai"
+              :user "apikey"))
       :stream t
       :models '(Qwen3.5-2B
                 GLM-5.3-Flash
                 Kimi-K3
                 gemma-4-31B-it
                 ))
-
 
     ;; Copilot
     (gptel-make-gh-copilot "Copilot"
@@ -60,18 +70,22 @@
                 claude-opus-5)
       )
 
-    ;; Pick the correct model for this emacs session once at startup
-    (defun gptel-pick-model-once (&rest _)
-      "Prompt for a gptel model the first time gptel is launched."
-      (let* ((models (gptel-backend-models gptel-backend))
-             (choice (completing-read
-                      "Model: "
-                      (mapcar (lambda (m) (format "%s" m)) models)
-                      nil t)))
-        (setq gptel-model (intern choice)))
-      (advice-remove 'gptel #'gptel-pick-model-once))
+    ;; Claude via Anthropic's API.
+    (gptel-make-anthropic "Claude"
+      :stream t
+      :key (lambda ()
+             (auth-source-pick-first-password
+              :host "api.anthropic.com"
+              :user "apikey")))
 
-    (advice-add 'gptel :before #'gptel-pick-model-once)
+    
+    ;; Default model
+    (setq gptel-backend (gptel-get-backend "Codex")
+          gptel-model 'gpt-6.1-sol)
+
+    ;; Model/backend and parameter changes affect only the current buffer.
+    (with-eval-after-load 'gptel-transient
+      (setq gptel--set-buffer-locally t))
 
     (setq gptel-use-curl t)
 
