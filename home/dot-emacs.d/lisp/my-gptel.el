@@ -89,6 +89,34 @@
 
     (setq gptel-use-curl t)
 
+    ;; Make the token counter respond to left-click and redraw immediately.
+    ;; Keep this local to the usage button, not Emacs buttons in general.
+    (defvar my-gptel--usage-button-map
+      (let ((map (copy-keymap button-map)))
+        (define-key map [header-line down-mouse-1] #'ignore)
+        (define-key map [header-line mouse-1] #'push-button)
+        map)
+      "Keymap for the gptel header's token usage button.")
+
+    (defun my-gptel--usage-button (string callback data help-echo)
+      "Like `buttonize', with left-click and an immediate header refresh."
+      (propertize
+       (buttonize string
+                  (lambda (value)
+                    (funcall callback value)
+                    (force-mode-line-update))
+                  data help-echo)
+       'keymap my-gptel--usage-button-map
+       ;; Disable mouse-1 to mouse-2 translation; mouse-1 is bound above.
+       'follow-link #'ignore))
+
+    ;; Replace only the usage button renderer.  Updating the existing form
+    ;; also fixes headers in already-open chat buffers; reloading is safe.
+    (let ((usage (assq 'usage (cadr (cadr gptel--header-line-info)))))
+      (when usage
+        (setf (cadr usage)
+              (cl-subst 'my-gptel--usage-button 'buttonize (cadr usage)))))
+
     ;; Create Codex buffers clean from gptel-max-tokens warning
     (defun gptel-disable-max-tokens-for-codex (&rest _)
       (when (and (boundp 'gptel-backend)
