@@ -10,6 +10,14 @@
 ;; Use my version - during gptel development
 ;; (add-to-list 'load-path (expand-file-name "~/devel/gptel"))
 
+;; Keep OAuth credentials out of debugger backtraces and other cl-prin1 output.
+;; This does not sanitize raw prin1 output or tokens passed as strings.
+(with-eval-after-load 'gptel-openai-oauth
+  (require 'cl-print)
+  (cl-defmethod cl-print-object ((_backend gptel-openai-oauth) stream)
+    "Print an OAuth backend without exposing its credentials."
+    (princ "#<gptel-openai-oauth credentials=REDACTED>" stream)))
+
 ;; LLM done right
 (use-package gptel
     :ensure t

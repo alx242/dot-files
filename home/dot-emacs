@@ -15,6 +15,10 @@
 ;; Make sure we are loading the latest stuff when starting emacs
 (setq load-prefer-newer t)
 
+;; Dim other buffers
+(require 'auto-dim-other-buffers)
+(auto-dim-other-buffers-mode 1)
+
 ;; Turn of c-wheel scrolling. It is to fast and unprecise
 (global-unset-key (kbd "<C-wheel-up>"))
 (global-unset-key (kbd "<C-wheel-down>"))
