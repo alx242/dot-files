@@ -10,6 +10,10 @@ show-read-articles true
 download-full-page true
 reload-time 5
 reload-threads 4
+text-width 80
+
+# Limit width in article-list
+articlelist-format "%4i %f %D %-100t"
 
 # Sorting latest first
 article-sort-order date-asc

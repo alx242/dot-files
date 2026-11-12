@@ -1,8 +1,4 @@
 [alias]
-        st = status
-        co = checkout
-        br = branch
-
         dt = difftool
 
         prune-remote = remote prune origin
@@ -14,27 +10,29 @@
 
         wc = whatchanged
 
-        amend-rewrite = !git reset --soft HEAD~1 && git commit
-
         lc = log ORIG_HEAD.. --stat --no-merges
         in = log HEAD..origin/master
         out = log origin/master..HEAD
-	create-pull-request = !sh -c 'create-pull-request $0 $@'
+
 [user]
         name = Alexander Schüssler
         email = alex@xalx.net
 
 [color]
         ui = true
+
 [push]
         default = current
+
 [core]
         excludesfile = "~/.gitignore"
 
 [diff]
        tool = ediff
+
 [difftool "ediff"]
        cmd = emacs --eval \"(ediff-files \\\"$LOCAL\\\" \\\"$REMOTE\\\")\"
+
 [pull]
 	rebase = true
 
