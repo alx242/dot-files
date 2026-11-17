@@ -363,6 +363,12 @@ If the tab has other windows, or it is the last tab, nothing is done."
 
 ;; Tab bar
 (setq tab-bar-show 1)
+
+;; Workaround: this Emacs 31 NS build reports tab-bar clicks as
+;; `<nil> <mouse-1>' instead of `<tab-bar> <mouse-1>'.  Route them to
+;; the tab-bar keymap so mouse tab switching works.
+(with-eval-after-load 'tab-bar
+  (define-key global-map [nil] tab-bar-map))
 ;; (global-set-key (kbd "C-t") 'tab-new)
 (global-set-key (kbd "C-c C-b") 'tab-bar-mode)
 (defun my-tab-new-with-ghostel ()

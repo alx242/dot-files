@@ -42,5 +42,6 @@
 [github]
 	user = alx242
 
-[includeIf "gitdir:~/work/"]
-        path = ~/.work.gitconfig
+# Machine possible overrides
+[include]
+    path = ~/.local.gitconfig
