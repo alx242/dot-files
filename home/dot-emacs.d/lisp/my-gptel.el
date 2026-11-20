@@ -49,11 +49,10 @@
       ;; :request-params '(:reasoning (:effort "high"))
       ;; none, low, medium (the default), high, xhigh, and max
       :request-params '(:reasoning (:effort "xhigh"))
-      :models '(gpt-5.6-sol
-                gpt-5.6-terra
-                gpt-5.6-luna
-                gpt-6-astra
+      :models '(gpt-6-astra
+                gpt-6.2-astra
                 gpt-6.1-sol
+                gpt-6.2-sol
                 ))
 
     ;; Swedish AI provider
@@ -85,11 +84,10 @@
              (auth-source-pick-first-password
               :host "api.anthropic.com"
               :user "apikey")))
-
     
     ;; Default model
-    (setq gptel-backend (gptel-get-backend "Codex")
-          gptel-model 'gpt-6.1-sol)
+    (setq gptel-backend (gptel-get-backend "Copilot")
+          gptel-model 'claude-opus-5.5)
 
     ;; Model/backend and parameter changes affect only the current buffer.
     (with-eval-after-load 'gptel-transient

@@ -36,9 +36,6 @@
 [pull]
 	rebase = true
 
-[url "git@github.com:/tailf"]
-    insteadOf = https://github.com/tailf
-
 [github]
 	user = alx242
 
